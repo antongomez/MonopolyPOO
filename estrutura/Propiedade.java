@@ -9,12 +9,19 @@ public abstract class Propiedade extends Casilla {
     private Xogador dono;
     private float cartosProducidos;
 
-
     public Propiedade() {
     }
 
     public Propiedade(String nome, int posicion, float valor) {
         super(nome, valor);
+        this.posicion = posicion;
+    }
+
+    public int getPosicion() {
+        return this.posicion;
+    }
+
+    public void setPosicion(int posicion) {
         this.posicion = posicion;
     }
 
@@ -46,7 +53,7 @@ public abstract class Propiedade extends Casilla {
     public boolean perteneceAXogador(Xogador xogador) {
         return this.dono.equals(xogador);
     }
-    
+
     public abstract void calculoAlquiler();
 
 }
