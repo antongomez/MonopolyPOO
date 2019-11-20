@@ -37,6 +37,20 @@ public class Solar extends Propiedade {
     public int getNCasas() {
         return this.getCasas().size();
     }
+    
+    public ArrayList<Hotel> getHoteis() {
+        ArrayList<Hotel> hoteis = new ArrayList<>();
+        for (Edificio hotel : edificios) {
+            if (hotel instanceof Hotel) {
+                hoteis.add((Hotel) hotel);
+            }
+        }
+        return hoteis;
+    }
+
+    public int getNHoteis() {
+        return this.getHoteis().size();
+    }
 
     @Override
     public void calculoAlquiler() {

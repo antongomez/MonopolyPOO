@@ -7,7 +7,7 @@ public abstract class Casilla {
 
     //Atributos
     private String nome;
-    private float valor;
+    
     private ArrayList<Avatar> avatares;
     private int frecuentada;
 
@@ -15,9 +15,8 @@ public abstract class Casilla {
     public Casilla() {
     }
 
-    public Casilla(String nome, float valor) {
+    public Casilla(String nome) {
         this.nome = nome;
-        this.valor = valor;
         this.avatares = new ArrayList<>();
         this.frecuentada = 0;
     }
@@ -33,14 +32,6 @@ public abstract class Casilla {
         } else {
             System.out.println("Erro en setNome.");
         }
-    }
-
-    public float getValor() {
-        return valor;
-    }
-
-    public void setValor(float valor) {
-        this.valor = valor;
     }
 
     public int getFrecuentada() {

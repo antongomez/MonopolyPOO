@@ -9,9 +9,7 @@ public abstract class Edificio {
     }
 
     public Edificio(String num) {
-
         this.id = num;
-
     }
 
     public String getId() {
