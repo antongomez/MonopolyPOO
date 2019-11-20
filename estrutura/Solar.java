@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package estrutura;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Anton
- */
 public class Solar extends Propiedade {
 
     private ArrayList<Edificio> edificios;
@@ -31,6 +22,20 @@ public class Solar extends Propiedade {
 
     public void eliminarEdificio(Edificio edificio) {
         edificios.remove(edificio);
+    }
+
+    public ArrayList<Casa> getCasas() {
+        ArrayList<Casa> casas = new ArrayList<>();
+        for (Edificio casa : edificios) {
+            if (casa instanceof Casa) {
+                casas.add((Casa) casa);
+            }
+        }
+        return casas;
+    }
+
+    public int getNCasas() {
+        return this.getCasas().size();
     }
 
     @Override

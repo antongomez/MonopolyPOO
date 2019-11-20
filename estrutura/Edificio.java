@@ -1,18 +1,17 @@
 package estrutura;
 
-public class Edificio {
+public abstract class Edificio {
 
     private String id;
-    private String tipo;
+    
+    public Edificio(){
+        
+    }
 
-    public Edificio(int num, String tipo) {
-        if (tipo != null) {
-            if (tipo.equals("casa") || tipo.equals("hotel") || 
-                tipo.equals("pista") || tipo.equals("piscina")) {
-                this.id = tipo + "-" + num;
-                this.tipo = tipo;
-            }
-        }
+    public Edificio(String num) {
+
+        this.id = num;
+
     }
 
     public String getId() {
@@ -23,20 +22,10 @@ public class Edificio {
         this.id = id;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
     //Métodos
     String imprimirEdificio() {
-        return tipo + " " + id + "\n";
+        return id + "\n";
     }
-
-
 
     /*@Override
     public String toString(){
