@@ -6,8 +6,7 @@ import java.util.ArrayList;
 public abstract class Casilla {
 
     //Atributos
-    private String nome;
-    
+    private String nome;   
     private ArrayList<Avatar> avatares;
     private int frecuentada;
 

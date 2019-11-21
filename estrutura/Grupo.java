@@ -1,12 +1,13 @@
 package estrutura;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 //import java.util.ArrayList;
 public class Grupo extends Casilla {
 
     private int id;
-    private ArrayList<Propiedade> propiedades;
+    private HashMap<String, Propiedade> propiedades;
     private String colorear;
 
     public Grupo() {
@@ -19,7 +20,7 @@ public class Grupo extends Casilla {
             case 1:
                 this.id = id;
                 this.colorear = Constantes.LARANXA;
-                this.propiedades = new ArrayList<>();
+                this.propiedades = new HashMap<>();
                 break;
 
             case 2:
@@ -80,7 +81,7 @@ public class Grupo extends Casilla {
         this.id = id;
     }
 
-    public ArrayList<Propiedade> getPropiedades() {
+    public HashMap<String, Propiedade> getPropiedades() {
         return this.propiedades;
     }
 
@@ -100,4 +101,28 @@ public class Grupo extends Casilla {
     public int getNCasas() {
         return 0;
     }
+
+    public boolean existeMonopolio() {
+        switch (id) {
+            case 1:
+            case 8:
+                if (propiedades.size() == 2) {
+                    return true;
+                }
+                break;
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+                if (propiedades.size() == 3) {
+                    return true;
+                }
+                break;
+
+        }
+        return false;
+    }
+    //Fin Clase
 }
