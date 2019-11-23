@@ -9,6 +9,7 @@ public class Grupo extends Casilla {
     private int id;
     private HashMap<String, Propiedade> propiedades;
     private String colorear;
+    private int maxConstructions;
 
     public Grupo() {
     }
@@ -21,46 +22,56 @@ public class Grupo extends Casilla {
                 this.id = id;
                 this.colorear = Constantes.LARANXA;
                 this.propiedades = new HashMap<>();
+                this.maxConstructions=2;
                 break;
 
             case 2:
                 this.id = id;
                 this.colorear = Constantes.CIAN;
+                this.maxConstructions=3;
                 break;
 
             case 3:
                 this.id = id;
                 this.colorear = Constantes.ROSA;
+                this.maxConstructions=3;
                 break;
 
             case 4:
                 this.id = id;
                 this.colorear = Constantes.GRIS;
+                this.maxConstructions=3;
                 break;
 
             case 5:
                 this.id = id;
                 this.colorear = Constantes.VERMELLO;
+                this.maxConstructions=3;
                 break;
 
             case 6:
                 this.id = id;
                 this.colorear = Constantes.AMARELO;
+                this.maxConstructions=3;
                 break;
 
             case 7:
                 this.id = id;
                 this.colorear = Constantes.VERDE;
+                this.maxConstructions=3;
                 break;
 
             case 8:
                 this.id = id;
                 this.colorear = Constantes.AZUL;
+                this.maxConstructions=2;
+                this.maxConstructions=3;
                 break;
 
             default:
                 this.id = id;
                 this.colorear = Constantes.NEGRO;
+                this.maxConstructions=0;
                 break;
 
         }
@@ -80,6 +91,10 @@ public class Grupo extends Casilla {
     public void setId(int id) {
         this.id = id;
     }
+
+    public int getMaxConstructions() {return this.maxConstructions;}
+    //Setter non funcional
+    public void setMaxConstructions() {return;}
 
     public HashMap<String, Propiedade> getPropiedades() {
         return this.propiedades;

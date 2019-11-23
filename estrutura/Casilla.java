@@ -8,14 +8,16 @@ public abstract class Casilla {
     //Atributos
     private String nome;   
     private ArrayList<Avatar> avatares;
+    private int posicion;
     private int frecuentada;
 
     //Constructor
     public Casilla() {
     }
 
-    public Casilla(String nome) {
+    public Casilla(String nome, int posicion) {
         this.nome = nome;
+        this.posicion = posicion;
         this.avatares = new ArrayList<>();
         this.frecuentada = 0;
     }
@@ -40,6 +42,9 @@ public abstract class Casilla {
     public void setFrecuentada(int num) {
         this.frecuentada = this.frecuentada + num;
     }
+
+    public int getPosicion() {return this.posicion;}
+    public void setPosicion(int posicion) {this.posicion = posicion;}
 
     public ArrayList<Avatar> getAvatares() {
         return avatares;

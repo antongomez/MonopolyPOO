@@ -4,7 +4,7 @@ import xogadores.*;
 
 public abstract class Propiedade extends Casilla {
 
-    private int posicion;
+    //private int posicion;
     private float valor;
     private float alquiler;
     private Xogador dono;
@@ -14,18 +14,18 @@ public abstract class Propiedade extends Casilla {
     public Propiedade() {
     }
 
-    public Propiedade(String nome, int posicion, float valor) {
-        super(nome);
-        this.posicion = posicion;
+    public Propiedade(String nome, int posicion, Xogador dono, float valor) {
+        super(nome, posicion);
+        //this.posicion = posicion;
         this.valor = valor;
     }
 
     public int getPosicion() {
-        return this.posicion;
+        return super.getPosicion();
     }
 
     public void setPosicion(int posicion) {
-        this.posicion = posicion;
+        super.setPosicion(posicion);
     }
 
     public float getValor() {
@@ -52,11 +52,11 @@ public abstract class Propiedade extends Casilla {
         this.grupo = grupo;
     }
 
-    public Xogador getXogador() {
+    public Xogador getDono() {
         return this.dono;
     }
 
-    public void setXogador(Xogador xogador) {
+    public void setDono(Xogador xogador) {
         this.dono = xogador;
     }
 
