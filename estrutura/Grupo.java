@@ -15,7 +15,7 @@ public class Grupo extends Casilla {
     }
 
     public Grupo(String nome, int id, String cor) {
-        super(nome);
+        super(nome,0);
         this.id = id;
         switch (id) {
             case 1:
