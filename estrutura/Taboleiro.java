@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Taboleiro {
 
-    private ArrayList<ArrayList<Casilla>> casillas;
+    private ArrayList<ArrayList<Propiedade>> casillas;
 
     public Taboleiro() {
     }
@@ -13,10 +13,10 @@ public class Taboleiro {
     public Taboleiro(Xogador banca) {
         casillas = new ArrayList<>();
         if (banca != null) {
-            ArrayList<Casilla> ladoSur = new ArrayList();
-            ArrayList<Casilla> ladoOeste = new ArrayList();
-            ArrayList<Casilla> ladoNorte = new ArrayList();
-            ArrayList<Casilla> ladoEste = new ArrayList();
+            ArrayList<Propiedade> ladoSur = new ArrayList();
+            ArrayList<Propiedade> ladoOeste = new ArrayList();
+            ArrayList<Propiedade> ladoNorte = new ArrayList();
+            ArrayList<Propiedade> ladoEste = new ArrayList();
 
             //Creacion de grupos Solares
             Grupo grupo1 = new Grupo(1, "Laranxa");

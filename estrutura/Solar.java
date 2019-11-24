@@ -162,8 +162,8 @@ public class Solar extends Propiedade {
     }
 
     //Edificamos
-    public void construirCasa() {
-
+    public boolean poderEdificarCasa() {
+        return (this.getNCasas() < 4);
     }
 
     public void Edificar(String tipo) {
@@ -172,7 +172,7 @@ public class Solar extends Propiedade {
                 if (((Propiedade) this).getDono().getFortuna() > this.getValor() * 0.6) {
                     //Comprobamos que non teña máis de catro casas
                     if (this.getNCasas() < 3) {
-                        if ((this.getNHoteis() < this.getGrupo().getMaxConstructions()) || (this.getNCasas() < this.getGrupo().getMaxConstructions())) {
+                        if ((this.getNHoteis() < this.getGrupo().getNSolares()) || (this.getNCasas() < this.getGrupo().getNSolares())) {
                             //Construimos
                             this.engadirEdificio(new Casa(this));
 
@@ -192,7 +192,7 @@ public class Solar extends Propiedade {
             break;
             case "Hotel": {
                 if (((Propiedade) this).getDono().getFortuna() > this.getValor() * 0.6) {
-                    if (this.getNHoteis() < this.getGrupo().getMaxConstructions()) {
+                    if (this.getNHoteis() < this.getGrupo().getNSolares()) {
                         if (this.getNCasas() > 3) {
                             //Construimos
                             this.engadirEdificio(new Hotel(this));
@@ -212,7 +212,7 @@ public class Solar extends Propiedade {
             break;
             case "Piscina": {
                 if (((Propiedade) this).getDono().getFortuna() > this.getValor() * 0.4) {
-                    if (this.getNPiscinas() < this.getGrupo().getMaxConstructions()) {
+                    if (this.getNPiscinas() < this.getGrupo().getNSolares()) {
                         if ((this.getNPiscinas() > 0) || (this.getNCasas() > 1)) {
                             //Construimos
                             this.engadirEdificio(new Piscina(this));
@@ -232,7 +232,7 @@ public class Solar extends Propiedade {
             break;
             case "Pista": {
                 if (((Propiedade) this).getDono().getFortuna() > this.getValor() * 10.) {
-                    if (this.getNPistas() < this.getGrupo().getMaxConstructions()) {
+                    if (this.getNPistas() < this.getGrupo().getNSolares()) {
                         if (this.getNHoteis() > 1) {
                             //Construimos
                             this.engadirEdificio(new Pista(this));

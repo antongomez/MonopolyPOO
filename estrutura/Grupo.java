@@ -1,83 +1,24 @@
 package estrutura;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-//import java.util.ArrayList;
 public class Grupo extends Casilla {
 
     private int id;
-    private HashMap<String, Propiedade> propiedades;
+    private ArrayList<Propiedade> propiedades;
     private String colorear;
-    private int maxConstructions;
 
     public Grupo() {
     }
 
-    public Grupo(String nome, int id, String cor) {
-        super(nome,0);
+    public Grupo(String nome, int id, String colorear) {
+        super(nome, 0);
         this.id = id;
-        switch (id) {
-            case 1:
-                this.id = id;
-                this.colorear = Constantes.LARANXA;
-                this.propiedades = new HashMap<>();
-                this.maxConstructions=2;
-                break;
-
-            case 2:
-                this.id = id;
-                this.colorear = Constantes.CIAN;
-                this.maxConstructions=3;
-                break;
-
-            case 3:
-                this.id = id;
-                this.colorear = Constantes.ROSA;
-                this.maxConstructions=3;
-                break;
-
-            case 4:
-                this.id = id;
-                this.colorear = Constantes.GRIS;
-                this.maxConstructions=3;
-                break;
-
-            case 5:
-                this.id = id;
-                this.colorear = Constantes.VERMELLO;
-                this.maxConstructions=3;
-                break;
-
-            case 6:
-                this.id = id;
-                this.colorear = Constantes.AMARELO;
-                this.maxConstructions=3;
-                break;
-
-            case 7:
-                this.id = id;
-                this.colorear = Constantes.VERDE;
-                this.maxConstructions=3;
-                break;
-
-            case 8:
-                this.id = id;
-                this.colorear = Constantes.AZUL;
-                this.maxConstructions=2;
-                this.maxConstructions=3;
-                break;
-
-            default:
-                this.id = id;
-                this.colorear = Constantes.NEGRO;
-                this.maxConstructions=0;
-                break;
-
-        }
+        this.colorear = colorear;
+        this.propiedades = new ArrayList<>();
     }
 
-    //Getters e Setters
+//Getters e Setters
     public Grupo(int id) {
         this.id = id;
         this.colorear = Constantes.NEGRO;
@@ -92,11 +33,7 @@ public class Grupo extends Casilla {
         this.id = id;
     }
 
-    public int getMaxConstructions() {return this.maxConstructions;}
-    //Setter non funcional
-    public void setMaxConstructions() {return;}
-
-    public HashMap<String, Propiedade> getPropiedades() {
+    public ArrayList<Propiedade> getPropiedades() {
         return this.propiedades;
     }
 
@@ -105,38 +42,39 @@ public class Grupo extends Casilla {
     }
 
     public void setColorear(String colorear) {
-        if (colorear != null) {
-            this.colorear = colorear;
-        } else {
-            System.out.println("Erro en setColor.\n");
-        }
+        this.colorear = colorear;
     }
 
     //Metodos
+    public void engadirPropiedade(Propiedade propiedade) {
+        this.propiedades.add(propiedade);
+    }
+
+    public void eliminarPropiedade(Propiedade propiedade) {
+        this.propiedades.remove(propiedade);
+    }
+
+    public int getNSolares() {
+        return this.propiedades.size();
+    }
+
+    /*Quero ter unha serie de funcions que me calculen se podo construir nun grupo*/
+ /*Quero ter unha funcion que me calcule o numero de casas no grupo*/
     public int getNCasas() {
+
         return 0;
     }
 
-    public boolean existeMonopolio() {
-        switch (id) {
-            case 1:
-            case 8:
-                if (propiedades.size() == 2) {
-                    return true;
-                }
-                break;
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-                if (propiedades.size() == 3) {
-                    return true;
-                }
-                break;
+    /*Funcion que determina se se pode construir unha casa*/
+    public void poderConstruirCasa() {
 
-        }
+    }
+
+    /*Funcion que devolve true se un mesmo xogador posee 
+    todas as propiedades do grupo*/
+    //Falta por implementar
+    public boolean existeMonopolio() {
+
         return false;
     }
     //Fin Clase
