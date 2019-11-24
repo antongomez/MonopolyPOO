@@ -147,6 +147,20 @@ public class Solar extends Propiedade {
         return valor;
     }
 
+    @Override
+    public void calculoAlquiler() {
+        //Establecese o valor inicial do alquiler do solar
+        float valor = alquilerInicialGrupo();
+        //Sumase o valor engadido se hai monopolio
+        valor += calculoAlquilerMonopolio();
+        //Sumase o valor engadido por todas as edificacions
+        valor += calculoAlquilerEdificios();
+        //Modificase o valor do alquiler?
+        this.setAlquiler(valor);
+
+        //return valor;
+    }
+
     //Edificamos
     public void construirCasa() {
 
@@ -241,18 +255,5 @@ public class Solar extends Propiedade {
                 break;
         }
     }
-
-    @Override
-    public void calculoAlquiler() {
-        //Establecese o valor inicial do alquiler do solar
-        float valor = alquilerInicialGrupo();
-        //Sumase o valor engadido se hai monopolio
-        valor += calculoAlquilerMonopolio();
-        //Sumase o valor engadido por todas as edificacions
-        valor += calculoAlquilerEdificios();
-        //Modificase o valor do alquiler?
-        this.setAlquiler(valor);
-
-        //return valor;
-    }
+//Fin clase
 }

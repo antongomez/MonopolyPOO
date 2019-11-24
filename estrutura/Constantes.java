@@ -101,8 +101,8 @@ public class Constantes {
     public final static float CASILLA_SERVIZOS = 185; //CASILLA_SERVIZOS = VALOR_VOLTA * (3f / 4f)
 
     //Constantes respectivas aos factores
-    public final static float FACTOR_SERVIZOS = VALOR_VOLTA / 200; //1.25
-    public final static float FACTOR_TRANSPORTE = VALOR_VOLTA; //250
+    public final static float ALQUILER_SERVIZO = VALOR_VOLTA / 200; //1.25
+    public final static float ALQUILER_TRANSPORTE = VALOR_VOLTA; //250
 
     //Constante sair do carcere
     public final static float SAIR_CARCERE = 60; //SAIR_CARCERE = VALOR_VOLTA / 4
