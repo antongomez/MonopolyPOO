@@ -328,10 +328,26 @@ public class Xogador {
     private float pagoTasasEImportos;
     private float pagoDeAlquileres;
     private float cobroDeAlquileres;
-    private float pasarPorSalida;
+    private float pasarPorSaida;
     private float premiosInversionsOBote;
 
     //Getters e Setters
+    public Avatar getAvatar() {
+        return this.avatar;
+    }
+
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getNome() {
+        return this.nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public float getFortuna() {
         return this.fortuna;
     }
@@ -344,8 +360,82 @@ public class Xogador {
         this.fortuna += valor;
     }
 
+    public ArrayList<Propiedade> getPropiedades() {
+        return this.propiedades;
+    }
+
+    public void engadirPropiedade(Propiedade propiedade) {
+        this.propiedades.add(propiedade);
+    }
+
+    public void eliminarPropiedade(Propiedade propiedade) {
+        this.propiedades.remove(propiedade);
+    }
+
+    public int getNVoltas() {
+        return this.nVoltas;
+    }
+
+    public void setNVoltas(int nVoltas) {
+        this.nVoltas = nVoltas;
+    }
+
+    public float getCartosInvertidos() {
+        return cartosInvertidos;
+    }
+
+    public void setCartosInvertidos(float cartosInvertidos) {
+        this.cartosInvertidos = cartosInvertidos;
+    }
+
+    public float getPagoTasasEImportos() {
+        return pagoTasasEImportos;
+    }
+
+    public void setPagoTasasEImportos(float pagoTasasEImportos) {
+        this.pagoTasasEImportos = pagoTasasEImportos;
+    }
+
+    public float getPagoDeAlquileres() {
+        return pagoDeAlquileres;
+    }
+
+    public void setPagoDeAlquileres(float pagoDeAlquileres) {
+        this.pagoDeAlquileres = pagoDeAlquileres;
+    }
+
+    public float getCobroDeAlquileres() {
+        return cobroDeAlquileres;
+    }
+
+    public void setCobroDeAlquileres(float cobroDeAlquileres) {
+        this.cobroDeAlquileres = cobroDeAlquileres;
+    }
+
+    public float getPasarPorSaida() {
+        return pasarPorSaida;
+    }
+
+    public void setPasarPorSaida(float pasarPorSaida) {
+        this.pasarPorSaida = pasarPorSaida;
+    }
+
+    public float getPremiosInversionsOBote() {
+        return premiosInversionsOBote;
+    }
+
+    public void setPremiosInversionsOBote(float premiosInversionsOBote) {
+        this.premiosInversionsOBote = premiosInversionsOBote;
+    }
+
+    //Metodos
     public float cartosGastados() {
         return cartosInvertidos + pagoTasasEImportos + pagoDeAlquileres;
     }
 
+    //Metodo para sumar voltas
+    public void sumarVolta() {
+        this.nVoltas++;
+    }
+//Fin Clase
 }
