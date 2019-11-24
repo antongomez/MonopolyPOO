@@ -4,8 +4,10 @@ Non deberían ter posicion todas as casillas?
 Bou pasar a clase nai ese atributo.
 
 
-Un xogador vai poder construir se ten todo o grupo ou se 
-caeu dúas veces nesa casilla e xa a ten. Polo tanto:
-- Precisamos un contador e non sei se facelo no xogador ou na casilla.
+- Se podes revisa o set posición de avatares porque non teño claro
+que sexa así. Os movementos dos avatares non os toquei-
 
-POLO DE AGORA DEIXOO COMO ESTABA FUNCIONANDO NA ANTERIOR ENTREGA
+____________________
+XOGADOR
+
+- Non pasai nada do que ten que ver co carcere e demáis 

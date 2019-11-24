@@ -50,6 +50,7 @@ public abstract class Casilla {
         return avatares;
     }
 
+
     public void engadirAvatar(Avatar avatar) {
 
         if (avatar != null) {

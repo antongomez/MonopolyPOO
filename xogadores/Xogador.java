@@ -2,10 +2,11 @@ package xogadores;
 
 import estrutura.Casilla;
 import estrutura.Constantes;
+import estrutura.Propiedade;
 import estrutura.Taboleiro;
 import xogadores.Avatar;
 import java.util.ArrayList;
-
+/*
 public class Xogador {
 
     private Avatar avatar;
@@ -313,4 +314,25 @@ public class Xogador {
         }
 
     }
+}
+*/
+
+public class Xogador{
+    private Avatar avatar;
+    private String nome;
+    private float fortuna;
+    private ArrayList<Propiedade> propiedades;
+    private int nVoltas;
+    private float cartosInvertidos;
+    private float pagoTasasEImportos;
+    private float pagoDeAlquileres;
+    private float cobroDeAlquileres;
+    private float pasarPorSalida;
+    private float premiosInversionsOBote;
+
+    public float cartosGastados()
+    {
+       return  cartosInvertidos + pagoTasasEImportos + pagoDeAlquileres;
+    }
+
 }

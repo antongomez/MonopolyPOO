@@ -34,9 +34,6 @@ public abstract class Edificio {
                 break;
         }
 
-
-
-
     }
 
     //public abstract void construir(Solar solar);
