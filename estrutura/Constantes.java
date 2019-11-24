@@ -29,15 +29,59 @@ public class Constantes {
     public final static int MAXCONS_3 = 15; //de tres casillas
 
     //Constantes valores solares
-    public final static float CASILLA_GRUPO1 = GRUPO1 / 2; //100
-    public final static float CASILLA_GRUPO2 = GRUPO2 / 3; //110
-    public final static float CASILLA_GRUPO3 = GRUPO3 / 3; //140
-    public final static float CASILLA_GRUPO4 = GRUPO4 / 3; //180
-    public final static float CASILLA_GRUPO5 = GRUPO5 / 3; //230
-    public final static float CASILLA_GRUPO6 = GRUPO6 / 3; //300
-    public final static float CASILLA_GRUPO7 = GRUPO7 / 3; //400
-    public final static float CASILLA_GRUPO8 = GRUPO8 / 2; //750
+    public final static float CASILLA_G1 = GRUPO1 / 2; //100
+    public final static float CASILLA_G2 = GRUPO2 / 3; //110
+    public final static float CASILLA_G3 = GRUPO3 / 3; //140
+    public final static float CASILLA_G4 = GRUPO4 / 3; //180
+    public final static float CASILLA_G5 = GRUPO5 / 3; //230
+    public final static float CASILLA_G6 = GRUPO6 / 3; //300
+    public final static float CASILLA_G7 = GRUPO7 / 3; //400
+    public final static float CASILLA_G8 = GRUPO8 / 2; //750
 
+    //Factores dos edificios
+    public final static float CASA = 0.6f;
+    public final static float HOTEL = 0.6f;
+    public final static float PISCINA = 0.4f;
+    public final static float PISTA = 1.25f;
+
+    //Constantes para o valor dos edificios
+    public final static float CASA_G1 = CASILLA_G1 * CASA; //60
+    public final static float CASA_G2 = CASILLA_G2 * CASA; //66
+    public final static float CASA_G3 = CASILLA_G3 * CASA; //84
+    public final static float CASA_G4 = CASILLA_G4 * CASA; //108
+    public final static float CASA_G5 = CASILLA_G5 * CASA; //138
+    public final static float CASA_G6 = CASILLA_G6 * CASA; //180
+    public final static float CASA_G7 = CASILLA_G7 * CASA; //240
+    public final static float CASA_G8 = CASILLA_G8 * CASA; //450
+
+    public final static float HOTEL_G1 = CASILLA_G1 * HOTEL; //60
+    public final static float HOTEL_G2 = CASILLA_G2 * HOTEL; //66
+    public final static float HOTEL_G3 = CASILLA_G3 * HOTEL; //84
+    public final static float HOTEL_G4 = CASILLA_G4 * HOTEL; //108
+    public final static float HOTEL_G5 = CASILLA_G5 * HOTEL; //138
+    public final static float HOTEL_G6 = CASILLA_G6 * HOTEL; //180
+    public final static float HOTEL_G7 = CASILLA_G7 * HOTEL; //240
+    public final static float HOTEL_G8 = CASILLA_G8 * HOTEL; //450
+
+    public final static float PISCINA_G1 = CASILLA_G1 * PISCINA; //40
+    public final static float PISCINA_G2 = CASILLA_G2 * PISCINA; //44
+    public final static float PISCINA_G3 = CASILLA_G3 * PISCINA; //56
+    public final static float PISCINA_G4 = CASILLA_G4 * PISCINA; //72
+    public final static float PISCINA_G5 = CASILLA_G5 * PISCINA; //92
+    public final static float PISCINA_G6 = CASILLA_G6 * PISCINA; //120
+    public final static float PISCINA_G7 = CASILLA_G7 * PISCINA; //160
+    public final static float PISCINA_G8 = CASILLA_G8 * PISCINA; //300
+
+    public final static float PISTA_G1 = CASILLA_G1 * PISTA; //125
+    public final static float PISTA_G2 = CASILLA_G2 * PISTA; //137.5
+    public final static float PISTA_G3 = CASILLA_G3 * PISTA; //175
+    public final static float PISTA_G4 = CASILLA_G4 * PISTA; //225
+    public final static float PISTA_G5 = CASILLA_G5 * PISTA; //287.5
+    public final static float PISTA_G6 = CASILLA_G6 * PISTA; //375
+    public final static float PISTA_G7 = CASILLA_G7 * PISTA; //500
+    public final static float PISTA_G8 = CASILLA_G8 * PISTA; //937.5
+
+    //Constantes valores dos alquileres dos solares
     public final static float ACASILLA_GRUPO1 = (float) ((GRUPO1 / 2) * 0.1); //10
     public final static float ACASILLA_GRUPO2 = (float) ((GRUPO2 / 3) * 0.1); //11
     public final static float ACASILLA_GRUPO3 = (float) ((GRUPO3 / 3) * 0.1); //14

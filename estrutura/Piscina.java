@@ -3,10 +3,10 @@ package estrutura;
 import xogadores.Xogador;
 
 public class Piscina extends Edificio {
-    final static String tipo= "Pisina";
+
 
     public Piscina(Solar solar) {
-        super(solar);
+        super(solar, "Piscina-" + solar.getPosicion() + solar.getNPiscinas(), 0.4f);
     }
 
     @Override

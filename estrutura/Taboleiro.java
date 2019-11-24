@@ -38,54 +38,54 @@ public class Taboleiro {
             //Creamos o lado Sur
             casillas.add(ladoSur);
             ladoSur.add(new Casilla("Saida", "Especial", 0, grupo0));
-            ladoSur.add(new Casilla("Santa-Cruz", "Solar", 1, Constantes.CASILLA_GRUPO1, grupo1, banca, Constantes.ACASILLA_GRUPO1));
+            ladoSur.add(new Casilla("Santa-Cruz", "Solar", 1, Constantes.CASILLA_G1, grupo1, banca, Constantes.ACASILLA_GRUPO1));
             ladoSur.add(new Casilla("Caixa-1", "Caixa e Sorte", 2, grupo9));
-            ladoSur.add(new Casilla("Arteixo", "Solar", 3, Constantes.CASILLA_GRUPO1, grupo1, banca, Constantes.ACASILLA_GRUPO1));
+            ladoSur.add(new Casilla("Arteixo", "Solar", 3, Constantes.CASILLA_G1, grupo1, banca, Constantes.ACASILLA_GRUPO1));
             ladoSur.add(new Casilla("IRPF", "Impostos", 4, grupo10));
             ladoSur.add(new Casilla("Autobus", "Transporte", 5, 0, grupo12, banca));
-            ladoSur.add(new Casilla("Meanho", "Solar", 6, Constantes.CASILLA_GRUPO2, grupo2, banca, Constantes.ACASILLA_GRUPO2));
+            ladoSur.add(new Casilla("Meanho", "Solar", 6, Constantes.CASILLA_G2, grupo2, banca, Constantes.ACASILLA_GRUPO2));
             ladoSur.add(new Casilla("Sorte-1", "Caixa e Sorte", 7, grupo9));
-            ladoSur.add(new Casilla("Corrubedo", "Solar", 8, Constantes.CASILLA_GRUPO2, grupo2, banca, Constantes.ACASILLA_GRUPO2));
-            ladoSur.add(new Casilla("Lugo", "Solar", 9, Constantes.CASILLA_GRUPO2, grupo2, banca, Constantes.ACASILLA_GRUPO2));
+            ladoSur.add(new Casilla("Corrubedo", "Solar", 8, Constantes.CASILLA_G2, grupo2, banca, Constantes.ACASILLA_GRUPO2));
+            ladoSur.add(new Casilla("Lugo", "Solar", 9, Constantes.CASILLA_G2, grupo2, banca, Constantes.ACASILLA_GRUPO2));
 
             //Creamos o lado Oeste
             casillas.add(ladoOeste);
             ladoOeste.add(new Casilla("Carcere", "Especial", 10, grupo0));
-            ladoOeste.add(new Casilla("O-Carballinho", "Solar", 11, Constantes.CASILLA_GRUPO3, grupo3, banca, Constantes.ACASILLA_GRUPO3));
+            ladoOeste.add(new Casilla("O-Carballinho", "Solar", 11, Constantes.CASILLA_G3, grupo3, banca, Constantes.ACASILLA_GRUPO3));
             ladoOeste.add(new Casilla("SERGAS", "Servizo", 12, 0, grupo11, banca));
-            ladoOeste.add(new Casilla("Sada", "Solar", 13, Constantes.CASILLA_GRUPO3, grupo3, banca, Constantes.ACASILLA_GRUPO3));
-            ladoOeste.add(new Casilla("Mera", "Solar", 14, Constantes.CASILLA_GRUPO3, grupo3, banca, Constantes.ACASILLA_GRUPO3));
+            ladoOeste.add(new Casilla("Sada", "Solar", 13, Constantes.CASILLA_G3, grupo3, banca, Constantes.ACASILLA_GRUPO3));
+            ladoOeste.add(new Casilla("Mera", "Solar", 14, Constantes.CASILLA_G3, grupo3, banca, Constantes.ACASILLA_GRUPO3));
             ladoOeste.add(new Casilla("Lancha Motora", "Transporte", 15, 0, grupo12, banca));
-            ladoOeste.add(new Casilla("Cedofeita", "Solar", 16, Constantes.CASILLA_GRUPO4, grupo4, banca, Constantes.ACASILLA_GRUPO4));
+            ladoOeste.add(new Casilla("Cedofeita", "Solar", 16, Constantes.CASILLA_G4, grupo4, banca, Constantes.ACASILLA_GRUPO4));
             ladoOeste.add(new Casilla("Caixa-2", "Caixa e Sorte", 17, grupo9));
-            ladoOeste.add(new Casilla("Viveiro", "Solar", 18, Constantes.CASILLA_GRUPO4, grupo4, banca, Constantes.ACASILLA_GRUPO4));
-            ladoOeste.add(new Casilla("Ribadeo", "Solar", 19, Constantes.CASILLA_GRUPO4, grupo4, banca, Constantes.ACASILLA_GRUPO4));
+            ladoOeste.add(new Casilla("Viveiro", "Solar", 18, Constantes.CASILLA_G4, grupo4, banca, Constantes.ACASILLA_GRUPO4));
+            ladoOeste.add(new Casilla("Ribadeo", "Solar", 19, Constantes.CASILLA_G4, grupo4, banca, Constantes.ACASILLA_GRUPO4));
 
             //Creamos o lado Norte
             casillas.add(ladoNorte);
             ladoNorte.add(new Casilla("Parking", "Especial", 20, grupo0));
-            ladoNorte.add(new Casilla("Verin", "Solar", 21, Constantes.CASILLA_GRUPO5, grupo5, banca, Constantes.ACASILLA_GRUPO5));
+            ladoNorte.add(new Casilla("Verin", "Solar", 21, Constantes.CASILLA_G5, grupo5, banca, Constantes.ACASILLA_GRUPO5));
             ladoNorte.add(new Casilla("Sorte-2", "Caixa e Sorte", 22, grupo9));
-            ladoNorte.add(new Casilla("Cambados", "Solar", 23, Constantes.CASILLA_GRUPO5, grupo5, banca, Constantes.ACASILLA_GRUPO5));
-            ladoNorte.add(new Casilla("Tui", "Solar", 24, Constantes.CASILLA_GRUPO5, grupo5, banca, Constantes.ACASILLA_GRUPO5));
+            ladoNorte.add(new Casilla("Cambados", "Solar", 23, Constantes.CASILLA_G5, grupo5, banca, Constantes.ACASILLA_GRUPO5));
+            ladoNorte.add(new Casilla("Tui", "Solar", 24, Constantes.CASILLA_G5, grupo5, banca, Constantes.ACASILLA_GRUPO5));
             ladoNorte.add(new Casilla("Iate", "Transporte", 25, 0, grupo12, banca));
-            ladoNorte.add(new Casilla("O-Caurel", "Solar", 26, Constantes.CASILLA_GRUPO6, grupo6, banca, Constantes.ACASILLA_GRUPO6));
-            ladoNorte.add(new Casilla("A-Guarda", "Solar", 27, Constantes.CASILLA_GRUPO6, grupo6, banca, Constantes.ACASILLA_GRUPO6));
+            ladoNorte.add(new Casilla("O-Caurel", "Solar", 26, Constantes.CASILLA_G6, grupo6, banca, Constantes.ACASILLA_GRUPO6));
+            ladoNorte.add(new Casilla("A-Guarda", "Solar", 27, Constantes.CASILLA_G6, grupo6, banca, Constantes.ACASILLA_GRUPO6));
             ladoNorte.add(new Casilla("EnsinoPublico", "Servizo", 28, 0, grupo11, banca));
-            ladoNorte.add(new Casilla("Ourense", "Solar", 29, Constantes.CASILLA_GRUPO6, grupo6, banca, Constantes.ACASILLA_GRUPO6));
+            ladoNorte.add(new Casilla("Ourense", "Solar", 29, Constantes.CASILLA_G6, grupo6, banca, Constantes.ACASILLA_GRUPO6));
 
             //Creamos o lado Este
             casillas.add(ladoEste);
             ladoEste.add(new Casilla("IrCarcere", "Especial", 30, grupo0));
-            ladoEste.add(new Casilla("Santiago", "Solar", 31, Constantes.CASILLA_GRUPO7, grupo7, banca, Constantes.ACASILLA_GRUPO7));
-            ladoEste.add(new Casilla("Sanxenxo", "Solar", 32, Constantes.CASILLA_GRUPO7, grupo7, banca, Constantes.ACASILLA_GRUPO7));
+            ladoEste.add(new Casilla("Santiago", "Solar", 31, Constantes.CASILLA_G7, grupo7, banca, Constantes.ACASILLA_GRUPO7));
+            ladoEste.add(new Casilla("Sanxenxo", "Solar", 32, Constantes.CASILLA_G7, grupo7, banca, Constantes.ACASILLA_GRUPO7));
             ladoEste.add(new Casilla("Caixa-3", "Caixa e Sorte", 33, grupo9));
-            ladoEste.add(new Casilla("Pontevedra", "Solar", 34, Constantes.CASILLA_GRUPO7, grupo7, banca, Constantes.ACASILLA_GRUPO7));
+            ladoEste.add(new Casilla("Pontevedra", "Solar", 34, Constantes.CASILLA_G7, grupo7, banca, Constantes.ACASILLA_GRUPO7));
             ladoEste.add(new Casilla("Jet Privado", "Transporte", 35, 0, grupo12, banca));
             ladoEste.add(new Casilla("Sorte-3", "Caixa e Sorte", 36, grupo9));
-            ladoEste.add(new Casilla("Vigo", "Solar", 37, Constantes.CASILLA_GRUPO8, grupo8, banca, Constantes.ACASILLA_GRUPO8));
+            ladoEste.add(new Casilla("Vigo", "Solar", 37, Constantes.CASILLA_G8, grupo8, banca, Constantes.ACASILLA_GRUPO8));
             ladoEste.add(new Casilla("SubidaPension", "Impostos", 38, grupo10));
-            ladoEste.add(new Casilla("A Corunha", "Solar", 39, Constantes.CASILLA_GRUPO8, grupo8, banca, Constantes.ACASILLA_GRUPO8));
+            ladoEste.add(new Casilla("A Corunha", "Solar", 39, Constantes.CASILLA_G8, grupo8, banca, Constantes.ACASILLA_GRUPO8));
 
             //Calculamos o valor das casillas de servizos e transportes.
             for (int i = 0; i < 4; i++) {

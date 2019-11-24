@@ -6,6 +6,7 @@ import estrutura.Propiedade;
 import estrutura.Taboleiro;
 import xogadores.Avatar;
 import java.util.ArrayList;
+
 /*
 public class Xogador {
 
@@ -315,9 +316,9 @@ public class Xogador {
 
     }
 }
-*/
+ */
+public class Xogador {
 
-public class Xogador{
     private Avatar avatar;
     private String nome;
     private float fortuna;
@@ -330,9 +331,21 @@ public class Xogador{
     private float pasarPorSalida;
     private float premiosInversionsOBote;
 
-    public float cartosGastados()
-    {
-       return  cartosInvertidos + pagoTasasEImportos + pagoDeAlquileres;
+    //Getters e Setters
+    public float getFortuna() {
+        return this.fortuna;
+    }
+
+    public void setFortuna(float fortuna) {
+        this.fortuna = fortuna;
+    }
+
+    public void modificarFortuna(float valor) {
+        this.fortuna += valor;
+    }
+
+    public float cartosGastados() {
+        return cartosInvertidos + pagoTasasEImportos + pagoDeAlquileres;
     }
 
 }
