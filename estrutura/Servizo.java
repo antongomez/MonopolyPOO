@@ -13,8 +13,8 @@ import xogadores.*;
  */
 public class Servizo extends Propiedade {
 
-    public Servizo(String nome, int posicion, Xogador xogador, float valor) {
-        super(nome, posicion, xogador, valor);
+    public Servizo(String nome, int posicion, float valor, Grupo grupo, Xogador xogador) {
+        super(nome, grupo, posicion, xogador, valor);
     }
 
     //Métodos

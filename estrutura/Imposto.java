@@ -10,5 +10,8 @@ package estrutura;
  * @author Anton
  */
 public class Imposto extends Casilla{
-    
+
+
+    public Imposto(String nome, int posicion)
+    {super(nome, posicion);}
 }

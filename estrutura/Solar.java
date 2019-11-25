@@ -6,10 +6,11 @@ import java.util.ArrayList;
 
 public class Solar extends Propiedade {
 
+
     private ArrayList<Edificio> edificios;
 
-    public Solar(String nome, int posicion, Xogador xogador, float valor) {
-        super(nome, posicion, xogador, valor);
+    public Solar(String nome, int posicion, float valor, Grupo grupo, Xogador dono) {
+        super(nome, grupo, posicion, dono, valor);
         edificios = new ArrayList<>();
     }
 

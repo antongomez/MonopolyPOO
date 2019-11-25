@@ -91,11 +91,11 @@ public abstract class Casilla {
         return avatarescasilla;
     }
 
-    /*@Override
+    @Override
     public String toString() {
         String nomeaux = String.format("%-13s", this.nome);
         String avataresCasilla = String.format("%6s", imprimirAvatares());
         String texto = "| " + nomeaux + " " + avataresCasilla + "|";
         return texto;
-    }*/
+    }
 }

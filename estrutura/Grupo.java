@@ -11,12 +11,40 @@ public class Grupo extends Casilla {
     public Grupo() {
     }
 
-    public Grupo(String nome, int id, String colorear) {
+    /*public Grupo(String nome, int id, String colorear) {
         super(nome, 0);
         this.id = id;
         this.colorear = colorear;
         this.propiedades = new ArrayList<>();
+    }*/
+
+    public Grupo(int id, String colorear) {
+        super(colorear, 0);
+        this.id = id;
+        switch (colorear)
+        {
+            case"VERMELLO": this.colorear = Constantes.VERMELLO;
+                break;
+            case"VERDE": this.colorear = Constantes.VERDE;
+                break;
+            case"AMARELO": this.colorear = Constantes.AMARELO;
+                break;
+            case"LARANXA": this.colorear = Constantes.LARANXA;
+                break;
+            case"AZUL": this.colorear = Constantes.AZUL;
+                break;
+            case"ROSA": this.colorear = Constantes.ROSA;
+                break;
+            case"CIAN": this.colorear = Constantes.CIAN;
+                break;
+            case"GRIS": this.colorear = Constantes.GRIS;
+                break;
+            case"RESET": this.colorear = Constantes.NEGRO;
+                break;
+        }
+        this.propiedades = new ArrayList<>();
     }
+
 
 //Getters e Setters
     public Grupo(int id) {

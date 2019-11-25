@@ -14,10 +14,11 @@ public abstract class Propiedade extends Casilla {
     public Propiedade() {
     }
 
-    public Propiedade(String nome, int posicion, Xogador dono, float valor) {
+    public Propiedade(String nome, Grupo grupo, int posicion, Xogador dono, float valor) {
         super(nome, posicion);
-        //this.posicion = posicion;
+        this.grupo = grupo;
         this.valor = valor;
+        this.dono = dono;
     }
 
     public int getPosicion() {
@@ -80,4 +81,11 @@ public abstract class Propiedade extends Casilla {
 
     public abstract void calculoAlquiler();
 
+
+    public String toString() {
+            String nomeaux = String.format("%-13s", this.getNome());
+            String avatares = String.format("%6s", imprimirAvatares());
+            String texto = this.grupo.getColorear() + "| " + nomeaux + " " + avatares + "|";
+            return texto;
+        }
 }

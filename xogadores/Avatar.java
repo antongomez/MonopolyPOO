@@ -215,7 +215,7 @@ public abstract class Avatar{
 
     public void setPosicion(Casilla posicion) {
         if (posicion != null) {
-            posicion.engadirAvatar();
+            posicion.engadirAvatar(this);
             this.posicion = posicion;
         } else {
             System.out.println("ERRO en setPosicion.\n");
