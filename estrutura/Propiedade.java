@@ -1,4 +1,3 @@
-
 package estrutura;
 
 import xogadores.*;
@@ -80,13 +79,20 @@ public abstract class Propiedade extends Casilla {
         novoDono.modificarFortuna(-this.valor);
     }
 
+    public void actualizarValor() {
+        //Comprobamos que o dono da propiedade sexa a banca.
+        if (this.dono.getNome().equals("Banca")) {
+            this.valor *= 1.05;
+        }
+    }
+
     public abstract void calculoAlquiler();
 
-
+    @Override
     public String toString() {
-            String nomeaux = String.format("%-13s", this.getNome());
-            String avatares = String.format("%6s", imprimirAvatares());
-            String texto = this.grupo.getColorear() + "| " + nomeaux + " " + avatares + "|";
-            return texto;
-        }
+        String nomeaux = String.format("%-13s", this.getNome());
+        String avatares = String.format("%6s", imprimirAvatares());
+        String texto = this.grupo.getColorear() + "| " + nomeaux + " " + avatares + "|";
+        return texto;
+    }
 }
