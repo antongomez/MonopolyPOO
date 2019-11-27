@@ -1,3 +1,4 @@
+
 package estrutura;
 
 import xogadores.*;
@@ -5,7 +6,6 @@ import xogadores.*;
 import java.util.ArrayList;
 
 public class Solar extends Propiedade {
-
 
     private ArrayList<Edificio> edificios;
 
@@ -27,6 +27,7 @@ public class Solar extends Propiedade {
         edificios.remove(edificio);
     }
 
+    //Metodo que devolve un ArrayList coas casas do solar
     public ArrayList<Casa> getCasas() {
         ArrayList<Casa> casas = new ArrayList<>();
         for (Edificio casa : edificios) {
@@ -37,10 +38,12 @@ public class Solar extends Propiedade {
         return casas;
     }
 
+    //Devolve o numero de casas do solar. Usa getCasas.
     public int getNCasas() {
         return this.getCasas().size();
     }
 
+    //Devolve un ArrayList cos hoteis so solar
     public ArrayList<Hotel> getHoteis() {
         ArrayList<Hotel> hoteis = new ArrayList<>();
         for (Edificio hotel : edificios) {
@@ -51,6 +54,7 @@ public class Solar extends Propiedade {
         return hoteis;
     }
 
+    //Devolve o numero de hoteis do solar. Usa getHoteis.
     public int getNHoteis() {
         return this.getHoteis().size();
     }
@@ -83,7 +87,8 @@ public class Solar extends Propiedade {
         return this.getPistas().size();
     }
 
-    public float alquilerInicialGrupo() {
+    //Metodo que inicializa o valor do alquiler
+    private float alquilerInicialGrupo() {
         float valor = 0;
 
         switch (this.getGrupo().getId()) {
@@ -116,6 +121,7 @@ public class Solar extends Propiedade {
         return valor;
     }
 
+    //Metodo que calcula o alquiler en funcion de se hai ou non monopolio
     public float calculoAlquilerMonopolio() {
         if (this.getGrupo().existeMonopolio()) {
             return this.alquilerInicialGrupo();
@@ -123,6 +129,7 @@ public class Solar extends Propiedade {
         return 0;
     }
 
+    //Calcula o alquiler en funcion do numero de casas
     public float calculoAlquilerEdificios() {
         float valor = 0;
 
@@ -148,6 +155,7 @@ public class Solar extends Propiedade {
         return valor;
     }
 
+    //Metodo que calcula o alquiler;
     @Override
     public void calculoAlquiler() {
         //Establecese o valor inicial do alquiler do solar
@@ -162,96 +170,116 @@ public class Solar extends Propiedade {
         //return valor;
     }
 
-    //Edificamos
+    /*Metodo que devolve true se se pode edificar unha casa en funcion da 
+    restricion da casilla e do grupo.
+     */
     public boolean poderEdificarCasa() {
-        return (this.getNCasas() < 4);
+        return ((this.getNCasas() < 4)
+                && (this.getGrupo().poderConstruirCasa()));
+    }
+
+    /*Metodo que devolve true se se pode edificar unha casa en funcion da 
+    restricion da casilla e do grupo.
+     */
+    public boolean poderEdificarHotel() {
+        return ((this.getNCasas() == 4)
+                && (this.getGrupo().poderConstruirHotel()));
+    }
+
+    /*Metodo que devolve true se se pode edificar unha piscina en funcion da 
+    restricion da casilla e do grupo. Unha piscina so se pode contruir con
+    duas casas e un hotel como minimo.
+     */
+    public boolean poderEdificarPiscina() {
+        //Consideramos que un hotel son 5 casas
+        int unidadesConstrucion = this.getNCasas() + this.getNHoteis() * 5;
+
+        return ((unidadesConstrucion >= 7)
+                && (this.getGrupo().poderConstruirPiscina()));
+    }
+
+    /*Metodo que devolve true se se pode edificar unha pista en funcion da 
+    restricion da casilla e do grupo. Unha pista so se pode contruir se se
+    construiron dous hoteis na casilla.
+     */
+    public boolean poderEdificarPista() {
+        return ((this.getNHoteis() >= 2)
+                && (this.getGrupo().poderConstruirPista()));
     }
 
     public void Edificar(String tipo) {
         switch (tipo) {
             case "Casa": {
-                if (((Propiedade) this).getDono().getFortuna() > this.getValor() * 0.6) {
-                    //Comprobamos que non teña máis de catro casas
-                    if (this.getNCasas() < 3) {
-                        if ((this.getNHoteis() < this.getGrupo().getNSolares()) || (this.getNCasas() < this.getGrupo().getNSolares())) {
-                            //Construimos
-                            this.engadirEdificio(new Casa(this));
+                if (((Propiedade) this).getDono().getFortuna() //facer un metodo en xogador que comprobe isto
+                        > this.getValor() * Constantes.CASA) {
+                    if (this.poderEdificarCasa()) {
 
-                            //Cobramos
-                            this.getDono().modificarFortuna(-this.getValor() * Constantes.CASA);
+                        //Construimos
+                        this.engadirEdificio(new Casa(this));
 
-                        } else {
-                            System.out.println("Ten o maximo de casas para este grupo.");
-                        }
-                    } else {
-                        System.out.println("Ten xa catro casas neste solar, debe construir un hotel.");
-                    }
+                        //Cobramos
+                        this.getDono().modificarFortuna(
+                                -this.getValor() * Constantes.CASA);
+                    } //Excepcion
                 } else {
-                    System.out.println("O dono deste solar non ten suficientes GM.");
+                    System.out.println("O dono deste solar non ten"
+                            + " suficientes GM.");
                 }
             }
             break;
             case "Hotel": {
-                if (((Propiedade) this).getDono().getFortuna() > this.getValor() * 0.6) {
-                    if (this.getNHoteis() < this.getGrupo().getNSolares()) {
-                        if (this.getNCasas() > 3) {
-                            //Construimos
-                            this.engadirEdificio(new Hotel(this));
+                if (((Propiedade) this).getDono().getFortuna()
+                        > this.getValor() * 0.6) {
+                    if (this.poderEdificarHotel()) {
+                        //Construimos
+                        this.engadirEdificio(new Hotel(this));
 
-                            //Cobramos
-                            this.getDono().modificarFortuna(-this.getValor() * Constantes.HOTEL);
-                        } else {
-                            System.out.println("Non ten suficientes casas para construir un hotel.");
-                        }
-                    } else {
-                        System.out.println("Ten o maximo de hoteis neste grupo.");
-                    }
+                        //Cobramos
+                        this.getDono().modificarFortuna(
+                                -this.getValor() * Constantes.HOTEL);
+                    } //Excepcion
                 } else {
-                    System.out.println("O dono deste solar non ten suficientes GM.");
+                    System.out.println("O dono deste solar non ten"
+                            + " suficientes GM.");
                 }
             }
             break;
             case "Piscina": {
-                if (((Propiedade) this).getDono().getFortuna() > this.getValor() * 0.4) {
-                    if (this.getNPiscinas() < this.getGrupo().getNSolares()) {
-                        if ((this.getNPiscinas() > 0) || (this.getNCasas() > 1)) {
-                            //Construimos
-                            this.engadirEdificio(new Piscina(this));
+                if (((Propiedade) this).getDono().getFortuna()
+                        > this.getValor() * 0.4) {
+                    if (this.poderEdificarPiscina()) {
+                        //Construimos
+                        this.engadirEdificio(new Piscina(this));
 
-                            //Cobramos
-                            this.getDono().modificarFortuna(-this.getValor() * Constantes.PISCINA);
-                        } else {
-                            System.out.println("Non debe ter duas un hotel e duas casas");
-                        }
-                    } else {
-                        System.out.println("Ten o maximo de piscinas neste grupo.");
+                        //Cobramos
+                        this.getDono().modificarFortuna(
+                                -this.getValor() * Constantes.PISCINA);
                     }
                 } else {
-                    System.out.println("O dono deste solar non ten suficientes GM.");
+                    System.out.println("O dono deste solar non ten"
+                            + " suficientes GM.");
                 }
             }
             break;
             case "Pista": {
-                if (((Propiedade) this).getDono().getFortuna() > this.getValor() * 10.) {
-                    if (this.getNPistas() < this.getGrupo().getNSolares()) {
-                        if (this.getNHoteis() > 1) {
-                            //Construimos
-                            this.engadirEdificio(new Pista(this));
+                if (((Propiedade) this).getDono().getFortuna()
+                        > this.getValor() * 10.) {
+                    if (this.poderEdificarPista()) {
+                        //Construimos
+                        this.engadirEdificio(new Pista(this));
 
-                            //Cobramos
-                            this.getDono().modificarFortuna(-this.getValor() * Constantes.PISTA);
-                        } else {
-                            System.out.println("Debe ter dous hoteis para poder construir unha pista de deporte");
-                        }
-                    } else {
-                        System.out.println("Ten o maximo de pistas neste grupo.");
+                        //Cobramos
+                        this.getDono().modificarFortuna(
+                                -this.getValor() * Constantes.PISTA);
                     }
                 } else {
-                    System.out.println("O dono deste solar non ten suficientes GM.");
+                    System.out.println("O dono deste solar non ten"
+                            + " suficientes GM.");
                 }
             }
             break;
             default:
+                //Excepcion
                 System.out.println("Debe introducir un tipo edificio valido.");
                 break;
         }

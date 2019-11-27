@@ -1,16 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package estrutura;
 
 import xogadores.*;
 
-/**
- *
- * @author Anton
- */
 public class Servizo extends Propiedade {
 
     public Servizo(String nome, int posicion, float valor, Grupo grupo, Xogador xogador) {

@@ -1,5 +1,7 @@
 package estrutura;
 
+import xogadores.*;
+
 import java.util.ArrayList;
 
 public class Grupo extends Casilla {
@@ -17,34 +19,40 @@ public class Grupo extends Casilla {
         this.colorear = colorear;
         this.propiedades = new ArrayList<>();
     }*/
-
     public Grupo(int id, String colorear) {
         super(colorear, 0);
         this.id = id;
-        switch (colorear)
-        {
-            case"VERMELLO": this.colorear = Constantes.VERMELLO;
+        switch (colorear) {
+            case "VERMELLO":
+                this.colorear = Constantes.VERMELLO;
                 break;
-            case"VERDE": this.colorear = Constantes.VERDE;
+            case "VERDE":
+                this.colorear = Constantes.VERDE;
                 break;
-            case"AMARELO": this.colorear = Constantes.AMARELO;
+            case "AMARELO":
+                this.colorear = Constantes.AMARELO;
                 break;
-            case"LARANXA": this.colorear = Constantes.LARANXA;
+            case "LARANXA":
+                this.colorear = Constantes.LARANXA;
                 break;
-            case"AZUL": this.colorear = Constantes.AZUL;
+            case "AZUL":
+                this.colorear = Constantes.AZUL;
                 break;
-            case"ROSA": this.colorear = Constantes.ROSA;
+            case "ROSA":
+                this.colorear = Constantes.ROSA;
                 break;
-            case"CIAN": this.colorear = Constantes.CIAN;
+            case "CIAN":
+                this.colorear = Constantes.CIAN;
                 break;
-            case"GRIS": this.colorear = Constantes.GRIS;
+            case "GRIS":
+                this.colorear = Constantes.GRIS;
                 break;
-            case"RESET": this.colorear = Constantes.NEGRO;
+            case "RESET":
+                this.colorear = Constantes.NEGRO;
                 break;
         }
         this.propiedades = new ArrayList<>();
     }
-
 
 //Getters e Setters
     public Grupo(int id) {
@@ -86,23 +94,132 @@ public class Grupo extends Casilla {
         return this.propiedades.size();
     }
 
-    /*Quero ter unha serie de funcions que me calculen se podo construir nun grupo*/
- /*Quero ter unha funcion que me calcule o numero de casas no grupo*/
+    /*Metodo que calcula o numero de casas totais do grupo*/
     public int getNCasas() {
-
+        int nCasas = 0;
+        if (!this.propiedades.isEmpty()) {
+            if (this.propiedades.get(0) instanceof Solar) {
+                for (Propiedade propiedade : this.propiedades) {
+                    nCasas += ((Solar) propiedade).getNCasas();
+                }
+                return nCasas;
+            }
+        }
+        //Introducir excepcion
         return 0;
     }
 
-    /*Funcion que determina se se pode construir unha casa*/
-    public void poderConstruirCasa() {
-
+    /*Metodo que calcula o numero de hoteis totais do grupo*/
+    public int getNHoteis() {
+        int nHoteis = 0;
+        if (!this.propiedades.isEmpty()) {
+            if (this.propiedades.get(0) instanceof Solar) {
+                for (Propiedade propiedade : this.propiedades) {
+                    nHoteis += ((Solar) propiedade).getNHoteis();
+                }
+                return nHoteis;
+            }
+        }
+        //Introducir excepcion
+        return 0;
     }
 
-    /*Funcion que devolve true se un mesmo xogador posee 
-    todas as propiedades do grupo*/
-    //Falta por implementar
-    public boolean existeMonopolio() {
+    /*Metodo que calcula o numero de piscinas totais do grupo*/
+    public int getNPiscinas() {
+        int nPiscinas = 0;
+        if (!this.propiedades.isEmpty()) {
+            if (this.propiedades.get(0) instanceof Solar) {
+                for (Propiedade propiedade : this.propiedades) {
+                    nPiscinas += ((Solar) propiedade).getNPiscinas();
+                }
+                return nPiscinas;
+            }
+        }
+        //Introducir excepcion
+        return 0;
+    }
 
+    /*Metodo que calcula o numero de pistas totais do grupo*/
+    public int getNPistas() {
+        int nPistas = 0;
+        if (!this.propiedades.isEmpty()) {
+            if (this.propiedades.get(0) instanceof Solar) {
+                for (Propiedade propiedade : this.propiedades) {
+                    nPistas += ((Solar) propiedade).getNPistas();
+                }
+                return nPistas;
+            }
+        }
+        //Introducir excepcion
+        return 0;
+    }
+
+    /*Funcion que determina se se pode construir unha casa coa restricion de
+    grupo. O maximo de casas son 15 (12 + 3) ou 10 (8 + 2).
+     */
+    public boolean poderConstruirCasa() {
+        if (this.getNCasas() + this.getNHoteis() * 4 == getNSolares() * 5) {
+            return false;
+        } else if (this.getNCasas() + this.getNHoteis() * 4 > getNSolares() * 5) {
+            //Excepcion, algo vai mal.
+        }
+        return true;
+    }
+
+    /*Funcion que determina se se pode construir un hotel coa restricion de
+    grupo.
+     */
+    public boolean poderConstruirHotel() {
+        if (this.getNHoteis() == getNSolares()) { //Xa hai 3 hoteis no grupo
+            return false;
+        } else if (this.getNHoteis() > getNSolares()) { //hai mais de tres hoteis no grupo
+            //Excepcion, algo vai mal.
+        }
+        return true; //Hai menos de tres hoteis no grupo
+    }
+
+    /*Funcion que determina se se pode construir unha piscina coa restricion de
+    grupo.
+     */
+    public boolean poderConstruirPiscina() {
+        if (this.getNPiscinas() == getNSolares()) {
+            return false;
+        } else if (this.getNPiscinas() > getNSolares()) { 
+            //Excepcion, algo vai mal.
+        }
+        return true;
+    }
+
+    /*Funcion que determina se se pode construir unha pista coa restricion de
+    grupo.
+     */
+    public boolean poderConstruirPista() {
+        if (this.getNPistas() == getNSolares()) {
+            return false;
+        } else if (this.getNPistas() > getNSolares()) { 
+            //Excepcion, algo vai mal.
+        }
+        return true;
+    }
+
+    /*Funcion que devolve true se un mesmo xogador posee
+    todas as propiedades do grupo*/
+    public boolean existeMonopolio() {
+        ArrayList<Xogador> donos = new ArrayList<>();
+        if (!this.propiedades.isEmpty()) {
+            if (this.propiedades.get(0) instanceof Solar) {
+                for (int i = 0; i < this.propiedades.size(); i++) {
+                    donos.add(propiedades.get(i).getDono());
+                }
+                for (int i = 1; i < donos.size(); i++) {
+                    if (!(donos.get(i).equals(donos.get(i - 1)))) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        //Introducir excepcion
         return false;
     }
     //Fin Clase
