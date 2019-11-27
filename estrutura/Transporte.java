@@ -1,12 +1,11 @@
-
 package estrutura;
 
 import xogadores.*;
 
 public class Transporte extends Propiedade {
 
-    public Transporte(String nome, int posicion, float valor, Grupo grupo, Xogador xogador) {
-        super(nome, grupo, posicion, xogador, valor);
+    public Transporte(String nome, int posicion, Grupo grupo, Xogador xogador) {
+        super(nome, grupo, posicion, xogador, Constantes.CASILLA_TRANSPORTE);
     }
 
     //Métodos
@@ -50,11 +49,11 @@ public class Transporte extends Propiedade {
 
     @Override
     public void calculoAlquiler() {
-        float valor = factorTransporte(this.getDono()) * Constantes.ALQUILER_TRANSPORTE;
+        float valor = factorTransporte(this.getDono())
+                * Constantes.ALQUILER_TRANSPORTE;
 
         this.setAlquiler(valor);
 
         //return valor;
     }
-
 }

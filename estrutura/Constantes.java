@@ -97,8 +97,8 @@ public class Constantes {
     public final static float FORTUNA_INICIAL = 2000; //FORTUNA_INICIAL = SUMA_SOLARES / 3
 
     //Constantes valores transportes e servizos
-    public final static float CASILLA_TRANSPORTES = VALOR_VOLTA; //250
-    public final static float CASILLA_SERVIZOS = 185; //CASILLA_SERVIZOS = VALOR_VOLTA * (3f / 4f)
+    public final static float CASILLA_TRANSPORTE = VALOR_VOLTA; //250
+    public final static float CASILLA_SERVIZO = 185; //CASILLA_SERVIZOS = VALOR_VOLTA * (3f / 4f)
 
     //Constantes respectivas aos factores
     public final static float ALQUILER_SERVIZO = VALOR_VOLTA / 200; //1.25

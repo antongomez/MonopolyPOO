@@ -10,51 +10,17 @@ public class Grupo extends Casilla {
     private ArrayList<Propiedade> propiedades;
     private String colorear;
 
+    //Constructores
     public Grupo() {
     }
 
-    /*public Grupo(String nome, int id, String colorear) {
+    public Grupo(String nome, int id, String colorear) {
         super(nome, 0);
         this.id = id;
         this.colorear = colorear;
         this.propiedades = new ArrayList<>();
-    }*/
-    public Grupo(int id, String colorear) {
-        super(colorear, 0);
-        this.id = id;
-        switch (colorear) {
-            case "VERMELLO":
-                this.colorear = Constantes.VERMELLO;
-                break;
-            case "VERDE":
-                this.colorear = Constantes.VERDE;
-                break;
-            case "AMARELO":
-                this.colorear = Constantes.AMARELO;
-                break;
-            case "LARANXA":
-                this.colorear = Constantes.LARANXA;
-                break;
-            case "AZUL":
-                this.colorear = Constantes.AZUL;
-                break;
-            case "ROSA":
-                this.colorear = Constantes.ROSA;
-                break;
-            case "CIAN":
-                this.colorear = Constantes.CIAN;
-                break;
-            case "GRIS":
-                this.colorear = Constantes.GRIS;
-                break;
-            case "RESET":
-                this.colorear = Constantes.NEGRO;
-                break;
-        }
-        this.propiedades = new ArrayList<>();
     }
 
-//Getters e Setters
     public Grupo(int id) {
         this.id = id;
         this.colorear = Constantes.NEGRO;
@@ -184,7 +150,7 @@ public class Grupo extends Casilla {
     public boolean poderConstruirPiscina() {
         if (this.getNPiscinas() == getNSolares()) {
             return false;
-        } else if (this.getNPiscinas() > getNSolares()) { 
+        } else if (this.getNPiscinas() > getNSolares()) {
             //Excepcion, algo vai mal.
         }
         return true;
@@ -196,10 +162,17 @@ public class Grupo extends Casilla {
     public boolean poderConstruirPista() {
         if (this.getNPistas() == getNSolares()) {
             return false;
-        } else if (this.getNPistas() > getNSolares()) { 
+        } else if (this.getNPistas() > getNSolares()) {
             //Excepcion, algo vai mal.
         }
         return true;
+    }
+
+    /*Metodo que determina os edificios que se poden construir ainda nun grupo.*/
+    public ArrayList<Edificio> faltaConstruir() {
+        ArrayList<Edificio> edificios = new ArrayList<>();
+
+        return edificios;
     }
 
     /*Funcion que devolve true se un mesmo xogador posee

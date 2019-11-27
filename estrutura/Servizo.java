@@ -5,8 +5,8 @@ import xogadores.*;
 
 public class Servizo extends Propiedade {
 
-    public Servizo(String nome, int posicion, float valor, Grupo grupo, Xogador xogador) {
-        super(nome, grupo, posicion, xogador, valor);
+    public Servizo(String nome, int posicion, Grupo grupo, Xogador xogador) {
+        super(nome, grupo, posicion, xogador, Constantes.CASILLA_SERVIZO);
     }
 
     //Métodos
@@ -45,7 +45,8 @@ public class Servizo extends Propiedade {
     @Override
     public void calculoAlquiler() {
         //Falta multiplicalo pola suma dos dados
-        float valor = factorServizo(this.getDono()) * Constantes.ALQUILER_SERVIZO /* * sumaDados*/;
+        float valor = factorServizo(this.getDono())
+                * Constantes.ALQUILER_SERVIZO;
 
         this.setAlquiler(valor);
 
