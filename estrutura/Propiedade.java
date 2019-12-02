@@ -88,6 +88,9 @@ public abstract class Propiedade extends Casilla {
 
     public abstract void calculoAlquiler();
 
+
+    public abstract String imprimirPropieade();
+
     @Override
     public String toString() {
         String nomeaux = String.format("%-13s", this.getNome());

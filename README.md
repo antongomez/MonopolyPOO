@@ -11,3 +11,13 @@ ____________________
 XOGADOR
 
 - Non pasai nada do que ten que ver co carcere e demáis 
+
+
+
+______
+DECISIÓNS  TOMADAS
+
+- Banca
+    * A fortuna deste xogador será 0.
+    * Terá todas as propiedades en enta
+    *   
