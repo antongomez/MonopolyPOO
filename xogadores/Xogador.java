@@ -1,10 +1,6 @@
 package xogadores;
 
-import estrutura.Casilla;
-import estrutura.Constantes;
-import estrutura.Propiedade;
-import estrutura.Taboleiro;
-import xogadores.Avatar;
+import estrutura.*;
 import xogo.Partida;
 
 import java.util.ArrayList;
@@ -16,6 +12,7 @@ public class Xogador {
     private float fortuna;
     private ArrayList<Propiedade> propiedades;
     private int nVoltas;
+    private int estadoPreso;
     private float cartosInvertidos;
     private float pagoTasasEImportos;
     private float pagoDeAlquileres;
@@ -24,10 +21,11 @@ public class Xogador {
     private float premiosInversionsOBote;
 
     //Constructor da Banca
-    public Xogador(){
+    public Xogador() {
         this.nome = "Banca";
         this.fortuna = 100000000;
         this.nVoltas = 0;
+        this.estadoPreso = 0;
         this.propiedades = new ArrayList<>();
         this.cartosInvertidos = 0;
         this.pagoTasasEImportos = 0;
@@ -37,11 +35,12 @@ public class Xogador {
         this.premiosInversionsOBote = 0;
     }
 
-    public Xogador(String hipotecar){
+    public Xogador(String hipotecar) {
         this.nome = "Hipotecar";
         this.fortuna = 100000000;
         this.propiedades = new ArrayList<>();
         this.nVoltas = 0;
+        this.estadoPreso = 0;
         this.cartosInvertidos = 0;
         this.pagoTasasEImportos = 0;
         this.pagoDeAlquileres = 0;
@@ -56,9 +55,10 @@ public class Xogador {
             this.fortuna = Constantes.FORTUNA_INICIAL;
             this.propiedades = new ArrayList<>();
             this.nVoltas = 0;
-            cartosInvertidos = 0;
-            pagoTasasEImportos = 0;
-            premiosInversionsOBote = 0;
+            this.estadoPreso = 0;
+            this.cartosInvertidos = 0;
+            this.pagoTasasEImportos = 0;
+            this.premiosInversionsOBote = 0;
         } else {
             System.out.println("Erro en cosntrutor de xogador.\n");
         }
@@ -117,6 +117,16 @@ public class Xogador {
         this.nVoltas = nVoltas;
     }
 
+    public int getEstadoPreso() {
+        return this.estadoPreso;
+    }
+
+    public void setEstadoPreso(int estado) {
+        if ((estado <= 4) && (estado >= 0)) {
+            this.estadoPreso = estado;
+        }
+    }
+
     public float getCartosInvertidos() {
         return cartosInvertidos;
     }
@@ -165,33 +175,37 @@ public class Xogador {
         this.premiosInversionsOBote = premiosInversionsOBote;
     }
 
-    public void CreateAvatarXogador(String tipo_avatar, Taboleiro taboleiro, Partida partida)
-    {
-        switch(tipo_avatar)
-        {
+    public void CreateAvatarXogador(String tipo_avatar, Taboleiro taboleiro, Partida partida) {
+        switch (tipo_avatar) {
             case "Sombrero":
             case "sombrero":
             case "Sombreiro":
             case "sombreiro":
-            case"Chapeu":
-            case "chapeu": this.setAvatar(new Chapeu(partida.getAvatares(), this, taboleiro));
+            case "Chapeu":
+            case "chapeu":
+                this.setAvatar(new Chapeu(partida.getAvatares(), this, taboleiro));
                 break;
             case "Coche":
-            case "coche": this.setAvatar(new Coche(partida.getAvatares(), this, taboleiro));
+            case "coche":
+                this.setAvatar(new Coche(partida.getAvatares(), this, taboleiro));
                 break;
             case "Esfinge":
             case "esfinge":
             case "esfinxe":
-            case "Esfinxe": this.setAvatar(new Esfinxe(partida.getAvatares(), this, taboleiro));
+            case "Esfinxe":
+                this.setAvatar(new Esfinxe(partida.getAvatares(), this, taboleiro));
                 break;
             case "pelota":
-            case "Pelota": this.setAvatar(new Pelota(partida.getAvatares(), this, taboleiro));
+            case "Pelota":
+                this.setAvatar(new Pelota(partida.getAvatares(), this, taboleiro));
                 break;
-            default: this.setAvatar(new Pelota(partida.getAvatares(), this, taboleiro));
+            default:
+                this.setAvatar(new Pelota(partida.getAvatares(), this, taboleiro));
                 break;
         }
 
     }
+
     //Metodos
     public float cartosGastados() {
         return cartosInvertidos + pagoTasasEImportos + pagoDeAlquileres;

@@ -1,49 +1,31 @@
 package xogadores;
-import estrutura.Casilla;
-import estrutura.Taboleiro;
+
+import estrutura.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+public abstract class Avatar {
 
-public abstract class Avatar{
     private char id;
-    String tipo;
     private Xogador xogador;
     private Casilla posicion;
-    private String modo;
-    private int bloqueado;
-    private boolean arrancado;
+    private boolean modoAvanzado;
 
-    public Avatar(ArrayList<Avatar> avatares, Xogador xogador, Taboleiro taboleiro)
-    {
-        this.id=xerarID(avatares);
-        this.xogador=xogador;
+    //Constructores
+    public Avatar() {
+    }
+
+    public Avatar(ArrayList<Avatar> avatares, Xogador xogador, Taboleiro taboleiro) {
+        this.id = xerarID(avatares);
+        this.xogador = xogador;
         this.posicion = taboleiro.getCasilla(0);
-        this.modo = "normal";
-        this.bloqueado = 0;
-        this.arrancado = false;
-        taboleiro.getCasilla(0).engadirAvatar(this);
+        this.modoAvanzado = false;
+        this.posicion.engadirAvatar(this);
     }
 
     //Getters y Setters
     public char getId() {
         return id;
-    }
-
-    public int getBloqueado() {
-        return bloqueado;
-    }
-
-    public void setBloqueado(int turnos) {
-        if (turnos >= 0) {
-            this.bloqueado = turnos;
-        }
-    }
-
-    public void restarTurnoBloqueo() {
-        if (bloqueado > 0) {
-            bloqueado--;
-        }
     }
 
     public Xogador getXogador() {
@@ -71,42 +53,65 @@ public abstract class Avatar{
         }
     }
 
+    public boolean getModoAvanzado() {
+        return this.modoAvanzado;
+    }
 
-    public abstract void moverEnBasico();
+    public void setModoAvanzado(boolean estado) {
+        this.modoAvanzado = estado;
+    }
+
+    //Metodos
+    //Metodo que move ao avatar en modo Basico
+    public void moverEnBasico(int sumaDados, Taboleiro taboleiro) {
+        if (this.xogador.getEstadoPreso() == 0) {
+            if (!this.modoAvanzado) {
+                //Eliminase ao avatar da casilla na que esta
+                this.posicion.eliminarAvatar(this);
+                //Distinguimos o caso que pasa pola saida e o que non
+                if(this.posicion.getPosicion() + sumaDados < 40){
+                    //Actualizase a posicion
+                    this.posicion = taboleiro.getCasilla(this.posicion.getPosicion() + sumaDados);
+                    //Actualizase a casilla
+                    this.posicion.engadirAvatar(this);
+                } else{
+                    this.posicion = taboleiro.getCasilla(this.posicion.getPosicion() + sumaDados - 40);
+                    this.posicion.engadirAvatar(this);
+                    this.xogador.sumarVolta();
+                }
+            }else{
+                
+            }
+        } else{
+        
+    }
+    }
+
     public abstract void moverEnAvanzado();
 
-    public char xerarID(ArrayList<Avatar> avatares)
-    {
-        char id;
+    public char xerarID(ArrayList<Avatar> avatares) {
+        char identificador;
         boolean distinto;
         int numero;
         do {
             Random ale = new Random(System.currentTimeMillis());
             numero = ale.nextInt(20) + 65;
-            id = (char) numero;
-            distinto=true;
+            identificador = (char) numero;
+            distinto = true;
 
-            for (int i=0; i < avatares.size(); i++)
-            {
-                if (id == avatares.get(i).id)
-                {
-                    distinto=false;
+            for (int i = 0; i < avatares.size(); i++) {
+                if (identificador == avatares.get(i).id) {
+                    distinto = false;
                 }
             }
 
-        }while (!distinto);
-        return id;
+        } while (!distinto);
+        return identificador;
     }
-
-
-
-
-
 
     @Override
     public String toString() {
         String texto = "{ \n" + "\tid: " + this.id
-                + "\n" + "\ttipo: " + this.tipo
                 + "\n" + "\tXogador: " + this.xogador.getNome()
                 + "\n" + "}";
         return texto;
