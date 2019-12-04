@@ -15,7 +15,7 @@ public interface Comando {
     //public void deshipotecar(Propiedade propiedade);
     //public void lanzarDados();
     //public void listar();
-    public void rematarPartida(Boolean sair);
+    public boolean rematarPartida();
     //public void rematarTurno();
     //public void retroceder();
     //public void sairCarcere();

@@ -1,6 +1,6 @@
 package estrutura;
 
-import xogadores.Xogador;
+import xogadores.*;
 
 public class Casa extends Edificio {
 

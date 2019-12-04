@@ -290,7 +290,7 @@ public class Solar extends Propiedade {
     @Override
     public String imprimirCasilla() {
         String texto = "{\n"
-                + "\tnome:" + this.getNome() + ",\n"
+                + "\tnome: " + this.getNome() + ",\n"
                 + "\ttipo: Solar,\n"
                 + "\tgrupo: " + this.getGrupo().getNome() + ",\n"
                 + "\tdono: " + this.getDono().getNome() + ",\n"

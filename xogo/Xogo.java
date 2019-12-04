@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Xogo implements Comando {
-
+    
     public static final ConsolaNormal consola = new ConsolaNormal();
     private ArrayList<Xogador> xogadores;
     private ArrayList<Avatar> avatares;
@@ -17,15 +17,15 @@ public class Xogo implements Comando {
     private HashMap<String, Dado> dados;
     private int turno = 0;
     private Xogador banca;
-
+    
     public Xogo() {
-
+        
         xogadores = new ArrayList<>();
         avatares = new ArrayList<>();
         dados = new HashMap<>();
         banca = new Xogador();
         taboleiro = new Taboleiro(banca);
-
+        
         int nXogadores = 0;
         Boolean sair = false;
         Xogador hipotecar = new Xogador("Hipotecar"); //Xogador ao que se lle hipoteca
@@ -45,7 +45,7 @@ public class Xogo implements Comando {
             do {
                 //Pedimos a información ao usuario
                 nomeXogador = consola.ler("Introduce o nome do xogador " + (i + 1) + ": ");
-
+                
                 if (nomeIgualXogador(nomeXogador)) {
                     consola.imprimir("\nXa existe un xogador con ese nome."
                             + " Introduce outro nome.\n");
@@ -54,7 +54,7 @@ public class Xogo implements Comando {
 
             //Engadimos o xogador
             xogadores.add(new Xogador(nomeXogador, taboleiro));
-
+            
             String tipoAvatar = "";
             char IdAvatar;
 
@@ -62,7 +62,7 @@ public class Xogo implements Comando {
             tipoAvatar = consola.ler("Introduce o tipo de avatar"
                     + " do xogador " + (i + 1) + ": ");
             IdAvatar = Avatar.xerarId();
-
+            
             while (IdIgualAvatar(IdAvatar)) {
                 IdAvatar = Avatar.xerarId();
             }
@@ -73,14 +73,11 @@ public class Xogo implements Comando {
                 case "Chapeu":
                 case "chapeu":
                     avatares.add(new Chapeu(IdAvatar, xogadores.get(i), taboleiro));
-                    xogadores.get(i).setAvatar(avatares.get(i));
                     break;
                 case "Coche":
                 case "coche":
                     avatares.add(new Coche(IdAvatar, xogadores.get(i), taboleiro));
                     break;
-                case "Esfinge":
-                case "esfinge":
                 case "esfinxe":
                 case "Esfinxe":
                     avatares.add(new Esfinxe(IdAvatar, xogadores.get(i), taboleiro));
@@ -94,11 +91,13 @@ public class Xogo implements Comando {
                     consola.imprimir("Introduciuse Pelota por defecto.\n");
                     break;
             }
-
+            
+            xogadores.get(i).setAvatar(avatares.get(i));
+            
             consola.imprimir("O avatar do xogador e: "
                     + avatares.get(i).getId() + "\n");
         }
-
+        
         taboleiro.imprimirTaboeiro();
 
         //Incio xogo
@@ -108,23 +107,26 @@ public class Xogo implements Comando {
                 + "7. describir casilla\n" + "8. describir xogador\n" + "9. describir avatar\n"
                 + "10. comprar\n" + "11. ver taboleiro\n" + "12. rematar partida\n"
                 + "===========================\n";
-
+        
         while (!sair) {
             consola.imprimir(menuimpreso);
-
+            
             Xogador xogador = xogadores.get(turno);
             Avatar avatar = xogador.getAvatar();
             String comando0;
             String comando1;
             String comando2;
 
+            //Turno do xogador
+            consola.imprimir("Turno de " + xogador.getNome() + "\n$> ");
+
             //Facemos as declaracións e imos lendo do caso que sexa
-            String orde = consola.ler("Lendo");
+            String orde = consola.lerLinha();
 
             //Xestion de comando
             String[] partes = orde.split(" ");
             comando0 = partes[0];
-
+            
             if (partes.length > 1) {
                 comando1 = partes[1];
             } else {
@@ -135,11 +137,10 @@ public class Xogo implements Comando {
             } else {
                 comando2 = "";
             }
-
+            
             switch (comando0) {
                 case "cambiar":
                     if (comando1.equals("modo")) {
-                        consola.imprimir("Merda");
                         cambiarModo(avatar);
                     }
                     break;
@@ -156,26 +157,37 @@ public class Xogo implements Comando {
                 case "rematar":
                     switch (comando1) {
                         case "partida":
-                            rematarPartida(sair);
+                            sair = rematarPartida();
                             break;
                     }
                     break;
-
+                default: //Excepcion
+                    consola.imprimir("Comando incorrecto.\n");
+                    break;
+                
             }
-
+            
         }
     }
 
     //Métodos auxiliares para a funcionalidade
     @Override
     public final void cambiarModo(Avatar avatar) {
-        if (!avatar.getModoAvanzado()) {
-            avatar.setModoAvanzado(true);
+        if (avatar != null) {
+            if (!avatar.getModoAvanzado()) {
+                avatar.setModoAvanzado(true);
+                consola.imprimir("A partir de agora o avatar " + avatar.getId()
+                        + " moverase en modo avanzado.\n");
+            } else {
+                avatar.setModoAvanzado(false);
+                consola.imprimir("A partir de agora o avatar " + avatar.getId()
+                        + " moverase en modo básico.\n");
+            }
         } else {
-            avatar.setModoAvanzado(false);
+            //Excepcion
         }
     }
-
+    
     @Override
     public final void comprar(Propiedade propiedade, Xogador xogador) {
         if (propiedadeComprable(propiedade)) {
@@ -188,7 +200,7 @@ public class Xogo implements Comando {
             }
         }
     }
-
+    
     @Override
     public final void describir(String nomeCasilla) {
         if (existeCasilla(nomeCasilla)) {
@@ -197,13 +209,13 @@ public class Xogo implements Comando {
             //Excepcion
         }
     }
-
+    
     private boolean existeCasilla(String nomeCasilla) {
-
+        
         return taboleiro.getCasilla(nomeCasilla) != null;
-
+        
     }
-
+    
     private boolean IdIgualAvatar(char id) {
         if (!avatares.isEmpty()) {
             for (Avatar avatar : avatares) {
@@ -214,9 +226,9 @@ public class Xogo implements Comando {
         }
         return false;
     }
-
+    
     private boolean nomeIgualXogador(String nome) {
-        if (xogadores.isEmpty()) {
+        if (!xogadores.isEmpty()) {
             for (Xogador xogador : xogadores) {
                 if (xogador.getNome().equals(nome)) {
                     return true;
@@ -225,14 +237,14 @@ public class Xogo implements Comando {
         }
         return false;
     }
-
+    
     private boolean propiedadeComprable(Propiedade propiedade) {
         return propiedade.getDono().equals(banca);
     }
-
+    
     @Override
-    public final void rematarPartida(Boolean sair) {
-        sair = true;
+    public final boolean rematarPartida() {
+        return true;
     }
 
     //Fin clase
