@@ -1,6 +1,7 @@
 package estrutura;
 
 import xogadores.*;
+import xogo.*;
 
 public class Transporte extends Propiedade {
 
@@ -55,5 +56,18 @@ public class Transporte extends Propiedade {
         this.setAlquiler(valor);
 
         //return valor;
+    }
+
+    @Override
+    public String imprimirCasilla() {
+        String texto = "{\n"
+                + "\tnome:" + this.getNome() + ",\n"
+                + "\ttipo: Transporte,\n"
+                + "\tdono: " + this.getDono().getNome() + ",\n"
+                + "\talquiler: " + this.getAlquiler() + " GM,\n"
+                + "\txogadores: [" + "]\n"
+                + "}\n";
+
+        return texto;
     }
 }

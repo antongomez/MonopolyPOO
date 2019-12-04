@@ -12,7 +12,7 @@ public class Taboleiro {
 
     public Taboleiro(Xogador banca) {
         casillas = new ArrayList<>();
-        
+
         if (banca != null) {
             ArrayList<Casilla> ladoSur = new ArrayList();
             ArrayList<Casilla> ladoOeste = new ArrayList();
@@ -23,7 +23,7 @@ public class Taboleiro {
             Grupo grupo1 = new Grupo("Marron", 1, Constantes.GRIS);
             Grupo grupo2 = new Grupo("Cian", 2, Constantes.CIAN);
             Grupo grupo3 = new Grupo("Rosa", 3, Constantes.ROSA);
-            Grupo grupo4 = new Grupo("Laranxa", 4,Constantes.LARANXA);
+            Grupo grupo4 = new Grupo("Laranxa", 4, Constantes.LARANXA);
             Grupo grupo5 = new Grupo("Vermello", 5, Constantes.VERMELLO);
             Grupo grupo6 = new Grupo("Amarelo", 6, Constantes.AMARELO);
             Grupo grupo7 = new Grupo("Verde", 7, Constantes.VERDE);
@@ -39,7 +39,7 @@ public class Taboleiro {
             ladoSur.add(new Solar("Santa Cruz", 1, Constantes.CASILLA_G1, grupo1, banca));
             ladoSur.add(new Especial("Caixa 1", 2));
             ladoSur.add(new Solar("Arteixo", 3, Constantes.CASILLA_G1, grupo1, banca));
-            ladoSur.add(new Imposto("IRPF", 4));
+            ladoSur.add(new Imposto("IRPF", 4, Constantes.IMPOSTO1));
             ladoSur.add(new Transporte("Autobus", 5, grupoTrans, banca));
             ladoSur.add(new Solar("Meanho", 6, Constantes.CASILLA_G2, grupo2, banca));
             ladoSur.add(new Especial("Sorte 1", 7));
@@ -82,7 +82,7 @@ public class Taboleiro {
             ladoEste.add(new Transporte("Jet Privado", 35, grupoTrans, banca));
             ladoEste.add(new Especial("Sorte 3", 36));
             ladoEste.add(new Solar("Vigo", 37, Constantes.CASILLA_G8, grupo8, banca));
-            ladoEste.add(new Imposto("Subida Pension", 38));
+            ladoEste.add(new Imposto("Subida Pension", 38, Constantes.IMPOSTO2));
             ladoEste.add(new Solar("A Corunha", 39, Constantes.CASILLA_G8, grupo8, banca));
 
         } else {

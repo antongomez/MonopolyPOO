@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public abstract class Casilla {
 
     //Atributos
-    private String nome;   
+    private String nome;
     private ArrayList<Avatar> avatares;
     private int posicion;
     private int frecuentada;
@@ -43,13 +43,19 @@ public abstract class Casilla {
         this.frecuentada = this.frecuentada + num;
     }
 
-    public int getPosicion() {return this.posicion;}
-    public void setPosicion(int posicion) {this.posicion = posicion;}
+    public int getPosicion() {
+        return this.posicion;
+    }
+
+    public void setPosicion(int posicion) {
+        if ((posicion >= 0) && (posicion < 40)) {
+            this.posicion = posicion;
+        }
+    }
 
     public ArrayList<Avatar> getAvatares() {
         return avatares;
     }
-
 
     public void engadirAvatar(Avatar avatar) {
 
@@ -90,6 +96,8 @@ public abstract class Casilla {
         }
         return avatarescasilla;
     }
+    
+    public abstract String imprimirCasilla();
 
     @Override
     public String toString() {

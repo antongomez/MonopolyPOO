@@ -21,14 +21,6 @@ public abstract class Propiedade extends Casilla {
         this.dono = dono;
     }
 
-    public int getPosicion() {
-        return super.getPosicion();
-    }
-
-    public void setPosicion(int posicion) {
-        super.setPosicion(posicion);
-    }
-
     public float getValor() {
         return valor;
     }
@@ -74,6 +66,7 @@ public abstract class Propiedade extends Casilla {
         return this.dono.equals(xogador);
     }
 
+    //Metodo que compra unha propiedade. Actualiza a fortuna do xogador.
     public void comprar(Xogador novoDono) {
         this.dono = novoDono;
         novoDono.modificarFortuna(-this.valor);
@@ -87,9 +80,6 @@ public abstract class Propiedade extends Casilla {
     }
 
     public abstract void calculoAlquiler();
-
-
-    public abstract String imprimirPropieade();
 
     @Override
     public String toString() {

@@ -1,7 +1,7 @@
-
 package estrutura;
 
 import xogadores.*;
+import xogo.*;
 
 import java.util.ArrayList;
 
@@ -124,9 +124,9 @@ public class Solar extends Propiedade {
     //Metodo que calcula o alquiler en funcion de se hai ou non monopolio
     public float calculoAlquilerMonopolio() {
         if (this.getGrupo().existeMonopolio()) {
-            return this.alquilerInicialGrupo();
+            return this.alquilerInicialGrupo() * 2;
         }
-        return 0;
+        return this.alquilerInicialGrupo();
     }
 
     //Calcula o alquiler en funcion do numero de casas
@@ -158,12 +158,14 @@ public class Solar extends Propiedade {
     //Metodo que calcula o alquiler;
     @Override
     public void calculoAlquiler() {
-        //Establecese o valor inicial do alquiler do solar
-        float valor = alquilerInicialGrupo();
-        //Sumase o valor engadido se hai monopolio
-        valor += calculoAlquilerMonopolio();
+
+        float valor;
+        //Establecese o valor inicial do alquiler do solar e multiplicase por 2 se hai monopolio
+        valor = calculoAlquilerMonopolio();
         //Sumase o valor engadido por todas as edificacions
-        valor += calculoAlquilerEdificios();
+        if (!edificios.isEmpty()) {
+            valor = calculoAlquilerEdificios();
+        }
         //Modificase o valor do alquiler?
         this.setAlquiler(valor);
 
@@ -284,5 +286,33 @@ public class Solar extends Propiedade {
                 break;
         }
     }
+
+    @Override
+    public String imprimirCasilla() {
+        String texto = "{\n"
+                + "\tnome:" + this.getNome() + ",\n"
+                + "\ttipo: Solar,\n"
+                + "\tgrupo: " + this.getGrupo().getNome() + ",\n"
+                + "\tdono: " + this.getDono().getNome() + ",\n"
+                + "\tvalor: " + this.getValor() + " GM,\n"
+                + "\talquiler: " + this.getAlquiler() + " GM,\n"
+                + "\tvalor casa: " + (this.getValor() * Constantes.CASA) + " GM,\n"
+                + "\tvalor hotel: " + (this.getValor() * Constantes.HOTEL) + " GM,\n"
+                + "\tvalor piscina: " + (this.getValor() * Constantes.PISCINA) + " GM,\n"
+                + "\tvalor pista de deporte: " + (this.getValor() * Constantes.PISTA) + " GM,\n"
+                + "\talquiler unha casa: " + " GM,\n"
+                + "\talquiler dúas casas: " + " GM,\n"
+                + "\talquiler tres casas: " + " GM,\n"
+                + "\talquiler catro casas: " + " GM,\n"
+                + "\talquiler hotel: " + " GM,\n"
+                + "\talquiler piscina: " + " GM,\n"
+                + "\talquiler pista de deporte: " + " GM,\n"
+                + "\txogadores: [" + "]\n"
+                + "}\n";
+
+        return texto;
+    }
+
+    /* tipo: solar,  grupo: Rosa,  propietario: Pedro,  valor: 2600000,  alquiler: 220000,  valor hotel: 1560000,  valor casa: 1560000,  valor piscina: 1040000,  valor pista de deporte: 3250000,  alquiler una casa: 1100000,  alquiler dos casas: 3300000,  alquiler tres casas: 7700000,  alquiler cuatro casas: 11000000,  alquiler hotel: 15400000,  alquiler piscina: 5500000,  alquiler pista de deporte: 5500000*/
 //Fin clase
 }

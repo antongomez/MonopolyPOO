@@ -1,7 +1,6 @@
 package xogadores;
 
 import estrutura.*;
-import xogo.Partida;
 
 import java.util.ArrayList;
 
@@ -49,8 +48,8 @@ public class Xogador {
         this.premiosInversionsOBote = 0;
     }
 
-    public Xogador(String nome, String tipo_avatar, Taboleiro taboleiro, Partida partida) {
-        if ((nome != null) && (tipo_avatar != null) && (taboleiro != null)) {
+    public Xogador(String nome, Taboleiro taboleiro) {
+        if ((nome != null) && (taboleiro != null)) {
             this.nome = nome;
             this.fortuna = Constantes.FORTUNA_INICIAL;
             this.propiedades = new ArrayList<>();
@@ -175,37 +174,6 @@ public class Xogador {
         this.premiosInversionsOBote = premiosInversionsOBote;
     }
 
-    public void CrearAvatarXogador(String tipo_avatar, Taboleiro taboleiro, Partida partida) {
-        switch (tipo_avatar) {
-            case "Sombrero":
-            case "sombrero":
-            case "Sombreiro":
-            case "sombreiro":
-            case "Chapeu":
-            case "chapeu":
-                this.setAvatar(new Chapeu(partida, this, taboleiro));
-                break;
-            case "Coche":
-            case "coche":
-                this.setAvatar(new Coche(partida, this, taboleiro));
-                break;
-            case "Esfinge":
-            case "esfinge":
-            case "esfinxe":
-            case "Esfinxe":
-                this.setAvatar(new Esfinxe(partida, this, taboleiro));
-                break;
-            case "pelota":
-            case "Pelota":
-                this.setAvatar(new Pelota(partida, this, taboleiro));
-                break;
-            default:
-                this.setAvatar(new Pelota(partida, this, taboleiro));
-                break;
-        }
-
-    }
-
     //Metodos
     public float cartosGastados() {
         return cartosInvertidos + pagoTasasEImportos + pagoDeAlquileres;
@@ -220,7 +188,7 @@ public class Xogador {
         String texto = "";
 
         for (Propiedade prop : propiedades) {
-            texto += prop.imprimirPropiedade() + "\n";
+            texto += prop.imprimirCasilla();
         }
 
         return texto;

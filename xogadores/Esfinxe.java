@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class Esfinxe extends Avatar {
 
-    public Esfinxe(Xogador xogador, Taboleiro taboleiro) {
-        super(xogador, taboleiro);
+    public Esfinxe(char Id, Xogador xogador, Taboleiro taboleiro) {
+        super(Id, xogador, taboleiro);
     }
 
     @Override

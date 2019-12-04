@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class Chapeu extends Avatar {
 
-    public Chapeu(Xogador xogador, Taboleiro taboleiro) {
-        super(xogador, taboleiro);
+    public Chapeu(char Id, Xogador xogador, Taboleiro taboleiro) {
+        super(Id, xogador, taboleiro);
     }
 
     @Override

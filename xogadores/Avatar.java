@@ -1,7 +1,6 @@
 package xogadores;
 
 import estrutura.*;
-import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Avatar {
@@ -15,8 +14,8 @@ public abstract class Avatar {
     public Avatar() {
     }
 
-    public Avatar(Xogador xogador, Taboleiro taboleiro) {
-        this.id = xerarID();
+    public Avatar(char Id, Xogador xogador, Taboleiro taboleiro) {
+        this.id = Id;
         this.xogador = xogador;
         this.posicion = taboleiro.getCasilla(0);
         this.modoAvanzado = false;
@@ -89,7 +88,7 @@ public abstract class Avatar {
 
     public abstract void moverEnAvanzado();
 
-    private char xerarID() {
+    public static char xerarId() {
         char identificador;
         int numero;
 
@@ -98,12 +97,6 @@ public abstract class Avatar {
         identificador = (char) numero;
 
         return identificador;
-    }
-
-    private boolean comprobarID(Avatar avatar){
-        boolean repetido = false;
-        
-        return repetido;
     }
     
     @Override

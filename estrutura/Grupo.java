@@ -1,7 +1,7 @@
 package estrutura;
 
 import xogadores.*;
-
+import xogo.*;
 import java.util.ArrayList;
 
 public class Grupo extends Casilla {
@@ -194,6 +194,15 @@ public class Grupo extends Casilla {
         }
         //Introducir excepcion
         return false;
+    }
+
+    @Override
+    public String imprimirCasilla() {
+        String texto = "{\n"
+                + "\tnome:" + this.getNome() + ",\n"
+                + "\tnumero de Grupo:" + id + ",\n";
+
+        return texto;
     }
     //Fin Clase
 }
