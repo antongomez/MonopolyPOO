@@ -8,8 +8,6 @@ import java.util.HashMap;
 public class Partida {
 
     //Atributos
-    private ArrayList<Xogador> xogadores;
-    private ArrayList<Avatar> avatares;
     private Xogador banca;
     private int turno;
     private int nXogadores;
