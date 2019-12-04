@@ -19,6 +19,8 @@ public abstract class Propiedade extends Casilla {
         this.grupo = grupo;
         this.valor = valor;
         this.dono = dono;
+        this.alquiler = 0;
+        this.cartosProducidos = 0;
     }
 
     public float getValor() {

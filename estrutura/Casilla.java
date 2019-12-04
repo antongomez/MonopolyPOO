@@ -1,6 +1,7 @@
 package estrutura;
 
 import xogadores.*;
+import xogo.*;
 import java.util.ArrayList;
 
 public abstract class Casilla {
@@ -9,7 +10,8 @@ public abstract class Casilla {
     private String nome;
     private ArrayList<Avatar> avatares;
     private int posicion;
-    private int frecuentada;
+    //ArrayList que conten as veces que o avatar i visitou a casilla
+    private ArrayList<Integer> frecuentada; 
 
     //Constructor
     public Casilla() {
@@ -19,7 +21,7 @@ public abstract class Casilla {
         this.nome = nome;
         this.posicion = posicion;
         this.avatares = new ArrayList<>();
-        this.frecuentada = 0;
+        this.frecuentada = new ArrayList<>();
     }
 
     //Getters y setters
@@ -35,12 +37,12 @@ public abstract class Casilla {
         }
     }
 
-    public int getFrecuentada() {
+    public ArrayList<Integer> getFrecuentada() {
         return this.frecuentada;
     }
 
-    public void setFrecuentada(int num) {
-        this.frecuentada = this.frecuentada + num;
+    public void setFrecuentada(ArrayList<Integer> frecuencias) {
+        this.frecuentada = frecuencias;
     }
 
     public int getPosicion() {
@@ -85,6 +87,20 @@ public abstract class Casilla {
         return false;
     }
 
+    public int frecuenciaVisita() {
+        int sumaFrecuencia = 0;
+        if (!frecuentada.isEmpty()) {
+            for (int i = 0; i < frecuentada.size(); i++) {
+                sumaFrecuencia += frecuentada.get(i);
+            }
+        }
+        return sumaFrecuencia;
+    }
+
+    public int frecuenciaVisita(Avatar avatar, Xogo xogo) {
+        return frecuentada.get(xogo.getTurnoAvatar(avatar));
+    }
+
     public String imprimirAvatares() {
         String avatarescasilla = " ";
         if (!this.avatares.isEmpty()) {
@@ -96,7 +112,7 @@ public abstract class Casilla {
         }
         return avatarescasilla;
     }
-    
+
     public abstract String imprimirCasilla();
 
     @Override

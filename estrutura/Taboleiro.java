@@ -98,7 +98,7 @@ public class Taboleiro {
     public void setCasillas() {
     } //Carece de sentido nesta implementación
 
-    public void imprimirTaboeiro() {
+    public void imprimirTaboleiro() {
         String texto = "";
         // Espazos en branco que se usann para separar o lado oeste do este.
         String espazos = "                                                                                                                                                                                                               ";
@@ -162,8 +162,5 @@ public class Taboleiro {
     private Casilla obterCasilla(int lado, int posicion) {
         return this.casillas.get(lado).get(posicion);
     }
-
-    /*public boolean casillaComprable(Casilla casilla) {
-        return (casilla.getTipo().equals("Solar")) || (casilla.getTipo().equals("Transporte")) || (casilla.getTipo().equals("Servizo"));
-    }*/
+    //Fin clase
 }

@@ -6,10 +6,9 @@ import consola.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class Xogo implements Comando {
-    
+
     public static final ConsolaNormal consola = new ConsolaNormal();
     private ArrayList<Xogador> xogadores;
     private ArrayList<Avatar> avatares;
@@ -17,15 +16,15 @@ public class Xogo implements Comando {
     private HashMap<String, Dado> dados;
     private int turno = 0;
     private Xogador banca;
-    
+
     public Xogo() {
-        
+
         xogadores = new ArrayList<>();
         avatares = new ArrayList<>();
         dados = new HashMap<>();
         banca = new Xogador();
         taboleiro = new Taboleiro(banca);
-        
+
         int nXogadores = 0;
         Boolean sair = false;
         Xogador hipotecar = new Xogador("Hipotecar"); //Xogador ao que se lle hipoteca
@@ -45,7 +44,7 @@ public class Xogo implements Comando {
             do {
                 //Pedimos a información ao usuario
                 nomeXogador = consola.ler("Introduce o nome do xogador " + (i + 1) + ": ");
-                
+
                 if (nomeIgualXogador(nomeXogador)) {
                     consola.imprimir("\nXa existe un xogador con ese nome."
                             + " Introduce outro nome.\n");
@@ -54,7 +53,7 @@ public class Xogo implements Comando {
 
             //Engadimos o xogador
             xogadores.add(new Xogador(nomeXogador, taboleiro));
-            
+
             String tipoAvatar = "";
             char IdAvatar;
 
@@ -62,7 +61,7 @@ public class Xogo implements Comando {
             tipoAvatar = consola.ler("Introduce o tipo de avatar"
                     + " do xogador " + (i + 1) + ": ");
             IdAvatar = Avatar.xerarId();
-            
+
             while (IdIgualAvatar(IdAvatar)) {
                 IdAvatar = Avatar.xerarId();
             }
@@ -91,14 +90,14 @@ public class Xogo implements Comando {
                     consola.imprimir("Introduciuse Pelota por defecto.\n");
                     break;
             }
-            
+
             xogadores.get(i).setAvatar(avatares.get(i));
-            
+
             consola.imprimir("O avatar do xogador e: "
                     + avatares.get(i).getId() + "\n");
         }
-        
-        taboleiro.imprimirTaboeiro();
+
+        taboleiro.imprimirTaboleiro();
 
         //Incio xogo
         String menuimpreso = "=========== MENU ==========\n"
@@ -107,10 +106,10 @@ public class Xogo implements Comando {
                 + "7. describir casilla\n" + "8. describir xogador\n" + "9. describir avatar\n"
                 + "10. comprar\n" + "11. ver taboleiro\n" + "12. rematar partida\n"
                 + "===========================\n";
-        
+
         while (!sair) {
             consola.imprimir(menuimpreso);
-            
+
             Xogador xogador = xogadores.get(turno);
             Avatar avatar = xogador.getAvatar();
             String comando0;
@@ -126,7 +125,7 @@ public class Xogo implements Comando {
             //Xestion de comando
             String[] partes = orde.split(" ");
             comando0 = partes[0];
-            
+
             if (partes.length > 1) {
                 comando1 = partes[1];
             } else {
@@ -137,7 +136,7 @@ public class Xogo implements Comando {
             } else {
                 comando2 = "";
             }
-            
+
             switch (comando0) {
                 case "cambiar":
                     if (comando1.equals("modo")) {
@@ -154,6 +153,23 @@ public class Xogo implements Comando {
                 case "describir":
                     describir(comando1);
                     break;
+
+                case "edificar":
+
+                    switch (comando1) {
+                        case "casa":
+                        case "hotel":
+                        case "piscinas":
+                        case "pistas":
+                            edificar(avatar, comando1, 1);
+                            break;
+                        case "casas":
+                            edificar(avatar, comando1,
+                                    Integer.parseInt(comando2));
+                            break;
+                    }
+
+                    break;
                 case "rematar":
                     switch (comando1) {
                         case "partida":
@@ -164,10 +180,72 @@ public class Xogo implements Comando {
                 default: //Excepcion
                     consola.imprimir("Comando incorrecto.\n");
                     break;
-                
+
             }
-            
+
         }
+    }
+
+    //Getters e Setters
+    public ArrayList<Xogador> getXogadores() {
+        return xogadores;
+    }
+
+    public void setXogadores(ArrayList<Xogador> xogadores) {
+        this.xogadores = xogadores;
+    }
+
+    public ArrayList<Avatar> getAvatares() {
+        return avatares;
+    }
+
+    public void setAvatares(ArrayList<Avatar> avatares) {
+        this.avatares = avatares;
+    }
+
+    public Taboleiro getTaboleiro() {
+        return taboleiro;
+    }
+
+    public void setTaboleiro(Taboleiro taboleiro) {
+        this.taboleiro = taboleiro;
+    }
+
+    public HashMap<String, Dado> getDados() {
+        return dados;
+    }
+
+    public void setDados(HashMap<String, Dado> dados) {
+        this.dados = dados;
+    }
+
+    public int getTurno() {
+        return turno;
+    }
+
+    public void setTurno(int turno) {
+        this.turno = turno;
+    }
+
+    public Xogador getBanca() {
+        return banca;
+    }
+
+    public void setBanca(Xogador banca) {
+        this.banca = banca;
+    }
+
+    public int getTurnoAvatar(Avatar avatar) {
+        if (avatar != null) {
+            for (int i = 0; i < avatares.size(); i++) {
+                if (avatar.equals(avatares.get(i))) {
+                    return i;
+                }
+            }
+        } else {
+            //Excepcion
+        }
+        return 0;
     }
 
     //Métodos auxiliares para a funcionalidade
@@ -187,7 +265,7 @@ public class Xogo implements Comando {
             //Excepcion
         }
     }
-    
+
     @Override
     public final void comprar(Propiedade propiedade, Xogador xogador) {
         if (propiedadeComprable(propiedade)) {
@@ -200,7 +278,7 @@ public class Xogo implements Comando {
             }
         }
     }
-    
+
     @Override
     public final void describir(String nomeCasilla) {
         if (existeCasilla(nomeCasilla)) {
@@ -209,13 +287,49 @@ public class Xogo implements Comando {
             //Excepcion
         }
     }
-    
-    private boolean existeCasilla(String nomeCasilla) {
-        
-        return taboleiro.getCasilla(nomeCasilla) != null;
-        
+
+    @Override
+    public final void edificar(Avatar avatar, String tipoEdificacion, int nEdificios) {
+        if (avatar.getPosicion() instanceof Solar) {
+            Solar solar = (Solar) avatar.getPosicion();
+            Xogador xogador = avatar.getXogador();
+            //Comprobamos que sexa o dono da casilla
+            if (solar.getDono().equals(xogador)) {
+
+                if ((solar.getGrupo().existeMonopolio())
+                        || (solar.frecuenciaVisita(avatar, this) >= 2)) {
+                    for (int i = 0; i < nEdificios; i++) {
+                        solar.edificar(tipoEdificacion);
+                    }
+                    if (nEdificios == 1) {
+                        consola.imprimir("Construíuse 1 " + tipoEdificacion
+                                + " no solar " + solar.getNome() + ". A fortuna "
+                                + "de " + xogador.getNome() + " redúcese a "
+                                + xogador.getFortuna() + " GM.\n");
+                    } else {
+                        consola.imprimir("Construíronse " + nEdificios
+                                + "casas no solar " + solar.getNome()
+                                + ". A fortuna de " + xogador.getNome()
+                                + " redúcese a " + xogador.getFortuna()
+                                + " GM.\n");
+                    }
+                } else {
+                    //Excepcion
+                }
+            } else {
+                //Excepcion
+            }
+        } else {
+            //Exception
+        }
     }
-    
+
+    private boolean existeCasilla(String nomeCasilla) {
+
+        return taboleiro.getCasilla(nomeCasilla) != null;
+
+    }
+
     private boolean IdIgualAvatar(char id) {
         if (!avatares.isEmpty()) {
             for (Avatar avatar : avatares) {
@@ -226,7 +340,7 @@ public class Xogo implements Comando {
         }
         return false;
     }
-    
+
     private boolean nomeIgualXogador(String nome) {
         if (!xogadores.isEmpty()) {
             for (Xogador xogador : xogadores) {
@@ -237,14 +351,19 @@ public class Xogo implements Comando {
         }
         return false;
     }
-    
+
     private boolean propiedadeComprable(Propiedade propiedade) {
         return propiedade.getDono().equals(banca);
     }
-    
+
     @Override
     public final boolean rematarPartida() {
         return true;
+    }
+
+    @Override
+    public void verTaboleiro() {
+        taboleiro.imprimirTaboleiro();
     }
 
     //Fin clase

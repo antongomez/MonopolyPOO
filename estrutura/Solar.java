@@ -121,6 +121,35 @@ public class Solar extends Propiedade {
         return valor;
     }
 
+    //Metodos que calculan o alquiler dun edificio deste solar
+    public float alquiler1Casa() {
+        return 5 * alquilerInicialGrupo();
+    }
+
+    public float alquiler2Casas() {
+        return 15 * alquilerInicialGrupo();
+    }
+
+    public float alquiler3Casas() {
+        return 35 * alquilerInicialGrupo();
+    }
+
+    public float alquiler4Casas() {
+        return 50 * alquilerInicialGrupo();
+    }
+
+    public float alquilerHotel() {
+        return 70 * alquilerInicialGrupo();
+    }
+
+    public float alquilerPiscina() {
+        return 25 * alquilerInicialGrupo();
+    }
+
+    public float alquilerPista() {
+        return 25 * alquilerInicialGrupo();
+    }
+
     //Metodo que calcula o alquiler en funcion de se hai ou non monopolio
     public float calculoAlquilerMonopolio() {
         if (this.getGrupo().existeMonopolio()) {
@@ -135,22 +164,22 @@ public class Solar extends Propiedade {
 
         switch (this.getNCasas()) {
             case 1:
-                valor += 5 * alquilerInicialGrupo();
+                valor += alquiler1Casa();
                 break;
             case 2:
-                valor += 15 * alquilerInicialGrupo();
+                valor += alquiler2Casas();
                 break;
             case 3:
-                valor += 35 * alquilerInicialGrupo();
+                valor += alquiler3Casas();
                 break;
             case 4:
-                valor += 50 * alquilerInicialGrupo();
+                valor += alquiler4Casas();
                 break;
         }
 
-        valor += 70 * alquilerInicialGrupo() * this.getNHoteis();
-        valor += 25 * alquilerInicialGrupo() * this.getNPiscinas();
-        valor += 25 * alquilerInicialGrupo() * this.getNPistas();
+        valor += alquilerHotel() * this.getNHoteis();
+        valor += alquilerPiscina() * this.getNPiscinas();
+        valor += alquilerPista() * this.getNPistas();
 
         return valor;
     }
@@ -209,10 +238,10 @@ public class Solar extends Propiedade {
                 && (this.getGrupo().poderConstruirPista()));
     }
 
-    public void Edificar(String tipo) {
+    public void edificar(String tipo) {
         switch (tipo) {
             case "Casa": {
-                if (((Propiedade) this).getDono().getFortuna() //facer un metodo en xogador que comprobe isto
+                if ( this.getDono().getFortuna() //facer un metodo en xogador que comprobe isto
                         > this.getValor() * Constantes.CASA) {
                     if (this.poderEdificarCasa()) {
 
@@ -230,7 +259,7 @@ public class Solar extends Propiedade {
             }
             break;
             case "Hotel": {
-                if (((Propiedade) this).getDono().getFortuna()
+                if (this.getDono().getFortuna()
                         > this.getValor() * 0.6) {
                     if (this.poderEdificarHotel()) {
                         //Construimos
@@ -247,7 +276,7 @@ public class Solar extends Propiedade {
             }
             break;
             case "Piscina": {
-                if (((Propiedade) this).getDono().getFortuna()
+                if (this.getDono().getFortuna()
                         > this.getValor() * 0.4) {
                     if (this.poderEdificarPiscina()) {
                         //Construimos
@@ -264,7 +293,7 @@ public class Solar extends Propiedade {
             }
             break;
             case "Pista": {
-                if (((Propiedade) this).getDono().getFortuna()
+                if (this.getDono().getFortuna()
                         > this.getValor() * 10.) {
                     if (this.poderEdificarPista()) {
                         //Construimos
