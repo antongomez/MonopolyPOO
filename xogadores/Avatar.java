@@ -15,8 +15,8 @@ public abstract class Avatar {
     public Avatar() {
     }
 
-    public Avatar(ArrayList<Avatar> avatares, Xogador xogador, Taboleiro taboleiro) {
-        this.id = xerarID(avatares);
+    public Avatar(Xogador xogador, Taboleiro taboleiro) {
+        this.id = xerarID();
         this.xogador = xogador;
         this.posicion = taboleiro.getCasilla(0);
         this.modoAvanzado = false;
@@ -69,46 +69,43 @@ public abstract class Avatar {
                 //Eliminase ao avatar da casilla na que esta
                 this.posicion.eliminarAvatar(this);
                 //Distinguimos o caso que pasa pola saida e o que non
-                if(this.posicion.getPosicion() + sumaDados < 40){
+                if (this.posicion.getPosicion() + sumaDados < 40) {
                     //Actualizase a posicion
                     this.posicion = taboleiro.getCasilla(this.posicion.getPosicion() + sumaDados);
                     //Actualizase a casilla
                     this.posicion.engadirAvatar(this);
-                } else{
+                } else {
                     this.posicion = taboleiro.getCasilla(this.posicion.getPosicion() + sumaDados - 40);
                     this.posicion.engadirAvatar(this);
                     this.xogador.sumarVolta();
                 }
-            }else{
-                
+            } else {
+
             }
-        } else{
-        
-    }
+        } else {
+
+        }
     }
 
     public abstract void moverEnAvanzado();
 
-    public char xerarID(ArrayList<Avatar> avatares) {
+    private char xerarID() {
         char identificador;
-        boolean distinto;
         int numero;
-        do {
-            Random ale = new Random(System.currentTimeMillis());
-            numero = ale.nextInt(20) + 65;
-            identificador = (char) numero;
-            distinto = true;
 
-            for (int i = 0; i < avatares.size(); i++) {
-                if (identificador == avatares.get(i).id) {
-                    distinto = false;
-                }
-            }
+        Random ale = new Random(System.currentTimeMillis());
+        numero = ale.nextInt(20) + 65;
+        identificador = (char) numero;
 
-        } while (!distinto);
         return identificador;
     }
 
+    private boolean comprobarID(Avatar avatar){
+        boolean repetido = false;
+        
+        return repetido;
+    }
+    
     @Override
     public String toString() {
         String texto = "{ \n" + "\tid: " + this.id

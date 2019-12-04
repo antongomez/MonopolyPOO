@@ -1,12 +1,15 @@
 package xogo;
 
-import estrutura.Taboleiro;
-import xogadores.Avatar;
-import xogadores.Xogador;
+import estrutura.*;
+import xogadores.*;
+import consola.*;
 
 import java.util.Scanner;
 
-public class Xogo {
+public class Xogo implements Comando{
+    
+    private static ConsolaNormal consola = new ConsolaNormal();
+    
     public Xogo() {
         Dado dado1 = new Dado();
         Dado dado2 = new Dado();
@@ -18,14 +21,12 @@ public class Xogo {
 
         //Creamos os xogadores
         Xogador banca = new Xogador();
-        Xogador hipotecar = new Xogador("Hipotecar")
+        Xogador hipotecar = new Xogador("Hipotecar");
         int nXogadores = 0;
         do {
-            System.out.println("Cantos xogadores sodes? ");
-            Scanner sc = new Scanner(System.in);
-            nXogadores = sc.nextInt();
+            nXogadores = Integer.parseInt(consola.ler("Cantos xogadores sodes? "));
             if ((nXogadores < 2) || (nXogadores > 7)) {
-                System.out.println("O numero de xogadores non e valido.\n");
+                consola.imprimir("O numero de xogadores non e valido.\n");
             }
         } while ((nXogadores < 2) || (nXogadores > 7));
 
@@ -39,23 +40,23 @@ public class Xogo {
             String nomeXogador = "";
             do {
                 //Pedimos a información ao usuario
-                System.out.println("Introduce o nome do xogador " + (i + 1) + ": ");
+                consola.imprimir("Introduce o nome do xogador " + (i + 1) + ": ");
                 Scanner scan = new Scanner(System.in);
                 nomeXogador = scan.next();
                 if (nomeIgual(nomeXogador, partida)) {
-                    System.out.println("\nXa existe un xogador con ese nome. Introduce outro nome.\n");
+                    consola.imprimir("\nXa existe un xogador con ese nome."
+                            + " Introduce outro nome.\n");
                 }
             } while (nomeIgual(nomeXogador, partida));
-            System.out.println("Introduce o tipo de avatar do xogador " + (i + 1) + ": ");
-            Scanner avt = new Scanner(System.in);
-            String avatarXogador = avt.next();
-
+            String avatarXogador = consola.ler("Introduce o tipo de avatar"
+                    + " do xogador " + (i + 1) + ": ");
 
             //Creamos cada xogador
             partida.setXogador(new Xogador(nomeXogador, avatarXogador, taboleiro, partida));
-            partida.getXogador(i).CreateAvatarXogador(avatarXogador, taboleiro, partida);
+            partida.getXogador(i).CrearAvatarXogador(avatarXogador, taboleiro, partida);
 
-            System.out.println("O avatar do xogador e: " + partida.getXogador(i).getAvatar().getId() + "\n");
+            consola.imprimir("O avatar do xogador e: " 
+                    + partida.getXogador(i).getAvatar().getId() + "\n");
         }
 
         taboleiro.imprimirTaboeiro();
@@ -71,7 +72,7 @@ public class Xogo {
 
 
         while (!sair) {
-            System.out.println(menuimpreso);
+            consola.imprimir(menuimpreso);
 
 
             xogador = partida.getXogador(partida.getTurno() - 1);

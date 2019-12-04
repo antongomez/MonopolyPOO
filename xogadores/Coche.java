@@ -5,16 +5,10 @@ import estrutura.Taboleiro;
 import java.util.ArrayList;
 
 public class Coche extends Avatar {
-    final String tipo="Coche";
-
-    public Coche(ArrayList<Avatar> avatares, Xogador xogador, Taboleiro taboleiro) {
-        super(avatares, xogador, taboleiro);
-    }
 
 
-    @Override
-    public void moverEnBasico() {
-
+    public Coche(Xogador xogador, Taboleiro taboleiro) {
+        super(xogador, taboleiro);
     }
 
     @Override

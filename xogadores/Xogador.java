@@ -175,7 +175,7 @@ public class Xogador {
         this.premiosInversionsOBote = premiosInversionsOBote;
     }
 
-    public void CreateAvatarXogador(String tipo_avatar, Taboleiro taboleiro, Partida partida) {
+    public void CrearAvatarXogador(String tipo_avatar, Taboleiro taboleiro, Partida partida) {
         switch (tipo_avatar) {
             case "Sombrero":
             case "sombrero":
@@ -183,24 +183,24 @@ public class Xogador {
             case "sombreiro":
             case "Chapeu":
             case "chapeu":
-                this.setAvatar(new Chapeu(partida.getAvatares(), this, taboleiro));
+                this.setAvatar(new Chapeu(partida, this, taboleiro));
                 break;
             case "Coche":
             case "coche":
-                this.setAvatar(new Coche(partida.getAvatares(), this, taboleiro));
+                this.setAvatar(new Coche(partida, this, taboleiro));
                 break;
             case "Esfinge":
             case "esfinge":
             case "esfinxe":
             case "Esfinxe":
-                this.setAvatar(new Esfinxe(partida.getAvatares(), this, taboleiro));
+                this.setAvatar(new Esfinxe(partida, this, taboleiro));
                 break;
             case "pelota":
             case "Pelota":
-                this.setAvatar(new Pelota(partida.getAvatares(), this, taboleiro));
+                this.setAvatar(new Pelota(partida, this, taboleiro));
                 break;
             default:
-                this.setAvatar(new Pelota(partida.getAvatares(), this, taboleiro));
+                this.setAvatar(new Pelota(partida, this, taboleiro));
                 break;
         }
 
@@ -219,8 +219,8 @@ public class Xogador {
     public String imprimirPropiedades() {
         String texto = "";
 
-        for (Casilla casilla : propiedades) {
-            texto += casilla.imprmirPropieade() + "\n";
+        for (Propiedade prop : propiedades) {
+            texto += prop.imprimirPropiedade() + "\n";
         }
 
         return texto;
