@@ -114,7 +114,7 @@ public class Xogo implements Comando {
             Avatar avatar = xogador.getAvatar();
             String comando0;
             String comando1;
-            String comando2;
+            String comando2 = "nada"; //Inicialización necesaria para o correcto funcionamento de describir e listar
 
             //Turno do xogador
             consola.imprimir("Turno de " + xogador.getNome() + "\n$> ");
@@ -151,7 +151,7 @@ public class Xogo implements Comando {
                     }
                     break;
                 case "describir":
-                    describir(comando1);
+                    describirXeral(comando1, comando2);
                     break;
 
                 case "edificar":
@@ -169,6 +169,8 @@ public class Xogo implements Comando {
                             break;
                     }
 
+                    break;
+                case "listar":
                     break;
                 case "rematar":
                     switch (comando1) {
@@ -280,6 +282,42 @@ public class Xogo implements Comando {
     }
 
     @Override
+    public final void describirXeral(String comando1, String comando2) {
+        switch (comando1) {
+            case "xogador":
+                if (comando2.equals("nada")) {
+                    for (int i = 0; i < xogadores.size(); i++) {
+                        System.out.println(xogadores.get(i));
+                    }
+                } else {
+                    for (int i = 0; i < xogadores.size(); i++) {
+                        if (xogadores.get(i).getNome().equals(comando2)) {
+                            System.out.println(xogadores.get(i));
+                        }
+                    }
+                }
+                break;
+            case "avatar":
+                if (comando2.equals("nada"))
+                {
+                    for (int i = 0; i < avatares.size(); i++) {
+                            System.out.println(avatares.get(i));
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < avatares.size(); i++) {
+                        if (avatares.get(i).getId() == (comando2.charAt(0)))  //Convirte unha cadea nun char
+                            System.out.println(avatares.get(i));
+                    }
+                }
+                break;
+            default:
+                describir(comando1);
+                break;
+
+        }
+    }
     public final void describir(String nomeCasilla) {
         if (existeCasilla(nomeCasilla)) {
             consola.imprimir(taboleiro.getCasilla(nomeCasilla).imprimirCasilla());
