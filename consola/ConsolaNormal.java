@@ -35,7 +35,7 @@ public class ConsolaNormal implements Consola {
 
             System.out.println(descricion);
             Scanner sc = new Scanner(System.in);
-            mensaxe = sc.next();
+            mensaxe = sc.nextLine();
         } else {
             //Excepcion
         }

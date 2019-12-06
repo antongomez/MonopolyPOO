@@ -22,11 +22,11 @@ public class Xogo implements Comando {
         xogadores = new ArrayList<>();
         avatares = new ArrayList<>();
         tiradas = new HashMap<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 1; i <= 3; i++) {
             HashMap<String, Dado> dados = new HashMap<>();
             dados.put("d1", new Dado());
             dados.put("d2", new Dado());
-            tiradas.put(i + 1, dados);
+            tiradas.put(i, dados);
         }
         banca = new Xogador();
         taboleiro = new Taboleiro(banca);
@@ -35,7 +35,7 @@ public class Xogo implements Comando {
         Boolean sair = false;
         Xogador hipotecar = new Xogador("Hipotecar"); //Xogador ao que se lle hipoteca
         ArrayList<Boolean> avanzado = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 1; i <= 3; i++) {
             avanzado.add(false);
         }
 
@@ -124,11 +124,44 @@ public class Xogo implements Comando {
             Avatar avatar = xogador.getAvatar();
             String comando0, comando1, comando2, comando3;
 
-            //Turno do xogador
-            consola.imprimir("Turno de " + xogador.getNome() + "\n$> ");
+            imprimirDados();
 
+            if (poderLanzar()) {
+                switch (xogador.getEstadoPreso()) {
+                    case 4:
+                    case 3:
+                        consola.imprimir("O xogador " + xogador.getNome()
+                                + " está preso. Quédanlle "
+                                + (xogador.getEstadoPreso() - 1)
+                                + " turnos no Cárcere.\nTes dúas opcións: \n"
+                                + "\t- Pagar 60 GM e sair do carcere (sair carcere)"
+                                + "\n\t- Tentar sacar dobres (lanzar dados)\n");
+                        break;
+                    case 2:
+                        consola.imprimir("O xogador " + xogador.getNome()
+                                + " está preso. Este é o último turno"
+                                + " no Cárcere.\nTes dúas opcións: \n"
+                                + "\t- Pagar 60 GM e sair do carcere (sair carcere)"
+                                + "\n\t- Tentar sacar dobres (lanzar dados)\n");
+                        break;
+                    case 1:
+                        if (xogador.getFortuna() > Constantes.SAIR_CARCERE) {
+                            xogador.modificarFortuna(-Constantes.SAIR_CARCERE);
+                            xogador.setEstadoPreso(0);
+                            consola.imprimir("O xogador " + xogador.getNome()
+                                    + " pagou " + Constantes.SAIR_CARCERE + " "
+                                    + "GM para saír do Cárcere. Podes lanzar os"
+                                    + " dados.\n");
+                        } else {
+                            consola.imprimir("A hipotecar");
+                        }
+                        break;
+                }
+            }
+
+            //Turno do xogador
             //Facemos as declaracións e imos lendo do caso que sexa
-            String orde = consola.lerLinha();
+            String orde = consola.lerLinha("Turno de " + xogador.getNome() + "\n$> ");
 
             //Xestion de comando
             String[] partes = orde.split(" ");
@@ -165,7 +198,10 @@ public class Xogo implements Comando {
                     }
                     break;
                 case "describir":
-                    describir(comando1, comando2 + comando3);
+                    if (partes.length > 3) {
+                        describir(comando1, comando2 + " " + comando3);
+                    }
+                    describir(comando1, comando2);
                     break;
 
                 case "edificar":
@@ -194,7 +230,6 @@ public class Xogo implements Comando {
                                 if ((sonDobres(getDadosLanzados())) && (getTirada() == 3)) {
 
                                     consola.imprimir("Tirar dobres por terceira vez consecutiva.\n");
-                                    xogador.setEstadoPreso(3);
                                     moverAoCarcere(avatar);
                                     consola.imprimir("O avatar " + avatar.getId() + " foi enviado "
                                             + "ao Cárcere.\n");
@@ -218,7 +253,8 @@ public class Xogo implements Comando {
                                 if (!sonDobres(getDadosLanzados())) {
                                     xogador.restarEstadoPreso();
                                     consola.imprimir("Non coneguiches lanzar dobres. Quédanche "
-                                            + xogador.getEstadoPreso() + " turnos no Cárcere.\n");
+                                            + (xogador.getEstadoPreso() - 1)
+                                            + " turnos no Cárcere.\n");
 
                                 } else {
                                     consola.imprimir("Tiraches dobres, polo que saes do Cárcere.");
@@ -262,12 +298,45 @@ public class Xogo implements Comando {
                 case "xogador":
                     xogador();
                     break;
+                case "Teletransport":
+                    Casilla destino = null;
+                    if (existeCasilla(comando1)) {
+                        destino = taboleiro.getCasilla(comando1);
+                    } else if (existeCasilla(comando1 + " " + comando2)) {
+                        destino = taboleiro.getCasilla(comando1 + " " + comando2);
+                    }
+                    if (destino != null) {
+                        Casilla procedencia = avatar.getPosicion();
+                        procedencia.eliminarAvatar(avatar);
+                        destino.engadirAvatar(avatar);
+                        avatar.setPosicion(destino);
+                        consola.imprimir("O avatar " + avatar.getId()
+                                + " teletranspórtase dende a casilla "
+                                + procedencia.getNome() + " ata a casilla "
+                                + destino.getNome() + ".\n");
+
+                        resetDados();
+                        tiradas.get(1).get("d1").setValor(3);
+                        tiradas.get(1).get("d2").setValor(2);
+
+                        comprobarCasilla(avatar.getPosicion(), xogador);
+                    }
+                    break;
                 default: //Excepcion
                     consola.imprimir("Comando incorrecto.\n");
                     break;
 
             }
         }
+    }
+
+    private void imprimirDados() {
+        consola.imprimir("Dados: \n");
+        for (int i = 1; i <= 3; i++) {
+            consola.imprimir(tiradas.get(i).get("d1") + " ");
+            consola.imprimir(tiradas.get(i).get("d2") + "  ");
+        }
+        consola.imprimir("\n");
     }
 
     //Getters e Setters
@@ -337,8 +406,8 @@ public class Xogo implements Comando {
         return 0;
     }
 
-    public void resetDados() {
-        for (int i = 0; i < 3; i++) {
+    private void resetDados() {
+        for (int i = 1; i <= 3; i++) {
             tiradas.get(i).get("d1").resetDado();
             tiradas.get(i).get("d2").resetDado();
         }
@@ -441,8 +510,8 @@ public class Xogo implements Comando {
                         break;
                     case "IrCarcere":
                         moverAoCarcere(avatar);
-                        consola.imprimir("O avatar " + avatar + " foi enviado"
-                                + " ao Carcere.\n");
+                        consola.imprimir("O avatar " + avatar.getId()
+                                + " foi enviado ao Carcere.\n");
                         break;
 
                     case "Sorte 1":
@@ -683,17 +752,7 @@ public class Xogo implements Comando {
     }
 
     public boolean existeCasilla(String nomeCasilla) {
-        if (taboleiro.getCasilla(nomeCasilla) != null) {
-            return true;
-        }
-        //Facemos a comprobacion sen o espazo
-        for (int i = 0; i < 40; i++) {
-            if (taboleiro.getCasilla(i).getNome().replace(" ", "")
-                    .equals(nomeCasilla)) {
-                return true;
-            }
-        }
-        return false;
+        return taboleiro.getCasilla(nomeCasilla) != null;
     }
 
     public boolean existeXogador(String nomeXogador) {
@@ -884,11 +943,17 @@ public class Xogo implements Comando {
     @Override
     public final void sairCarcere() {
         if (xogadores.get(turno).getEstadoPreso() > 0) {
-            xogadores.get(turno).modificarFortuna(-Constantes.SAIR_CARCERE);
-            consola.imprimir("O xogador " + xogadores.get(turno).getNome()
-                    + " pagou " + Constantes.SAIR_CARCERE + " GM para saír do"
-                    + " Cárcere. A súa fortuna actual é de "
-                    + xogadores.get(turno).getFortuna() + ".\n");
+            if (poderLanzar()) {
+                xogadores.get(turno).modificarFortuna(-Constantes.SAIR_CARCERE);
+                xogadores.get(turno).setEstadoPreso(0);
+                consola.imprimir("O xogador " + xogadores.get(turno).getNome()
+                        + " pagou " + Constantes.SAIR_CARCERE + " GM para saír do"
+                        + " Cárcere. A súa fortuna actual é de "
+                        + xogadores.get(turno).getFortuna() + ".\n");
+            } else {
+                //Excepcion
+                consola.imprimir("Xa lanzaches. Agora non podes pagar.\n");
+            }
         } else {
 
             //Excepcion
@@ -898,7 +963,9 @@ public class Xogo implements Comando {
     private boolean sonDobres(HashMap<String, Dado> dados) {
         if (dados != null) {
             if (dados.get("d1").equals(dados.get("d2"))) {
-                return true;
+                if (dados.get("d1").getValor() > 0) {
+                    return true;
+                }
             }
         } else {
             //Excepcion

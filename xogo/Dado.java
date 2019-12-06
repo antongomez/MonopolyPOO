@@ -13,7 +13,7 @@ public class Dado {
     }
 
     public void setValor(int n) {
-        if ((n > 0) && (n < 7)) {
+        if ((n >= 0) && (n < 7)) {
             valor = n;
         }
     }
