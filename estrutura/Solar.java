@@ -212,7 +212,7 @@ public class Solar extends Propiedade {
 
     //Metodo que calcula o alquiler;
     @Override
-    public void calculoAlquiler() {
+    public float calculoAlquiler() {
 
         float valor;
         //Establecese o valor inicial do alquiler do solar e multiplicase por 2 se hai monopolio
@@ -222,7 +222,7 @@ public class Solar extends Propiedade {
             valor = calculoAlquilerEdificios();
         }
         //Modificase o valor do alquiler?
-        this.setAlquiler(valor);
+        return valor;
 
         //return valor;
     }
@@ -350,7 +350,7 @@ public class Solar extends Propiedade {
                 + "\tgrupo: " + this.getGrupo().getNome() + ",\n"
                 + "\tdono: " + this.getDono().getNome() + ",\n"
                 + "\tvalor: " + this.getValor() + " GM,\n"
-                + "\talquiler: " + this.getAlquiler() + " GM,\n"
+                + "\talquiler: " + this.calculoAlquiler() + " GM,\n"
                 + "\tvalor casa: " + (this.getValor() * Constantes.CASA) + " GM,\n"
                 + "\tvalor hotel: " + (this.getValor() * Constantes.HOTEL) + " GM,\n"
                 + "\tvalor piscina: " + (this.getValor() * Constantes.PISCINA) + " GM,\n"

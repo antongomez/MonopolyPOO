@@ -49,11 +49,11 @@ public class Transporte extends Propiedade {
     }
 
     @Override
-    public void calculoAlquiler() {
+    public float calculoAlquiler() {
         float valor = factorTransporte(this.getDono())
                 * Constantes.ALQUILER_TRANSPORTE;
 
-        this.setAlquiler(valor);
+        return valor;
 
         //return valor;
     }
@@ -64,7 +64,7 @@ public class Transporte extends Propiedade {
                 + "\tnome:" + this.getNome() + ",\n"
                 + "\ttipo: Transporte,\n"
                 + "\tdono: " + this.getDono().getNome() + ",\n"
-                + "\talquiler: " + this.getAlquiler() + " GM,\n"
+                + "\talquiler: " + this.calculoAlquiler() + " GM,\n"
                 + "\txogadores: [" + "]\n"
                 + "}\n";
 

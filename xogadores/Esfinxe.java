@@ -38,6 +38,10 @@ public class Esfinxe extends Avatar {
     public void sumarHistorial(String accion){
         this.historial.add(accion);
     }
+    
+    public void resetHistorial(){
+        this.historial.clear();
+    }
 
     //Métodos
     //Utiliza moverEnBasico

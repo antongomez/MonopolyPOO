@@ -11,7 +11,7 @@ public class Chapeu extends Avatar {
     }
 
     @Override
-    public void moverEnAvanzado() {
+    public void moverEnAvanzado(int sumaDados, Taboleiro taboleiro) {
 
     }
 }

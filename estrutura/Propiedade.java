@@ -19,7 +19,6 @@ public abstract class Propiedade extends Casilla {
         this.grupo = grupo;
         this.valor = valor;
         this.dono = dono;
-        this.alquiler = 0;
         this.cartosProducidos = 0;
     }
 
@@ -29,14 +28,6 @@ public abstract class Propiedade extends Casilla {
 
     public void setValor(float valor) {
         this.valor = valor;
-    }
-
-    public float getAlquiler() {
-        return this.alquiler;
-    }
-
-    public void setAlquiler(float alquiler) {
-        this.alquiler = alquiler;
     }
 
     public Grupo getGrupo() {
@@ -81,7 +72,7 @@ public abstract class Propiedade extends Casilla {
         }
     }
 
-    public abstract void calculoAlquiler();
+    public abstract float calculoAlquiler();
 
     @Override
     public String toString() {

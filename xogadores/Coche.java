@@ -12,7 +12,7 @@ public class Coche extends Avatar {
     }
 
     @Override
-    public void moverEnAvanzado() {
+    public void moverEnAvanzado(int sumaDados, Taboleiro taboleiro) {
 
     }
 }

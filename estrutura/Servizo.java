@@ -43,12 +43,12 @@ public class Servizo extends Propiedade {
     }
 
     @Override
-    public void calculoAlquiler() {
-        //Falta multiplicalo pola suma dos dados
+    public float calculoAlquiler() {
+        //Falta multiplicalo pola suma dos dados. Faise en xogo
         float valor = factorServizo(this.getDono())
                 * Constantes.ALQUILER_SERVIZO;
 
-        this.setAlquiler(valor);
+        return valor;
 
         //return valor;
     }
@@ -59,7 +59,7 @@ public class Servizo extends Propiedade {
                 + "\tnome:" + this.getNome() + ",\n"
                 + "\ttipo: Servizo,\n"
                 + "\tdono: " + this.getDono().getNome() + ",\n"
-                + "\talquiler: " + this.getAlquiler() + " GM,\n"
+                + "\talquiler: " + this.calculoAlquiler() + " GM,\n"
                 + "\txogadores: [" + "]\n"
                 + "}\n";
 

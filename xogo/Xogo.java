@@ -355,6 +355,15 @@ public class Xogo implements Comando {
                                 + " ao Carcere.\n");
                         break;
 
+                    case "Sorte 1":
+                    case "Sorte 2":
+                    case "Sorte 3":
+                    case "Caixa 1":
+                    case "Caixa 2":
+                    case "Caixa 3":
+                        consola.imprimir("Sorte non implementada");
+                        break;
+
                 }
             } else if (casilla instanceof Imposto) {
                 switch (casilla.getNome()) {
@@ -381,7 +390,61 @@ public class Xogo implements Comando {
                         break;
                 }
             } else if (casilla instanceof Solar) {
-
+                Solar solar = (Solar) casilla;
+                if (solar.getDono().equals(banca)) {
+                    consola.imprimir("O solar " + solar.getNome() + " non ten "
+                            + "dono, pódese comprar.\n");
+                } else {
+                    float alquiler = solar.calculoAlquiler();
+                    if (xogador.getFortuna() > alquiler) {
+                        xogador.modificarFortuna(-alquiler);
+                        solar.getDono().modificarFortuna(alquiler);
+                        consola.imprimir("O xogador " + xogador.getNome()
+                                + " pagulle ao xogador " + solar.getDono().getNome()
+                                + " " + alquiler + " GM. A súa fortuna actual é "
+                                + "de " + xogador.getFortuna() + "\n");
+                    } else {
+                        consola.imprimir("Implementar bancarrota co numero da xogadores.");
+                    }
+                }
+            } else if (casilla instanceof Transporte) {
+                Transporte transporte = (Transporte) casilla;
+                if (transporte.getDono().equals(banca)) {
+                    consola.imprimir("A casilla de transporte "
+                            + transporte.getNome() + " non ten dono, pódese"
+                            + " comprar.\n");
+                } else {
+                    float alquiler = transporte.calculoAlquiler();
+                    if (xogador.getFortuna() > alquiler) {
+                        xogador.modificarFortuna(-alquiler);
+                        transporte.getDono().modificarFortuna(alquiler);
+                        consola.imprimir("O xogador " + xogador.getNome()
+                                + " pagulle ao xogador " + transporte.getDono().getNome()
+                                + " " + alquiler + " GM. A súa fortuna actual é "
+                                + "de " + xogador.getFortuna() + "\n");
+                    } else {
+                        consola.imprimir("Implementar bancarrota co numero da xogadores.");
+                    }
+                }
+            } else if (casilla instanceof Servizo) {
+                Servizo servizo = (Servizo) casilla;
+                if (servizo.getDono().equals(banca)) {
+                    consola.imprimir("A casilla de servizo "
+                            + servizo.getNome() + " non ten dono, pódese"
+                            + " comprar.\n");
+                } else {
+                    float alquiler = servizo.calculoAlquiler();
+                    if (xogador.getFortuna() > alquiler) {
+                        xogador.modificarFortuna(-alquiler);
+                        servizo.getDono().modificarFortuna(alquiler);
+                        consola.imprimir("O xogador " + xogador.getNome()
+                                + " pagulle ao xogador " + servizo.getDono().getNome()
+                                + " " + alquiler + " GM. A súa fortuna actual é "
+                                + "de " + xogador.getFortuna() + "\n");
+                    } else {
+                        consola.imprimir("Implementar bancarrota co número da xogadores.");
+                    }
+                }
             }
         } else {
             //Excepcion
