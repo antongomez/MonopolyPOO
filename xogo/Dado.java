@@ -21,6 +21,10 @@ public class Dado {
         }
     }
 
+    public void resetDado() {
+        this.valor = 0;
+    }
+
     public void tirardado() {
         valor = (int) Math.floor(Math.random() * 6 + 1);
     }

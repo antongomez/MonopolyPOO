@@ -13,7 +13,7 @@ public class Xogo implements Comando {
     private ArrayList<Xogador> xogadores;
     private ArrayList<Avatar> avatares;
     private Taboleiro taboleiro;
-    private HashMap<String, Dado> dados;
+    private HashMap<Integer, HashMap<String, Dado>> tiradas;
     private int turno = 0;
     private Xogador banca;
 
@@ -21,15 +21,17 @@ public class Xogo implements Comando {
 
         xogadores = new ArrayList<>();
         avatares = new ArrayList<>();
-        dados = new HashMap<>();
-        dados.put("d1", new Dado());
-        dados.put("d2", new Dado());
+        for (int i = 0; i < 3; i++) {
+            HashMap<String, Dado> dados = new HashMap<>();
+            dados.put("d1", new Dado());
+            dados.put("d2", new Dado());
+            tiradas.put(i + 1, dados);
+        }
         banca = new Xogador();
         taboleiro = new Taboleiro(banca);
 
         int nXogadores = 0;
         Boolean sair = false;
-        boolean dadosLanzados = false;
         Xogador hipotecar = new Xogador("Hipotecar"); //Xogador ao que se lle hipoteca
 
         do {
@@ -57,7 +59,7 @@ public class Xogo implements Comando {
             //Engadimos o xogador
             xogadores.add(new Xogador(nomeXogador, taboleiro));
 
-            String tipoAvatar = "";
+            String tipoAvatar;
             char IdAvatar;
 
             //Creamos o avatar
@@ -179,9 +181,12 @@ public class Xogo implements Comando {
                     break;
                 case "lanzar":
                     if (comando1.equals("dados")) {
-                        if (!dadosLanzados) {
-                            lanzarDados(dados);
-                            dadosLanzados = true;
+                        if (poderLanzar()) {
+                            lanzarDados();
+
+                            if (avatar instanceof Esfinxe) {
+                                ((Esfinxe) avatar).resetHistorial();
+                            }
                         } else {
                             //Excepcion
                         }
@@ -194,7 +199,20 @@ public class Xogo implements Comando {
                         case "partida":
                             sair = rematarPartida();
                             break;
+                        case "turno":
+                            rematarTurno();
+                            break;
                     }
+                    break;
+
+                case "sair":
+                    if (comando1.equals("carcere")) {
+                        sairCarcere();
+                    }
+                    break;
+
+                case "xogador":
+                    xogador();
                     break;
                 default: //Excepcion
                     consola.imprimir("Comando incorrecto.\n");
@@ -204,16 +222,28 @@ public class Xogo implements Comando {
             if (xogador.getEstadoPreso() == 0) {
                 avanzar(avatar);
                 comprobarCasilla(avatar.getPosicion(), xogador);
-                if (sonDobres(dados)) {
+                if (sonDobres(tiradas.get(0))) {
                     consola.imprimir("Conseguiches tirar dobres. Saes do carcere.");
-                    dadosLanzados = false;
+                    xogador.setEstadoPreso(0);
                 }
-            } else if (sonDobres(dados)) {
-                consola.imprimir("Conseguiches tirar dobres. Saes do carcere.");
-                xogador.setEstadoPreso(0);
-                dadosLanzados = false;
+            } else if ((sonDobres(getDadosLanzados())) && (getTirada() != 3)) {
+                consola.imprimir("Conseguiches tirar dobres. "
+                        + "Debes volver lanzar.\n");
+
                 avanzar(avatar);
                 comprobarCasilla(avatar.getPosicion(), xogador);
+            } else if ((sonDobres(getDadosLanzados())) && (getTirada() == 3)) {
+                consola.imprimir("Tirar dobres por terceira vez consecutiva.\n");
+                xogador.setEstadoPreso(3);
+                moverAoCarcere(avatar);
+                consola.imprimir("O avatar " + avatar.getId() + " foi enviado "
+                        + "ao Cárcere.\n");
+
+            } else if (sonDobres(getDadosLanzados())) {
+                xogador.restarEstadoPreso();
+                consola.imprimir("Non coneguiches lanzar dobres. Quédanche "
+                        + xogador.getEstadoPreso() + " turnos no Cárcere.\n");
+
             } else {
                 consola.imprimir("Non conseguiches tirar dobres.");
                 xogador.restarEstadoPreso();
@@ -246,12 +276,53 @@ public class Xogo implements Comando {
         this.taboleiro = taboleiro;
     }
 
-    public HashMap<String, Dado> getDados() {
-        return dados;
+    public HashMap<String, Dado> getDadosLanzables() {
+        if (!dadosLanzados(tiradas.get(1))) {
+            return tiradas.get(1);
+        } else if ((!dadosLanzados(tiradas.get(2))) && (sonDobres(tiradas.get(1)))) {
+            return tiradas.get(2);
+        } else if ((!dadosLanzados(tiradas.get(3))) && (sonDobres(tiradas.get(2)))) {
+            return tiradas.get(3);
+        } else {
+            //Excepcion
+        }
+        System.out.println("Non se deberia chegar aqui. Faltan as excepcions");
+        return tiradas.get(3);
     }
 
-    public void setDados(HashMap<String, Dado> dados) {
-        this.dados = dados;
+    private HashMap<String, Dado> getDadosLanzados() {
+        if (dadosLanzados(tiradas.get(3))) {
+            return tiradas.get(3);
+        } else if (dadosLanzados(tiradas.get(2))) {
+            return tiradas.get(2);
+        } else if (dadosLanzados(tiradas.get(1))) {
+            return tiradas.get(1);
+        } else {
+            //Excepcion
+        }
+        System.out.println("Non se deberia chegar aqui. Faltan as excepcions");
+        return tiradas.get(1);
+    }
+
+    private int getTirada() {
+        if (dadosLanzados(tiradas.get(3))) {
+            return 3;
+        } else if (dadosLanzados(tiradas.get(2))) {
+            return 2;
+        } else if (dadosLanzados(tiradas.get(1))) {
+            return 1;
+        } else {
+            //Excepcion
+        }
+        System.out.println("Non se deberia chegar aqui. Faltan as excepcions");
+        return 0;
+    }
+
+    public void resetDados() {
+        for (int i = 0; i < 3; i++) {
+            tiradas.get(i).get("d1").resetDado();
+            tiradas.get(i).get("d2").resetDado();
+        }
     }
 
     public int getTurno() {
@@ -286,9 +357,9 @@ public class Xogo implements Comando {
     //Métodos auxiliares para a funcionalidade
     private void avanzar(Avatar avatar) {
         if (!avatar.getModoAvanzado()) {
-            avatar.moverEnBasico(sumarDados(dados), taboleiro);
+            avatar.moverEnBasico(sumarDados(getDadosLanzados()), taboleiro);
         } else {
-            avatar.moverEnAvanzado(sumarDados(dados), taboleiro);
+            avatar.moverEnAvanzado(sumarDados(getDadosLanzados()), taboleiro);
         }
     }
 
@@ -403,6 +474,11 @@ public class Xogo implements Comando {
                                 + " pagulle ao xogador " + solar.getDono().getNome()
                                 + " " + alquiler + " GM. A súa fortuna actual é "
                                 + "de " + xogador.getFortuna() + "\n");
+
+                        if (avatar instanceof Esfinxe) {
+                            ((Esfinxe) avatar).sumarHistorial("alquiler "
+                                    + solar.getDono().getNome() + " " + alquiler);
+                        }
                     } else {
                         consola.imprimir("Implementar bancarrota co numero da xogadores.");
                     }
@@ -422,6 +498,11 @@ public class Xogo implements Comando {
                                 + " pagulle ao xogador " + transporte.getDono().getNome()
                                 + " " + alquiler + " GM. A súa fortuna actual é "
                                 + "de " + xogador.getFortuna() + "\n");
+
+                        if (avatar instanceof Esfinxe) {
+                            ((Esfinxe) avatar).sumarHistorial("alquiler "
+                                    + transporte.getDono().getNome() + " " + alquiler);
+                        }
                     } else {
                         consola.imprimir("Implementar bancarrota co numero da xogadores.");
                     }
@@ -441,6 +522,11 @@ public class Xogo implements Comando {
                                 + " pagulle ao xogador " + servizo.getDono().getNome()
                                 + " " + alquiler + " GM. A súa fortuna actual é "
                                 + "de " + xogador.getFortuna() + "\n");
+
+                        if (avatar instanceof Esfinxe) {
+                            ((Esfinxe) avatar).sumarHistorial("alquiler "
+                                    + servizo.getDono().getNome() + " " + alquiler);
+                        }
                     } else {
                         consola.imprimir("Implementar bancarrota co número da xogadores.");
                     }
@@ -449,6 +535,13 @@ public class Xogo implements Comando {
         } else {
             //Excepcion
         }
+    }
+
+    public boolean dadosLanzados(HashMap<String, Dado> dados) {
+        if ((dados.get("d1").getValor() == 0) && (dados.get("d2").getValor() == 0)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -597,18 +690,20 @@ public class Xogo implements Comando {
     }
 
     @Override
-    public final void lanzarDados(HashMap<String, Dado> dados) {
-        if (dados != null) {
+    public final void lanzarDados() {
+
+        if (poderLanzar()) {
+            HashMap<String, Dado> dados = getDadosLanzables();
             dados.get("d1").tirardado();
             dados.get("d2").tirardado();
 
             consola.imprimir("Dado1: " + dados.get("d1"));
             consola.imprimir("Dado2: " + dados.get("d2"));
             consola.imprimir("Suma dos dados: " + sumarDados(dados));
-
         } else {
             //Excepcion
         }
+
     }
 
     @Override
@@ -707,7 +802,7 @@ public class Xogo implements Comando {
         return false;
     }
 
-    public void moverAoCarcere(Avatar avatar) {
+    private void moverAoCarcere(Avatar avatar) {
         if (avatar != null) {
             Casilla procedencia = avatar.getPosicion();
             Casilla destino = taboleiro.getCasilla("Carcere");
@@ -726,9 +821,50 @@ public class Xogo implements Comando {
         return propiedade.getDono().equals(banca);
     }
 
+    private boolean poderLanzar() {
+        if (!dadosLanzados(tiradas.get(1))) {
+            return true;
+        } else if ((!dadosLanzados(tiradas.get(2))) && (sonDobres(tiradas.get(1)))) {
+            return true;
+        } else if ((!dadosLanzados(tiradas.get(3))) && (sonDobres(tiradas.get(2)))) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public final void rematarTurno() {
+        if (!poderLanzar()) {
+            this.resetDados();
+            if (turno == (xogadores.size() - 1)) {
+                turno = 0;
+            } else {
+                turno++;
+            }
+            consola.imprimir("Turno de " + xogadores.get(turno).getNome() + ".\n");
+        } else {
+            //Excepcion
+            consola.imprimir("O xogador non pode rematar turno.");
+        }
+    }
+
     @Override
     public final boolean rematarPartida() {
         return true;
+    }
+
+    @Override
+    public final void sairCarcere() {
+        if (xogadores.get(turno).getEstadoPreso() > 0) {
+            xogadores.get(turno).modificarFortuna(-Constantes.SAIR_CARCERE);
+            consola.imprimir("O xogador " + xogadores.get(turno).getNome()
+                    + " pagou " + Constantes.SAIR_CARCERE + " GM para saír do"
+                    + " Cárcere. A súa fortuna actual é de "
+                    + xogadores.get(turno).getFortuna() + ".\n");
+        } else {
+
+            //Excepcion
+        }
     }
 
     private boolean sonDobres(HashMap<String, Dado> dados) {
@@ -754,6 +890,11 @@ public class Xogo implements Comando {
     @Override
     public void verTaboleiro() {
         taboleiro.imprimirTaboleiro();
+    }
+
+    @Override
+    public final void xogador() {
+        xogadores.get(turno);
     }
 
     //Fin clase

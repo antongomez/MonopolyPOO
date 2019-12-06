@@ -1,6 +1,7 @@
 package xogadores;
 
 import estrutura.*;
+import xogo.*;
 
 import java.util.ArrayList;
 
@@ -8,7 +9,7 @@ public class Esfinxe extends Avatar {
 
     private ArrayList<String> historial;
 
-    //Exemplo: alquiler Lugo casa-2/hotel-1/piscina-1 Anton 150  /*sendo Victor o xogador deste avatar*/
+    //Exemplo: alquiler Anton 150  /*sendo Victor o xogador deste avatar*/
     //Exemplo: compra Lugo 150
     //Exemplo: hipoteca Lugo 150
     /*Se se edifica nun turno varios edificios van en comandos distintos.
@@ -34,12 +35,13 @@ public class Esfinxe extends Avatar {
     public void setHistorial(ArrayList<String> historial) {
         this.historial = historial;
     }
-    
-    public void sumarHistorial(String accion){
+
+    public void sumarHistorial(String accion) {
         this.historial.add(accion);
+        System.err.println("Linha engadida: \n" + accion + "\n");
     }
-    
-    public void resetHistorial(){
+
+    public void resetHistorial() {
         this.historial.clear();
     }
 
@@ -53,6 +55,7 @@ public class Esfinxe extends Avatar {
             switch (this.getLado(this.getPosicion().getPosicion())) {
                 case 'e':
                     //Facemos o primeiro movemento
+                    Xogo.consola.imprimir("");
                     desplazarseEste(this.getPosicion(), taboleiro);
                     sumaDados--;
 
@@ -78,7 +81,6 @@ public class Esfinxe extends Avatar {
         } else {
             desfacerCambios();
         }
-
     }
 
     private void desplazarseEste(Casilla casilla, Taboleiro taboleiro) {
@@ -186,15 +188,15 @@ public class Esfinxe extends Avatar {
             //Excepcion
         }
     }
-    
-    private void desfacerCambios(){
+
+    private void desfacerCambios() {
         String[] partes;
         String accion, casilla;
-        for(int i = 0; i < historial.size(); i++){
+        for (int i = 0; i < historial.size(); i++) {
             partes = historial.get(i).split(" ");
             accion = partes[0];
 
-            switch(accion){
+            switch (accion) {
                 case "alquiler":
                     break;
                 case "compra":
@@ -210,10 +212,10 @@ public class Esfinxe extends Avatar {
                 case "trato":
                     break;
                 case "pago":
-                
+
                     break;
             }
-            
+
         }
     }
 
