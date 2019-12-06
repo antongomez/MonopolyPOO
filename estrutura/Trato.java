@@ -27,7 +27,18 @@ public class Trato {
         dineroRecibe = 0;
         nTurnos = 0;
     }
-
+    public Trato(Xogador xogProp, Xogador xogRec, Propiedade propProp, Propiedade propRec, Propiedade propAl, float dineroProp, float dineroRec, int numturn)
+    {
+        this.xogadorPropon = xogProp;
+        this.xogadorRecibe = xogRec;
+        this.propPropon = propProp;
+        this.propRecibe = propRec;
+        this.propAlRecibe = propAl;
+        this.dineroPropon = dineroProp;
+        this.dineroRecibe = dineroRec;
+        this.nTurnos = numturn;
+    }
+    /*
     public void InciarTrato(ArrayList<Xogador> xogadores)
     {
         final ConsolaNormal consola = new ConsolaNormal();
@@ -136,19 +147,50 @@ public class Trato {
             } else
                 pedirProp = true;
         }while(!pedirProp);
-
-    }
+    }*/
 
     public void aceptarTrato()
     {
+        final ConsolaNormal consola = new ConsolaNormal();
+        if (xogadorRecibe.getFortuna() < dineroRecibe)
+            {
+                consola.imprimir("Non tes suficientes cartos para aceptar o trato.");
+                return;
+            }
+
         if (xogadorPropon.getFortuna() < dineroPropon)
             return;
             //excepcion
-
+        //Paga 1 a 2
         xogadorRecibe.setFortuna(xogadorRecibe.getFortuna() + dineroPropon);
         xogadorPropon.setFortuna(xogadorPropon.getFortuna() - dineroPropon);
+        //Paga 2 a 1
+        xogadorRecibe.setFortuna(xogadorRecibe.getFortuna() - dineroRecibe);
+        xogadorPropon.setFortuna(xogadorPropon.getFortuna() + dineroRecibe);
 
-        //SEN REMATAR
+        if (propPropon != null)
+        {
+            //introducimos novo dono
+            propPropon.setDono(xogadorRecibe);
+            xogadorRecibe.engadirPropiedade(propPropon);
+
+            //Eliminamos do dono previo
+            xogadorPropon.eliminarPropiedade(propPropon);
+        }
+
+        if (propRecibe != null)
+        {
+            //introducimos novo dono
+            propRecibe.setDono(xogadorPropon);
+            xogadorPropon.engadirPropiedade(propRecibe);
+
+            //Eliminamos do dono previo
+            xogadorRecibe.eliminarPropiedade(propRecibe);
+        }
+
+        //XestionAlquilares
+
+
     }
 
     @Override

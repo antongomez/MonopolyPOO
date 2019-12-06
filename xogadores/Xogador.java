@@ -1,5 +1,6 @@
 package xogadores;
 
+import consola.ConsolaNormal;
 import estrutura.*;
 
 import java.util.ArrayList;
@@ -200,6 +201,66 @@ public class Xogador {
         }
 
         return texto;
+    }
+
+    public void hipotecar(Propiedade prop, Xogador hipotecar)
+    {
+        boolean atopada = false;
+        final ConsolaNormal consola = new ConsolaNormal();
+        for (Propiedade propiedade : this.propiedades) {
+            if (propiedade.getNome().equals(prop.getNome())) {
+                atopada = true;
+                break;
+            }
+        }
+
+        if (!atopada) {
+            consola.imprimir("Esta propiedade non te pertence.");
+            //excepcion
+            return;
+        }
+
+        if (prop instanceof Solar)
+        {
+            for (int i = ((Solar) prop).getEdificios().size() -1; i >= 0; i++)
+            {
+                this.fortuna = this.fortuna + ((Solar) prop).getEdificios().get(i).vender();
+            }
+        }
+
+        prop.setDono(hipotecar);
+        hipotecar.engadirPropiedade(prop);
+        this.fortuna = (float) (fortuna + prop.getValor()*0.5);
+    }
+
+    public void deshipotecar(Xogador xog, Propiedade prop)
+    {
+        final ConsolaNormal consola = new ConsolaNormal();
+        boolean edel = false;
+
+        if (!prop.getDono().getNome().equals("Hipotecar"))
+        {
+            consola.imprimir("Esta propiedade non esta hipotecada.");
+            return;
+        }
+
+        for (int i = 0; i < xog.getPropiedades().size(); i++)
+        {
+            if (xog.getPropiedades().get(i).getNome().equals(prop.getNome())) {
+                edel = true;
+                break;
+            }
+        }
+
+        if (edel)
+        {
+            xog.setFortuna((float) (xog.getFortuna()- 0.5*prop.getValor()));
+            prop.setDono(xog);
+
+            xog.eliminarPropiedade(prop);
+        }
+        else
+            consola.imprimir("Esta propiedade non é túa pilloín!");
     }
 
     @Override
