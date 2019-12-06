@@ -8,7 +8,7 @@ public interface Comando {
     //public void avanzar();
     public void cambiarModo(Avatar avatar);
     public void comprar(Propiedade propiedade, Xogador xogador);
-    public void describir(String nomeCasilla);
+    public void describir(String tipo, String nome);
     public void edificar(Avatar avatar, String tipoEdificacion, int nEdificios);
     //public void estatisticas();
     //public void hipotecar(Propiedade propiedade, Xogador xogador);

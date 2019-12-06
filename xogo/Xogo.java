@@ -151,7 +151,7 @@ public class Xogo implements Comando {
                     }
                     break;
                 case "describir":
-                    describirXeral(comando1, comando2);
+                    describir(comando1, comando2);
                     break;
 
                 case "edificar":
@@ -281,8 +281,16 @@ public class Xogo implements Comando {
         }
     }
 
+    public final void describirCasilla(String nomeCasilla) {
+        if (existeCasilla(nomeCasilla)) {
+            consola.imprimir(taboleiro.getCasilla(nomeCasilla).imprimirCasilla());
+        } else {
+            //Excepcion
+        }
+    }
+
     @Override
-    public final void describirXeral(String comando1, String comando2) {
+    public final void describir(String comando1, String comando2) {
         switch (comando1) {
             case "xogador":
                 if (comando2.equals("nada")) {
@@ -298,31 +306,23 @@ public class Xogo implements Comando {
                 }
                 break;
             case "avatar":
-                if (comando2.equals("nada"))
-                {
+                if (comando2.equals("nada")) {
                     for (int i = 0; i < avatares.size(); i++) {
-                            System.out.println(avatares.get(i));
+                        System.out.println(avatares.get(i));
                     }
-                }
-                else
-                {
+                } else {
                     for (int i = 0; i < avatares.size(); i++) {
-                        if (avatares.get(i).getId() == (comando2.charAt(0)))  //Convirte unha cadea nun char
+                        if (avatares.get(i).getId() == (comando2.charAt(0))) //Convirte unha cadea nun char
+                        {
                             System.out.println(avatares.get(i));
+                        }
                     }
                 }
                 break;
             default:
-                describir(comando1);
+                describirCasilla(comando1);
                 break;
 
-        }
-    }
-    public final void describir(String nomeCasilla) {
-        if (existeCasilla(nomeCasilla)) {
-            consola.imprimir(taboleiro.getCasilla(nomeCasilla).imprimirCasilla());
-        } else {
-            //Excepcion
         }
     }
 
