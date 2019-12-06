@@ -6,8 +6,8 @@ import xogadores.Xogador;
 import java.util.ArrayList;
 
 public class Trato {
-
-    private  Xogador xogadorPropon;
+    private String nome;
+    private Xogador xogadorPropon;
     private Xogador xogadorRecibe;
     private Propiedade propPropon;
     private Propiedade propRecibe;
@@ -137,8 +137,18 @@ public class Trato {
                 pedirProp = true;
         }while(!pedirProp);
 
-        
+    }
 
+    public void aceptarTrato()
+    {
+        if (xogadorPropon.getFortuna() < dineroPropon)
+            return;
+            //excepcion
+
+        xogadorRecibe.setFortuna(xogadorRecibe.getFortuna() + dineroPropon);
+        xogadorPropon.setFortuna(xogadorPropon.getFortuna() - dineroPropon);
+
+        //SEN REMATAR
     }
 
     @Override
