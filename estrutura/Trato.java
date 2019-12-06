@@ -33,8 +33,8 @@ public class Trato {
         final ConsolaNormal consola = new ConsolaNormal();
         String buffer;
         boolean xogadoratopado = false;
-        boolean propiedadeatopadaPropon = false;
-        boolean propiedadeatopadaRecibe = false;
+        boolean pedirProp = false;
+        boolean pediralquiler = false;
 
         do {
             //Xogador a tratar
@@ -49,42 +49,133 @@ public class Trato {
             }
         }while(!xogadoratopado);
 
-        buffer = consola.ler("Canto diñeiro lle gustaría ofertar 0 para indicar nada.");
+        //Dñeiro propon
+        buffer = consola.ler("Canto diñeiro lle gustaría ofertar? 0 para indicar nada.");
         if (Float.parseFloat(buffer)>=0)
         {
-            dineroPropon=Float.parseFloat(buffer); //Diéiro a pagar
-            if (xogadorPropon.getFortuna() < dineroPropon)
-            {
-                //excepcion
-            }
-            buffer = consola.ler("Desexa ofertar unha propiedade?");//propieade a cambiar
-            for (int i = 0; i < xogadorPropon.getPropiedades().size(); i++)
-            {
-                if (xogadorPropon.getPropiedades().get(i).getNome().equals(buffer))
-                {
-                    propPropon = xogadorPropon.getPropiedades().get(i);
-                    propiedadeatopadaPropon = true;
-                }
-            }
-
-            if (dineroPropon == 0)
-            {
-                buffer = consola.ler("Desexa ofertar unha propiedade?");
-                if (Float.parseFloat(buffer)>=0)
-                {
-                    dineroRecibe = Float.parseFloat(buffer);
-                }
-                else
-                    //excepcion
-            }
-
-        }
-        else
             //Excepcion
+            return;
+        }
 
+        dineroPropon=Float.parseFloat(buffer); //Diéiro a pagar
+        if (xogadorPropon.getFortuna() < dineroPropon)
+        {
+            //excepcion
+        }
+
+        //Porpiedade
+        buffer = consola.ler("Desexa ofertar unha propiedade?");//propieade a cambiar
+        for (int i = 0; i < xogadorPropon.getPropiedades().size(); i++)
+        {
+            if (xogadorPropon.getPropiedades().get(i).getNome().equals(buffer))
+            {
+                propPropon = xogadorPropon.getPropiedades().get(i);
+            }
+        }
+
+        //Pedir dinero a cambio
+        if (dineroPropon == 0)
+        {
+            buffer = consola.ler("Te gustaría pedir dinero a cambio? 0 par non");
+            if (Float.parseFloat(buffer)>=0)
+            {
+                dineroRecibe = Float.parseFloat(buffer);
+            }
+            //else
+                //excepcion
+        }
+
+        //Pedir propiedade a cambio
+        do {
+
+            buffer = consola.ler("Te gustaría obtener una propieade del acuerdo? Non para non.");
+            if (!buffer.equals("Nom ")) {
+                for (int i = 0; i < xogadorRecibe.getPropiedades().size(); i++) {
+                    if (xogadorRecibe.getPropiedades().get(i).getNome().equals(buffer)) {
+                        propRecibe = xogadorRecibe.getPropiedades().get(i);
+                        pedirProp = true;
+                    }
+                }
+
+                //ALquiler por turnos
+                do {
+                    buffer = consola.ler("Desexa pedir alquiler coma parte de pago? Non para non.");
+                    for (int i = 0; i < xogadorRecibe.getPropiedades().size(); i++)
+                    {
+                        if (xogadorRecibe.getPropiedades().get(i).getNome().equals(buffer))
+                        {
+                            if (xogadorRecibe.getPropiedades().get(i).getNome().equals(propRecibe.getNome()))
+                                consola.imprimir("Esta propidade xa foi seleccionada.");
+                            else {
+                                propAlRecibe = xogadorRecibe.getPropiedades().get(i);
+                                buffer = consola.ler("Durante cantos turnos?");
+                                if (Integer.parseInt(buffer)>0){
+                                    nTurnos = Integer.parseInt(buffer);
+                                    pedirProp = true;
+                                    pediralquiler = true;
+                                }
+                                //else
+                                    //Excpción
+                            }
+                        }
+                    }
+                    if (buffer.equals("Non"))
+                    {
+                        pedirProp = true;
+                        pediralquiler = true;
+                    }
+                    else
+                        consola.imprimir("O xogador co que trata non posee esa propiedade.");
+                }while (!pediralquiler);
+
+
+                if (!pedirProp) {
+                    pedirProp = false;
+                    consola.imprimir("O xogador co que trata non posee esa propiedade.");
+                }
+            } else
+                pedirProp = true;
+        }while(!pedirProp);
+
+        
 
     }
 
-    public void
+    @Override
+    public String toString() {
+        String trato="";
+        if (xogadorRecibe != null)
+        {
+             trato = "\n--------TRATO--------"+
+                     "\nPropon: " + xogadorPropon.getNome()+
+                     "\nA: " + xogadorRecibe.getNome() +
+                     "\nCambiar:";
+             if (propPropon != null)
+                 trato += "\nPropiedad: " + propPropon.getNome();
+
+             if (dineroPropon > 0)
+             {
+                 trato += "\n Diñeiro: " + dineroPropon + "GM";
+             }
+
+             trato += "\n Por:";
+            if (propRecibe != null)
+                trato += "\nPropiedad: " + propRecibe.getNome();
+
+            if (dineroRecibe > 0)
+            {
+                trato += "\n Diñeiro: " + dineroRecibe + "GM";
+            }
+
+            if (nTurnos > 0)
+            {
+                trato += "\n No pagar el alquiler de " + propAlRecibe.getNome() +
+                        "\n durante " + nTurnos + " turnos.\n";
+            }
+            return trato;
+        }
+        else
+            return trato;
+    }
 
 }
