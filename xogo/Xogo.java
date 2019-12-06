@@ -281,7 +281,39 @@ public class Xogo implements Comando {
         }
     }
 
-    public final void describirCasilla(String nomeCasilla) {
+    @Override
+    public final void describir(String comando1, String comando2) {
+        switch (comando1) {
+            case "xogador":
+                describirXogador(comando2);
+                break;
+            case "avatar":
+                describirAvatar(comando2.charAt(0));
+                break;
+            case "casilla":
+                describirCasilla(comando2);
+                break;
+            default:
+                //Excepcion
+                break;
+
+        }
+    }
+
+    private void describirAvatar(char idAvatar) {
+        if (existeAvatar(idAvatar)) {
+            for (int i = 0; i < avatares.size(); i++) {
+                if (avatares.get(i).getId() == idAvatar) {
+                    System.out.println(avatares.get(i));
+                }
+            }
+        } else {
+            //Excepcion
+        }
+
+    }
+
+    public void describirCasilla(String nomeCasilla) {
         if (existeCasilla(nomeCasilla)) {
             consola.imprimir(taboleiro.getCasilla(nomeCasilla).imprimirCasilla());
         } else {
@@ -289,41 +321,17 @@ public class Xogo implements Comando {
         }
     }
 
-    @Override
-    public final void describir(String comando1, String comando2) {
-        switch (comando1) {
-            case "xogador":
-                if (comando2.equals("nada")) {
-                    for (int i = 0; i < xogadores.size(); i++) {
-                        System.out.println(xogadores.get(i));
-                    }
-                } else {
-                    for (int i = 0; i < xogadores.size(); i++) {
-                        if (xogadores.get(i).getNome().equals(comando2)) {
-                            System.out.println(xogadores.get(i));
-                        }
-                    }
+    private void describirXogador(String nomeXogador) {
+        if (existeXogador(nomeXogador)) {
+            for (int i = 0; i < xogadores.size(); i++) {
+                if (xogadores.get(i).getNome().equals(nomeXogador)) {
+                    System.out.println(xogadores.get(i));
                 }
-                break;
-            case "avatar":
-                if (comando2.equals("nada")) {
-                    for (int i = 0; i < avatares.size(); i++) {
-                        System.out.println(avatares.get(i));
-                    }
-                } else {
-                    for (int i = 0; i < avatares.size(); i++) {
-                        if (avatares.get(i).getId() == (comando2.charAt(0))) //Convirte unha cadea nun char
-                        {
-                            System.out.println(avatares.get(i));
-                        }
-                    }
-                }
-                break;
-            default:
-                describirCasilla(comando1);
-                break;
-
+            }
+        } else {
+            //Excepcion
         }
+
     }
 
     @Override
@@ -362,10 +370,30 @@ public class Xogo implements Comando {
         }
     }
 
-    private boolean existeCasilla(String nomeCasilla) {
+    public boolean existeAvatar(char idAvatar) {
+        boolean existe = false;
 
+        for (int i = 0; i < avatares.size(); i++) {
+            if (avatares.get(i).getId() == idAvatar) {
+                existe = true;
+            }
+        }
+        return existe;
+    }
+
+    public boolean existeCasilla(String nomeCasilla) {
         return taboleiro.getCasilla(nomeCasilla) != null;
+    }
 
+    public boolean existeXogador(String nomeXogador) {
+        boolean existe = false;
+
+        for (int i = 0; i < xogadores.size(); i++) {
+            if (xogadores.get(i).getNome().equals(nomeXogador)) {
+                existe = true;
+            }
+        }
+        return existe;
     }
 
     private boolean IdIgualAvatar(char id) {
