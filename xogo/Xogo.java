@@ -21,6 +21,7 @@ public class Xogo implements Comando {
 
         xogadores = new ArrayList<>();
         avatares = new ArrayList<>();
+        tiradas = new HashMap<>();
         for (int i = 0; i < 3; i++) {
             HashMap<String, Dado> dados = new HashMap<>();
             dados.put("d1", new Dado());
@@ -33,6 +34,10 @@ public class Xogo implements Comando {
         int nXogadores = 0;
         Boolean sair = false;
         Xogador hipotecar = new Xogador("Hipotecar"); //Xogador ao que se lle hipoteca
+        ArrayList<Boolean> avanzado = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            avanzado.add(false);
+        }
 
         do {
             nXogadores = Integer.parseInt(consola.ler("Cantos xogadores sodes? "));
@@ -184,10 +189,41 @@ public class Xogo implements Comando {
                         if (poderLanzar()) {
                             lanzarDados();
 
-                            if (avatar instanceof Esfinxe) {
-                                ((Esfinxe) avatar).resetHistorial();
+                            if (xogador.getEstadoPreso() == 0) {
+
+                                if ((sonDobres(getDadosLanzados())) && (getTirada() == 3)) {
+
+                                    consola.imprimir("Tirar dobres por terceira vez consecutiva.\n");
+                                    xogador.setEstadoPreso(3);
+                                    moverAoCarcere(avatar);
+                                    consola.imprimir("O avatar " + avatar.getId() + " foi enviado "
+                                            + "ao Cárcere.\n");
+
+                                } else if (!sonDobres(getDadosLanzados())) {
+
+                                    avanzar(avatar);
+                                    comprobarCasilla(avatar.getPosicion(), xogador);
+                                }
+                                if (sonDobres(getDadosLanzados())) {
+
+                                    consola.imprimir("Conseguiches tirar dobres. "
+                                            + "Debes volver lanzar.\n");
+                                }
+
+                            } else {
+
+                                if (!sonDobres(getDadosLanzados())) {
+                                    xogador.restarEstadoPreso();
+                                    consola.imprimir("Non coneguiches lanzar dobres. Quédanche "
+                                            + xogador.getEstadoPreso() + " turnos no Cárcere.\n");
+
+                                } else {
+                                    consola.imprimir("Tiraches dobres, polo que saes do Cárcere.");
+                                    xogador.setEstadoPreso(0);
+                                }
                             }
                         } else {
+                            consola.imprimir("NOn podes lanzar.\n");
                             //Excepcion
                         }
                     }
@@ -218,35 +254,6 @@ public class Xogo implements Comando {
                     consola.imprimir("Comando incorrecto.\n");
                     break;
 
-            }
-            if (xogador.getEstadoPreso() == 0) {
-                avanzar(avatar);
-                comprobarCasilla(avatar.getPosicion(), xogador);
-                if (sonDobres(tiradas.get(0))) {
-                    consola.imprimir("Conseguiches tirar dobres. Saes do carcere.");
-                    xogador.setEstadoPreso(0);
-                }
-            } else if ((sonDobres(getDadosLanzados())) && (getTirada() != 3)) {
-                consola.imprimir("Conseguiches tirar dobres. "
-                        + "Debes volver lanzar.\n");
-
-                avanzar(avatar);
-                comprobarCasilla(avatar.getPosicion(), xogador);
-            } else if ((sonDobres(getDadosLanzados())) && (getTirada() == 3)) {
-                consola.imprimir("Tirar dobres por terceira vez consecutiva.\n");
-                xogador.setEstadoPreso(3);
-                moverAoCarcere(avatar);
-                consola.imprimir("O avatar " + avatar.getId() + " foi enviado "
-                        + "ao Cárcere.\n");
-
-            } else if (sonDobres(getDadosLanzados())) {
-                xogador.restarEstadoPreso();
-                consola.imprimir("Non coneguiches lanzar dobres. Quédanche "
-                        + xogador.getEstadoPreso() + " turnos no Cárcere.\n");
-
-            } else {
-                consola.imprimir("Non conseguiches tirar dobres.");
-                xogador.restarEstadoPreso();
             }
         }
     }
@@ -723,7 +730,6 @@ public class Xogo implements Comando {
                 break;
             case "enventa":
                 listarEnVenta();
-                ;
                 break;
             default:
                 //Excepcion

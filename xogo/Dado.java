@@ -9,9 +9,6 @@ public class Dado {
     }
 
     public int getValor() {
-        if ((valor < 1) || (valor > 6)) {
-            System.out.println("\nDado non inicilizado.\n");
-        }
         return this.valor;
     }
 
