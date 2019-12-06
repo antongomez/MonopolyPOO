@@ -112,9 +112,7 @@ public class Xogo implements Comando {
 
             Xogador xogador = xogadores.get(turno);
             Avatar avatar = xogador.getAvatar();
-            String comando0;
-            String comando1;
-            String comando2 = "nada"; //Inicialización necesaria para o correcto funcionamento de describir e listar
+            String comando0, comando1, comando2, comando3;
 
             //Turno do xogador
             consola.imprimir("Turno de " + xogador.getNome() + "\n$> ");
@@ -126,6 +124,7 @@ public class Xogo implements Comando {
             String[] partes = orde.split(" ");
             comando0 = partes[0];
 
+            //INICIALIZACION COMANDOS
             if (partes.length > 1) {
                 comando1 = partes[1];
             } else {
@@ -135,6 +134,11 @@ public class Xogo implements Comando {
                 comando2 = partes[2];
             } else {
                 comando2 = "";
+            }
+            if (partes.length > 3) {
+                comando3 = partes[3];
+            } else {
+                comando3 = "";
             }
 
             switch (comando0) {
@@ -151,7 +155,7 @@ public class Xogo implements Comando {
                     }
                     break;
                 case "describir":
-                    describir(comando1, comando2);
+                    describir(comando1, comando2 + comando3);
                     break;
 
                 case "edificar":
