@@ -23,7 +23,7 @@ public class Imposto extends Casilla {
     @Override
     public String imprimirCasilla() {
         String texto = "{\n"
-                + "\tnome:" + this.getNome() + ",\n"
+                + "\tnome: " + this.getNome() + ",\n"
                 + "\timposto:" + imposto + ",\n"
                 + "\txogadores: [" + "]\n"
                 + "}\n";

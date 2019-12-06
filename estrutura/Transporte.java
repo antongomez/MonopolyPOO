@@ -61,7 +61,7 @@ public class Transporte extends Propiedade {
     @Override
     public String imprimirCasilla() {
         String texto = "{\n"
-                + "\tnome:" + this.getNome() + ",\n"
+                + "\tnome: " + this.getNome() + ",\n"
                 + "\ttipo: Transporte,\n"
                 + "\tdono: " + this.getDono().getNome() + ",\n"
                 + "\talquiler: " + this.calculoAlquiler() + " GM,\n"

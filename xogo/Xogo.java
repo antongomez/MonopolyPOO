@@ -208,6 +208,9 @@ public class Xogo implements Comando {
 
                                     consola.imprimir("Conseguiches tirar dobres. "
                                             + "Debes volver lanzar.\n");
+
+                                    avanzar(avatar);
+                                    comprobarCasilla(avatar.getPosicion(), xogador);
                                 }
 
                             } else {
@@ -220,10 +223,13 @@ public class Xogo implements Comando {
                                 } else {
                                     consola.imprimir("Tiraches dobres, polo que saes do Cárcere.");
                                     xogador.setEstadoPreso(0);
+
+                                    avanzar(avatar);
+                                    comprobarCasilla(avatar.getPosicion(), xogador);
                                 }
                             }
                         } else {
-                            consola.imprimir("NOn podes lanzar.\n");
+                            consola.imprimir("Non podes lanzar.\n");
                             //Excepcion
                         }
                     }
@@ -244,6 +250,12 @@ public class Xogo implements Comando {
                 case "sair":
                     if (comando1.equals("carcere")) {
                         sairCarcere();
+                    }
+                    break;
+
+                case "ver":
+                    if (comando1.equals("taboleiro")) {
+                        verTaboleiro();
                     }
                     break;
 
@@ -552,20 +564,20 @@ public class Xogo implements Comando {
     }
 
     @Override
-    public final void describir(String comando1, String comando2) {
-        switch (comando1) {
+    public final void describir(String tipo, String nome) {
+        switch (tipo) {
             case "xogador":
-                describirXogador(comando2);
+                describirXogador(nome);
                 break;
             case "avatar":
-                describirAvatar(comando2.charAt(0));
+                describirAvatar(nome.charAt(0));
                 break;
             case "casilla":
-                describirCasilla(comando2);
+                describirCasilla(nome);
                 break;
             case "Carcere":
             case "Parking":
-                describirCasilla(comando1);
+                describirCasilla(tipo);
                 break;
             default:
                 //Excepcion
@@ -671,7 +683,17 @@ public class Xogo implements Comando {
     }
 
     public boolean existeCasilla(String nomeCasilla) {
-        return taboleiro.getCasilla(nomeCasilla) != null;
+        if (taboleiro.getCasilla(nomeCasilla) != null) {
+            return true;
+        }
+        //Facemos a comprobacion sen o espazo
+        for (int i = 0; i < 40; i++) {
+            if (taboleiro.getCasilla(i).getNome().replace(" ", "")
+                    .equals(nomeCasilla)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean existeXogador(String nomeXogador) {
@@ -716,13 +738,13 @@ public class Xogo implements Comando {
     @Override
     public final void listar(String comando1, String grupo) {
         switch (comando1) {
-            case "xogador":
+            case "xogadores":
                 listarXogador();
                 break;
-            case "avatar":
+            case "avatares":
                 listarAvatar();
                 break;
-            case "casilla":
+            case "casillas":
                 listarCasilla();
                 break;
             case "edificios":
@@ -894,13 +916,14 @@ public class Xogo implements Comando {
     }
 
     @Override
-    public void verTaboleiro() {
+    public final void verTaboleiro() {
         taboleiro.imprimirTaboleiro();
     }
 
     @Override
     public final void xogador() {
         xogadores.get(turno);
+        consola.imprimir("\n");
     }
 
     //Fin clase

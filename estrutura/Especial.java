@@ -46,7 +46,7 @@ public class Especial extends Casilla {
     @Override
     public String imprimirCasilla() {
         String texto = "{\n"
-                + "\tnome:" + this.getNome() + ",\n";
+                + "\tnome: " + this.getNome() + ",\n";
         switch (this.getNome()) {
             case "Parking":
                 texto += "\tbote: " + valor + ",\n";

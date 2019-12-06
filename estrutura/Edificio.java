@@ -38,12 +38,12 @@ public abstract class Edificio {
     }
 
     public float vender() {
-        for (int i = 0; i < solar.getEdificios().size(); i++)
-        {
-            if (solar.getEdificios().get(i).getId().equals(this.id))
+        for (int i = 0; i < solar.getEdificios().size(); i++) {
+            if (solar.getEdificios().get(i).getId().equals(this.id)) {
                 solar.getEdificios().remove(i);
+            }
         }
-        return (float) (valor*0.5);
+        return (float) (valor * 0.5);
     }
 
     //Métodos
@@ -55,4 +55,11 @@ public abstract class Edificio {
     public String toString(){
         return String = tipo+" "+id;
     }*/
+    @Override
+    public boolean equals(Object edificio) {
+        if (!(edificio instanceof Edificio)) {
+            return false;
+        }
+        return (this.id.equals(((Edificio) edificio).getId()));
+    }
 }

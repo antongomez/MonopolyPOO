@@ -11,7 +11,7 @@ public abstract class Casilla {
     private ArrayList<Avatar> avatares;
     private int posicion;
     //ArrayList que conten as veces que o avatar i visitou a casilla
-    private ArrayList<Integer> frecuentada; 
+    private ArrayList<Integer> frecuentada;
 
     //Constructor
     public Casilla() {
@@ -121,5 +121,13 @@ public abstract class Casilla {
         String avataresCasilla = String.format("%6s", imprimirAvatares());
         String texto = "| " + nomeaux + " " + avataresCasilla + "|";
         return texto;
+    }
+
+    @Override
+    public boolean equals(Object casilla) {
+        if (!(casilla instanceof Casilla)) {
+            return false;
+        }
+        return (this.nome.equals(((Casilla) casilla).getNome()));
     }
 }
