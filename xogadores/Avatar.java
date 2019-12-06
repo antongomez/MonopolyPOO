@@ -86,7 +86,7 @@ public abstract class Avatar {
         }
     }
 
-    public abstract void moverEnAvanzado();
+    public abstract void moverEnAvanzado(int sumaDados, Taboleiro taboleiro);
 
     public static char xerarId() {
         char identificador;
