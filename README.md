@@ -5,8 +5,7 @@ CASILLA
 
  - Atributo frecuentada: leva a conta das visitas dos Avatares (é un ArrayList que almacena)
  - Métodos frecuenciaVisita: serve para calcular as visitas dun avatar ou de todos os avatares
- - O método imprimirCasilla devolve o texto para imprimir. Falta por engadir, en cada subclase, os xogadores que están nesa casilla. En GRUPO quizais non fai falta.
-
+ - O método imprimirCasilla devolve o texto para imprimir. Falta por engadir, en cada subclase, os xogadores que están nesa casilla. En GRUPO quizais non fai falta. NON FAI FALTa
 __________________________
 XOGO
 

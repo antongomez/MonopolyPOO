@@ -175,6 +175,7 @@ public class Xogo implements Comando {
 
                     break;
                 case "listar":
+                    listar(comando1, comando2);
                     break;
                 case "rematar":
                     switch (comando1) {
@@ -297,6 +298,10 @@ public class Xogo implements Comando {
             case "casilla":
                 describirCasilla(comando2);
                 break;
+            case "Carcere":
+            case "Parking":
+                describirCasilla(comando1);
+                break;
             default:
                 //Excepcion
                 break;
@@ -308,7 +313,7 @@ public class Xogo implements Comando {
         if (existeAvatar(idAvatar)) {
             for (int i = 0; i < avatares.size(); i++) {
                 if (avatares.get(i).getId() == idAvatar) {
-                    System.out.println(avatares.get(i));
+                    consola.imprimir(avatares.get(i).toString());
                 }
             }
         } else {
@@ -329,14 +334,15 @@ public class Xogo implements Comando {
         if (existeXogador(nomeXogador)) {
             for (int i = 0; i < xogadores.size(); i++) {
                 if (xogadores.get(i).getNome().equals(nomeXogador)) {
-                    System.out.println(xogadores.get(i));
+                    consola.imprimir(xogadores.get(i).toString());
                 }
             }
         } else {
             //Excepcion
         }
-
     }
+
+
 
     @Override
     public final void edificar(Avatar avatar, String tipoEdificacion, int nEdificios) {
@@ -409,6 +415,90 @@ public class Xogo implements Comando {
             }
         }
         return false;
+    }
+
+    public final void listar(String comando1, String comando2) {
+        switch (comando1) {
+            case "xogador":
+                listarXogador();
+                break;
+            case "avatar":
+                listarAvatar();
+                break;
+            case "casilla":
+                listarCasilla();
+                break;
+            case "edificios":
+                listarEdificios(comando2);
+                break;
+            case "enventa":
+                listarEnVenta();;
+                break;
+            default:
+                //Excepcion
+                break;
+
+        }
+    }
+
+    private void listarAvatar() {
+        for (int i = 0; i < avatares.size(); i++) {
+                consola.imprimir(avatares.get(i).toString());
+            }
+    }
+
+    private void listarEdificios(String grupo)
+    {
+        boolean atopado = false;
+        for (int i = 0; i < taboleiro.getCasillas().size(); i++)
+        {
+            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++)
+                if (taboleiro.getCasillas().get(i).get(j) instanceof Solar)
+                    if (((Solar) taboleiro.getCasillas().get(i).get(j)).getGrupo().getNome().equals(grupo))     {
+                        atopado = true;
+                        for (int k = 0; k < ((Solar) taboleiro.getCasillas().get(i).get(j)).getEdificios().size(); k++)
+                        {
+                            consola.imprimir(((Solar) taboleiro.getCasillas().get(i).get(j)).getEdificios().get(i).toString());
+                        }
+                    }
+        }
+        if (!atopado)
+        {
+            for (int i = 0; i < taboleiro.getCasillas().size(); i++)
+            {
+                for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++)
+                    if (taboleiro.getCasillas().get(i).get(j) instanceof Solar)
+                        for (int k = 0; k < ((Solar) taboleiro.getCasillas().get(i).get(j)).getEdificios().size(); k++)
+                        {
+                            consola.imprimir(((Solar) taboleiro.getCasillas().get(i).get(j)).getEdificios().get(i).toString());
+                        }
+            }
+        }
+    }
+
+    private void listarEnVenta()
+    {
+        for (int i = 0; i < taboleiro.getCasillas().size(); i++)
+        {
+            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++)
+                if (taboleiro.getCasillas().get(i).get(j) instanceof Propiedade)
+                    if (((Propiedade) taboleiro.getCasillas().get(i).get(j)).getDono().getNome().equals("Banca"))
+                        consola.imprimir(taboleiro.getCasillas().get(i).get(j).imprimirCasilla());
+        }
+    }
+
+    private void listarCasilla() {
+        for (int i = 0; i < taboleiro.getCasillas().size(); i++)
+        {
+            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++)
+                consola.imprimir(taboleiro.getCasillas().get(i).get(j).imprimirCasilla());
+        }
+    }
+
+    private void listarXogador() {
+        for (int i = 0; i < xogadores.size(); i++) {
+                consola.imprimir(xogadores.get(i).toString());
+        }
     }
 
     private boolean nomeIgualXogador(String nome) {
