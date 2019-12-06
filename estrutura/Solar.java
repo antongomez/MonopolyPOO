@@ -158,6 +158,32 @@ public class Solar extends Propiedade {
         return this.alquilerInicialGrupo();
     }
 
+    public float calculoPrezoEdificio(String tipoEdificio) {
+        float valor = 0;
+
+        if (tipoEdificio != null) {
+            switch (tipoEdificio) {
+                case "casa":
+                    valor = this.getValor() * Constantes.CASA;
+                    break;
+                case "hotel":
+                    valor = this.getValor() * Constantes.HOTEL;
+                    break;
+                case "piscina":
+                    valor = this.getValor() * Constantes.PISCINA;
+                    break;
+                case "pista":
+                    valor = this.getValor() * Constantes.PISTA;
+                    break;
+            }
+
+        } else {
+            //Excepcion
+        }
+
+        return valor;
+    }
+
     //Calcula o alquiler en funcion do numero de casas
     public float calculoAlquilerEdificios() {
         float valor = 0;
@@ -241,7 +267,7 @@ public class Solar extends Propiedade {
     public void edificar(String tipo) {
         switch (tipo) {
             case "Casa": {
-                if ( this.getDono().getFortuna() //facer un metodo en xogador que comprobe isto
+                if (this.getDono().getFortuna() //facer un metodo en xogador que comprobe isto
                         > this.getValor() * Constantes.CASA) {
                     if (this.poderEdificarCasa()) {
 

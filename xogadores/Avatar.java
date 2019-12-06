@@ -2,6 +2,8 @@ package xogadores;
 
 import estrutura.*;
 import java.util.Random;
+import xogo.Xogo;
+import static xogo.Xogo.consola;
 
 public abstract class Avatar {
 
@@ -65,6 +67,8 @@ public abstract class Avatar {
     public void moverEnBasico(int sumaDados, Taboleiro taboleiro) {
         if (this.xogador.getEstadoPreso() == 0) {
             if (!this.modoAvanzado) {
+                Casilla procedencia = posicion;
+                
                 //Eliminase ao avatar da casilla na que esta
                 this.posicion.eliminarAvatar(this);
                 //Distinguimos o caso que pasa pola saida e o que non
@@ -73,10 +77,24 @@ public abstract class Avatar {
                     this.posicion = taboleiro.getCasilla(this.posicion.getPosicion() + sumaDados);
                     //Actualizase a casilla
                     this.posicion.engadirAvatar(this);
-                } else {
+                    
+                    consola.imprimir("O avatar " + id + " avanza " + sumaDados
+                            + " posicións, desde " + procedencia.getNome()
+                            + " ata " + posicion.getNome() + ".\n");
+                    
+                } else { //Caso no que o avatar da unha volta
                     this.posicion = taboleiro.getCasilla(this.posicion.getPosicion() + sumaDados - 40);
                     this.posicion.engadirAvatar(this);
+                    
+                    consola.imprimir("O avatar " + id + " avanza " + sumaDados
+                            + " posicións, desde " + procedencia.getNome()
+                            + " ata " + posicion.getNome() + ".\n");
+                    
+                    this.xogador.modificarFortuna(Constantes.VALOR_VOLTA);
                     this.xogador.sumarVolta();
+                    Xogo.consola.imprimir("O xogador " + xogador.getNome()
+                            + " pasou pola Saída. Cobra "
+                            + Constantes.VALOR_VOLTA + " GM.\n");
                 }
             } else {
 
@@ -98,7 +116,7 @@ public abstract class Avatar {
 
         return identificador;
     }
-    
+
     @Override
     public String toString() {
         String texto = "{ \n" + "\tid: " + this.id

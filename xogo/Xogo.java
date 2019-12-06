@@ -22,11 +22,14 @@ public class Xogo implements Comando {
         xogadores = new ArrayList<>();
         avatares = new ArrayList<>();
         dados = new HashMap<>();
+        dados.put("d1", new Dado());
+        dados.put("d2", new Dado());
         banca = new Xogador();
         taboleiro = new Taboleiro(banca);
 
         int nXogadores = 0;
         Boolean sair = false;
+        boolean dadosLanzados = false;
         Xogador hipotecar = new Xogador("Hipotecar"); //Xogador ao que se lle hipoteca
 
         do {
@@ -174,6 +177,15 @@ public class Xogo implements Comando {
                     }
 
                     break;
+                case "lanzar":
+                    if (comando1.equals("dados")) {
+                        if (!dadosLanzados) {
+                            lanzarDados(dados);
+                            dadosLanzados = true;
+                        } else {
+                            //Excepcion
+                        }
+                    }
                 case "listar":
                     listar(comando1, comando2);
                     break;
@@ -189,7 +201,23 @@ public class Xogo implements Comando {
                     break;
 
             }
-
+            if (xogador.getEstadoPreso() == 0) {
+                avanzar(avatar);
+                comprobarCasilla(avatar.getPosicion(), xogador);
+                if (sonDobres(dados)) {
+                    consola.imprimir("Conseguiches tirar dobres. Saes do carcere.");
+                    dadosLanzados = false;
+                }
+            } else if (sonDobres(dados)) {
+                consola.imprimir("Conseguiches tirar dobres. Saes do carcere.");
+                xogador.setEstadoPreso(0);
+                dadosLanzados = false;
+                avanzar(avatar);
+                comprobarCasilla(avatar.getPosicion(), xogador);
+            } else {
+                consola.imprimir("Non conseguiches tirar dobres.");
+                xogador.restarEstadoPreso();
+            }
         }
     }
 
@@ -256,6 +284,14 @@ public class Xogo implements Comando {
     }
 
     //Métodos auxiliares para a funcionalidade
+    private void avanzar(Avatar avatar) {
+        if (!avatar.getModoAvanzado()) {
+            avatar.moverEnBasico(sumarDados(dados), taboleiro);
+        } else {
+            avatar.moverEnAvanzado(sumarDados(dados), taboleiro);
+        }
+    }
+
     @Override
     public final void cambiarModo(Avatar avatar) {
         if (avatar != null) {
@@ -282,7 +318,73 @@ public class Xogo implements Comando {
                         + "casilla " + propiedade.getNome() + " por "
                         + propiedade.getValor() + ". A súa fortuna actual é "
                         + xogador.getFortuna() + " GM.\n");
+
+                if (xogador.getAvatar() instanceof Esfinxe) {
+                    ((Esfinxe) xogador.getAvatar()).sumarHistorial("compra "
+                            + propiedade.getNome() + " " + propiedade.getValor());
+                }
             }
+        }
+    }
+
+    private void comprobarCasilla(Casilla casilla, Xogador xogador) {
+        if ((casilla != null) && (xogador != null)) {
+            Avatar avatar = xogador.getAvatar();
+
+            if (casilla instanceof Especial) {
+                switch (casilla.getNome()) {
+
+                    case "Parking":
+                        float bote = ((Especial) casilla).getValor();
+                        if (bote > 0) {
+                            consola.imprimir("Conseguiches o bote do Parking."
+                                    + " O xogador " + xogador.getNome()
+                                    + " recibe " + bote + " GM.\n");
+                            xogador.modificarFortuna(bote);
+                            ((Especial) casilla).setValor(0);
+
+                            if (avatar instanceof Esfinxe) {
+                                ((Esfinxe) avatar).sumarHistorial("cobro "
+                                        + "Parking " + bote);
+                            }
+                        }
+                        break;
+                    case "IrCarcere":
+                        moverAoCarcere(avatar);
+                        consola.imprimir("O avatar " + avatar + " foi enviado"
+                                + " ao Carcere.\n");
+                        break;
+
+                }
+            } else if (casilla instanceof Imposto) {
+                switch (casilla.getNome()) {
+                    case "IRPF":
+                        xogador.modificarFortuna(-Constantes.IMPOSTO1);
+                        consola.imprimir(" O xogador " + xogador.getNome()
+                                + " paga " + Constantes.IMPOSTO1 + " GM"
+                                + " á banca.\n");
+                        if (avatar instanceof Esfinxe) {
+                            ((Esfinxe) avatar).sumarHistorial("pago "
+                                    + "imposto " + Constantes.IMPOSTO1);
+                        }
+                        break;
+                    case "Subida Pension":
+                        xogador.modificarFortuna(-Constantes.IMPOSTO2);
+                        consola.imprimir(" O xogador " + xogador.getNome()
+                                + " paga " + Constantes.IMPOSTO2 + " GM"
+                                + " á banca.\n");
+
+                        if (avatar instanceof Esfinxe) {
+                            ((Esfinxe) avatar).sumarHistorial("pago "
+                                    + "imposto " + Constantes.IMPOSTO2);
+                        }
+                        break;
+                }
+            } else if (casilla instanceof Solar) {
+
+            }
+        } else {
+            //Excepcion
         }
     }
 
@@ -342,8 +444,6 @@ public class Xogo implements Comando {
         }
     }
 
-
-
     @Override
     public final void edificar(Avatar avatar, String tipoEdificacion, int nEdificios) {
         if (avatar.getPosicion() instanceof Solar) {
@@ -362,12 +462,28 @@ public class Xogo implements Comando {
                                 + " no solar " + solar.getNome() + ". A fortuna "
                                 + "de " + xogador.getNome() + " redúcese a "
                                 + xogador.getFortuna() + " GM.\n");
+
+                        if (avatar instanceof Esfinxe) {
+                            ((Esfinxe) avatar).sumarHistorial("edificar "
+                                    + avatar.getPosicion().getNome() + " "
+                                    + tipoEdificacion + " "
+                                    + +((Solar) avatar.getPosicion()).
+                                            calculoPrezoEdificio(tipoEdificacion));
+                        }
                     } else {
                         consola.imprimir("Construíronse " + nEdificios
                                 + "casas no solar " + solar.getNome()
                                 + ". A fortuna de " + xogador.getNome()
                                 + " redúcese a " + xogador.getFortuna()
                                 + " GM.\n");
+
+                        if (avatar instanceof Esfinxe) {
+                            ((Esfinxe) avatar).sumarHistorial("edificar "
+                                    + avatar.getPosicion().getNome() + " "
+                                    + tipoEdificacion + "-" + nEdificios + " "
+                                    + ((Solar) avatar.getPosicion()).
+                                            calculoPrezoEdificio(tipoEdificacion) * nEdificios);
+                        }
                     }
                 } else {
                     //Excepcion
@@ -417,7 +533,23 @@ public class Xogo implements Comando {
         return false;
     }
 
-    public final void listar(String comando1, String comando2) {
+    @Override
+    public final void lanzarDados(HashMap<String, Dado> dados) {
+        if (dados != null) {
+            dados.get("d1").tirardado();
+            dados.get("d2").tirardado();
+
+            consola.imprimir("Dado1: " + dados.get("d1"));
+            consola.imprimir("Dado2: " + dados.get("d2"));
+            consola.imprimir("Suma dos dados: " + sumarDados(dados));
+
+        } else {
+            //Excepcion
+        }
+    }
+
+    @Override
+    public final void listar(String comando1, String grupo) {
         switch (comando1) {
             case "xogador":
                 listarXogador();
@@ -429,10 +561,11 @@ public class Xogo implements Comando {
                 listarCasilla();
                 break;
             case "edificios":
-                listarEdificios(comando2);
+                listarEdificios(grupo);
                 break;
             case "enventa":
-                listarEnVenta();;
+                listarEnVenta();
+                ;
                 break;
             default:
                 //Excepcion
@@ -443,61 +576,60 @@ public class Xogo implements Comando {
 
     private void listarAvatar() {
         for (int i = 0; i < avatares.size(); i++) {
-                consola.imprimir(avatares.get(i).toString());
-            }
+            consola.imprimir(avatares.get(i).toString());
+        }
     }
 
-    private void listarEdificios(String grupo)
-    {
+    private void listarEdificios(String grupo) {
         boolean atopado = false;
-        for (int i = 0; i < taboleiro.getCasillas().size(); i++)
-        {
-            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++)
-                if (taboleiro.getCasillas().get(i).get(j) instanceof Solar)
-                    if (((Solar) taboleiro.getCasillas().get(i).get(j)).getGrupo().getNome().equals(grupo))     {
+        for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
+            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++) {
+                if (taboleiro.getCasillas().get(i).get(j) instanceof Solar) {
+                    if (((Solar) taboleiro.getCasillas().get(i).get(j)).getGrupo().getNome().equals(grupo)) {
                         atopado = true;
-                        for (int k = 0; k < ((Solar) taboleiro.getCasillas().get(i).get(j)).getEdificios().size(); k++)
-                        {
+                        for (int k = 0; k < ((Solar) taboleiro.getCasillas().get(i).get(j)).getEdificios().size(); k++) {
                             consola.imprimir(((Solar) taboleiro.getCasillas().get(i).get(j)).getEdificios().get(i).toString());
                         }
                     }
+                }
+            }
         }
-        if (!atopado)
-        {
-            for (int i = 0; i < taboleiro.getCasillas().size(); i++)
-            {
-                for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++)
-                    if (taboleiro.getCasillas().get(i).get(j) instanceof Solar)
-                        for (int k = 0; k < ((Solar) taboleiro.getCasillas().get(i).get(j)).getEdificios().size(); k++)
-                        {
+        if (!atopado) {
+            for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
+                for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++) {
+                    if (taboleiro.getCasillas().get(i).get(j) instanceof Solar) {
+                        for (int k = 0; k < ((Solar) taboleiro.getCasillas().get(i).get(j)).getEdificios().size(); k++) {
                             consola.imprimir(((Solar) taboleiro.getCasillas().get(i).get(j)).getEdificios().get(i).toString());
                         }
+                    }
+                }
             }
         }
     }
 
-    private void listarEnVenta()
-    {
-        for (int i = 0; i < taboleiro.getCasillas().size(); i++)
-        {
-            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++)
-                if (taboleiro.getCasillas().get(i).get(j) instanceof Propiedade)
-                    if (((Propiedade) taboleiro.getCasillas().get(i).get(j)).getDono().getNome().equals("Banca"))
+    private void listarEnVenta() {
+        for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
+            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++) {
+                if (taboleiro.getCasillas().get(i).get(j) instanceof Propiedade) {
+                    if (((Propiedade) taboleiro.getCasillas().get(i).get(j)).getDono().getNome().equals("Banca")) {
                         consola.imprimir(taboleiro.getCasillas().get(i).get(j).imprimirCasilla());
+                    }
+                }
+            }
         }
     }
 
     private void listarCasilla() {
-        for (int i = 0; i < taboleiro.getCasillas().size(); i++)
-        {
-            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++)
+        for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
+            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++) {
                 consola.imprimir(taboleiro.getCasillas().get(i).get(j).imprimirCasilla());
+            }
         }
     }
 
     private void listarXogador() {
         for (int i = 0; i < xogadores.size(); i++) {
-                consola.imprimir(xogadores.get(i).toString());
+            consola.imprimir(xogadores.get(i).toString());
         }
     }
 
@@ -512,6 +644,21 @@ public class Xogo implements Comando {
         return false;
     }
 
+    public void moverAoCarcere(Avatar avatar) {
+        if (avatar != null) {
+            Casilla procedencia = avatar.getPosicion();
+            Casilla destino = taboleiro.getCasilla("Carcere");
+
+            procedencia.eliminarAvatar(avatar);
+            destino.engadirAvatar(avatar);
+            avatar.setPosicion(destino);
+            avatar.getXogador().setEstadoPreso(4);
+
+        } else {
+            //Excepcion
+        }
+    }
+
     private boolean propiedadeComprable(Propiedade propiedade) {
         return propiedade.getDono().equals(banca);
     }
@@ -519,6 +666,26 @@ public class Xogo implements Comando {
     @Override
     public final boolean rematarPartida() {
         return true;
+    }
+
+    private boolean sonDobres(HashMap<String, Dado> dados) {
+        if (dados != null) {
+            if (dados.get("d1").equals(dados.get("d2"))) {
+                return true;
+            }
+        } else {
+            //Excepcion
+        }
+        return false;
+    }
+
+    public int sumarDados(HashMap<String, Dado> dados) {
+        if (dados != null) {
+            return (dados.get("d1").getValor() + dados.get("d2").getValor());
+        } else {
+            //Excepcion
+        }
+        return 0;
     }
 
     @Override

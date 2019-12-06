@@ -2,27 +2,43 @@ package xogo;
 
 public class Dado {
 
-    private int dado;
+    private int valor;
 
     public Dado() {
-        dado = 0;
+        valor = 0;
     }
 
-    public int getDado() {
-        if ((dado < 1) || (dado > 6)) {
+    public int getValor() {
+        if ((valor < 1) || (valor > 6)) {
             System.out.println("\nDado non inicilizado.\n");
         }
-        return this.dado;
+        return this.valor;
     }
 
-    public void setDado(int n) {
+    public void setValor(int n) {
         if ((n > 0) && (n < 7)) {
-            dado = n;
+            valor = n;
         }
     }
 
     public void tirardado() {
-        //dado=2; Probar dobres
-        dado = (int) Math.floor(Math.random() * 6 + 1);
+        valor = (int) Math.floor(Math.random() * 6 + 1);
+    }
+
+    @Override
+    public String toString() {
+        String texto = "";
+
+        texto += this.getValor();
+
+        return texto;
+    }
+
+    @Override
+    public boolean equals(Object d2) {
+        if (!(d2 instanceof Dado)) {
+            return false;
+        }
+        return (this.valor == ((Dado) d2).getValor());
     }
 }

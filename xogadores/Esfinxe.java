@@ -6,18 +6,20 @@ import java.util.ArrayList;
 
 public class Esfinxe extends Avatar {
 
-    public ArrayList<String> historial;
+    private ArrayList<String> historial;
 
-    /*    Accion   |  Casilla  |  Edificios  |  Xogador  */
-    //Exemplo: alquiler Lugo casa-2/hotel-1/piscina-1 Anton  /*sendo Victor o xogador deste avatar*/
-    //Exemplo: compra Lugo
-    //Exemplo: hipoteca Lugo
+    //Exemplo: alquiler Lugo casa-2/hotel-1/piscina-1 Anton 150  /*sendo Victor o xogador deste avatar*/
+    //Exemplo: compra Lugo 150
+    //Exemplo: hipoteca Lugo 150
     /*Se se edifica nun turno varios edificios van en comandos distintos.
       Asi, so se pode edificar ou 4-casas, 1-hotel, 1-piscina ou 1-pista,
       como moito
      */
-    //Exemplo: edificar Lugo casa-3
-    //         edificar Lugo hotel  
+    //Exemplo: edificar Lugo casa-3 150
+    //         edificar Lugo hotel 150
+    //Exemplo: pago imposto 100
+    //Exemplo: pago 2 Anton Victor 25 /*sendo Pedro o xogador deste avatar*/
+    //Exemplo: cobro Parking 150
     public Esfinxe(char Id, Xogador xogador, Taboleiro taboleiro) {
         super(Id, xogador, taboleiro);
 
@@ -187,11 +189,7 @@ public class Esfinxe extends Avatar {
         for(int i = 0; i < historial.size(); i++){
             partes = historial.get(i).split(" ");
             accion = partes[0];
-            if(partes.length > 1){
-                casilla = partes[1];
-            }else{
-                //Excepcion
-            }
+
             switch(accion){
                 case "alquiler":
                     break;
@@ -204,6 +202,11 @@ public class Esfinxe extends Avatar {
                 case "deshipoteca":
                     break;
                 case "venta":
+                    break;
+                case "trato":
+                    break;
+                case "pago":
+                
                     break;
             }
             

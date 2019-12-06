@@ -126,6 +126,14 @@ public class Xogador {
         }
     }
 
+    public void restarEstadoPreso() {
+        if (this.estadoPreso > 0) {
+            this.estadoPreso--;
+        } else {
+            //Excepcion
+        }
+    }
+
     public float getCartosInvertidos() {
         return cartosInvertidos;
     }
