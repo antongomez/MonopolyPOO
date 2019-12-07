@@ -8,7 +8,7 @@ import static xogo.Xogo.consola;
 import java.util.ArrayList;
 
 public abstract class Avatar {
-
+    
     private char id;
     private Xogador xogador;
     private Casilla posicion;
@@ -17,7 +17,7 @@ public abstract class Avatar {
     //Constructores
     public Avatar() {
     }
-
+    
     public Avatar(char Id, Xogador xogador, Taboleiro taboleiro) {
         this.id = Id;
         this.xogador = xogador;
@@ -30,11 +30,11 @@ public abstract class Avatar {
     public char getId() {
         return id;
     }
-
+    
     public Xogador getXogador() {
         return xogador;
     }
-
+    
     public void setXogador(Xogador xogador) {
         if (xogador != null) {
             this.xogador = xogador;
@@ -42,11 +42,11 @@ public abstract class Avatar {
             System.out.println("Erro en setXogador.");
         }
     }
-
+    
     public Casilla getPosicion() {
         return posicion;
     }
-
+    
     public void setPosicion(Casilla posicion) {
         if (posicion != null) {
             posicion.engadirAvatar(this);
@@ -55,11 +55,11 @@ public abstract class Avatar {
             System.out.println("ERRO en setPosicion.\n");
         }
     }
-
+    
     public boolean getModoAvanzado() {
         return this.modoAvanzado;
     }
-
+    
     public void setModoAvanzado(boolean estado) {
         this.modoAvanzado = estado;
     }
@@ -77,19 +77,21 @@ public abstract class Avatar {
                 if (this.posicion.getPosicion() + sumaDados < 40) {
                     //Actualizase a posicion
                     this.posicion = taboleiro.getCasilla(this.posicion.getPosicion() + sumaDados);
-
+                    
                     consola.imprimir("O avatar " + id + " avanza " + sumaDados
                             + " posicións, desde " + procedencia.getNome()
                             + " ata " + posicion.getNome() + ".\n");
-
+                    
+                    this.posicion.engadirAvatar(this);
+                    
                 } else { //Caso no que o avatar da unha volta
                     this.posicion = taboleiro.getCasilla(this.posicion.getPosicion() + sumaDados - 40);
                     this.posicion.engadirAvatar(this);
-
+                    
                     consola.imprimir("O avatar " + id + " avanza " + sumaDados
                             + " posicións, desde " + procedencia.getNome()
                             + " ata " + posicion.getNome() + ".\n");
-
+                    
                     this.xogador.modificarFortuna(Constantes.VALOR_VOLTA);
                     this.xogador.sumarVolta();
                     Xogo.consola.imprimir("O xogador " + xogador.getNome()
@@ -97,27 +99,27 @@ public abstract class Avatar {
                             + Constantes.VALOR_VOLTA + " GM.\n");
                 }
             } else {
-
+                
             }
         } else {
-
+            
         }
     }
-
+    
     public abstract void moverEnAvanzado(int sumaDados, Taboleiro taboleiro,
             Xogador banca);
-
+    
     public static char xerarId() {
         char identificador;
         int numero;
-
+        
         Random ale = new Random(System.currentTimeMillis());
         numero = ale.nextInt(20) + 65;
         identificador = (char) numero;
-
+        
         return identificador;
     }
-
+    
     @Override
     public String toString() {
         String texto = "{ \n" + "\tid: " + this.id
@@ -125,7 +127,7 @@ public abstract class Avatar {
                 + "\n" + "}";
         return texto;
     }
-
+    
     @Override
     public boolean equals(Object avatar) {
         if (!(avatar instanceof Avatar)) {

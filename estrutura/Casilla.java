@@ -97,8 +97,12 @@ public abstract class Casilla {
         return sumaFrecuencia;
     }
 
-    public int frecuenciaVisita(Avatar avatar, Xogo xogo) {
-        return frecuentada.get(xogo.getTurnoAvatar(avatar));
+    public int frecuenciaVisita(int posicion) {
+        return frecuentada.get(posicion);
+    }
+
+    public void sumarFrecuenciaVisita(int posicion) {
+        this.frecuentada.set(posicion, this.frecuentada.get(posicion) + 1);
     }
 
     public String imprimirAvatares() {
@@ -119,12 +123,11 @@ public abstract class Casilla {
     public String toString() {
         String nomeaux = String.format("%-15s", this.getNome());
         String avatares = String.format("%6s", imprimirAvatares());
-        String texto ="| " + nomeaux + " " + avatares + "|";
+        String texto = "| " + nomeaux + " " + avatares + "|";
         return texto;
     }
 
-
-        @Override
+    @Override
     public boolean equals(Object casilla) {
         if (!(casilla instanceof Casilla)) {
             return false;

@@ -204,7 +204,8 @@ public class Xogo implements Comando {
                     describir(comando1, comando2);
                     break;
 
-                case "deshipotecar": deshipotecar(comando1, xogador, hipotecar);
+                case "deshipotecar":
+                    deshipotecar(comando1, xogador, hipotecar);
                     break;
 
                 case "edificar":
@@ -224,7 +225,8 @@ public class Xogo implements Comando {
 
                     break;
 
-                case "hipotecar": hipotecar(comando1, xogador, hipotecar);
+                case "hipotecar":
+                    hipotecar(comando1, xogador, hipotecar);
                     break;
                 case "lanzar":
                     if (comando1.equals("dados")) {
@@ -316,7 +318,7 @@ public class Xogo implements Comando {
                     if (destino != null) {
                         Casilla procedencia = avatar.getPosicion();
                         procedencia.eliminarAvatar(avatar);
-                        destino.engadirAvatar(avatar);
+
                         avatar.setPosicion(destino);
                         consola.imprimir("O avatar " + avatar.getId()
                                 + " teletranspórtase dende a casilla "
@@ -326,6 +328,8 @@ public class Xogo implements Comando {
                         resetDados();
                         tiradas.get(1).get("d1").setValor(3);
                         tiradas.get(1).get("d2").setValor(2);
+
+                        avatar.getPosicion().sumarFrecuenciaVisita(turno);
 
                         comprobarCasilla(avatar.getPosicion(), xogador);
                     }
@@ -454,8 +458,10 @@ public class Xogo implements Comando {
     private void avanzar(Avatar avatar) {
         if (!avatar.getModoAvanzado()) {
             avatar.moverEnBasico(sumarDados(getDadosLanzados()), taboleiro);
+            avatar.getPosicion().sumarFrecuenciaVisita(turno);
         } else {
             avatar.moverEnAvanzado(sumarDados(getDadosLanzados()), taboleiro, banca);
+            avatar.getPosicion().sumarFrecuenciaVisita(turno);
         }
     }
 
@@ -487,8 +493,8 @@ public class Xogo implements Comando {
                         + xogador.getFortuna() + " GM.\n");
 
                 if (xogador.getAvatar() instanceof Esfinxe) {
-                    ((Esfinxe) xogador.getAvatar()).sumarHistorial("compra "
-                            + propiedade.getNome() + " " + propiedade.getValor());
+                    ((Esfinxe) xogador.getAvatar()).sumarHistorial("compra/"
+                            + propiedade.getNome() + "/" + propiedade.getValor());
                 }
             }
         }
@@ -511,8 +517,8 @@ public class Xogo implements Comando {
                             ((Especial) casilla).setValor(0);
 
                             if (avatar instanceof Esfinxe) {
-                                ((Esfinxe) avatar).sumarHistorial("cobro "
-                                        + "Parking " + bote);
+                                ((Esfinxe) avatar).sumarHistorial("cobro/"
+                                        + bote + "/Parking");
                             }
                         }
                         break;
@@ -540,8 +546,8 @@ public class Xogo implements Comando {
                                 + " paga " + Constantes.IMPOSTO1 + " GM"
                                 + " á banca.\n");
                         if (avatar instanceof Esfinxe) {
-                            ((Esfinxe) avatar).sumarHistorial("pago "
-                                    + "imposto " + Constantes.IMPOSTO1);
+                            ((Esfinxe) avatar).sumarHistorial("pago/"
+                                    + Constantes.IMPOSTO1);
                         }
                         break;
                     case "Subida Pension":
@@ -551,8 +557,8 @@ public class Xogo implements Comando {
                                 + " á banca.\n");
 
                         if (avatar instanceof Esfinxe) {
-                            ((Esfinxe) avatar).sumarHistorial("pago "
-                                    + "imposto " + Constantes.IMPOSTO2);
+                            ((Esfinxe) avatar).sumarHistorial("pago/"
+                                    + Constantes.IMPOSTO2);
                         }
                         break;
                 }
@@ -572,8 +578,9 @@ public class Xogo implements Comando {
                                 + "de " + xogador.getFortuna() + "\n");
 
                         if (avatar instanceof Esfinxe) {
-                            ((Esfinxe) avatar).sumarHistorial("alquiler "
-                                    + solar.getDono().getNome() + " " + alquiler);
+                            ((Esfinxe) avatar).sumarHistorial("alquiler/"
+                                    + alquiler + "/" + solar.getDono().getNome()
+                                    + "/" + solar.getNome());
                         }
                     } else {
                         consola.imprimir("Implementar bancarrota co numero da xogadores.");
@@ -596,8 +603,9 @@ public class Xogo implements Comando {
                                 + "de " + xogador.getFortuna() + "\n");
 
                         if (avatar instanceof Esfinxe) {
-                            ((Esfinxe) avatar).sumarHistorial("alquiler "
-                                    + transporte.getDono().getNome() + " " + alquiler);
+                            ((Esfinxe) avatar).sumarHistorial("alquiler/"
+                                    + alquiler + "/" + transporte.getDono().getNome()
+                                    + "/" + transporte.getNome());
                         }
                     } else {
                         consola.imprimir("Implementar bancarrota co numero da xogadores.");
@@ -620,8 +628,9 @@ public class Xogo implements Comando {
                                 + "de " + xogador.getFortuna() + "\n");
 
                         if (avatar instanceof Esfinxe) {
-                            ((Esfinxe) avatar).sumarHistorial("alquiler "
-                                    + servizo.getDono().getNome() + " " + alquiler);
+                            ((Esfinxe) avatar).sumarHistorial("alquiler/"
+                                    + alquiler + "/" + servizo.getDono().getNome()
+                                    + "/" + servizo.getNome());
                         }
                     } else {
                         consola.imprimir("Implementar bancarrota co número da xogadores.");
@@ -696,17 +705,15 @@ public class Xogo implements Comando {
         }
     }
 
-    private void deshipotecar(String nom, Xogador xogador, Xogador hipo)
-    {
-        for (int i = 0; i < taboleiro.getCasillas().size(); i++)
-        {
-            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++)
-            {
-                if (taboleiro.getCasillas().get(i).get(j).getNome().equals(nom))
+    private void deshipotecar(String nom, Xogador xogador, Xogador hipo) {
+        for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
+            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++) {
+                if (taboleiro.getCasillas().get(i).get(j).getNome().equals(nom)) {
                     if (taboleiro.getCasillas().get(i).get(j) instanceof Propiedade) {
                         Propiedade prop = (Propiedade) taboleiro.getCasillas().get(i).get(j);
                         hipo.deshipotecar(xogador, prop);
                     }
+                }
 
             }
         }
@@ -720,42 +727,42 @@ public class Xogo implements Comando {
             //Comprobamos que sexa o dono da casilla
             if (solar.getDono().equals(xogador)) {
 
-                //if ((solar.getGrupo().existeMonopolio())
-                //       || (solar.frecuenciaVisita(avatar, this) >= 2)) {
-                for (int i = 0; i < nEdificios; ++i) {
-                    solar.edificar(tipoEdificacion);
-                }
-                if (nEdificios == 1) {
-                    consola.imprimir("Construíuse 1 " + tipoEdificacion
-                            + " no solar " + solar.getNome() + ". A fortuna "
-                            + "de " + xogador.getNome() + " redúcese a "
-                            + xogador.getFortuna() + " GM.\n");
+                if ((solar.getGrupo().existeMonopolio())
+                        || (solar.frecuenciaVisita(getTurnoAvatar(avatar)) >= 2)) {
+                    for (int i = 0; i < nEdificios; ++i) {
+                        solar.edificar(tipoEdificacion);
+                    }
+                    if (nEdificios == 1) {
+                        consola.imprimir("Construíuse 1 " + tipoEdificacion
+                                + " no solar " + solar.getNome() + ". A fortuna "
+                                + "de " + xogador.getNome() + " redúcese a "
+                                + xogador.getFortuna() + " GM.\n");
 
-                    if (avatar instanceof Esfinxe) {
-                        ((Esfinxe) avatar).sumarHistorial("edificar "
-                                + avatar.getPosicion().getNome() + " "
-                                + tipoEdificacion + " "
-                                + +((Solar) avatar.getPosicion()).
-                                        calculoPrezoEdificio(tipoEdificacion));
+                        if (avatar instanceof Esfinxe) {
+                            ((Esfinxe) avatar).sumarHistorial("edificar/"
+                                    + ((Solar) avatar.getPosicion()).
+                                            calculoPrezoEdificio(tipoEdificacion)
+                                    + "/" + avatar.getPosicion().getNome() + "/"
+                                    + tipoEdificacion);
+                        }
+                    } else {
+                        consola.imprimir("Construíronse " + nEdificios
+                                + "casas no solar " + solar.getNome()
+                                + ". A fortuna de " + xogador.getNome()
+                                + " redúcese a " + xogador.getFortuna()
+                                + " GM.\n");
+
+                        if (avatar instanceof Esfinxe) {
+                            ((Esfinxe) avatar).sumarHistorial("edificar/"
+                                    + ((Solar) avatar.getPosicion()).
+                                            calculoPrezoEdificio(tipoEdificacion) * nEdificios
+                                    + "/" + avatar.getPosicion().getNome() + "/"
+                                    + tipoEdificacion + "-" + nEdificios);
+                        }
                     }
                 } else {
-                    consola.imprimir("Construíronse " + nEdificios
-                            + "casas no solar " + solar.getNome()
-                            + ". A fortuna de " + xogador.getNome()
-                            + " redúcese a " + xogador.getFortuna()
-                            + " GM.\n");
-
-                    if (avatar instanceof Esfinxe) {
-                        ((Esfinxe) avatar).sumarHistorial("edificar "
-                                + avatar.getPosicion().getNome() + " "
-                                + tipoEdificacion + "-" + nEdificios + " "
-                                + ((Solar) avatar.getPosicion()).
-                                        calculoPrezoEdificio(tipoEdificacion) * nEdificios);
-                    }
-                }
-                /*} else {
                     //Excepcion
-                }*/
+                }
             } else {
                 //Excepcion
             }
@@ -766,7 +773,6 @@ public class Xogo implements Comando {
 
     public boolean existeAvatar(char idAvatar) {
         boolean existe = false;
-
 
         for (int i = 0; i < avatares.size(); i++) {
             if (avatares.get(i).getId() == idAvatar) {
@@ -791,17 +797,15 @@ public class Xogo implements Comando {
         return existe;
     }
 
-    private void hipotecar(String nom, Xogador xogador, Xogador hipo)
-    {
-        for (int i = 0; i < taboleiro.getCasillas().size(); i++)
-        {
-            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++)
-            {
-                if (taboleiro.getCasillas().get(i).get(j).getNome().equals(nom))
+    private void hipotecar(String nom, Xogador xogador, Xogador hipo) {
+        for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
+            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++) {
+                if (taboleiro.getCasillas().get(i).get(j).getNome().equals(nom)) {
                     if (taboleiro.getCasillas().get(i).get(j) instanceof Propiedade) {
                         Propiedade prop = (Propiedade) taboleiro.getCasillas().get(i).get(j);
                         xogador.hipotecar(prop, hipo);
                     }
+                }
 
             }
         }
