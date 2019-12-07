@@ -16,7 +16,7 @@ public class Esfinxe extends Avatar {
       Asi, so se pode edificar ou 4-casas, 1-hotel, 1-piscina ou 1-pista,
       como moito
      */
-    //Exemplo: edificar 150 Lugo casa-3 
+    //Exemplo: edificar 150 Lugo casas-3 
     //         edificar 150 Lugo hotel 
     //Exemplo: pago 100 
     //Exemplo: pago 50 Anton-Victor  /*sendo Pedro o xogador deste avatar e tendolles que pagar 25 a cada un*/
@@ -53,31 +53,52 @@ public class Esfinxe extends Avatar {
             Xogador banca) {
 
         if (sumaDados > 4) {
-
+            String texto = "O xogador " + getXogador().getNome() + " avanza "
+                    + sumaDados + " posicións, partindo dende "
+                    + getPosicion().getNome() + " e pasando por";
             switch (this.getLado(this.getPosicion().getPosicion())) {
                 case 'e':
                     //Facemos o primeiro movemento
-                    Xogo.consola.imprimir("");
+                    Xogo.consola.imprimir("Lado: e");
                     desplazarseEste(this.getPosicion(), taboleiro);
                     sumaDados--;
+                    texto += " " + getPosicion().getNome() + ",";
 
                 case 's':
-                    for (int i = 1; i == sumaDados; i++) {
+                    Xogo.consola.imprimir("Lado: s");
+                    for (int i = 1; i <= sumaDados; i++) {
                         desplazarseSur(this.getPosicion(), taboleiro);
+                        if (i == (sumaDados)) {
+                            texto += " ata chegar a " + getPosicion().getNome() + ".";
+                        } else if (i == (sumaDados - 1)) {
+                            texto += " " + getPosicion().getNome();
+                        } else {
+                            texto += " " + getPosicion().getNome() + ",";
+                        }
                     }
                     break;
                 case 'o':
+                    Xogo.consola.imprimir("Lado: o");
                     //Facemos o primeiro movemento
                     desplazarseOeste(this.getPosicion(), taboleiro);
                     sumaDados--;
+                    texto += " " + getPosicion().getNome() + ",";
                 case 'n':
-                    for (int i = 1; i == sumaDados; i++) {
+                    Xogo.consola.imprimir("Lado: n");
+                    for (int i = 1; i <= sumaDados; i++) {
                         desplazarseNorte(this.getPosicion(), taboleiro);
+                        if (i == (sumaDados)) {
+                            texto += " ata chegar a " + getPosicion().getNome() + ".";
+                        } else if (i == (sumaDados - 1)) {
+                            texto += " " + getPosicion().getNome();
+                        } else {
+                            texto += " " + getPosicion().getNome() + ",";
+                        }
                     }
                     break;
 
             }
-
+            Xogo.consola.imprimir(texto);
         } else if (sumaDados == 4) {
             this.moverEnBasico(sumaDados, taboleiro);
         } else {
@@ -92,7 +113,6 @@ public class Esfinxe extends Avatar {
             casilla.eliminarAvatar(this);
 
             destino = taboleiro.getCasilla("Santa Cruz");
-            destino.engadirAvatar(this);
 
             this.setPosicion(destino);
         } else {
@@ -107,7 +127,6 @@ public class Esfinxe extends Avatar {
             casilla.eliminarAvatar(this);
 
             destino = taboleiro.getCasilla("Verin");
-            destino.engadirAvatar(this);
 
             this.setPosicion(destino);
         } else {
@@ -124,13 +143,13 @@ public class Esfinxe extends Avatar {
                 case "Verin":
                     casilla.eliminarAvatar(this);
                     destino = taboleiro.getCasilla("Saida");
-                    destino.engadirAvatar(this);
+
                     this.setPosicion(destino);
                     break;
                 case "Parking":
                     casilla.eliminarAvatar(this);
                     destino = taboleiro.getCasilla("Santa Cruz");
-                    destino.engadirAvatar(this);
+
                     this.setPosicion(destino);
                     break;
                 default:
@@ -141,7 +160,6 @@ public class Esfinxe extends Avatar {
                         destino = taboleiro.getCasilla(30 - casilla.getPosicion() - 1);
                     }
                     if (destino != null) {
-                        destino.engadirAvatar(this);
                         this.setPosicion(destino);
                     } else {
                         //Excepcion
@@ -162,13 +180,13 @@ public class Esfinxe extends Avatar {
                 case "Santa Cruz":
                     casilla.eliminarAvatar(this);
                     destino = taboleiro.getCasilla("Parking");
-                    destino.engadirAvatar(this);
+
                     this.setPosicion(destino);
                     break;
                 case "Saida":
                     casilla.eliminarAvatar(this);
                     destino = taboleiro.getCasilla("Verin");
-                    destino.engadirAvatar(this);
+
                     this.setPosicion(destino);
                     break;
                 default:
@@ -179,7 +197,7 @@ public class Esfinxe extends Avatar {
                         destino = taboleiro.getCasilla(30 - casilla.getPosicion() + 1);
                     }
                     if (destino != null) {
-                        destino.engadirAvatar(this);
+
                         this.setPosicion(destino);
                     } else {
                         //Excepcion
@@ -222,21 +240,23 @@ public class Esfinxe extends Avatar {
                             taboleiro, banca);
                     Xogo.consola.imprimir("O xogador " + getXogador().getNome()
                             + " recibiu de volta " + comando1 + " GM que "
-                            + "pagara pola compra de " + comando2 + ".");
+                            + "pagara pola compra de " + comando2 + ". A "
+                            + "propiedade volve estar á venta.");
                     break;
                 case "edificar":
                     String[] edificios = comando3.split("-");
-                    String tipoEdificio = "";
-                    
-                    desfacerConstrucion(Float.parseFloat(comando1), comando2, tipoEdificio,
+                    String nCasas = "1 ";
+                    if (edificios.length == 2) {
+                        nCasas = edificios[1] + " ";
+                    }
+
+                    desfacerConstrucion(Float.parseFloat(comando1), comando2, edificios,
                             taboleiro);
-                    
-                    
-                    
+
                     Xogo.consola.imprimir("O xogador " + getXogador().getNome()
                             + " recibiu de volta " + comando1 + " GM que "
-                            + "pagara pola construción de " + tipoEdificio + " en "
-                            + comando2 + ".");
+                            + "pagara pola construción de " + nCasas + edificios[0] + " en "
+                            + comando2 + ". Tiráronse abaixo as construcións.");
                     break;
                 case "hipoteca":
                     break;
@@ -314,10 +334,22 @@ public class Esfinxe extends Avatar {
             casilla.setDono(banca);
         }
     }
-    
+
     public void desfacerConstrucion(float cantidade, String nomeCasilla,
-            String tipoEdificio, Taboleiro taboleiro){
-        
+            String[] edificio, Taboleiro taboleiro) {
+
+        desfacerPago(cantidade);
+        if ((nomeCasilla != null) && (cantidade > 0) && (taboleiro != null)
+                && (edificio.length > 0)) {
+            if (taboleiro.getCasilla(nomeCasilla) instanceof Solar) {
+                Solar solar = (Solar) taboleiro.getCasilla(nomeCasilla);
+                if (edificio.length == 2) {
+                    solar.destruirEdificio(Integer.parseInt(edificio[1]));
+                } else if (edificio.length == 1) {
+                    solar.destruirEdificio(edificio[0]);
+                }
+            }
+        }
     }
 
     public void desfacerPago(float cantidade) {

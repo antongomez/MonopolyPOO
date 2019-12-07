@@ -77,8 +77,6 @@ public abstract class Avatar {
                 if (this.posicion.getPosicion() + sumaDados < 40) {
                     //Actualizase a posicion
                     this.posicion = taboleiro.getCasilla(this.posicion.getPosicion() + sumaDados);
-                    //Actualizase a casilla
-                    this.posicion.engadirAvatar(this);
 
                     consola.imprimir("O avatar " + id + " avanza " + sumaDados
                             + " posicións, desde " + procedencia.getNome()
