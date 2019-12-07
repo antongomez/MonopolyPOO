@@ -210,6 +210,65 @@ public class Solar extends Propiedade {
         return valor;
     }
 
+    public void destruirEdificio(int nCasas) {
+        if (getNCasas() < nCasas) {
+
+            int destruidas = 0;
+            for (int i = (edificios.size() - 1); destruidas < nCasas; i--) {
+                if (edificios.get(i) instanceof Casa) {
+                    eliminarEdificio(edificios.get(i));
+                    destruidas++;
+                }
+            }
+        } else {
+            System.out.println("Bro, non hai tantas casas.");
+        }
+    }
+
+    public void destruirEdificio(String tipoEdificio) {
+
+        int destruidas = 0;
+
+        switch (tipoEdificio) {
+            case "casa":
+
+                for (int i = (edificios.size() - 1); destruidas < 1; i--) {
+                    if (edificios.get(i) instanceof Casa) {
+                        eliminarEdificio(edificios.get(i));
+                        destruidas++;
+                    }
+                }
+                break;
+            case "hotel":
+
+                for (int i = (edificios.size() - 1); destruidas < 1; i--) {
+                    if (edificios.get(i) instanceof Hotel) {
+                        eliminarEdificio(edificios.get(i));
+                        destruidas++;
+                    }
+                }
+                break;
+            case "piscina":
+
+                for (int i = (edificios.size() - 1); destruidas < 1; i--) {
+                    if (edificios.get(i) instanceof Piscina) {
+                        eliminarEdificio(edificios.get(i));
+                        destruidas++;
+                    }
+                }
+                break;
+            case "pista":
+
+                for (int i = (edificios.size() - 1); destruidas < 1; i--) {
+                    if (edificios.get(i) instanceof Pista) {
+                        eliminarEdificio(edificios.get(i));
+                        destruidas++;
+                    }
+                }
+                break;
+        }
+    }
+
     //Metodo que calcula o alquiler;
     @Override
     public float calculoAlquiler() {
