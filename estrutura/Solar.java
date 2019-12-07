@@ -266,6 +266,7 @@ public class Solar extends Propiedade {
 
     public void edificar(String tipo) {
         switch (tipo) {
+            case "casa":
             case "Casa": {
                 if (this.getDono().getFortuna() //facer un metodo en xogador que comprobe isto
                         > this.getValor() * Constantes.CASA) {
@@ -284,6 +285,7 @@ public class Solar extends Propiedade {
                 }
             }
             break;
+            case "hotel":
             case "Hotel": {
                 if (this.getDono().getFortuna()
                         > this.getValor() * 0.6) {
@@ -301,6 +303,7 @@ public class Solar extends Propiedade {
                 }
             }
             break;
+            case "piscina":
             case "Piscina": {
                 if (this.getDono().getFortuna()
                         > this.getValor() * 0.4) {
@@ -318,6 +321,7 @@ public class Solar extends Propiedade {
                 }
             }
             break;
+            case "pista":
             case "Pista": {
                 if (this.getDono().getFortuna()
                         > this.getValor() * 10.) {

@@ -51,10 +51,13 @@ public abstract class Edificio {
     public abstract void destruir(Solar solar);
 
 
-    /*@Override
+    @Override
     public String toString(){
-        return String = tipo+" "+id;
-    }*/
+        String imp = "\n ID: " + id +
+            "\n Solar:" + solar.getNome() +
+            "\n Valor: " + valor + "\n";
+        return imp;
+    }
     @Override
     public boolean equals(Object edificio) {
         if (!(edificio instanceof Edificio)) {

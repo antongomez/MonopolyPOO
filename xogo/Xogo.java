@@ -298,6 +298,8 @@ public class Xogo implements Comando {
                 case "xogador":
                     xogador();
                     break;
+                case "tele":
+                case "teletransport":
                 case "Teletransport":
                     Casilla destino = null;
                     if (existeCasilla(comando1)) {
@@ -696,8 +698,8 @@ public class Xogo implements Comando {
             //Comprobamos que sexa o dono da casilla
             if (solar.getDono().equals(xogador)) {
 
-                if ((solar.getGrupo().existeMonopolio())
-                        || (solar.frecuenciaVisita(avatar, this) >= 2)) {
+                //if ((solar.getGrupo().existeMonopolio())
+                 //       || (solar.frecuenciaVisita(avatar, this) >= 2)) {
                     for (int i = 0; i < nEdificios; i++) {
                         solar.edificar(tipoEdificacion);
                     }
@@ -729,9 +731,9 @@ public class Xogo implements Comando {
                                             calculoPrezoEdificio(tipoEdificacion) * nEdificios);
                         }
                     }
-                } else {
+                /*} else {
                     //Excepcion
-                }
+                }*/
             } else {
                 //Excepcion
             }
