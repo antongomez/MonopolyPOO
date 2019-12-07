@@ -22,6 +22,9 @@ public abstract class Casilla {
         this.posicion = posicion;
         this.avatares = new ArrayList<>();
         this.frecuentada = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            frecuentada.add(0);
+        }
     }
 
     //Getters y setters
@@ -63,6 +66,7 @@ public abstract class Casilla {
 
         if (avatar != null) {
             this.avatares.add(avatar);
+
         } else {
             System.out.println("Erro en engadirAvatar.\n");
         }

@@ -205,7 +205,13 @@ public class Xogo implements Comando {
                     break;
 
                 case "deshipotecar":
-                    deshipotecar(comando1, xogador, hipotecar);
+                    if (existeCasilla(comando1)) {
+                        deshipotecar(comando1, xogador, hipotecar);
+                    } else if (existeCasilla(comando1 + " " + comando2)) {
+                        deshipotecar(comando1 + " " + comando2, xogador, hipotecar);
+                    } else {
+                        //Excepcion
+                    }
                     break;
 
                 case "edificar":
@@ -226,7 +232,13 @@ public class Xogo implements Comando {
                     break;
 
                 case "hipotecar":
-                    hipotecar(comando1, xogador, hipotecar);
+                    if (existeCasilla(comando1)) {
+                        hipotecar(comando1, xogador, hipotecar);
+                    } else if (existeCasilla(comando1 + " " + comando2)) {
+                        hipotecar(comando1 + " " + comando2, xogador, hipotecar);
+                    } else {
+                        //Excepcion
+                    }
                     break;
                 case "lanzar":
                     if (comando1.equals("dados")) {
@@ -782,7 +794,7 @@ public class Xogo implements Comando {
         return existe;
     }
 
-    public boolean existeCasilla(String nomeCasilla) {
+    private boolean existeCasilla(String nomeCasilla) {
         return taboleiro.getCasilla(nomeCasilla) != null;
     }
 
