@@ -286,7 +286,7 @@ public class Solar extends Propiedade {
         //return valor;
     }
 
-    /*Metodo que devolve true se se pode edificar unha casa en funcion da 
+    /*Metodo que devolve true se se pode edificar unha casa en funcion da
     restricion da casilla e do grupo.
      */
     public boolean poderEdificarCasa() {
@@ -294,7 +294,7 @@ public class Solar extends Propiedade {
                 && (this.getGrupo().poderConstruirCasa()));
     }
 
-    /*Metodo que devolve true se se pode edificar unha casa en funcion da 
+    /*Metodo que devolve true se se pode edificar unha casa en funcion da
     restricion da casilla e do grupo.
      */
     public boolean poderEdificarHotel() {
@@ -302,7 +302,7 @@ public class Solar extends Propiedade {
                 && (this.getGrupo().poderConstruirHotel()));
     }
 
-    /*Metodo que devolve true se se pode edificar unha piscina en funcion da 
+    /*Metodo que devolve true se se pode edificar unha piscina en funcion da
     restricion da casilla e do grupo. Unha piscina so se pode contruir con
     duas casas e un hotel como minimo.
      */
@@ -314,7 +314,7 @@ public class Solar extends Propiedade {
                 && (this.getGrupo().poderConstruirPiscina()));
     }
 
-    /*Metodo que devolve true se se pode edificar unha pista en funcion da 
+    /*Metodo que devolve true se se pode edificar unha pista en funcion da
     restricion da casilla e do grupo. Unha pista so se pode contruir se se
     construiron dous hoteis na casilla.
      */
