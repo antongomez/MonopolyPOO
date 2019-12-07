@@ -37,15 +37,6 @@ public abstract class Edificio {
         this.valor = valor;
     }
 
-    public float vender() {
-        for (int i = 0; i < solar.getEdificios().size(); i++) {
-            if (solar.getEdificios().get(i).getId().equals(this.id)) {
-                solar.getEdificios().remove(i);
-            }
-        }
-        return (float) (valor * 0.5);
-    }
-
     //Métodos
     //public abstract void construir(Solar solar);
     public abstract void destruir(Solar solar);

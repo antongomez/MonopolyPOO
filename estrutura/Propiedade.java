@@ -63,6 +63,7 @@ public abstract class Propiedade extends Casilla {
     public void comprar(Xogador novoDono) {
         this.dono = novoDono;
         novoDono.modificarFortuna(-this.valor);
+        novoDono.engadirPropiedade(this);
     }
 
     public void actualizarValor() {

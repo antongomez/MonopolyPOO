@@ -405,6 +405,17 @@ public class Solar extends Propiedade {
         }
     }
 
+    public float venderEdificios(String id) {
+        float valor = 0;
+        for (int i = 0; i < edificios.size(); i++) {
+            if (edificios.get(i).getId().equals(id)) {
+                valor = edificios.get(i).getValor();
+                edificios.remove(i);
+            }
+        }
+        return (float) (valor * 0.5);
+    }
+
     @Override
     public String imprimirCasilla() {
         String texto = "{\n"

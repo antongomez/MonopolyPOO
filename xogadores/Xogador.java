@@ -220,13 +220,15 @@ public class Xogador {
         }
 
         if (prop instanceof Solar) {
-            for (int i = ((Solar) prop).getEdificios().size() - 1; i >= 0; i++) {
-                this.fortuna = this.fortuna + ((Solar) prop).getEdificios().get(i).vender();
+            for (int i = ((Solar) prop).getEdificios().size() - 1; i >= 0; i--) {
+                String id = ((Solar) prop).getEdificios().get(i).getId();
+                this.fortuna = this.fortuna + ((Solar) prop).venderEdificios(id);
             }
         }
 
         prop.setDono(hipotecar);
         hipotecar.engadirPropiedade(prop);
+        consola.imprimir("Hipoteca realizada correctamente.");
         this.fortuna = (float) (fortuna + prop.getValor() * 0.5);
     }
 
@@ -247,8 +249,10 @@ public class Xogador {
         }
 
         if (edel) {
-            xog.setFortuna((float) (xog.getFortuna() - 0.5 * prop.getValor()));
+            xog.modificarFortuna((float) (-0.5 * prop.getValor()));
             prop.setDono(xog);
+            xog.engadirPropiedade(prop);
+            consola.imprimir("Deshipotecado correctamente.");
 
             xog.eliminarPropiedade(prop);
         } else {
