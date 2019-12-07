@@ -12,7 +12,7 @@ public class Chapeu extends Avatar {
 
     @Override
     public void moverEnAvanzado(int sumaDados, Taboleiro taboleiro,
-            ArrayList<Xogador> xogadores) {
+            Xogador banca) {
 
     }
 }

@@ -107,7 +107,7 @@ public abstract class Avatar {
     }
 
     public abstract void moverEnAvanzado(int sumaDados, Taboleiro taboleiro,
-            ArrayList<Xogador> xogadores);
+            Xogador banca);
 
     public static char xerarId() {
         char identificador;

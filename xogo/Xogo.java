@@ -449,7 +449,7 @@ public class Xogo implements Comando {
         if (!avatar.getModoAvanzado()) {
             avatar.moverEnBasico(sumarDados(getDadosLanzados()), taboleiro);
         } else {
-            avatar.moverEnAvanzado(sumarDados(getDadosLanzados()), taboleiro, xogadores);
+            avatar.moverEnAvanzado(sumarDados(getDadosLanzados()), taboleiro, banca);
         }
     }
 
@@ -699,38 +699,38 @@ public class Xogo implements Comando {
             if (solar.getDono().equals(xogador)) {
 
                 //if ((solar.getGrupo().existeMonopolio())
-                 //       || (solar.frecuenciaVisita(avatar, this) >= 2)) {
-                    for (int i = 0; i < nEdificios; i++) {
-                        solar.edificar(tipoEdificacion);
-                    }
-                    if (nEdificios == 1) {
-                        consola.imprimir("Construíuse 1 " + tipoEdificacion
-                                + " no solar " + solar.getNome() + ". A fortuna "
-                                + "de " + xogador.getNome() + " redúcese a "
-                                + xogador.getFortuna() + " GM.\n");
+                //       || (solar.frecuenciaVisita(avatar, this) >= 2)) {
+                for (int i = 0; i < nEdificios; i++) {
+                    solar.edificar(tipoEdificacion);
+                }
+                if (nEdificios == 1) {
+                    consola.imprimir("Construíuse 1 " + tipoEdificacion
+                            + " no solar " + solar.getNome() + ". A fortuna "
+                            + "de " + xogador.getNome() + " redúcese a "
+                            + xogador.getFortuna() + " GM.\n");
 
-                        if (avatar instanceof Esfinxe) {
-                            ((Esfinxe) avatar).sumarHistorial("edificar "
-                                    + avatar.getPosicion().getNome() + " "
-                                    + tipoEdificacion + " "
-                                    + +((Solar) avatar.getPosicion()).
-                                            calculoPrezoEdificio(tipoEdificacion));
-                        }
-                    } else {
-                        consola.imprimir("Construíronse " + nEdificios
-                                + "casas no solar " + solar.getNome()
-                                + ". A fortuna de " + xogador.getNome()
-                                + " redúcese a " + xogador.getFortuna()
-                                + " GM.\n");
-
-                        if (avatar instanceof Esfinxe) {
-                            ((Esfinxe) avatar).sumarHistorial("edificar "
-                                    + avatar.getPosicion().getNome() + " "
-                                    + tipoEdificacion + "-" + nEdificios + " "
-                                    + ((Solar) avatar.getPosicion()).
-                                            calculoPrezoEdificio(tipoEdificacion) * nEdificios);
-                        }
+                    if (avatar instanceof Esfinxe) {
+                        ((Esfinxe) avatar).sumarHistorial("edificar "
+                                + avatar.getPosicion().getNome() + " "
+                                + tipoEdificacion + " "
+                                + +((Solar) avatar.getPosicion()).
+                                        calculoPrezoEdificio(tipoEdificacion));
                     }
+                } else {
+                    consola.imprimir("Construíronse " + nEdificios
+                            + "casas no solar " + solar.getNome()
+                            + ". A fortuna de " + xogador.getNome()
+                            + " redúcese a " + xogador.getFortuna()
+                            + " GM.\n");
+
+                    if (avatar instanceof Esfinxe) {
+                        ((Esfinxe) avatar).sumarHistorial("edificar "
+                                + avatar.getPosicion().getNome() + " "
+                                + tipoEdificacion + "-" + nEdificios + " "
+                                + ((Solar) avatar.getPosicion()).
+                                        calculoPrezoEdificio(tipoEdificacion) * nEdificios);
+                    }
+                }
                 /*} else {
                     //Excepcion
                 }*/
