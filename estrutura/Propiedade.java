@@ -76,7 +76,7 @@ public abstract class Propiedade extends Casilla {
 
     @Override
     public String toString() {
-        String nomeaux = String.format("%-13s", this.getNome());
+        String nomeaux = String.format("%-15s", this.getNome());
         String avatares = String.format("%6s", imprimirAvatares());
         String texto = this.grupo.getColorear() + "| " + nomeaux + " " + avatares + "|";
         return texto;

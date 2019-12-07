@@ -117,13 +117,14 @@ public abstract class Casilla {
 
     @Override
     public String toString() {
-        String nomeaux = String.format("%-13s", this.nome);
-        String avataresCasilla = String.format("%6s", imprimirAvatares());
-        String texto = "| " + nomeaux + " " + avataresCasilla + "|";
+        String nomeaux = String.format("%-15s", this.getNome());
+        String avatares = String.format("%6s", imprimirAvatares());
+        String texto ="| " + nomeaux + " " + avatares + "|";
         return texto;
     }
 
-    @Override
+
+        @Override
     public boolean equals(Object casilla) {
         if (!(casilla instanceof Casilla)) {
             return false;
