@@ -210,6 +210,65 @@ public class Solar extends Propiedade {
         return valor;
     }
 
+    public void destruirEdificio(int nCasas) {
+        if (getNCasas() < nCasas) {
+
+            int destruidas = 0;
+            for (int i = (edificios.size() - 1); destruidas < nCasas; i--) {
+                if (edificios.get(i) instanceof Casa) {
+                    eliminarEdificio(edificios.get(i));
+                    destruidas++;
+                }
+            }
+        } else {
+            System.out.println("Bro, non hai tantas casas.");
+        }
+    }
+
+    public void destruirEdificio(String tipoEdificio) {
+
+        int destruidas = 0;
+
+        switch (tipoEdificio) {
+            case "casa":
+
+                for (int i = (edificios.size() - 1); destruidas < 1; i--) {
+                    if (edificios.get(i) instanceof Casa) {
+                        eliminarEdificio(edificios.get(i));
+                        destruidas++;
+                    }
+                }
+                break;
+            case "hotel":
+
+                for (int i = (edificios.size() - 1); destruidas < 1; i--) {
+                    if (edificios.get(i) instanceof Hotel) {
+                        eliminarEdificio(edificios.get(i));
+                        destruidas++;
+                    }
+                }
+                break;
+            case "piscina":
+
+                for (int i = (edificios.size() - 1); destruidas < 1; i--) {
+                    if (edificios.get(i) instanceof Piscina) {
+                        eliminarEdificio(edificios.get(i));
+                        destruidas++;
+                    }
+                }
+                break;
+            case "pista":
+
+                for (int i = (edificios.size() - 1); destruidas < 1; i--) {
+                    if (edificios.get(i) instanceof Pista) {
+                        eliminarEdificio(edificios.get(i));
+                        destruidas++;
+                    }
+                }
+                break;
+        }
+    }
+
     //Metodo que calcula o alquiler;
     @Override
     public float calculoAlquiler() {
@@ -227,7 +286,7 @@ public class Solar extends Propiedade {
         //return valor;
     }
 
-    /*Metodo que devolve true se se pode edificar unha casa en funcion da 
+    /*Metodo que devolve true se se pode edificar unha casa en funcion da
     restricion da casilla e do grupo.
      */
     public boolean poderEdificarCasa() {
@@ -235,7 +294,7 @@ public class Solar extends Propiedade {
                 && (this.getGrupo().poderConstruirCasa()));
     }
 
-    /*Metodo que devolve true se se pode edificar unha casa en funcion da 
+    /*Metodo que devolve true se se pode edificar unha casa en funcion da
     restricion da casilla e do grupo.
      */
     public boolean poderEdificarHotel() {
@@ -243,7 +302,7 @@ public class Solar extends Propiedade {
                 && (this.getGrupo().poderConstruirHotel()));
     }
 
-    /*Metodo que devolve true se se pode edificar unha piscina en funcion da 
+    /*Metodo que devolve true se se pode edificar unha piscina en funcion da
     restricion da casilla e do grupo. Unha piscina so se pode contruir con
     duas casas e un hotel como minimo.
      */
@@ -255,7 +314,7 @@ public class Solar extends Propiedade {
                 && (this.getGrupo().poderConstruirPiscina()));
     }
 
-    /*Metodo que devolve true se se pode edificar unha pista en funcion da 
+    /*Metodo que devolve true se se pode edificar unha pista en funcion da
     restricion da casilla e do grupo. Unha pista so se pode contruir se se
     construiron dous hoteis na casilla.
      */

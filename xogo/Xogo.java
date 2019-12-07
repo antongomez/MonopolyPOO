@@ -204,6 +204,9 @@ public class Xogo implements Comando {
                     describir(comando1, comando2);
                     break;
 
+                case "deshipotecar": deshipotecar(comando1, xogador, hipotecar);
+                    break;
+
                 case "edificar":
 
                     switch (comando1) {
@@ -219,6 +222,9 @@ public class Xogo implements Comando {
                             break;
                     }
 
+                    break;
+
+                case "hipotecar": hipotecar(comando1, xogador, hipotecar);
                     break;
                 case "lanzar":
                     if (comando1.equals("dados")) {
@@ -690,6 +696,22 @@ public class Xogo implements Comando {
         }
     }
 
+    private void deshipotecar(String nom, Xogador xogador, Xogador hipo)
+    {
+        for (int i = 0; i < taboleiro.getCasillas().size(); i++)
+        {
+            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++)
+            {
+                if (taboleiro.getCasillas().get(i).get(j).getNome().equals(nom))
+                    if (taboleiro.getCasillas().get(i).get(j) instanceof Propiedade) {
+                        Propiedade prop = (Propiedade) taboleiro.getCasillas().get(i).get(j);
+                        hipo.deshipotecar(xogador, prop);
+                    }
+
+            }
+        }
+    }
+
     @Override
     public final void edificar(Avatar avatar, String tipoEdificacion, int nEdificios) {
         if (avatar.getPosicion() instanceof Solar) {
@@ -700,7 +722,7 @@ public class Xogo implements Comando {
 
                 //if ((solar.getGrupo().existeMonopolio())
                 //       || (solar.frecuenciaVisita(avatar, this) >= 2)) {
-                for (int i = 0; i < nEdificios; i++) {
+                for (int i = 0; i < nEdificios; ++i) {
                     solar.edificar(tipoEdificacion);
                 }
                 if (nEdificios == 1) {
@@ -745,6 +767,7 @@ public class Xogo implements Comando {
     public boolean existeAvatar(char idAvatar) {
         boolean existe = false;
 
+
         for (int i = 0; i < avatares.size(); i++) {
             if (avatares.get(i).getId() == idAvatar) {
                 existe = true;
@@ -766,6 +789,22 @@ public class Xogo implements Comando {
             }
         }
         return existe;
+    }
+
+    private void hipotecar(String nom, Xogador xogador, Xogador hipo)
+    {
+        for (int i = 0; i < taboleiro.getCasillas().size(); i++)
+        {
+            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++)
+            {
+                if (taboleiro.getCasillas().get(i).get(j).getNome().equals(nom))
+                    if (taboleiro.getCasillas().get(i).get(j) instanceof Propiedade) {
+                        Propiedade prop = (Propiedade) taboleiro.getCasillas().get(i).get(j);
+                        xogador.hipotecar(prop, hipo);
+                    }
+
+            }
+        }
     }
 
     private boolean IdIgualAvatar(char id) {
