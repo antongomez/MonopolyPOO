@@ -18,9 +18,10 @@ public class Esfinxe extends Avatar {
      */
     //Exemplo: edificar Lugo casa-3 150
     //         edificar Lugo hotel 150
-    //Exemplo: pago imposto 100
-    //Exemplo: pago 2 Anton Victor 25 /*sendo Pedro o xogador deste avatar*/
-    //Exemplo: cobro Parking 150
+    //Exemplo: pago 100 
+    //Exemplo: pago 25 2 Anton-Victor  /*sendo Pedro o xogador deste avatar*/
+    //Exemplo: cobro 150 Parking
+    //         cobro 160
     public Esfinxe(char Id, Xogador xogador, Taboleiro taboleiro) {
         super(Id, xogador, taboleiro);
 
@@ -48,7 +49,8 @@ public class Esfinxe extends Avatar {
     //Métodos
     //Utiliza moverEnBasico
     @Override
-    public void moverEnAvanzado(int sumaDados, Taboleiro taboleiro) {
+    public void moverEnAvanzado(int sumaDados, Taboleiro taboleiro,
+            ArrayList<Xogador> xogadores) {
 
         if (sumaDados > 4) {
 
@@ -79,7 +81,7 @@ public class Esfinxe extends Avatar {
         } else if (sumaDados == 4) {
             this.moverEnBasico(sumaDados, taboleiro);
         } else {
-            desfacerCambios();
+            desfacerCambios(taboleiro);
         }
     }
 
@@ -189,12 +191,23 @@ public class Esfinxe extends Avatar {
         }
     }
 
-    private void desfacerCambios() {
+    private void desfacerCambios(Taboleiro taboleiro) {
         String[] partes;
         String accion, casilla;
         for (int i = 0; i < historial.size(); i++) {
+            String comando1 = "", comando2 = "", comando3 = "";
             partes = historial.get(i).split(" ");
             accion = partes[0];
+
+            if (partes.length > 1) {
+                comando1 = partes[1];
+            }
+            if (partes.length > 2) {
+                comando2 = partes[2];
+            }
+            if (partes.length > 3) {
+                comando3 = partes[3];
+            }
 
             switch (accion) {
                 case "alquiler":
@@ -212,10 +225,67 @@ public class Esfinxe extends Avatar {
                 case "trato":
                     break;
                 case "pago":
-
+                    if (comando2.matches("12345")) {
+                        desfacerPagoXogador(Float.parseFloat(comando1), comando2);
+                    } else {
+                        desfacerPago(Float.parseFloat(comando1));
+                    }
+                    break;
+                case "cobro":
+                    if (comando2.equals("Parking")) {
+                        desfacerCobroParking(Float.parseFloat(comando1), taboleiro);
+                    } else {
+                        desfacerCobro(Float.parseFloat(comando1));
+                        Xogo.consola.imprimir("Desfíxose o cobro de "
+                                + comando1 + " Gm que recibiu o xogador "
+                                + getXogador().getNome() + " no truno anterior.");
+                    }
                     break;
             }
 
+        }
+    }
+
+    public void desfacerCobro(float cantidade) {
+        if (cantidade > 0) {
+            this.getXogador().modificarFortuna(-cantidade);
+        } else {
+            //Excepcion
+            Xogo.consola.imprimir("O cobro debe ser positivo.\n");
+        }
+    }
+
+    public void desfacerCobroParking(float bote, Taboleiro taboleiro) {
+        if (bote > 0) {
+            this.getXogador().modificarFortuna(-bote);
+            ((Especial) taboleiro.getCasilla("Parking")).modificarBoteParking(bote);
+        } else {
+            //Excepcion
+            Xogo.consola.imprimir("O bote debe ser positivo.\n");
+        }
+    }
+
+    public void desfacerPago(float cantidade) {
+        if (cantidade > 0) {
+            this.getXogador().modificarFortuna(cantidade);
+        } else {
+            //Excepcion
+            Xogo.consola.imprimir("O pago debe ser positivo.\n");
+        }
+    }
+
+    public void desfacerPagoXogador(float cantidade, String nomes) {
+        if (cantidade > 0) {
+            String[] xogadores = nomes.split("-");
+
+            for (int i = 0; i < xogadores.length; i++) {
+                this.getXogador().modificarFortuna(cantidade);
+                this.getXogador().modificarFortuna(cantidade);
+            }
+
+        } else {
+            //Excepcion
+            Xogo.consola.imprimir("O pago debe ser positivo.\n");
         }
     }
 
@@ -236,5 +306,14 @@ public class Esfinxe extends Avatar {
         }
 
         return lado;
+    }
+
+    @Override
+    public String toString() {
+        String texto = "{ \n" + "\tid: " + this.getId()
+                + "\n" + "\tTipo: esfinxe"
+                + "\n" + "\tXogador: " + this.getXogador().getNome()
+                + "\n" + "}";
+        return texto;
     }
 }

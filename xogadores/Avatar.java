@@ -5,6 +5,8 @@ import java.util.Random;
 import xogo.Xogo;
 import static xogo.Xogo.consola;
 
+import java.util.ArrayList;
+
 public abstract class Avatar {
 
     private char id;
@@ -104,7 +106,8 @@ public abstract class Avatar {
         }
     }
 
-    public abstract void moverEnAvanzado(int sumaDados, Taboleiro taboleiro);
+    public abstract void moverEnAvanzado(int sumaDados, Taboleiro taboleiro,
+            ArrayList<Xogador> xogadores);
 
     public static char xerarId() {
         char identificador;

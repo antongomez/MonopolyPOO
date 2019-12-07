@@ -447,7 +447,7 @@ public class Xogo implements Comando {
         if (!avatar.getModoAvanzado()) {
             avatar.moverEnBasico(sumarDados(getDadosLanzados()), taboleiro);
         } else {
-            avatar.moverEnAvanzado(sumarDados(getDadosLanzados()), taboleiro);
+            avatar.moverEnAvanzado(sumarDados(getDadosLanzados()), taboleiro, xogadores);
         }
     }
 
