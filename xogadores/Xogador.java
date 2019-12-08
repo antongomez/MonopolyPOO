@@ -203,7 +203,7 @@ public class Xogador {
         return texto;
     }
 
-    public void hipotecar(Propiedade prop, Xogador hipotecar) {
+    public void hipotecar(Propiedade prop, Xogador hipotecar)  {
         boolean atopada = false;
         final ConsolaNormal consola = new ConsolaNormal();
         for (Propiedade propiedade : this.propiedades) {
