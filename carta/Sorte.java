@@ -8,5 +8,13 @@ public class Sorte extends Carta {
         super(nome, accion);
     }
 
-    void accion();
+    public void accion()
+    {
+        String accion = "";
+        String partes[] = super.getNome().split("-");
+        switch (partes[0])
+        {
+
+        }
+    }
 }
