@@ -346,6 +346,13 @@ public class Xogo implements Comando {
                         comprobarCasilla(avatar.getPosicion(), xogador);
                     }
                     break;
+                case "historial":
+                    if (xogadores.get(turno).equals(xogador)) {
+                        if (avatar instanceof Esfinxe) {
+                            ((Esfinxe) avatar).imprimirHistorial();
+                        }
+                    }
+                    break;
                 default: //Excepcion
                     consola.imprimir("Comando incorrecto.\n");
                     break;
@@ -508,6 +515,14 @@ public class Xogo implements Comando {
                     ((Esfinxe) xogador.getAvatar()).sumarHistorial("compra/"
                             + propiedade.getNome() + "/" + propiedade.getValor());
                 }
+                if (propiedade instanceof Solar) {
+                    if ((((Solar) propiedade)).getGrupo().existeMonopolio()) {
+                        consola.imprimir("O xogador " + xogador.getNome()
+                                + " adquiriu todos os solares do grupo "
+                                + propiedade.getGrupo().getNome() + ". A partir"
+                                + "de agora pode edificar.");
+                    }
+                }
             }
         }
     }
@@ -580,22 +595,33 @@ public class Xogo implements Comando {
                     consola.imprimir("O solar " + solar.getNome() + " non ten "
                             + "dono, pódese comprar.\n");
                 } else {
-                    float alquiler = solar.calculoAlquiler();
-                    if (xogador.getFortuna() > alquiler) {
-                        xogador.modificarFortuna(-alquiler);
-                        solar.getDono().modificarFortuna(alquiler);
-                        consola.imprimir("O xogador " + xogador.getNome()
-                                + " pagulle ao xogador " + solar.getDono().getNome()
-                                + " " + alquiler + " GM. A súa fortuna actual é "
-                                + "de " + xogador.getFortuna() + "\n");
+                    if (!solar.getDono().equals(xogador)) {
+                        float alquiler = solar.calculoAlquiler();
+                        if (xogador.getFortuna() > alquiler) {
+                            xogador.modificarFortuna(-alquiler);
+                            solar.getDono().modificarFortuna(alquiler);
+                            consola.imprimir("O xogador " + xogador.getNome()
+                                    + " pagulle ao xogador "
+                                    + solar.getDono().getNome() + " " + alquiler
+                                    + " GM. A súa fortuna actual é de "
+                                    + xogador.getFortuna() + "\n");
 
-                        if (avatar instanceof Esfinxe) {
-                            ((Esfinxe) avatar).sumarHistorial("alquiler/"
-                                    + alquiler + "/" + solar.getDono().getNome()
-                                    + "/" + solar.getNome());
+                            if (avatar instanceof Esfinxe) {
+                                ((Esfinxe) avatar).sumarHistorial("alquiler/"
+                                        + alquiler + "/" + solar.getDono().getNome()
+                                        + "/" + solar.getNome());
+                            }
+                        } else {
+                            consola.imprimir("Implementar bancarrota co numero"
+                                    + " da xogadores.");
                         }
                     } else {
-                        consola.imprimir("Implementar bancarrota co numero da xogadores.");
+                        if (solar.frecuenciaVisita(turno) == 2) {
+                            consola.imprimir("O xogador " + xogador.getNome()
+                                    + " caeu dúas veces no solar "
+                                    + solar.getNome() + ". A partir de agora "
+                                    + "pode edificar.");
+                        }
                     }
                 }
             } else if (casilla instanceof Transporte) {
@@ -741,7 +767,7 @@ public class Xogo implements Comando {
 
                 if ((solar.getGrupo().existeMonopolio())
                         || (solar.frecuenciaVisita(getTurnoAvatar(avatar)) >= 2)) {
-                    for (int i = 0; i < nEdificios; ++i) {
+                    for (int i = 0; i < nEdificios; i++) {
                         solar.edificar(tipoEdificacion);
                     }
                     if (nEdificios == 1) {
@@ -759,7 +785,7 @@ public class Xogo implements Comando {
                         }
                     } else {
                         consola.imprimir("Construíronse " + nEdificios
-                                + "casas no solar " + solar.getNome()
+                                + " casas no solar " + solar.getNome()
                                 + ". A fortuna de " + xogador.getNome()
                                 + " redúcese a " + xogador.getFortuna()
                                 + " GM.\n");
@@ -767,7 +793,7 @@ public class Xogo implements Comando {
                         if (avatar instanceof Esfinxe) {
                             ((Esfinxe) avatar).sumarHistorial("edificar/"
                                     + ((Solar) avatar.getPosicion()).
-                                            calculoPrezoEdificio(tipoEdificacion) * nEdificios
+                                            calculoPrezoEdificio("casa") * nEdificios
                                     + "/" + avatar.getPosicion().getNome() + "/"
                                     + tipoEdificacion + "-" + nEdificios);
                         }

@@ -46,6 +46,19 @@ public class Esfinxe extends Avatar {
         this.historial.clear();
     }
 
+    public void imprimirHistorial() {
+        Xogo.consola.imprimir("---------------------------------------");
+        Xogo.consola.imprimir("---------------------------------------");
+        Xogo.consola.imprimir("Historial de " + getId() + "\n");
+
+        for (int i = 0; i < historial.size(); i++) {
+            Xogo.consola.imprimir(historial.get(i));
+        }
+
+        Xogo.consola.imprimir("---------------------------------------");
+        Xogo.consola.imprimir("---------------------------------------");
+    }
+
     //Métodos
     //Utiliza moverEnBasico
     @Override

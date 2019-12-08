@@ -164,6 +164,7 @@ public class Solar extends Propiedade {
         if (tipoEdificio != null) {
             switch (tipoEdificio) {
                 case "casa":
+                case "casas":
                     valor = this.getValor() * Constantes.CASA;
                     break;
                 case "hotel":
@@ -326,6 +327,7 @@ public class Solar extends Propiedade {
     public void edificar(String tipo) {
         switch (tipo) {
             case "casa":
+            case "casas":
             case "Casa": {
                 if (this.getDono().getFortuna() //facer un metodo en xogador que comprobe isto
                         > this.getValor() * Constantes.CASA) {
@@ -416,6 +418,27 @@ public class Solar extends Propiedade {
         return (float) (valor * 0.5);
     }
 
+    public String imprimirEdificios() {
+        String texto = "";
+        if (!edificios.isEmpty()) {
+            texto += "------------------------------------------";
+            for (int i = 0; i < getCasas().size(); i++) {
+                texto += getCasas().get(i).toString();
+            }
+            for (int i = 0; i < getHoteis().size(); i++) {
+                texto += getHoteis().get(i).toString();
+            }
+            for (int i = 0; i < getPiscinas().size(); i++) {
+                texto += getPiscinas().get(i).toString();
+            }
+            for (int i = 0; i < getPistas().size(); i++) {
+                texto += getPistas().get(i).toString();
+            }
+            texto += "------------------------------------------";
+        }
+        return texto;
+    }
+
     @Override
     public String imprimirCasilla() {
         String texto = "{\n"
@@ -429,14 +452,15 @@ public class Solar extends Propiedade {
                 + "\tvalor hotel: " + (this.getValor() * Constantes.HOTEL) + " GM,\n"
                 + "\tvalor piscina: " + (this.getValor() * Constantes.PISCINA) + " GM,\n"
                 + "\tvalor pista de deporte: " + (this.getValor() * Constantes.PISTA) + " GM,\n"
-                + "\talquiler unha casa: " + " GM,\n"
-                + "\talquiler dúas casas: " + " GM,\n"
-                + "\talquiler tres casas: " + " GM,\n"
-                + "\talquiler catro casas: " + " GM,\n"
-                + "\talquiler hotel: " + " GM,\n"
-                + "\talquiler piscina: " + " GM,\n"
-                + "\talquiler pista de deporte: " + " GM,\n"
+                + "\talquiler unha casa: " + alquiler1Casa() + " GM,\n"
+                + "\talquiler dúas casas: " + alquiler2Casas() + " GM,\n"
+                + "\talquiler tres casas: " + alquiler3Casas() + " GM,\n"
+                + "\talquiler catro casas: " + alquiler4Casas() + " GM,\n"
+                + "\talquiler hotel: " + alquilerHotel() + " GM,\n"
+                + "\talquiler piscina: " + alquilerPiscina() + " GM,\n"
+                + "\talquiler pista de deporte: " + alquilerPista() + " GM,\n"
                 + "\txogadores: [" + "]\n"
+                + "\tedificios: \n" + imprimirEdificios() + "\n"
                 + "}\n";
 
         return texto;
