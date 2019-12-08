@@ -351,6 +351,9 @@ public class Solar extends Propiedade {
                 if (this.getDono().getFortuna()
                         > this.getValor() * 0.6) {
                     if (this.poderEdificarHotel()) {
+                        //Eliminamos as casas do solar
+                        this.destruirEdificio(4);
+
                         //Construimos
                         this.engadirEdificio(new Hotel(this));
 
@@ -407,15 +410,94 @@ public class Solar extends Propiedade {
         }
     }
 
-    public float venderEdificios(String id) {
-        float valor = 0;
-        for (int i = 0; i < edificios.size(); i++) {
-            if (edificios.get(i).getId().equals(id)) {
-                valor = edificios.get(i).getValor();
-                edificios.remove(i);
+    private Casa getUltimaCasa() {
+        return getCasas().get(getNCasas() - 1);
+    }
+
+    private Hotel getUltimoHotel() {
+        return getHoteis().get(getNHoteis() - 1);
+    }
+
+    private Piscina getUltimaPiscina() {
+        return getPiscinas().get(getNPiscinas() - 1);
+    }
+
+    private Pista getUltimaPista() {
+        return getPistas().get(getNPistas() - 1);
+    }
+
+    private Edificio getUltimoEdificio(String tipoEdificio) {
+
+        if (tipoEdificio != null) {
+            switch (tipoEdificio) {
+                case "casa":
+                case "casas":
+                    if (!getCasas().isEmpty()) {
+                        return getUltimaCasa();
+                    } else {
+                        //Excepcion
+                    }
+                    break;
+                case "hotel":
+                case "hoteis":
+                    if (!getCasas().isEmpty()) {
+                        return getUltimoHotel();
+                    }
+                    break;
+                case "piscina":
+                case "piscinas":
+                    if (!getCasas().isEmpty()) {
+                        return getUltimaPiscina();
+                    }
+                    break;
+                case "pista":
+                case "pistas":
+                    if (!getCasas().isEmpty()) {
+                        return getUltimaPista();
+                    }
+                    break;
             }
         }
+        return getUltimaCasa();
+    }
+
+    public float venderEdificio(String tipoEdificio) {
+        float valor = 0;
+
+        if (!edificios.isEmpty()) {
+            Edificio edificio = getUltimoEdificio(tipoEdificio);
+            valor = edificio.getValor();
+            eliminarEdificio(edificio);
+            getDono().modificarFortuna(valor * 0.5f);
+        }
+
         return (float) (valor * 0.5);
+    }
+
+    public float venderEdificios(String id) {
+        float valor = 0;
+
+        for (Edificio edificio : edificios) {
+            if (edificio.getId().equals(id)) {
+                valor = edificio.getValor();
+                eliminarEdificio(edificio);
+            }
+        }
+
+        return (float) (valor * 0.5);
+    }
+
+    public String imprimirXogadores() {
+        String texto = "";
+        if (!getAvatares().isEmpty()) {
+            for (int i = 0; i < getAvatares().size(); i++) {
+                texto += getAvatares().get(i).getXogador().getNome();
+                if (!((i + 1) == getAvatares().size())) {
+                    texto += ", ";
+                }
+            }
+        }
+        return texto;
     }
 
     public String imprimirEdificios() {
@@ -458,10 +540,14 @@ public class Solar extends Propiedade {
                 + "\talquiler catro casas: " + alquiler4Casas() + " GM,\n"
                 + "\talquiler hotel: " + alquilerHotel() + " GM,\n"
                 + "\talquiler piscina: " + alquilerPiscina() + " GM,\n"
-                + "\talquiler pista de deporte: " + alquilerPista() + " GM,\n"
-                + "\txogadores: [" + "]\n"
-                + "\tedificios: \n" + imprimirEdificios() + "\n"
-                + "}\n";
+                + "\talquiler pista de deporte: " + alquilerPista() + " GM,\n";
+        if (!getAvatares().isEmpty()) {
+            texto += "\txogadores: [" + "]\n";
+        }
+        if (!edificios.isEmpty()) {
+            texto += "\tedificios: \n" + imprimirEdificios() + "\n";
+        }
+        texto += "}\n";
 
         return texto;
     }

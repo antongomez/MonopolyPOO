@@ -309,6 +309,12 @@ public class Xogo implements Comando {
                     }
                     break;
 
+                case "vender":
+                    if (existeCasilla(comando2)) {
+                        vender(comando1, comando2, comando3);
+                    }
+                    break;
+
                 case "ver":
                     if (comando1.equals("taboleiro")) {
                         verTaboleiro();
@@ -481,6 +487,9 @@ public class Xogo implements Comando {
         } else {
             avatar.moverEnAvanzado(sumarDados(getDadosLanzados()), taboleiro, banca);
             avatar.getPosicion().sumarFrecuenciaVisita(turno);
+        }
+        if (avatar instanceof Esfinxe) {
+            ((Esfinxe) avatar).resetHistorial();
         }
     }
 
@@ -1063,6 +1072,32 @@ public class Xogo implements Comando {
             //Excepcion
         }
         return 0;
+    }
+
+    @Override
+    public final void vender(String tipoEdificio, String casilla, String nEdificios) {
+        int n = Integer.parseInt(nEdificios);
+        if (taboleiro.getCasilla(casilla) instanceof Solar) {
+            Solar solar = (Solar) taboleiro.getCasilla(casilla);
+
+            float valor = 0;
+            if ((n > 0) && (n <= 4)) {
+                for (int i = 0; i < n; i++) {
+                    valor = solar.venderEdificio(tipoEdificio);
+
+                }
+                consola.imprimir("O xogador " + solar.getDono().getNome()
+                        + " vendeu " + nEdificios + " " + tipoEdificio
+                        + "pola cantidade de " + valor
+                        + " GM.\n");
+            } else {
+                valor = solar.venderEdificio(tipoEdificio);
+                consola.imprimir("O xogador " + solar.getDono().getNome()
+                        + " vendeu 1 " + tipoEdificio
+                        + "pola cantidade de " + valor
+                        + " GM.\n");
+            }
+        }
     }
 
     @Override

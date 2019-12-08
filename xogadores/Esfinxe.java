@@ -224,7 +224,7 @@ public class Esfinxe extends Avatar {
 
     private void desfacerCambios(Taboleiro taboleiro, Xogador banca) {
         String[] partes;
-        String accion, casilla;
+        String accion;
         for (int i = 0; i < historial.size(); i++) {
             String comando1 = "", comando2 = "", comando3 = "";
             partes = historial.get(i).split("/");

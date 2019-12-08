@@ -2,7 +2,6 @@ package xogo;
 
 import xogadores.*;
 import estrutura.*;
-import java.util.HashMap;
 
 public interface Comando {
 
@@ -29,7 +28,7 @@ public interface Comando {
     //public void retroceder();
     public void sairCarcere();
 
-    //public void vender();
+    public void vender(String tipoEdificio, String casilla, String nEdificios);
     public void verTaboleiro();
 
     public void xogador();

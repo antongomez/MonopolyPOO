@@ -214,7 +214,7 @@ public class Xogador {
         }
 
         if (!atopada) {
-            consola.imprimir("Esta propiedade non te pertence.");
+            consola.imprimir("Esta propiedade non é da túa propiedade pertence.");
             //excepcion
             return;
         }
@@ -222,7 +222,7 @@ public class Xogador {
         if (prop instanceof Solar) {
             for (int i = ((Solar) prop).getEdificios().size() - 1; i >= 0; i--) {
                 String id = ((Solar) prop).getEdificios().get(i).getId();
-                this.fortuna = this.fortuna + ((Solar) prop).venderEdificios(id);
+                modificarFortuna(((Solar) prop).venderEdificios(id));
             }
         }
 
