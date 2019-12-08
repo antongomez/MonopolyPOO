@@ -241,7 +241,7 @@ public class Xogador {
         final ConsolaNormal consola = new ConsolaNormal();
         boolean edel = false;
 
-        if (this.getFortuna() < (0.5 * prop.getValor())) {
+        if (this.getFortuna() < (0.5f * prop.getValor())) {
             System.out.println("NO MONEY BABY");
             throw new DesHipoNONdin("En xogador", this.getNome(), (float) (0.5 * prop.getValor()));
         }
