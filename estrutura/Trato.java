@@ -43,6 +43,80 @@ public class Trato {
         this.nTurnos = nTurnos;
     }
 
+    //Getters e Setters
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Xogador getXogadorPropon() {
+        return xogadorPropon;
+    }
+
+    public void setXogadorPropon(Xogador xogadorPropon) {
+        this.xogadorPropon = xogadorPropon;
+    }
+
+    public Xogador getXogadorRecibe() {
+        return xogadorRecibe;
+    }
+
+    public void setXogadorRecibe(Xogador xogadorRecibe) {
+        this.xogadorRecibe = xogadorRecibe;
+    }
+
+    public Propiedade getPropPropon() {
+        return propPropon;
+    }
+
+    public void setPropPropon(Propiedade propPropon) {
+        this.propPropon = propPropon;
+    }
+
+    public Propiedade getPropRecibe() {
+        return propRecibe;
+    }
+
+    public void setPropRecibe(Propiedade propRecibe) {
+        this.propRecibe = propRecibe;
+    }
+
+    public Propiedade getPropAlRecibe() {
+        return propAlRecibe;
+    }
+
+    public void setPropAlRecibe(Propiedade propAlRecibe) {
+        this.propAlRecibe = propAlRecibe;
+    }
+
+    public float getCartosProp() {
+        return cartosProp;
+    }
+
+    public void setCartosProp(float cartosProp) {
+        this.cartosProp = cartosProp;
+    }
+
+    public float getCartosRec() {
+        return cartosRec;
+    }
+
+    public void setCartosRec(float cartosRec) {
+        this.cartosRec = cartosRec;
+    }
+
+    public int getnTurnos() {
+        return nTurnos;
+    }
+
+    public void setnTurnos(int nTurnos) {
+        this.nTurnos = nTurnos;
+    }
+
+
     /*
     public void InciarTrato(ArrayList<Xogador> xogadores)
     {
@@ -156,11 +230,15 @@ public class Trato {
     public void aceptarTrato() {
         final ConsolaNormal consola = new ConsolaNormal();
         if (xogadorRecibe.getFortuna() < cartosRec) {
-            consola.imprimir("Non tes suficientes cartos para aceptar o trato.");
+            consola.imprimir("Neste momento, non tes suficientes cartos para "
+                    + "aceptar o trato. Debes conseguir "
+                    + (cartosRec - xogadorRecibe.getFortuna()) + " GM.");
             return;
         }
 
         if (xogadorPropon.getFortuna() < cartosProp) {
+            consola.imprimir("O trato non pode ser aceptado ata que o xogador "
+                    + "que propuxo o trato consiga " + cartosProp + " GM.");
             return;
         }
         //excepcion

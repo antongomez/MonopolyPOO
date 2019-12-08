@@ -5,6 +5,8 @@ import estrutura.*;
 
 public interface Comando {
 
+    public void aceptarTrato(String nomeTrato);
+
     //public void avanzar();
     public void cambiarModo(Avatar avatar);
 
@@ -28,7 +30,10 @@ public interface Comando {
     //public void retroceder();
     public void sairCarcere();
 
+    public void proponherTrato(String[] detalles);
+
     public void vender(String tipoEdificio, String casilla, String nEdificios);
+
     public void verTaboleiro();
 
     public void xogador();

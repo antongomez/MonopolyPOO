@@ -324,12 +324,12 @@ public class Xogo implements Comando {
                     }
                     break;
 
-                //Exemplo: trato Anton: cambiar Santa Cruz por nonalquiler(A Guarda 3)
-                //Exemplo: trato Anton: cambiar 500 por Lugo
+                //Exemplo: proponherTrato Anton: cambiar Santa Cruz por nonalquiler(A Guarda 3)
+                //Exemplo: proponherTrato Anton: cambiar 500 por Lugo
                 case "trato":
                     if (existeXogador(comando1.replace(":", ""))) {
                         if (comando2.equals("cambiar")) {
-                            trato(partes);
+                            proponherTrato(partes);
                         } else {
                             consola.imprimir("comando incorrecto. Falta cambiar.");
                         }
@@ -535,6 +535,18 @@ public class Xogo implements Comando {
     }
 
     //Métodos auxiliares para a funcionalidade
+    @Override
+    public final void aceptarTrato(String nomeTrato) {
+        if (nomeTrato != null) {
+            if (existeTrato(xogadores.get(turno), nomeTrato)) {
+                getTrato(xogadores.get(turno), nomeTrato).aceptarTrato();
+            } else {
+                consola.imprimir("O trato " + nomeTrato + " non lle foi"
+                        + " proposto ao xogador " + xogadores.get(turno));
+            }
+        }
+    }
+
     private void avanzar(Avatar avatar) {
         if (!avatar.getModoAvanzado()) {
             avatar.moverEnBasico(sumarDados(getDadosLanzados()), taboleiro);
@@ -888,6 +900,24 @@ public class Xogo implements Comando {
         return taboleiro.getCasilla(nomeCasilla) != null;
     }
 
+    private boolean existeTrato(Xogador xogador, String nomeTrato) {
+        if ((xogador != null) && (nomeTrato != null)) {
+            if (!tratos.isEmpty()) {
+                if (!tratos.get(xogador.getNome()).isEmpty()) {
+                    for (Trato trato : tratosXogador(xogador)) {
+                        if (trato.getNome().equals(nomeTrato)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        } else {
+            //Excepcion
+        }
+        return false;
+    }
+
     public boolean existeXogador(String nomeXogador) {
         boolean existe = false;
 
@@ -897,6 +927,19 @@ public class Xogo implements Comando {
             }
         }
         return existe;
+    }
+
+    private Trato getTrato(Xogador xogador, String nomeTrato) {
+        if (existeTrato(xogador, nomeTrato)) {
+            for (Trato trato : tratosXogador(xogador)) {
+                if (trato.getNome().equals(nomeTrato)) {
+                    return trato;
+                }
+            }
+        } else {
+            //Excepcion
+        }
+        return null;
     }
 
     private void hipotecar(String nom, Xogador xogador, Xogador hipo) {
@@ -1084,80 +1127,6 @@ public class Xogo implements Comando {
         return propiedade.getDono().equals(banca);
     }
 
-    private boolean poderLanzar() {
-        if (!dadosLanzados(tiradas.get(1))) {
-            return true;
-        } else if ((!dadosLanzados(tiradas.get(2))) && (sonDobres(tiradas.get(1)))) {
-            return true;
-        } else if ((!dadosLanzados(tiradas.get(3))) && (sonDobres(tiradas.get(2)))) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public final void rematarTurno() {
-        if (!poderLanzar()) {
-            this.resetDados();
-            if (turno == (xogadores.size() - 1)) {
-                turno = 0;
-            } else {
-                turno++;
-            }
-            consola.imprimir("Turno de " + xogadores.get(turno).getNome() + ".\n");
-        } else {
-            //Excepcion
-            consola.imprimir("O xogador non pode rematar turno.");
-        }
-    }
-
-    @Override
-    public final boolean rematarPartida() {
-        return true;
-    }
-
-    @Override
-    public final void sairCarcere() {
-        if (xogadores.get(turno).getEstadoPreso() > 0) {
-            if (poderLanzar()) {
-                xogadores.get(turno).modificarFortuna(-Constantes.SAIR_CARCERE);
-                xogadores.get(turno).setEstadoPreso(0);
-                consola.imprimir("O xogador " + xogadores.get(turno).getNome()
-                        + " pagou " + Constantes.SAIR_CARCERE + " GM para saír do"
-                        + " Cárcere. A súa fortuna actual é de "
-                        + xogadores.get(turno).getFortuna() + ".\n");
-            } else {
-                //Excepcion
-                consola.imprimir("Xa lanzaches. Agora non podes pagar.\n");
-            }
-        } else {
-
-            //Excepcion
-        }
-    }
-
-    private boolean sonDobres(HashMap<String, Dado> dados) {
-        if (dados != null) {
-            if (dados.get("d1").equals(dados.get("d2"))) {
-                if (dados.get("d1").getValor() > 0) {
-                    return true;
-                }
-            }
-        } else {
-            //Excepcion
-        }
-        return false;
-    }
-
-    public int sumarDados(HashMap<String, Dado> dados) {
-        if (dados != null) {
-            return (dados.get("d1").getValor() + dados.get("d2").getValor());
-        } else {
-            //Excepcion
-        }
-        return 0;
-    }
-
     /*Exemplo:
 
     trato Anton: cambiar Lugo por Santiago
@@ -1168,7 +1137,8 @@ public class Xogo implements Comando {
     trato Anton: cambiar Lugo por Santiago e nonalquiler(Meanho,3)
 
      */
-    public final void trato(String[] partes) {
+    @Override
+    public final void proponherTrato(String[] partes) {
         if (partes != null) {
 
             boolean comandoViable = false;
@@ -1368,6 +1338,80 @@ public class Xogo implements Comando {
         } else {
             consola.imprimir("partes null");
         }
+    }
+
+    private boolean poderLanzar() {
+        if (!dadosLanzados(tiradas.get(1))) {
+            return true;
+        } else if ((!dadosLanzados(tiradas.get(2))) && (sonDobres(tiradas.get(1)))) {
+            return true;
+        } else if ((!dadosLanzados(tiradas.get(3))) && (sonDobres(tiradas.get(2)))) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public final void rematarTurno() {
+        if (!poderLanzar()) {
+            this.resetDados();
+            if (turno == (xogadores.size() - 1)) {
+                turno = 0;
+            } else {
+                turno++;
+            }
+            consola.imprimir("Turno de " + xogadores.get(turno).getNome() + ".\n");
+        } else {
+            //Excepcion
+            consola.imprimir("O xogador non pode rematar turno.");
+        }
+    }
+
+    @Override
+    public final boolean rematarPartida() {
+        return true;
+    }
+
+    @Override
+    public final void sairCarcere() {
+        if (xogadores.get(turno).getEstadoPreso() > 0) {
+            if (poderLanzar()) {
+                xogadores.get(turno).modificarFortuna(-Constantes.SAIR_CARCERE);
+                xogadores.get(turno).setEstadoPreso(0);
+                consola.imprimir("O xogador " + xogadores.get(turno).getNome()
+                        + " pagou " + Constantes.SAIR_CARCERE + " GM para saír do"
+                        + " Cárcere. A súa fortuna actual é de "
+                        + xogadores.get(turno).getFortuna() + ".\n");
+            } else {
+                //Excepcion
+                consola.imprimir("Xa lanzaches. Agora non podes pagar.\n");
+            }
+        } else {
+
+            //Excepcion
+        }
+    }
+
+    private boolean sonDobres(HashMap<String, Dado> dados) {
+        if (dados != null) {
+            if (dados.get("d1").equals(dados.get("d2"))) {
+                if (dados.get("d1").getValor() > 0) {
+                    return true;
+                }
+            }
+        } else {
+            //Excepcion
+        }
+        return false;
+    }
+
+    public int sumarDados(HashMap<String, Dado> dados) {
+        if (dados != null) {
+            return (dados.get("d1").getValor() + dados.get("d2").getValor());
+        } else {
+            //Excepcion
+        }
+        return 0;
     }
 
     public ArrayList<Trato> tratosXogador(Xogador xogador) {
