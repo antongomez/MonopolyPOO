@@ -309,6 +309,15 @@ public class Xogo implements Comando {
                     }
                     break;
 
+                //Exemplo: trato Anton: cambiar Lugo Valencia por nonalquiler(Santa Cruz,3)
+                case "trato":
+                    if (existeXogador(comando1.replace(":", ""))) {
+                        trato(partes);
+                    } else {
+                        //Excepcion
+                    }
+                    break;
+
                 case "vender":
                     if (existeCasilla(comando2)) {
                         vender(comando1, comando2, comando3);
@@ -345,8 +354,10 @@ public class Xogo implements Comando {
 
                         resetDados();
                         tiradas.get(1).get("d1").setValor(3);
-                        tiradas.get(1).get("d2").setValor(2);
-
+                        tiradas.get(1).get("d2").setValor(1);
+                        if (avatar instanceof Esfinxe) {
+                            ((Esfinxe) avatar).resetHistorial();
+                        }
                         avatar.getPosicion().sumarFrecuenciaVisita(turno);
 
                         comprobarCasilla(avatar.getPosicion(), xogador);
@@ -379,6 +390,20 @@ public class Xogo implements Comando {
     //Getters e Setters
     public ArrayList<Xogador> getXogadores() {
         return xogadores;
+    }
+
+    public Xogador getXogador(String nome) {
+        if (nome != null) {
+            for (Xogador xogador : xogadores) {
+                if (xogador.getNome().equals(nome)) {
+                    return xogador;
+                }
+
+            }
+        } else {
+            //Excepcion
+        }
+        return xogadores.get(0);
     }
 
     public void setXogadores(ArrayList<Xogador> xogadores) {
@@ -869,6 +894,10 @@ public class Xogo implements Comando {
         return false;
     }
 
+    private void lerCasillas() {
+
+    }
+
     @Override
     public final void lanzarDados() {
 
@@ -1074,6 +1103,120 @@ public class Xogo implements Comando {
         return 0;
     }
 
+    //Exemplo: trato Anton: cambiar A Guarda e 1300 por Cambados e nonalquiler(Santa Cruz 3)
+    public final void trato(String[] partes) {
+        if (partes != null) {
+            boolean comandoViable = false;
+            for (int i = 0; i < partes.length; i++) {
+                if (partes[i].equals("por")) {
+                    comandoViable = true;
+                }
+            }
+
+            if ((comandoViable) && (partes.length >= 5)) { //Lemos as casillasPropon que se proponhen
+                Xogador propon = xogadores.get(turno);
+                Xogador acepta = getXogador(partes[1].replace(":", ""));
+
+                String nomeCasillas = "";
+                Propiedade casillaPropon = null;
+                float cartos1 = 0;
+                Propiedade casillaQuere = null;
+                float cartos2 = 0;
+                Propiedade casillaAlquiler = null;
+                int turnos;
+
+                int j = 3;
+
+                if (existeCasilla(partes[3])) {
+                    casillaPropon = (Propiedade) taboleiro.getCasilla(partes[3]);
+                    if (!casillaPropon.getDono().equals(propon)
+                            && (casillaPropon instanceof Propiedade)) {
+
+                    } else {
+                        consola.imprimir("Non podes cambiar a casilla "
+                                + casillaPropon.getNome());
+                        comandoViable = false;
+                    }
+                    comandoViable = false;
+                } else if (existeCasilla(partes[3] + " " + partes[4])) {
+                    j = 4;
+                    casillaPropon = (Propiedade) taboleiro.getCasilla(partes[3] + " " + partes[4]);
+                    if (!casillaPropon.getDono().equals(propon)
+                            && (casillaPropon instanceof Propiedade)) {
+
+                    } else {
+                        consola.imprimir("Non podes cambiar a casilla "
+                                + casillaPropon.getNome());
+                        comandoViable = false;
+                    }
+                    comandoViable = false;
+                } else {
+                    cartos1 = Float.parseFloat(partes[3]);
+                }
+                j++; // 5 ou 4 dependendo de se a casilla ten nome composto
+                if (comandoViable) {
+                    if (partes[j].equals("e")) { //Lemos a cantidade de cartos
+                        j++;
+                        cartos1 = Float.parseFloat(partes[j]);
+                        j++;
+                    }
+                    if (partes[j].equals("por")) { //Lemos o que se quere
+                        j++;
+
+                        if (existeCasilla(partes[j])) { //lemos a casilla
+                            casillaQuere = (Propiedade) taboleiro.getCasilla(partes[j]);
+                            if (!casillaQuere.getDono().equals(propon)
+                                    && (casillaQuere instanceof Propiedade)) {
+
+                            } else {
+                                consola.imprimir("Non podes cambiar a casilla "
+                                        + casillaQuere.getNome());
+                                comandoViable = false;
+                            }
+                            comandoViable = false;
+                        } else if (partes.length > j) {
+                            if (existeCasilla(partes[j] + " " + partes[j + 1])) {
+                                j++;
+                                casillaQuere = (Propiedade) taboleiro.getCasilla(partes[j] + " " + partes[j + 1]);
+                                if (!casillaQuere.getDono().equals(propon)
+                                        && (casillaQuere instanceof Propiedade)) {
+
+                                } else {
+                                    consola.imprimir("Non podes cambiar a casilla "
+                                            + casillaQuere.getNome());
+                                    comandoViable = false;
+                                }
+                                comandoViable = false;
+                            }
+                        }
+                        j++;
+                        if (partes.length > j + 1) {
+                            if (partes[j].equals("e")) {
+                                j++;
+                                String[] comandos = partes[j].split("(");
+                                j++;
+                                if (comandos[1].equals("nonalquiler")) {
+                                    if (existeCasilla(comandos[2])) {
+                                        casillaAlquiler = (Propiedade) taboleiro.getCasilla(comandos[2]);
+                                    } else if (existeCasilla(comandos[2] + " " + partes[j])) {
+
+                                        casillaAlquiler = (Propiedade) taboleiro.getCasilla(comandos[2] + " " + partes[j]);
+                                        j++;
+                                    }
+
+                                    turnos = Integer.parseInt(partes[j].replace(")", ""));
+
+                                } else {
+                                    cartos2 = Float.parseFloat(comandos[1]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     public final void vender(String tipoEdificio, String casilla, String nEdificios) {
         int n = Integer.parseInt(nEdificios);
@@ -1107,7 +1250,7 @@ public class Xogo implements Comando {
 
     @Override
     public final void xogador() {
-        xogadores.get(turno);
+        consola.imprimir(xogadores.get(turno).toString());
         consola.imprimir("\n");
     }
 
