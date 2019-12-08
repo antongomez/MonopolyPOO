@@ -4,9 +4,9 @@ import xogadores.Xogador;
 
 public class Caixa extends Carta {
 
-    public Caixa(String nome, String accion)
+    public Caixa(String nome)
     {
-        super(nome, accion);
+        super(nome);
     }
 
     public void accion(Xogador xogador)
@@ -21,6 +21,6 @@ public class Caixa extends Carta {
 
     @Override
     public void Carta1(Xogador xogador) {
-        
+
     }
 }

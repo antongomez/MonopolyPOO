@@ -9,12 +9,11 @@ import xogadores.Xogador;
 
 public abstract class Carta {
     private String nome;
-    private String accion;
 
-    public Carta(String nome, String accion)
+
+    public Carta(String nome)
     {
         this.nome = nome;
-        this.accion = accion;
     }
 
     public String getNome() {
@@ -23,14 +22,6 @@ public abstract class Carta {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getAccion() {
-        return accion;
-    }
-
-    public void setAccion(String accion) {
-        this.accion = accion;
     }
 
     public abstract void accion(Xogador xogador);

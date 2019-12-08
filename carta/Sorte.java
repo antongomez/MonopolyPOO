@@ -7,9 +7,9 @@ import xogadores.*;
 public class Sorte extends Carta {
 
 
-    public Sorte(String nome, String accion)
+    public Sorte(String nome)
     {
-        super(nome, accion);
+        super(nome);
     }
 
     public void accion(Xogador xogador)
@@ -64,19 +64,21 @@ public class Sorte extends Carta {
 
 
     private void pagarImpostoInmoble(Xogador xogador) {
-        if (xogador != null) {
+        /*if (xogador != null) {
             int casas = 0, hoteis = 0, pistas = 0, piscinas = 0;
             float total;
-            for (Casilla casilla : xogador.getPropiedades()) {
-                for (Edificio edificio : casilla.getEdificios()) {
-                    if (edificio instanceof Casa) {
-                        casas++;
-                    } else if (edificio instanceof Hotel) {
-                        hoteis++;
-                    } else if (edificio instanceof Piscina) {
-                        piscinas++;
-                    } else if (edificio instanceof Pista) {
-                        pistas++;
+            for (Propiedade propiedade : xogador.getPropiedades()) {
+                if (propiedade instanceof  Solar) {
+                    for (Edificio edificio : propiedade.getEdificios()) {
+                        if (edificio instanceof Casa) {
+                            casas++;
+                        } else if (edificio instanceof Hotel) {
+                            hoteis++;
+                        } else if (edificio instanceof Piscina) {
+                            piscinas++;
+                        } else if (edificio instanceof Pista) {
+                            pistas++;
+                        }
                     }
                 }
             }
@@ -88,6 +90,6 @@ public class Sorte extends Carta {
                     + " hoteis, " + piscinas + " piscinas e " + pistas + " pistas de deporte.\n");
         } else {
             System.out.println("\nErro en pagarImpostoInmoble.\n");
-        }
+        }*/
     }
 }

@@ -1,12 +1,17 @@
 package xogo;
 
 import Excepcions.*;
+import carta.Carta;
+import carta.Caixa;
+import carta.Sorte;
 import com.sun.source.tree.TryTree;
 import estrutura.*;
 import xogadores.*;
 import consola.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class Xogo implements Comando {
@@ -17,11 +22,18 @@ public class Xogo implements Comando {
     private HashMap<String, ArrayList<Trato>> tratos;
     private Taboleiro taboleiro;
     private HashMap<Integer, HashMap<String, Dado>> tiradas;
+    private HashMap<String, ArrayList> cartas;
     private int turno = 0;
     private Xogador banca;
 
     public Xogo() {
-
+        cartas = new HashMap<>();
+        cartas.put("Sorte", new ArrayList<Carta>());
+        cartas.get("Sorte").add(new Sorte("Sorte-1"));
+        cartas.get("Sorte").add(new Sorte("Sorte-2"));
+        cartas.get("Sorte").add(new Sorte("Sorte-3"));
+        cartas.get("Sorte").add(new Sorte("Sorte-4"));
+        cartas.put("Caixa", new ArrayList<Carta>());
         xogadores = new ArrayList<>();
         avatares = new ArrayList<>();
         tratos = new HashMap<>();
@@ -679,11 +691,34 @@ public class Xogo implements Comando {
 
                     case "Sorte 1":
                     case "Sorte 2":
-                    case "Sorte 3":
+                    case "Sorte 3": {
+                        Collections.shuffle(cartas.get("Sorte"));
+                        int numCarta;
+                        do {
+                            numCarta = Integer.parseInt(consola.ler("Escolle unha carta:"));
+                            if ((numCarta < 1) || (numCarta > 4)) {
+                                System.out.print("\nEscolla non válida.\n");
+                            }
+                        } while ((numCarta < 1) || (numCarta > 4));
+
+                        ((Sorte)cartas.get("Sorte").get(numCarta-1)).accion(xogador);
+                        }
+                        break;
+
                     case "Caixa 1":
                     case "Caixa 2":
-                    case "Caixa 3":
-                        consola.imprimir("Sorte non implementada");
+                    case "Caixa 3":{
+                        Collections.shuffle(cartas.get("Caixa"));
+                        int numCarta;
+                        do {
+                            numCarta = Integer.parseInt(consola.ler("Escolle unha carta:"));
+                            if ((numCarta < 1) || (numCarta > 4)) {
+                                System.out.print("\nEscolla non válida.\n");
+                            }
+                        } while ((numCarta < 1) || (numCarta > 4));
+
+                        ((Sorte)cartas.get("Caixa").get(numCarta-1)).accion(xogador);
+                        }
                         break;
 
                 }
