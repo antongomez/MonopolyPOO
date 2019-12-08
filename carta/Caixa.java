@@ -1,5 +1,7 @@
 package carta;
 
+import xogadores.Xogador;
+
 public class Caixa extends Carta {
 
     public Caixa(String nome, String accion)
@@ -7,7 +9,7 @@ public class Caixa extends Carta {
         super(nome, accion);
     }
 
-    public void accion()
+    public void accion(Xogador xogador)
     {
         String accion = "";
         String partes[] = super.getNome().split("-");
@@ -15,5 +17,10 @@ public class Caixa extends Carta {
         {
 
         }
+    }
+
+    @Override
+    public void Carta1(Xogador xogador) {
+        
     }
 }

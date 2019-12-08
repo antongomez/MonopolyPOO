@@ -5,6 +5,8 @@
  */
 package carta;
 
+import xogadores.Xogador;
+
 public abstract class Carta {
     private String nome;
     private String accion;
@@ -31,5 +33,7 @@ public abstract class Carta {
         this.accion = accion;
     }
 
-    public abstract void accion();
+    public abstract void accion(Xogador xogador);
+
+    public abstract void Carta1(Xogador xogador);
 }

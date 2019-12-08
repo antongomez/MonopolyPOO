@@ -138,4 +138,6 @@ public abstract class Casilla {
         }
         return (this.nome.equals(((Casilla) casilla).getNome()));
     }
+
+    public abstract Edificio[] getEdificios();
 }
