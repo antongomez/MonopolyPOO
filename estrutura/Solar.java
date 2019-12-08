@@ -212,7 +212,7 @@ public class Solar extends Propiedade {
     }
 
     public void destruirEdificio(int nCasas) {
-        if (getNCasas() < nCasas) {
+        if (getNCasas() >= nCasas) {
 
             int destruidas = 0;
             for (int i = (edificios.size() - 1); destruidas < nCasas; i--) {
