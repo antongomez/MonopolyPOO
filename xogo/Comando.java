@@ -2,6 +2,7 @@ package xogo;
 
 import xogadores.*;
 import estrutura.*;
+import Excepcions.*;
 
 public interface Comando {
 
@@ -22,6 +23,8 @@ public interface Comando {
     public void lanzarDados();
 
     public void listar(String comando1, String grupo);
+    
+    public void proponherTrato(String[] detalles) throws FalsaPropiedade, ErroSintaxe;
 
     public boolean rematarPartida();
 
@@ -30,7 +33,7 @@ public interface Comando {
     //public void retroceder();
     public void sairCarcere();
 
-    public void proponherTrato(String[] detalles);
+    
 
     public void vender(String tipoEdificio, String casilla, String nEdificios);
 

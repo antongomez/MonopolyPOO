@@ -32,7 +32,7 @@ public class Trato {
             Propiedade propRec, Propiedade propAl, float cartosProp,
             float cartosRec, int nTurnos) {
 
-        this.nome = "TRATO" + nome;
+        this.nome = "trato" + nome;
         this.xogadorPropon = xogProp;
         this.xogadorRecibe = xogRec;
         this.propPropon = propProp;
@@ -243,11 +243,11 @@ public class Trato {
         }
         //excepcion
         //Paga 1 a 2
-        xogadorRecibe.setFortuna(xogadorRecibe.getFortuna() + cartosProp);
-        xogadorPropon.setFortuna(xogadorPropon.getFortuna() - cartosProp);
+        xogadorRecibe.modificarFortuna(cartosProp);
+        xogadorPropon.modificarFortuna(-cartosProp);
         //Paga 2 a 1
-        xogadorRecibe.setFortuna(xogadorRecibe.getFortuna() - cartosRec);
-        xogadorPropon.setFortuna(xogadorPropon.getFortuna() + cartosRec);
+        xogadorRecibe.modificarFortuna(-cartosRec);
+        xogadorPropon.modificarFortuna(cartosRec);
 
         if (propPropon != null) {
             //introducimos novo dono
@@ -274,7 +274,7 @@ public class Trato {
     public String toString() {
         String trato = "";
         if (xogadorRecibe != null) {
-            trato = "\n--------" + nome + "--------"
+            trato = "\n--------" + nome.toUpperCase() + "--------"
                     + "\nPropon: " + xogadorPropon.getNome()
                     + "\n A: " + xogadorRecibe.getNome()
                     + "\nCambiar:";
