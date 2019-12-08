@@ -12,6 +12,7 @@ public class Xogo implements Comando {
     public static final ConsolaNormal consola = new ConsolaNormal();
     private ArrayList<Xogador> xogadores;
     private ArrayList<Avatar> avatares;
+    private HashMap<String, ArrayList<Trato>> tratos;
     private Taboleiro taboleiro;
     private HashMap<Integer, HashMap<String, Dado>> tiradas;
     private int turno = 0;
@@ -21,6 +22,7 @@ public class Xogo implements Comando {
 
         xogadores = new ArrayList<>();
         avatares = new ArrayList<>();
+        tratos = new HashMap<>();
         tiradas = new HashMap<>();
         for (int i = 1; i <= 3; i++) {
             HashMap<String, Dado> dados = new HashMap<>();
@@ -63,6 +65,7 @@ public class Xogo implements Comando {
 
             //Engadimos o xogador
             xogadores.add(new Xogador(nomeXogador, taboleiro));
+            tratos.put(nomeXogador, new ArrayList());
 
             String tipoAvatar;
             char IdAvatar;
@@ -159,6 +162,12 @@ public class Xogo implements Comando {
                 }
             }
 
+            if (!tratos.get(xogador.getNome()).isEmpty()) {
+                consola.imprimir("\nTratos pendentes: ");
+                imprimirTratos(xogador);
+                consola.imprimir("\n");
+            }
+
             //Turno do xogador
             //Facemos as declaracións e imos lendo do caso que sexa
             String orde = consola.lerLinha("Turno de " + xogador.getNome() + "\n$> ");
@@ -185,6 +194,8 @@ public class Xogo implements Comando {
             }
 
             switch (comando0) {
+                case "aceptar":
+                    break;
                 case "cambiar":
                     if (comando1.equals("modo")) {
                         cambiarModo(avatar);
@@ -394,6 +405,16 @@ public class Xogo implements Comando {
             consola.imprimir(tiradas.get(i).get("d2") + "  ");
         }
         consola.imprimir("\n");
+    }
+
+    private void imprimirTratos(Xogador xogador) {
+        if (!tratos.isEmpty()) {
+            if (!tratos.get(xogador.getNome()).isEmpty()) {
+                for (Trato trato : tratos.get(xogador.getNome())) {
+                    consola.imprimir(trato.toString());
+                }
+            }
+        }
     }
 
     //Getters e Setters
@@ -1034,6 +1055,31 @@ public class Xogo implements Comando {
         }
     }
 
+    public int nTratos(Xogador xogador) {
+        if (xogador != null) {
+            if (!tratos.isEmpty()) {
+                int nTrat = 0;
+                if (!tratos.get(xogador.getNome()).isEmpty()) {
+                    nTrat = tratos.get(xogador.getNome()).size();
+                }
+            }
+        }
+        return 0;
+    }
+
+    public int nTratos() {
+        if (!tratos.isEmpty()) {
+            int nTrat = 0;
+
+            for (Xogador xogador : xogadores) {
+                nTrat += nTratos(xogador);
+            }
+
+            return nTrat;
+        }
+        return 0;
+    }
+
     private boolean propiedadeComprable(Propiedade propiedade) {
         return propiedade.getDono().equals(banca);
     }
@@ -1135,24 +1181,24 @@ public class Xogo implements Comando {
             }
 
             if ((comandoViable) && (partes.length >= 5)) { //Lemos as casillasPropon que se proponhen
-                Xogador propon = xogadores.get(turno);
-                Xogador acepta = getXogador(partes[1].replace(":", ""));
+                Xogador xogProp = xogadores.get(turno);
+                Xogador xogRec = getXogador(partes[1].replace(":", ""));
 
                 String nomeCasilla = "";
-                Propiedade casillaPropon = null;
+                Propiedade propProp = null;
                 float cartos1 = 0;
-                Propiedade casillaQuere = null;
+                Propiedade propRec = null;
                 float cartos2 = 0;
-                Propiedade casillaAluguer = null;
-                int turnos = 0;
+                Propiedade propAl = null;
+                int nTurnos = 0;
 
                 nomeCasilla = partes[3].replace("-", " ");
 
                 if (existeCasilla(nomeCasilla)) {
                     if (taboleiro.getCasilla(nomeCasilla) instanceof Propiedade) {
-                        if (((Propiedade) taboleiro.getCasilla(nomeCasilla)).getDono().equals(propon)) {
+                        if (((Propiedade) taboleiro.getCasilla(nomeCasilla)).getDono().equals(xogProp)) {
 
-                            casillaPropon = (Propiedade) taboleiro.getCasilla(nomeCasilla);
+                            propProp = (Propiedade) taboleiro.getCasilla(nomeCasilla);
 
                             //Trato 5
                             if (partes[4].equals("e")) { //Lemos a cantidade de cartos
@@ -1162,22 +1208,22 @@ public class Xogo implements Comando {
 
                                 if (existeCasilla(nomeCasilla)) {
                                     if (taboleiro.getCasilla(nomeCasilla) instanceof Propiedade) {
-                                        if (((Propiedade) taboleiro.getCasilla(nomeCasilla)).getDono().equals(acepta)) {
+                                        if (((Propiedade) taboleiro.getCasilla(nomeCasilla)).getDono().equals(xogRec)) {
 
-                                            casillaQuere = (Propiedade) taboleiro.getCasilla(nomeCasilla);
+                                            propRec = (Propiedade) taboleiro.getCasilla(nomeCasilla);
                                             rematar = true;
 
                                         } else {
                                             consola.imprimir("Non podes cambiar a propiedade "
                                                     + nomeCasilla
-                                                    + " co xogador " + acepta.getNome()
+                                                    + " co xogador " + xogRec.getNome()
                                                     + " porque non é del.");
                                             comandoViable = false;
                                         }
                                     } else {
                                         consola.imprimir("Non podes cambiar a casilla "
                                                 + nomeCasilla
-                                                + " co xogador " + acepta.getNome()
+                                                + " co xogador " + xogRec.getNome()
                                                 + " porque non é del.");
                                         comandoViable = false;
                                     }
@@ -1192,7 +1238,7 @@ public class Xogo implements Comando {
 
                         } else {
                             consola.imprimir("Non podes cambiar a propiedade "
-                                    + casillaPropon.getNome()
+                                    + propProp.getNome()
                                     + " porque non é túa.");
                             comandoViable = false;
                         }
@@ -1214,8 +1260,8 @@ public class Xogo implements Comando {
 
                         if (existeCasilla(nomeCasilla)) {
                             if (taboleiro.getCasilla(nomeCasilla) instanceof Propiedade) {
-                                if (((Propiedade) taboleiro.getCasilla(nomeCasilla)).getDono().equals(acepta)) {
-                                    casillaQuere = (Propiedade) taboleiro.getCasilla(nomeCasilla);
+                                if (((Propiedade) taboleiro.getCasilla(nomeCasilla)).getDono().equals(xogRec)) {
+                                    propRec = (Propiedade) taboleiro.getCasilla(nomeCasilla);
 
                                     if (partes.length > 6) {
 
@@ -1225,15 +1271,15 @@ public class Xogo implements Comando {
                                             nomeCasilla = alquileres[0].replace("-", " ");
                                             if (existeCasilla(nomeCasilla)) {
                                                 if (taboleiro.getCasilla(nomeCasilla) instanceof Propiedade) {
-                                                    if (((Propiedade) taboleiro.getCasilla(nomeCasilla)).getDono().equals(acepta)) {
-                                                        casillaAluguer = (Propiedade) taboleiro.getCasilla(nomeCasilla);
-                                                        turnos = Integer.parseInt(alquileres[1]);
+                                                    if (((Propiedade) taboleiro.getCasilla(nomeCasilla)).getDono().equals(xogRec)) {
+                                                        propAl = (Propiedade) taboleiro.getCasilla(nomeCasilla);
+                                                        nTurnos = Integer.parseInt(alquileres[1]);
                                                     }
                                                 } else {
                                                     consola.imprimir("A casilla "
                                                             + nomeCasilla
                                                             + " non é do xogador "
-                                                            + acepta.getNome());
+                                                            + xogRec.getNome());
                                                     comandoViable = false;
                                                 }
                                             } else {
@@ -1251,7 +1297,7 @@ public class Xogo implements Comando {
                                     consola.imprimir("A propiedade "
                                             + nomeCasilla
                                             + " non pertence ao xogador "
-                                            + acepta.getNome());
+                                            + xogRec.getNome());
                                     comandoViable = false;
                                 }
                             } else {
@@ -1265,20 +1311,25 @@ public class Xogo implements Comando {
                         }
 
                         if (comandoViable) {
-                            consola.imprimir("Aqui chamariase a Trato. Comprobacion: \n");
+                            tratos.get(xogRec.getNome()).add(
+                                    new Trato(nTratos() + 1, xogProp, xogRec,
+                                            propProp, propRec, propAl, cartos1,
+                                            cartos2, nTurnos));
+
+                            consola.imprimir("\nComprobacion: \n");
                             consola.imprimir("Trato: ");
-                            if (casillaPropon != null) {
-                                consola.imprimir("CasillaPropon: " + casillaPropon.getNome());
+                            if (propProp != null) {
+                                consola.imprimir("CasillaPropon: " + propProp.getNome());
                             }
                             if (cartos1 != 0) {
                                 consola.imprimir("cartos1: " + cartos1);
                             }
-                            if (casillaQuere != null) {
-                                consola.imprimir("CasillaQuere: " + casillaQuere.getNome());
+                            if (propRec != null) {
+                                consola.imprimir("CasillaQuere: " + propRec.getNome());
                             }
-                            if (casillaAluguer != null) {
-                                consola.imprimir("CasillaAluguer: " + casillaAluguer.getNome());
-                                consola.imprimir("Turnos: " + turnos);
+                            if (propAl != null) {
+                                consola.imprimir("CasillaAluguer: " + propAl.getNome());
+                                consola.imprimir("Turnos: " + nTurnos);
                             }
                             if (cartos2 != 0) {
                                 consola.imprimir("cartos2: " + cartos2);
@@ -1287,21 +1338,25 @@ public class Xogo implements Comando {
                     } else {
                         consola.imprimir("comando non viable");
                     }
-                } else if (comandoViable) {
-                    consola.imprimir("Aqui chamariase a Trato. Comprobacion: \n");
+                } else if (comandoViable) { //Isto cambia de sitio coas excepcions
+                    tratos.get(xogRec.getNome()).add(
+                            new Trato(nTratos() + 1, xogProp, xogRec,
+                                    propProp, propRec, propAl, cartos1,
+                                    cartos2, nTurnos));
+                    consola.imprimir("\nComprobacion: \n");
                     consola.imprimir("Trato: ");
-                    if (casillaPropon != null) {
-                        consola.imprimir("CasillaPropon: " + casillaPropon.getNome());
+                    if (propProp != null) {
+                        consola.imprimir("CasillaPropon: " + propProp.getNome());
                     }
                     if (cartos1 != 0) {
                         consola.imprimir("cartos1: " + cartos1);
                     }
-                    if (casillaQuere != null) {
-                        consola.imprimir("CasillaQuere: " + casillaQuere.getNome());
+                    if (propRec != null) {
+                        consola.imprimir("CasillaQuere: " + propRec.getNome());
                     }
-                    if (casillaAluguer != null) {
-                        consola.imprimir("CasillaAlquiler: " + casillaAluguer.getNome());
-                        consola.imprimir("Turnos: " + turnos);
+                    if (propAl != null) {
+                        consola.imprimir("CasillaAlquiler: " + propAl.getNome());
+                        consola.imprimir("Turnos: " + nTurnos);
                     }
                     if (cartos2 != 0) {
                         consola.imprimir("cartos2: " + cartos2);
@@ -1313,6 +1368,13 @@ public class Xogo implements Comando {
         } else {
             consola.imprimir("partes null");
         }
+    }
+
+    public ArrayList<Trato> tratosXogador(Xogador xogador) {
+        if (xogador != null) {
+            return tratos.get(xogador.getNome());
+        }
+        return tratos.get("Anton");
     }
 
     @Override

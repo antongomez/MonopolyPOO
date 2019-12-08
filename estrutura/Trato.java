@@ -6,38 +6,43 @@ import xogadores.Xogador;
 import java.util.ArrayList;
 
 public class Trato {
+
     private String nome;
     private Xogador xogadorPropon;
     private Xogador xogadorRecibe;
     private Propiedade propPropon;
     private Propiedade propRecibe;
     private Propiedade propAlRecibe;
-    private float dineroPropon;
-    private float dineroRecibe;
+    private float cartosProp;
+    private float cartosRec;
     private int nTurnos;
 
-    public Trato(Xogador xogcrea)
-    {
+    public Trato(Xogador xogcrea) {
         xogadorPropon = xogcrea;
         xogadorRecibe = null;
         propPropon = null;
         propRecibe = null;
         propAlRecibe = null;
-        dineroPropon = 0;
-        dineroRecibe = 0;
+        cartosProp = 0;
+        cartosRec = 0;
         nTurnos = 0;
     }
-    public Trato(Xogador xogProp, Xogador xogRec, Propiedade propProp, Propiedade propRec, Propiedade propAl, float dineroProp, float dineroRec, int numturn)
-    {
+
+    public Trato(int nome, Xogador xogProp, Xogador xogRec, Propiedade propProp,
+            Propiedade propRec, Propiedade propAl, float cartosProp,
+            float cartosRec, int nTurnos) {
+
+        this.nome = "TRATO" + nome;
         this.xogadorPropon = xogProp;
         this.xogadorRecibe = xogRec;
         this.propPropon = propProp;
         this.propRecibe = propRec;
         this.propAlRecibe = propAl;
-        this.dineroPropon = dineroProp;
-        this.dineroRecibe = dineroRec;
-        this.nTurnos = numturn;
+        this.cartosProp = cartosProp;
+        this.cartosRec = cartosRec;
+        this.nTurnos = nTurnos;
     }
+
     /*
     public void InciarTrato(ArrayList<Xogador> xogadores)
     {
@@ -68,8 +73,8 @@ public class Trato {
             return;
         }
 
-        dineroPropon=Float.parseFloat(buffer); //Diéiro a pagar
-        if (xogadorPropon.getFortuna() < dineroPropon)
+        cartosProp=Float.parseFloat(buffer); //Diéiro a pagar
+        if (xogadorPropon.getFortuna() < cartosProp)
         {
             //excepcion
         }
@@ -85,12 +90,12 @@ public class Trato {
         }
 
         //Pedir dinero a cambio
-        if (dineroPropon == 0)
+        if (cartosProp == 0)
         {
             buffer = consola.ler("Te gustaría pedir dinero a cambio? 0 par non");
             if (Float.parseFloat(buffer)>=0)
             {
-                dineroRecibe = Float.parseFloat(buffer);
+                cartosRec = Float.parseFloat(buffer);
             }
             //else
                 //excepcion
@@ -148,28 +153,25 @@ public class Trato {
                 pedirProp = true;
         }while(!pedirProp);
     }*/
-
-    public void aceptarTrato()
-    {
+    public void aceptarTrato() {
         final ConsolaNormal consola = new ConsolaNormal();
-        if (xogadorRecibe.getFortuna() < dineroRecibe)
-            {
-                consola.imprimir("Non tes suficientes cartos para aceptar o trato.");
-                return;
-            }
-
-        if (xogadorPropon.getFortuna() < dineroPropon)
+        if (xogadorRecibe.getFortuna() < cartosRec) {
+            consola.imprimir("Non tes suficientes cartos para aceptar o trato.");
             return;
-            //excepcion
-        //Paga 1 a 2
-        xogadorRecibe.setFortuna(xogadorRecibe.getFortuna() + dineroPropon);
-        xogadorPropon.setFortuna(xogadorPropon.getFortuna() - dineroPropon);
-        //Paga 2 a 1
-        xogadorRecibe.setFortuna(xogadorRecibe.getFortuna() - dineroRecibe);
-        xogadorPropon.setFortuna(xogadorPropon.getFortuna() + dineroRecibe);
+        }
 
-        if (propPropon != null)
-        {
+        if (xogadorPropon.getFortuna() < cartosProp) {
+            return;
+        }
+        //excepcion
+        //Paga 1 a 2
+        xogadorRecibe.setFortuna(xogadorRecibe.getFortuna() + cartosProp);
+        xogadorPropon.setFortuna(xogadorPropon.getFortuna() - cartosProp);
+        //Paga 2 a 1
+        xogadorRecibe.setFortuna(xogadorRecibe.getFortuna() - cartosRec);
+        xogadorPropon.setFortuna(xogadorPropon.getFortuna() + cartosRec);
+
+        if (propPropon != null) {
             //introducimos novo dono
             propPropon.setDono(xogadorRecibe);
             xogadorRecibe.engadirPropiedade(propPropon);
@@ -178,8 +180,7 @@ public class Trato {
             xogadorPropon.eliminarPropiedade(propPropon);
         }
 
-        if (propRecibe != null)
-        {
+        if (propRecibe != null) {
             //introducimos novo dono
             propRecibe.setDono(xogadorPropon);
             xogadorPropon.engadirPropiedade(propRecibe);
@@ -189,45 +190,41 @@ public class Trato {
         }
 
         //XestionAlquilares
-
-
     }
 
     @Override
     public String toString() {
-        String trato="";
-        if (xogadorRecibe != null)
-        {
-             trato = "\n--------TRATO--------"+
-                     "\nPropon: " + xogadorPropon.getNome()+
-                     "\nA: " + xogadorRecibe.getNome() +
-                     "\nCambiar:";
-             if (propPropon != null)
-                 trato += "\nPropiedad: " + propPropon.getNome();
-
-             if (dineroPropon > 0)
-             {
-                 trato += "\n Diñeiro: " + dineroPropon + "GM";
-             }
-
-             trato += "\n Por:";
-            if (propRecibe != null)
-                trato += "\nPropiedad: " + propRecibe.getNome();
-
-            if (dineroRecibe > 0)
-            {
-                trato += "\n Diñeiro: " + dineroRecibe + "GM";
+        String trato = "";
+        if (xogadorRecibe != null) {
+            trato = "\n--------" + nome + "--------"
+                    + "\nPropon: " + xogadorPropon.getNome()
+                    + "\n A: " + xogadorRecibe.getNome()
+                    + "\nCambiar:";
+            if (propPropon != null) {
+                trato += "\nPropiedade: " + propPropon.getNome();
             }
 
-            if (nTurnos > 0)
-            {
-                trato += "\n No pagar el alquiler de " + propAlRecibe.getNome() +
-                        "\n durante " + nTurnos + " turnos.\n";
+            if (cartosProp > 0) {
+                trato += "\n Cartos: " + cartosProp + "GM";
             }
+
+            trato += "\n Por:";
+            if (propRecibe != null) {
+                trato += "\nPropiedade: " + propRecibe.getNome();
+            }
+
+            if (cartosRec > 0) {
+                trato += "\n Cartos: " + cartosRec + "GM";
+            }
+
+            if (nTurnos > 0) {
+                trato += "\n Non pagar o aluguer de " + propAlRecibe.getNome()
+                        + "\n durante " + nTurnos + " turnos.\n";
+            }
+            return trato;
+        } else {
             return trato;
         }
-        else
-            return trato;
     }
 
 }
