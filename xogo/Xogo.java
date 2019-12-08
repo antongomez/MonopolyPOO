@@ -309,7 +309,8 @@ public class Xogo implements Comando {
                     }
                     break;
 
-                //Exemplo: trato Anton: cambiar Lugo Valencia por nonalquiler(Santa Cruz,3)
+                //Exemplo: trato Anton: cambiar Santa Cruz por nonalquiler(A Guarda 3)
+                //Exemplo: trato Anton: cambiar 500 por Lugo
                 case "trato":
                     if (existeXogador(comando1.replace(":", ""))) {
                         trato(partes);
@@ -1123,7 +1124,7 @@ public class Xogo implements Comando {
                 Propiedade casillaQuere = null;
                 float cartos2 = 0;
                 Propiedade casillaAlquiler = null;
-                int turnos;
+                int turnos = 0;
 
                 int j = 3;
 
@@ -1210,6 +1211,24 @@ public class Xogo implements Comando {
                                     cartos2 = Float.parseFloat(comandos[1]);
                                 }
                             }
+                        }
+                        
+                        consola.imprimir("Trato: ");
+                        if(casillaPropon != null){
+                            consola.imprimir("CasillaPropon: " + casillaPropon.getNome());
+                        }
+                        if(cartos1 != 0){
+                            consola.imprimir("cartos1: " + cartos1);
+                        }
+                        if(casillaQuere != null){
+                            consola.imprimir("CasillaQuere: " + casillaQuere.getNome());
+                        }
+                        if(casillaAlquiler != null){
+                            consola.imprimir("CasillaAlquiler: " + casillaAlquiler.getNome());
+                            consola.imprimir("Turnos: " + turnos);
+                        }
+                        if(cartos2 != 0){
+                            consola.imprimir("cartos2: " + cartos2);
                         }
                     }
                 }
