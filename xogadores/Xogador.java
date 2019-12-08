@@ -1,5 +1,7 @@
 package xogadores;
 
+import Excepcions.DesHipoNONdin;
+import Excepcions.HipoDono;
 import consola.ConsolaNormal;
 import estrutura.*;
 
@@ -203,9 +205,12 @@ public class Xogador {
         return texto;
     }
 
-    public void hipotecar(Propiedade prop, Xogador hipotecar)  {
+    public void hipotecar(Propiedade prop, Xogador hipotecar) throws HipoDono {
         boolean atopada = false;
         final ConsolaNormal consola = new ConsolaNormal();
+        if (!prop.getDono().getNome().equals(this.getNome()))
+            throw new HipoDono("Dono", this.getNome());
+
         for (Propiedade propiedade : this.propiedades) {
             if (propiedade.getNome().equals(prop.getNome())) {
                 atopada = true;
@@ -232,9 +237,14 @@ public class Xogador {
         this.fortuna = (float) (fortuna + prop.getValor() * 0.5);
     }
 
-    public void deshipotecar(Xogador xog, Propiedade prop) {
+    public void deshipotecar(Xogador xog, Propiedade prop) throws DesHipoNONdin {
         final ConsolaNormal consola = new ConsolaNormal();
         boolean edel = false;
+
+        if (this.getFortuna() < (0.5 * prop.getValor())) {
+            System.out.println("NO MONEY BABY");
+            throw new DesHipoNONdin("En xogador", this.getNome(), (float) (0.5 * prop.getValor()));
+        }
 
         if (!prop.getDono().getNome().equals("Hipotecar")) {
             consola.imprimir("Esta propiedade non esta hipotecada.");

@@ -4,6 +4,6 @@ public abstract class MonoExcep extends Exception{
 
     public MonoExcep(String mensaxe)
     {
-        super("MonoGal: " + mensaxe);
+        super("MonoGal: Exception" + mensaxe);
     }
 }

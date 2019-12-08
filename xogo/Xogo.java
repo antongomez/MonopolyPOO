@@ -1,5 +1,8 @@
 package xogo;
 
+import Excepcions.DesHipoNONdin;
+import Excepcions.HipoDono;
+import Excepcions.HipoPropNOn;
 import estrutura.*;
 import xogadores.*;
 import consola.*;
@@ -249,9 +252,21 @@ public class Xogo implements Comando {
 
                 case "hipotecar":
                     if (existeCasilla(comando1)) {
-                        hipotecar(comando1, xogador, hipotecar);
+                        try {
+                            hipotecar(comando1, xogador, hipotecar);
+                        }
+                        catch (HipoPropNOn hipoprop1)
+                        {
+                            System.out.println(hipoprop1.getMessage());
+                        }
                     } else if (existeCasilla(comando1 + " " + comando2)) {
-                        hipotecar(comando1 + " " + comando2, xogador, hipotecar);
+                        try {
+                            hipotecar(comando1 + " " + comando2, xogador, hipotecar);
+                        }
+                        catch (HipoPropNOn hipoprop2)
+                        {
+                             System.out.println(hipoprop2.getMessage());
+                        }
                     } else {
                         //Excepcion
                     }
@@ -826,7 +841,12 @@ public class Xogo implements Comando {
                 if (taboleiro.getCasillas().get(i).get(j).getNome().equals(nom)) {
                     if (taboleiro.getCasillas().get(i).get(j) instanceof Propiedade) {
                         Propiedade prop = (Propiedade) taboleiro.getCasillas().get(i).get(j);
-                        hipo.deshipotecar(xogador, prop);
+                        try {
+                            hipo.deshipotecar(xogador, prop);
+                        } catch (DesHipoNONdin deshiponondin)
+                        {
+                            System.out.println(deshiponondin.getMessage());
+                        }
                     }
                 }
 
@@ -943,14 +963,19 @@ public class Xogo implements Comando {
         return null;
     }
 
-    private void hipotecar(String nom, Xogador xogador, Xogador hipo) {
+    private void hipotecar(String nom, Xogador xogador, Xogador hipo) throws HipoPropNOn {
         for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
             for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++) {
                 if (taboleiro.getCasillas().get(i).get(j).getNome().equals(nom)) {
                     if (taboleiro.getCasillas().get(i).get(j) instanceof Propiedade) {
                         Propiedade prop = (Propiedade) taboleiro.getCasillas().get(i).get(j);
-                        xogador.hipotecar(prop, hipo);
+                        try {
+                            xogador.hipotecar(prop, hipo);
+                        }catch (HipoDono hipodono) {
+                            System.out.println(hipodono.getMessage());
+                        }
                     }
+                    else throw new HipoPropNOn("Función de menu principal.");
                 }
 
             }
