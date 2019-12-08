@@ -195,6 +195,7 @@ public class Xogo implements Comando {
 
             switch (comando0) {
                 case "aceptar":
+                    aceptarTrato(comando1);
                     break;
                 case "cambiar":
                     if (comando1.equals("modo")) {
@@ -1101,7 +1102,7 @@ public class Xogo implements Comando {
     public int nTratos(Xogador xogador) {
         if (xogador != null) {
             if (!tratos.isEmpty()) {
-                int nTrat = 0;
+                int nTrat;
                 if (!tratos.get(xogador.getNome()).isEmpty()) {
                     nTrat = tratos.get(xogador.getNome()).size();
                 }
@@ -1287,7 +1288,7 @@ public class Xogo implements Comando {
                                             cartos2, nTurnos));
 
                             consola.imprimir("\nComprobacion: \n");
-                            consola.imprimir("Trato: ");
+                            consola.imprimir("Trato: " + (nTratos()) + 1);
                             if (propProp != null) {
                                 consola.imprimir("CasillaPropon: " + propProp.getNome());
                             }

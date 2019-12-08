@@ -1,5 +1,14 @@
 ﻿#Entrega 3
 
+Exemplo comandos tartos
+trato Anton: cambiar Lugo por Santiago
+    trato Anton: cambiar Lugo por 500
+    trato Anton: cambiar 500 por Santiago
+    trato Anton: cambiar Lugo e 500 por Santiago
+    trato Anton: cambiar Lugo por Santiago e 500
+    trato Anton: cambiar Lugo por Santiago e nonalquiler(Meanho,3)
+
+
 __________________________
 CASILLA
 
