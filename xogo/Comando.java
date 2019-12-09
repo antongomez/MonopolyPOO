@@ -17,13 +17,17 @@ public interface Comando {
 
     public void edificar(Avatar avatar, String tipoEdificacion, int nEdificios) throws EdificarErr;
 
+    public void eliminarTrato(String nomeTrato);
+
     //public void estatisticas();
-    //public void hipotecar(Propiedade propiedade, Xogador xogador);
-    //public void deshipotecar(Propiedade propiedade);
+    public void hipotecar(String nome, Xogador xogador, Xogador hipo) throws HipoPropNOn;
+
+    public void deshipotecar(String nome, Xogador xogador, Xogador hipo) throws DeshipoPropNON;
+
     public void lanzarDados();
 
     public void listar(String comando1, String grupo) throws ListarErr;
-    
+
     public void proponherTrato(String[] detalles) throws FalsaPropiedade, ErroSintaxe;
 
     public boolean rematarPartida();
@@ -32,8 +36,6 @@ public interface Comando {
 
     //public void retroceder();
     public void sairCarcere();
-
-    
 
     public void vender(String tipoEdificio, String casilla, String nEdificios);
 

@@ -281,6 +281,10 @@ public class Xogo implements Comando {
 
                     break;
 
+                case "eliminar":
+                    eliminarTrato(comando1);
+                    break;
+
                 case "hipotecar":
                     if (existeCasilla(comando1)) {
                         try {
@@ -766,6 +770,11 @@ public class Xogo implements Comando {
                 if (solar.getDono().equals(banca)) {
                     consola.imprimir("O solar " + solar.getNome() + " non ten "
                             + "dono, pódese comprar.\n");
+                } else if (!solar.getExentos().isEmpty()) {
+                    if (solar.getExentos().get(xogador.getNome()) != null) {
+                        consola.imprimir("O xogador " + xogador.getNome() + " está"
+                                + " exento de pagar o aluguer.\n");
+                    }
                 } else {
                     if (!solar.getDono().equals(xogador)) {
                         float alquiler = solar.calculoAlquiler();
@@ -927,7 +936,8 @@ public class Xogo implements Comando {
         }
     }
 
-    private void deshipotecar(String nom, Xogador xogador, Xogador hipo) throws DeshipoPropNON {
+    @Override
+    public void deshipotecar(String nom, Xogador xogador, Xogador hipo) throws DeshipoPropNON {
         for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
             for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++) {
                 if (taboleiro.getCasillas().get(i).get(j).getNome().equals(nom)) {
@@ -1011,6 +1021,22 @@ public class Xogo implements Comando {
         }
     }
 
+    @Override
+    public final void eliminarTrato(String nomeTrato) {
+        for (int i = 0; i < xogadores.size(); i++) {
+            if (i != turno) {
+                for (int j = 0; j < tratos.get(xogadores.get(i)).size(); j++) {
+                    Trato trato = tratos.get(xogadores.get(i)).get(j);
+                    if (trato.getXogadorPropon().equals(xogadores.get(turno))) {
+                        consola.imprimir(trato.getNome() + " eliminado.");
+                        tratos.get(xogadores.get(i)).remove(j);
+
+                    }
+                }
+            }
+        }
+    }
+
     public boolean existeAvatar(char idAvatar) {
         boolean existe = false;
 
@@ -1068,7 +1094,8 @@ public class Xogo implements Comando {
         return null;
     }
 
-    private void hipotecar(String nom, Xogador xogador, Xogador hipo) throws HipoPropNOn {
+    @Override
+    public void hipotecar(String nom, Xogador xogador, Xogador hipo) throws HipoPropNOn {
         for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
             for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++) {
                 if (taboleiro.getCasillas().get(i).get(j).getNome().equals(nom)) {
@@ -1116,6 +1143,17 @@ public class Xogo implements Comando {
 
     }
 
+    public void listarTratos() {
+
+        for (int i = 0; i < xogadores.size(); i++) {
+            if (i != turno) {
+                for (Trato trato : tratos.get(xogadores.get(i))) {
+                    consola.imprimir(trato.toString());
+                }
+            }
+        }
+    }
+
     @Override
     public final void listar(String comando1, String grupo) throws ListarErr {
         switch (comando1) {
@@ -1134,6 +1172,8 @@ public class Xogo implements Comando {
             case "enventa":
                 listarEnVenta();
                 break;
+            case "tratos":
+                listarTratos();
             default:
                 throw new ListarErr("Comando incorrecto. Debe indicar:\n"
                         + " listar xogadores\n"
@@ -1460,6 +1500,21 @@ public class Xogo implements Comando {
     public final void rematarTurno() {
         if (!poderLanzar()) {
             this.resetDados();
+
+            for (int i = 0; i < 40; i++) {
+                if (taboleiro.getCasilla(i) instanceof Propiedade) {
+                    if (!((Propiedade) taboleiro.getCasilla(i)).getExentos().isEmpty()) {
+                        Propiedade prop = (Propiedade) taboleiro.getCasilla(i);
+                        if (prop.estaExento(xogadores.get(i).getNome())) {
+                            prop.restarTurnoExento(xogadores.get(i).getNome());
+                            consola.imprimir("Ao xogador " + xogadores.get(i).getNome()
+                                    + " quédanlle " + prop.getExentos().get(xogadores.get(i).getNome())
+                                    + " turnos exento de pagar o aluguer de " + prop.getNome());
+                        }
+                    }
+                }
+            }
+
             if (turno == (xogadores.size() - 1)) {
                 turno = 0;
             } else {

@@ -419,10 +419,10 @@ public class Esfinxe extends Avatar {
 
     @Override
     public String toString() {
-        String texto = "{ \n" + "\tid: " + this.getId()
-                + "\n" + "\tTipo: esfinxe"
-                + "\n" + "\tXogador: " + this.getXogador().getNome()
-                + "\n" + "}";
+        String texto = super.toString();
+        
+        texto += "\n\ttipo: esfinxe" + "\n}";
+        
         return texto;
     }
 }

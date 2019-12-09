@@ -1,9 +1,8 @@
 package estrutura;
 
 import consola.ConsolaNormal;
-import xogadores.Xogador;
-
-import java.util.ArrayList;
+import xogadores.*;
+import xogo.*;
 
 public class Trato {
 
@@ -267,7 +266,12 @@ public class Trato {
             xogadorRecibe.eliminarPropiedade(propRecibe);
         }
 
-        //XestionAlquilares
+        if (propAlRecibe != null) {
+            propAlRecibe.engadirExento(xogadorPropon.getNome(), nTurnos);
+            Xogo.consola.imprimir("O xogador " + xogadorPropon.getNome()
+                    + " está exento de pagar o aluguer de " + propAlRecibe.getNome()
+                    + " durante " + nTurnos + ".");
+        }
     }
 
     @Override

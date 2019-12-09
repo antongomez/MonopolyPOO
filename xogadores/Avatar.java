@@ -123,8 +123,8 @@ public abstract class Avatar {
     @Override
     public String toString() {
         String texto = "{ \n" + "\tid: " + this.id
-                + "\n" + "\tXogador: " + this.xogador.getNome()
-                + "\n" + "}";
+                + "\n" + "\tXogador: " + this.xogador.getNome();
+
         return texto;
     }
     

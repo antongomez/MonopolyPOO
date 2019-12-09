@@ -1,12 +1,13 @@
 package estrutura;
 
+import java.util.HashMap;
 import xogadores.*;
 
 public abstract class Propiedade extends Casilla {
 
     //private int posicion;
     private float valor;
-    private float alquiler;
+    private HashMap<String, Integer> exentos;
     private Xogador dono;
     private Grupo grupo;
     private float cartosProducidos;
@@ -20,6 +21,7 @@ public abstract class Propiedade extends Casilla {
         this.valor = valor;
         this.dono = dono;
         this.cartosProducidos = 0;
+        this.exentos = new HashMap<>();
     }
 
     public float getValor() {
@@ -28,6 +30,31 @@ public abstract class Propiedade extends Casilla {
 
     public void setValor(float valor) {
         this.valor = valor;
+    }
+
+    public HashMap<String, Integer> getExentos() {
+        return exentos;
+    }
+
+    public boolean estaExento(String nomeXogador) {
+        return exentos.get(nomeXogador) != null;
+    }
+
+    public void engadirExento(String nomeXogador, Integer nTurnos) {
+        this.exentos.put(nomeXogador, nTurnos);
+    }
+
+    public void eliminarExento(String nomeXogador) {
+        this.exentos.remove(nomeXogador);
+    }
+
+    public void restarTurnoExento(String nomeXogador) {
+        Integer oldValue = exentos.get(nomeXogador);
+        if (oldValue > 1) {
+            this.exentos.replace(nomeXogador, oldValue - 1);
+        } else if (oldValue == 1) {
+            this.exentos.remove(nomeXogador);
+        }
     }
 
     public Grupo getGrupo() {
