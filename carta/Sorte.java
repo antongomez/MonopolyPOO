@@ -14,7 +14,6 @@ public class Sorte extends Carta {
 
     public void accion(Xogador xogador)
     {
-        String accion = "";
         String partes[] = super.getNome().split("-");
         switch (partes[1])
         {
@@ -24,13 +23,15 @@ public class Sorte extends Carta {
                 break;
             case "3": this.Carta3(xogador);
                 break;
+            case "4": this.Carta4(xogador);
+                break;
         }
     }
 
     @Override
     public void Carta1(Xogador xogador)
     {
-        String accion ="Carta de Sorte 1";
+        String accion ="Carta de Sorte 1\n";
         accion += "O aumento do imposto sobre bens inmobles afecta a todas as túas propiedades. "
                 + "Paga 50 GM por  casa, 145 GM por hotel, 25 GM por piscina e 90 GM por pista de deporte.\n";
         System.out.println(accion);
@@ -38,7 +39,7 @@ public class Sorte extends Carta {
     }
     public void Carta2(Xogador xogador)
     {
-        String accion ="Carta de Sorte 2";
+        String accion ="Carta de Sorte 2\n";
         accion += "Vendes a túa Lancha. Cobra 60 GM.\n";
         System.out.println(accion);
         xogador.modificarFortuna(60);
@@ -46,7 +47,7 @@ public class Sorte extends Carta {
     }
     public void Carta3(Xogador xogador)
     {
-        String accion ="Carta de Sorte 3";
+        String accion ="Carta de Sorte 3\n";
         accion += "Ganhaches o bote da lotaría! Recibe 125 GM.\n";
         System.out.println(accion);
         xogador.modificarFortuna(125);
@@ -54,7 +55,7 @@ public class Sorte extends Carta {
     }
     public void Carta4(Xogador xogador)
     {
-        String accion ="Carta de Sorte 4";
+        String accion ="Carta de Sorte 4\n";
         accion += "Paga 185 GM pola matrícula do colexio privado.\n";
         System.out.println(accion);
         xogador.modificarFortuna(-185);
@@ -64,12 +65,12 @@ public class Sorte extends Carta {
 
 
     private void pagarImpostoInmoble(Xogador xogador) {
-        /*if (xogador != null) {
+        if (xogador != null) {
             int casas = 0, hoteis = 0, pistas = 0, piscinas = 0;
             float total;
             for (Propiedade propiedade : xogador.getPropiedades()) {
                 if (propiedade instanceof  Solar) {
-                    for (Edificio edificio : propiedade.getEdificios()) {
+                    for (Edificio edificio : ((Solar)propiedade).getEdificios()) {
                         if (edificio instanceof Casa) {
                             casas++;
                         } else if (edificio instanceof Hotel) {
@@ -90,6 +91,6 @@ public class Sorte extends Carta {
                     + " hoteis, " + piscinas + " piscinas e " + pistas + " pistas de deporte.\n");
         } else {
             System.out.println("\nErro en pagarImpostoInmoble.\n");
-        }*/
+        }
     }
 }
