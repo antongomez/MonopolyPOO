@@ -22,6 +22,10 @@ public class Esfinxe extends Avatar {
     //Exemplo: pago/50/Anton-Victor  /*sendo Pedro o xogador deste avatar e tendolles que pagar 25 a cada un*/
     //Exemplo: cobro/150/Parking
     //         cobro/160
+    //Exemplo: venta/50/Lugo/casa
+    //Exemplo: hipoteca/100/Lugo
+    //Exemplo: dehipoteca/100/Lugo
+    //Exemplo: trato/Anton/Brais/Lugo/100/Vigo/100/Meanho /*sendo Meanho a casilla na que non se paga o alquiler*/
     public Esfinxe(char Id, Xogador xogador, Taboleiro taboleiro) {
         super(Id, xogador, taboleiro);
 
@@ -276,8 +280,13 @@ public class Esfinxe extends Avatar {
                 case "deshipoteca":
                     break;
                 case "venta":
+                    desfacerVenta(Float.parseFloat(comando1), comando2, comando3, taboleiro);
+                    Xogo.consola.imprimir("O xogador " + getXogador().getNome()
+                            + " construíu de novo 1 " + comando3 + " en "
+                            + comando2 + ". Cobráronselle " + comando1 + " GM.");
                     break;
                 case "trato":
+
                     break;
                 case "pago":
                     String nomes = "";
@@ -371,6 +380,21 @@ public class Esfinxe extends Avatar {
         } else {
             //Excepcion
             Xogo.consola.imprimir("O pago debe ser positivo.\n");
+        }
+    }
+
+    public void desfacerVenta(float cantidade, String nomeCasilla, String tipoEdificio, Taboleiro taboleiro) {
+        if ((nomeCasilla != null) && (cantidade > 0) && (taboleiro != null)) {
+            desfacerCobro(cantidade);
+            if (taboleiro.getCasilla(nomeCasilla) instanceof Solar) {
+                Solar solar = (Solar) taboleiro.getCasilla(nomeCasilla);
+                solar.edificar(tipoEdificio);
+            } else {
+
+            }
+
+        } else {
+
         }
     }
 
