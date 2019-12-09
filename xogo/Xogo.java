@@ -142,8 +142,6 @@ public class Xogo implements Comando {
             Avatar avatar = xogador.getAvatar();
             String comando0, comando1, comando2, comando3;
 
-            imprimirDados();
-
             if (poderLanzar()) {
                 switch (xogador.getEstadoPreso()) {
                     case 4:
@@ -600,7 +598,7 @@ public class Xogo implements Comando {
                 consola.imprimir("Trato aceptado.");
             } else {
                 consola.imprimir("O trato " + nomeTrato + " non lle foi"
-                        + " proposto ao xogador " + xogadores.get(turno));
+                        + " proposto ao xogador " + xogadores.get(turno).getNome());
             }
         }
     }
@@ -649,10 +647,10 @@ public class Xogo implements Comando {
 
                 if (xogador.getAvatar() instanceof Esfinxe) {
                     ((Esfinxe) xogador.getAvatar()).sumarHistorial("compra/"
-                            + propiedade.getNome() + "/" + propiedade.getValor());
+                            + propiedade.getValor() + "/" + propiedade.getNome());
                 } else if (xogador.getAvatar() instanceof Chapeu) {
                     ((Chapeu) xogador.getAvatar()).sumarHistorial("compra/"
-                            + propiedade.getNome() + "/" + propiedade.getValor());
+                            + propiedade.getValor() + "/" + propiedade.getNome());
                 }
                 if (propiedade instanceof Solar) {
                     if ((((Solar) propiedade)).getGrupo().existeMonopolio()) {
@@ -1147,11 +1145,7 @@ public class Xogo implements Comando {
 
     public void listarTratos() {
         for (int i = 0; i < xogadores.size(); i++) {
-            if (i != turno) {
-                for (Trato trato : tratos.get(xogadores.get(i).getNome())) {
-                    consola.imprimir(trato.toString());
-                }
-            }
+            imprimirTratos(xogadores.get(i));
         }
     }
 
@@ -1175,6 +1169,7 @@ public class Xogo implements Comando {
                 break;
             case "tratos":
                 listarTratos();
+                break;
             default:
                 throw new ListarErr("Comando incorrecto. Debe indicar:\n"
                         + " listar xogadores\n"
@@ -1506,10 +1501,10 @@ public class Xogo implements Comando {
                 if (taboleiro.getCasilla(i) instanceof Propiedade) {
                     if (!((Propiedade) taboleiro.getCasilla(i)).getExentos().isEmpty()) {
                         Propiedade prop = (Propiedade) taboleiro.getCasilla(i);
-                        if (prop.estaExento(xogadores.get(i).getNome())) {
-                            prop.restarTurnoExento(xogadores.get(i).getNome());
-                            consola.imprimir("Ao xogador " + xogadores.get(i).getNome()
-                                    + " quédanlle " + prop.getExentos().get(xogadores.get(i).getNome())
+                        if (prop.estaExento(xogadores.get(turno).getNome())) {
+                            prop.restarTurnoExento(xogadores.get(turno).getNome());
+                            consola.imprimir("Ao xogador " + xogadores.get(turno).getNome()
+                                    + " quédanlle " + prop.getExentos().get(xogadores.get(turno).getNome())
                                     + " turnos exento de pagar o aluguer de " + prop.getNome());
                         }
                     }
