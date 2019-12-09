@@ -317,7 +317,11 @@ public class Xogo implements Comando {
                                 } else if (!sonDobres(getDadosLanzados())) {
 
                                     avanzar(avatar);
-                                    comprobarCasilla(avatar.getPosicion(), xogador);
+                                    if ((avatar instanceof Esfinxe) || (avatar instanceof Chapeu)) {
+                                        if (!(avatar.getModoAvanzado() && (sumarDados(getDadosLanzados()) < 4))) {
+                                            comprobarCasilla(avatar.getPosicion(), xogador);
+                                        }
+                                    }
                                 }
                                 if (sonDobres(getDadosLanzados())) {
 
