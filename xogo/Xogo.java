@@ -1025,11 +1025,13 @@ public class Xogo implements Comando {
     public final void eliminarTrato(String nomeTrato) {
         for (int i = 0; i < xogadores.size(); i++) {
             if (i != turno) {
-                for (int j = 0; j < tratos.get(xogadores.get(i)).size(); j++) {
-                    Trato trato = tratos.get(xogadores.get(i)).get(j);
+                for (int j = 0; j < tratos.get(xogadores.get(i).getNome()).size(); j++) {
+                    Trato trato = tratos.get(xogadores.get(i).getNome()).get(j);
                     if (trato.getXogadorPropon().equals(xogadores.get(turno))) {
-                        consola.imprimir(trato.getNome() + " eliminado.");
-                        tratos.get(xogadores.get(i)).remove(j);
+                        if (trato.getNome().equals(nomeTrato)) {
+                            consola.imprimir(trato.getNome() + " eliminado.");
+                            tratos.get(xogadores.get(i).getNome()).remove(j);
+                        }
 
                     }
                 }
@@ -1144,10 +1146,9 @@ public class Xogo implements Comando {
     }
 
     public void listarTratos() {
-
         for (int i = 0; i < xogadores.size(); i++) {
             if (i != turno) {
-                for (Trato trato : tratos.get(xogadores.get(i))) {
+                for (Trato trato : tratos.get(xogadores.get(i).getNome())) {
                     consola.imprimir(trato.toString());
                 }
             }
