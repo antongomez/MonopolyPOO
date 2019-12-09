@@ -347,6 +347,7 @@ public class Solar extends Propiedade {
             }
             break;
             case "hotel":
+            case "hoteis":
             case "Hotel": {
                 if (this.getDono().getFortuna()
                         > this.getValor() * 0.6) {
@@ -368,6 +369,7 @@ public class Solar extends Propiedade {
             }
             break;
             case "piscina":
+            case "piscinas":
             case "Piscina": {
                 if (this.getDono().getFortuna()
                         > this.getValor() * 0.4) {
@@ -386,6 +388,7 @@ public class Solar extends Propiedade {
             }
             break;
             case "pista":
+            case "pistas":
             case "Pista": {
                 if (this.getDono().getFortuna()
                         > this.getValor() * 10.) {

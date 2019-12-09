@@ -1,16 +1,13 @@
 package xogo;
 
 import Excepcions.*;
-import carta.Carta;
-import carta.Caixa;
-import carta.Sorte;
+import carta.*;
 import com.sun.source.tree.TryTree;
 import estrutura.*;
 import xogadores.*;
 import consola.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -219,14 +216,13 @@ public class Xogo implements Comando {
                 case "comprar":
                     if (!poderLanzar()) {
                         if (avatar.getPosicion() instanceof Propiedade) {
-                            try{
+                            try {
                                 comprar((Propiedade) avatar.getPosicion(), xogador);
-                            }catch (ComprarErr comprar1)
-                            {
+                            } catch (ComprarErr comprar1) {
                                 System.out.println(comprar1);
                             }
                         } else {
-                            consola.imprimir("So se poden comprar propiedades");
+                            consola.imprimir("Só se poden comprar propiedades");
                         }
                     } else {
                         //Excepcion
@@ -243,15 +239,13 @@ public class Xogo implements Comando {
                     if (existeCasilla(comando1)) {
                         try {
                             deshipotecar(comando1, xogador, hipotecar);
-                        } catch (DeshipoPropNON deshipo1)
-                        {
+                        } catch (DeshipoPropNON deshipo1) {
                             System.out.println(deshipo1.getMessage());
                         }
                     } else if (existeCasilla(comando1 + " " + comando2)) {
                         try {
                             deshipotecar(comando1 + " " + comando2, xogador, hipotecar);
-                        } catch (DeshipoPropNON deshipo1)
-                        {
+                        } catch (DeshipoPropNON deshipo1) {
                             System.out.println(deshipo1.getMessage());
                         }
                     } else {
@@ -268,14 +262,14 @@ public class Xogo implements Comando {
                         case "pistas":
                             try {
                                 edificar(avatar, comando1, 1);
-                            }catch (EdificarErr edif1) {
+                            } catch (EdificarErr edif1) {
                                 System.out.println(edif1.getMessage());
                             }
                             break;
                         case "casas":
                             try {
                                 edificar(avatar, comando1, Integer.parseInt(comando2));
-                            }catch (EdificarErr edif2) {
+                            } catch (EdificarErr edif2) {
                                 System.out.println(edif2.getMessage());
                             }
                             break;
@@ -349,11 +343,11 @@ public class Xogo implements Comando {
                             //Excepcion
                         }
                     }
+                    break;
                 case "listar":
                     try {
                         listar(comando1, comando2);
-                    } catch (ListarErr listar1)
-                    {
+                    } catch (ListarErr listar1) {
                         System.out.println(listar1);
                     }
                     break;
@@ -613,6 +607,8 @@ public class Xogo implements Comando {
         }
         if (avatar instanceof Esfinxe) {
             ((Esfinxe) avatar).resetHistorial();
+        } else if (avatar instanceof Chapeu) {
+            ((Chapeu) avatar).resetHistorial();
         }
     }
 
@@ -634,7 +630,7 @@ public class Xogo implements Comando {
     }
 
     @Override
-    public final void comprar(Propiedade propiedade, Xogador xogador) throws ComprarErr{
+    public final void comprar(Propiedade propiedade, Xogador xogador) throws ComprarErr {
         if (propiedadeComprable(propiedade)) {
             if (xogador.getFortuna() > propiedade.getValor()) {
                 propiedade.comprar(xogador);
@@ -646,6 +642,9 @@ public class Xogo implements Comando {
                 if (xogador.getAvatar() instanceof Esfinxe) {
                     ((Esfinxe) xogador.getAvatar()).sumarHistorial("compra/"
                             + propiedade.getNome() + "/" + propiedade.getValor());
+                } else if (xogador.getAvatar() instanceof Chapeu) {
+                    ((Chapeu) xogador.getAvatar()).sumarHistorial("compra/"
+                            + propiedade.getNome() + "/" + propiedade.getValor());
                 }
                 if (propiedade instanceof Solar) {
                     if ((((Solar) propiedade)).getGrupo().existeMonopolio()) {
@@ -655,10 +654,12 @@ public class Xogo implements Comando {
                                 + "de agora pode edificar.");
                     }
                 }
+            } else {
+                throw new ComprarErr("Non ten fortuna suficiente.");
             }
-            else throw new ComprarErr(" Non ten fortuna suficiente.");
+        } else {
+            throw new ComprarErr("Só se poden comprar as propiedades.");
         }
-        else throw new ComprarErr("Só se poden comprar as propiedades.");
     }
 
     private void comprobarCasilla(Casilla casilla, Xogador xogador) {
@@ -679,6 +680,9 @@ public class Xogo implements Comando {
 
                             if (avatar instanceof Esfinxe) {
                                 ((Esfinxe) avatar).sumarHistorial("cobro/"
+                                        + bote + "/Parking");
+                            } else if (xogador.getAvatar() instanceof Chapeu) {
+                                ((Chapeu) avatar).sumarHistorial("cobro/"
                                         + bote + "/Parking");
                             }
                         }
@@ -701,13 +705,13 @@ public class Xogo implements Comando {
                             }
                         } while ((numCarta < 1) || (numCarta > 4));
 
-                        ((Sorte)cartas.get("Sorte").get(numCarta-1)).accion(xogador);
-                        }
-                        break;
+                        ((Sorte) cartas.get("Sorte").get(numCarta - 1)).accion(xogador);
+                    }
+                    break;
 
                     case "Caixa 1":
                     case "Caixa 2":
-                    case "Caixa 3":{
+                    case "Caixa 3": {
                         Collections.shuffle(cartas.get("Caixa"));
                         int numCarta;
                         do {
@@ -717,9 +721,9 @@ public class Xogo implements Comando {
                             }
                         } while ((numCarta < 1) || (numCarta > 4));
 
-                        ((Sorte)cartas.get("Caixa").get(numCarta-1)).accion(xogador);
-                        }
-                        break;
+                        ((Sorte) cartas.get("Caixa").get(numCarta - 1)).accion(xogador);
+                    }
+                    break;
 
                 }
             } else if (casilla instanceof Imposto) {
@@ -732,8 +736,12 @@ public class Xogo implements Comando {
                         if (avatar instanceof Esfinxe) {
                             ((Esfinxe) avatar).sumarHistorial("pago/"
                                     + Constantes.IMPOSTO1);
+                        } else if (xogador.getAvatar() instanceof Chapeu) {
+                            ((Chapeu) avatar).sumarHistorial("pago/"
+                                    + Constantes.IMPOSTO1);
                         }
                         break;
+
                     case "Subida Pension":
                         xogador.modificarFortuna(-Constantes.IMPOSTO2);
                         consola.imprimir(" O xogador " + xogador.getNome()
@@ -742,6 +750,9 @@ public class Xogo implements Comando {
 
                         if (avatar instanceof Esfinxe) {
                             ((Esfinxe) avatar).sumarHistorial("pago/"
+                                    + Constantes.IMPOSTO2);
+                        } else if (xogador.getAvatar() instanceof Chapeu) {
+                            ((Chapeu) avatar).sumarHistorial("pago/"
                                     + Constantes.IMPOSTO2);
                         }
                         break;
@@ -765,6 +776,10 @@ public class Xogo implements Comando {
 
                             if (avatar instanceof Esfinxe) {
                                 ((Esfinxe) avatar).sumarHistorial("alquiler/"
+                                        + alquiler + "/" + solar.getDono().getNome()
+                                        + "/" + solar.getNome());
+                            } else if (xogador.getAvatar() instanceof Chapeu) {
+                                ((Chapeu) avatar).sumarHistorial("alquiler/"
                                         + alquiler + "/" + solar.getDono().getNome()
                                         + "/" + solar.getNome());
                             }
@@ -801,6 +816,10 @@ public class Xogo implements Comando {
                             ((Esfinxe) avatar).sumarHistorial("alquiler/"
                                     + alquiler + "/" + transporte.getDono().getNome()
                                     + "/" + transporte.getNome());
+                        } else if (xogador.getAvatar() instanceof Chapeu) {
+                            ((Chapeu) avatar).sumarHistorial("alquiler/"
+                                    + alquiler + "/" + transporte.getDono().getNome()
+                                    + "/" + transporte.getNome());
                         }
                     } else {
                         consola.imprimir("Implementar bancarrota co numero da xogadores.");
@@ -813,7 +832,7 @@ public class Xogo implements Comando {
                             + servizo.getNome() + " non ten dono, pódese"
                             + " comprar.\n");
                 } else {
-                    float alquiler = servizo.calculoAlquiler();
+                    float alquiler = servizo.calculoAlquiler() * sumarDados(getDadosLanzados());
                     if (xogador.getFortuna() > alquiler) {
                         xogador.modificarFortuna(-alquiler);
                         servizo.getDono().modificarFortuna(alquiler);
@@ -824,6 +843,10 @@ public class Xogo implements Comando {
 
                         if (avatar instanceof Esfinxe) {
                             ((Esfinxe) avatar).sumarHistorial("alquiler/"
+                                    + alquiler + "/" + servizo.getDono().getNome()
+                                    + "/" + servizo.getNome());
+                        } else if (xogador.getAvatar() instanceof Chapeu) {
+                            ((Chapeu) avatar).sumarHistorial("alquiler/"
                                     + alquiler + "/" + servizo.getDono().getNome()
                                     + "/" + servizo.getNome());
                         }
@@ -911,7 +934,9 @@ public class Xogo implements Comando {
                         } catch (DesHipoNONdin deshiponondin) {
                             System.out.println(deshiponondin.getMessage());
                         }
-                    } else throw new DeshipoPropNON("Esta casilla non é unha propiedade.");
+                    } else {
+                        throw new DeshipoPropNON("Esta casilla non é unha propiedade.");
+                    }
                 }
 
             }
@@ -943,6 +968,12 @@ public class Xogo implements Comando {
                                             calculoPrezoEdificio(tipoEdificacion)
                                     + "/" + avatar.getPosicion().getNome() + "/"
                                     + tipoEdificacion);
+                        } else if (xogador.getAvatar() instanceof Chapeu) {
+                            ((Chapeu) avatar).sumarHistorial("edificar/"
+                                    + ((Solar) avatar.getPosicion()).
+                                            calculoPrezoEdificio(tipoEdificacion)
+                                    + "/" + avatar.getPosicion().getNome() + "/"
+                                    + tipoEdificacion);
                         }
                     } else {
                         consola.imprimir("Construíronse " + nEdificios
@@ -953,6 +984,12 @@ public class Xogo implements Comando {
 
                         if (avatar instanceof Esfinxe) {
                             ((Esfinxe) avatar).sumarHistorial("edificar/"
+                                    + ((Solar) avatar.getPosicion()).
+                                            calculoPrezoEdificio("casa") * nEdificios
+                                    + "/" + avatar.getPosicion().getNome() + "/"
+                                    + tipoEdificacion + "-" + nEdificios);
+                        } else if (xogador.getAvatar() instanceof Chapeu) {
+                            ((Chapeu) avatar).sumarHistorial("edificar/"
                                     + ((Solar) avatar.getPosicion()).
                                             calculoPrezoEdificio("casa") * nEdificios
                                     + "/" + avatar.getPosicion().getNome() + "/"
@@ -1036,7 +1073,7 @@ public class Xogo implements Comando {
                         try {
                             xogador.hipotecar(prop, hipo);
                         } catch (HipoDono hipodono) {
-                            System.out.println(hipodono.getMessage());
+                            consola.imprimir(hipodono.getMessage());
                         }
                     } else {
                         throw new HipoPropNOn("Función de menu principal.");
@@ -1076,7 +1113,7 @@ public class Xogo implements Comando {
     }
 
     @Override
-    public final void listar(String comando1, String grupo) throws ListarErr{
+    public final void listar(String comando1, String grupo) throws ListarErr {
         switch (comando1) {
             case "xogadores":
                 listarXogador();
@@ -1094,12 +1131,12 @@ public class Xogo implements Comando {
                 listarEnVenta();
                 break;
             default:
-                throw new ListarErr("Comando incorrecto. Debe indicar:\n" +
-                        " listar xogadroes\n" +
-                        " listar avatares\n" +
-                        " listar casillas\n" +
-                        " listar edificios\n" +
-                        " listar enventa");
+                throw new ListarErr("Comando incorrecto. Debe indicar:\n"
+                        + " listar xogadores\n"
+                        + " listar avatares\n"
+                        + " listar casillas\n"
+                        + " listar edificios\n"
+                        + " listar enventa");
 
         }
     }
@@ -1446,6 +1483,14 @@ public class Xogo implements Comando {
                         + " pagou " + Constantes.SAIR_CARCERE + " GM para saír do"
                         + " Cárcere. A súa fortuna actual é de "
                         + xogadores.get(turno).getFortuna() + ".\n");
+
+                if (avatares.get(turno) instanceof Esfinxe) {
+                    ((Esfinxe) avatares.get(turno)).sumarHistorial("pago/"
+                            + Constantes.SAIR_CARCERE);
+                } else if (avatares.get(turno) instanceof Chapeu) {
+                    ((Chapeu) avatares.get(turno)).sumarHistorial("pago/"
+                            + Constantes.SAIR_CARCERE);
+                }
             } else {
                 //Excepcion
                 consola.imprimir("Xa lanzaches. Agora non podes pagar.\n");
@@ -1496,19 +1541,34 @@ public class Xogo implements Comando {
             float valor = 0;
             if ((n > 0) && (n <= 4)) {
                 for (int i = 0; i < n; i++) {
-                    valor = solar.venderEdificio(tipoEdificio);
-
+                    valor += solar.venderEdificio(tipoEdificio);
                 }
                 consola.imprimir("O xogador " + solar.getDono().getNome()
                         + " vendeu " + nEdificios + " " + tipoEdificio
                         + "pola cantidade de " + valor
                         + " GM.\n");
+                if (avatares.get(turno) instanceof Esfinxe) {
+                    ((Esfinxe) avatares.get(turno)).sumarHistorial("venta/"
+                            + valor + "/" + casilla + "/" + tipoEdificio);
+
+                } else if (avatares.get(turno) instanceof Chapeu) {
+                    ((Chapeu) avatares.get(turno)).sumarHistorial("venta/"
+                            + valor + "/" + casilla + "/" + tipoEdificio);
+                }
             } else {
                 valor = solar.venderEdificio(tipoEdificio);
                 consola.imprimir("O xogador " + solar.getDono().getNome()
                         + " vendeu 1 " + tipoEdificio
                         + "pola cantidade de " + valor
                         + " GM.\n");
+                if (avatares.get(turno) instanceof Esfinxe) {
+                    ((Esfinxe) avatares.get(turno)).sumarHistorial("venta/"
+                            + valor + "/" + casilla + "/" + tipoEdificio);
+
+                } else if (avatares.get(turno) instanceof Chapeu) {
+                    ((Chapeu) avatares.get(turno)).sumarHistorial("venta/"
+                            + valor + "/" + casilla + "/" + tipoEdificio);
+                }
             }
         }
     }
