@@ -31,6 +31,10 @@ public class Xogo implements Comando {
         cartas.get("Sorte").add(new Sorte("Sorte-3"));
         cartas.get("Sorte").add(new Sorte("Sorte-4"));
         cartas.put("Caixa", new ArrayList<Carta>());
+        cartas.get("Caixa").add(new Sorte("Caixa-1"));
+        cartas.get("Caixa").add(new Sorte("Caixa-2"));
+        cartas.get("Caixa").add(new Sorte("Caixa-3"));
+        cartas.get("Caixa").add(new Sorte("Caixa-4"));
         xogadores = new ArrayList<>();
         avatares = new ArrayList<>();
         tratos = new HashMap<>();
@@ -720,7 +724,7 @@ public class Xogo implements Comando {
                                 System.out.print("\nEscolla non válida.\n");
                             }
                         } while ((numCarta < 1) || (numCarta > 4));
-
+                        System.out.println("Proba");
                         ((Sorte) cartas.get("Caixa").get(numCarta - 1)).accion(xogador);
                     }
                     break;
