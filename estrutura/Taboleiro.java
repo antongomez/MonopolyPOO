@@ -79,7 +79,7 @@ public class Taboleiro {
             ladoEste.add(new Solar("Sanxenxo", 32, Constantes.CASILLA_G7, grupo7, banca));
             ladoEste.add(new Especial("Caixa 3", 33));
             ladoEste.add(new Solar("Pontevedra", 34, Constantes.CASILLA_G7, grupo7, banca));
-            ladoEste.add(new Transporte("Jet-Privado", 35, grupoTrans, banca));
+            ladoEste.add(new Transporte("Jet Privado", 35, grupoTrans, banca));
             ladoEste.add(new Especial("Sorte 3", 36));
             ladoEste.add(new Solar("Vigo", 37, Constantes.CASILLA_G8, grupo8, banca));
             ladoEste.add(new Imposto("Subida Pension", 38, Constantes.IMPOSTO2));

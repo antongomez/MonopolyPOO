@@ -76,15 +76,13 @@ public class Chapeu extends Avatar {
             switch (this.getLado(this.getPosicion().getPosicion())) {
                 case 's':
                     //Facemos o primeiro movemento
-                    Xogo.consola.imprimir("Lado: e");
                     desplazarseSur(this.getPosicion(), taboleiro);
                     sumaDados--;
                     texto += " " + getPosicion().getNome() + ",";
 
-                case 'o':
-                    Xogo.consola.imprimir("Lado: s");
+                case 'e':
                     for (int i = 1; i <= sumaDados; i++) {
-                        desplazarseOeste(this.getPosicion(), taboleiro);
+                        desplazarseEste(this.getPosicion(), taboleiro);
                         if (i == (sumaDados)) {
                             texto += " ata chegar a " + getPosicion().getNome() + ".";
                         } else if (i == (sumaDados - 1)) {
@@ -95,15 +93,13 @@ public class Chapeu extends Avatar {
                     }
                     break;
                 case 'n':
-                    Xogo.consola.imprimir("Lado: o");
                     //Facemos o primeiro movemento
                     desplazarseNorte(this.getPosicion(), taboleiro);
                     sumaDados--;
                     texto += " " + getPosicion().getNome() + ",";
-                case 'e':
-                    Xogo.consola.imprimir("Lado: n");
+                case 'o':
                     for (int i = 1; i <= sumaDados; i++) {
-                        desplazarseEste(this.getPosicion(), taboleiro);
+                        desplazarseOeste(this.getPosicion(), taboleiro);
                         if (i == (sumaDados)) {
                             texto += " ata chegar a " + getPosicion().getNome() + ".";
                         } else if (i == (sumaDados - 1)) {
@@ -129,7 +125,7 @@ public class Chapeu extends Avatar {
 
             casilla.eliminarAvatar(this);
 
-            destino = taboleiro.getCasilla("O Carballinho");
+            destino = taboleiro.getCasilla("Ribadeo");
 
             this.setPosicion(destino);
         } else {
@@ -169,12 +165,18 @@ public class Chapeu extends Avatar {
 
                     this.setPosicion(destino);
                     break;
+                case "Saida":
+                    casilla.eliminarAvatar(this);
+                    destino = taboleiro.getCasilla("O Carballinho");
+
+                    this.setPosicion(destino);
+                    break;
                 default:
                     casilla.eliminarAvatar(this);
-                    if (casilla.getPosicion() > 30) {
-                        destino = taboleiro.getCasilla(20 - (casilla.getPosicion() - 30) + 1);
-                    } else {
+                    if (casilla.getPosicion() <= 20) {
                         destino = taboleiro.getCasilla(40 - (casilla.getPosicion() - 10) - 1);
+                    } else {
+                        destino = taboleiro.getCasilla(20 - (casilla.getPosicion() - 30) + 1);
                     }
                     if (destino != null) {
                         this.setPosicion(destino);
@@ -206,12 +208,18 @@ public class Chapeu extends Avatar {
 
                     this.setPosicion(destino);
                     break;
+                case "O Carballinho":
+                    casilla.eliminarAvatar(this);
+                    destino = taboleiro.getCasilla("Saida");
+
+                    this.setPosicion(destino);
+                    break;
                 default:
                     casilla.eliminarAvatar(this);
-                    if (casilla.getPosicion() > 19) {
-                        destino = taboleiro.getCasilla(10 - (casilla.getPosicion() - 20) - 1);
+                    if (casilla.getPosicion() <= 20) {
+                        destino = taboleiro.getCasilla(40 - (casilla.getPosicion() - 10) + 1);
                     } else {
-                        destino = taboleiro.getCasilla(30 - casilla.getPosicion() + 1);
+                        destino = taboleiro.getCasilla(20 - (casilla.getPosicion() - 30) - 1);
                     }
                     if (destino != null) {
 
