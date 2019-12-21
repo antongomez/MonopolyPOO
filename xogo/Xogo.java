@@ -2,7 +2,6 @@ package xogo;
 
 import Excepcions.*;
 import carta.*;
-import com.sun.source.tree.TryTree;
 import estrutura.*;
 import xogadores.*;
 import consola.*;
@@ -24,6 +23,7 @@ public class Xogo implements Comando {
     private Xogador banca;
 
     public Xogo() {
+        //Créanse as cartas de sorte e caixa
         cartas = new HashMap<>();
         cartas.put("Sorte", new ArrayList<Carta>());
         cartas.get("Sorte").add(new Sorte("Sorte-1"));
@@ -35,9 +35,11 @@ public class Xogo implements Comando {
         cartas.get("Caixa").add(new Sorte("Caixa-2"));
         cartas.get("Caixa").add(new Sorte("Caixa-3"));
         cartas.get("Caixa").add(new Sorte("Caixa-4"));
+        //Créanse os arrays de xogadores, avatares e tratos baleiros
         xogadores = new ArrayList<>();
         avatares = new ArrayList<>();
         tratos = new HashMap<>();
+        //Créanse os dados e inicialízanse a 0 todos
         tiradas = new HashMap<>();
         for (int i = 1; i <= 3; i++) {
             HashMap<String, Dado> dados = new HashMap<>();
@@ -51,10 +53,6 @@ public class Xogo implements Comando {
         int nXogadores = 0;
         Boolean sair = false;
         Xogador hipotecar = new Xogador("Hipotecar"); //Xogador ao que se lle hipoteca
-        ArrayList<Boolean> avanzado = new ArrayList<>();
-        for (int i = 1; i <= 3; i++) {
-            avanzado.add(false);
-        }
 
         do {
             nXogadores = Integer.parseInt(consola.ler("Cantos xogadores sodes? "));
@@ -63,7 +61,6 @@ public class Xogo implements Comando {
             }
         } while ((nXogadores < 2) || (nXogadores > 7));
 
-        //Partida partida = new Partida(nXogadores);
         //Pedimos nome e avatar para inicializar todos os xogadores menos a banca
         for (int i = 0; i < nXogadores; i++) {
             //Creamos o xogador
@@ -818,26 +815,35 @@ public class Xogo implements Comando {
                             + transporte.getNome() + " non ten dono, pódese"
                             + " comprar.\n");
                 } else {
-                    float alquiler = transporte.calculoAlquiler();
-                    if (xogador.getFortuna() > alquiler) {
-                        xogador.modificarFortuna(-alquiler);
-                        transporte.getDono().modificarFortuna(alquiler);
-                        consola.imprimir("O xogador " + xogador.getNome()
-                                + " pagulle ao xogador " + transporte.getDono().getNome()
-                                + " " + alquiler + " GM. A súa fortuna actual é "
-                                + "de " + xogador.getFortuna() + "\n");
+                    if (!transporte.getDono().equals(xogador)) {
+                        float alquiler = transporte.calculoAlquiler();
+                        if (xogador.getFortuna() > alquiler) {
+                            xogador.modificarFortuna(-alquiler);
+                            transporte.getDono().modificarFortuna(alquiler);
+                            consola.imprimir("O xogador " + xogador.getNome()
+                                    + " pagulle ao xogador " + transporte.getDono().getNome()
+                                    + " " + alquiler + " GM. A súa fortuna actual é "
+                                    + "de " + xogador.getFortuna() + "\n");
 
-                        if (avatar instanceof Esfinxe) {
-                            ((Esfinxe) avatar).sumarHistorial("alquiler/"
-                                    + alquiler + "/" + transporte.getDono().getNome()
-                                    + "/" + transporte.getNome());
-                        } else if (xogador.getAvatar() instanceof Chapeu) {
-                            ((Chapeu) avatar).sumarHistorial("alquiler/"
-                                    + alquiler + "/" + transporte.getDono().getNome()
-                                    + "/" + transporte.getNome());
+                            if (avatar instanceof Esfinxe) {
+                                ((Esfinxe) avatar).sumarHistorial("alquiler/"
+                                        + alquiler + "/" + transporte.getDono().getNome()
+                                        + "/" + transporte.getNome());
+                            } else if (xogador.getAvatar() instanceof Chapeu) {
+                                ((Chapeu) avatar).sumarHistorial("alquiler/"
+                                        + alquiler + "/" + transporte.getDono().getNome()
+                                        + "/" + transporte.getNome());
+                            }
+                        } else {
+                            consola.imprimir("Implementar bancarrota co numero da xogadores.");
                         }
                     } else {
-                        consola.imprimir("Implementar bancarrota co numero da xogadores.");
+                        if (transporte.frecuenciaVisita(turno) == 2) {
+                            consola.imprimir("O xogador " + xogador.getNome()
+                                    + " caeu dúas veces na casilla de transporte "
+                                    + transporte.getNome() + ". A partir de agora "
+                                    + "pode edificar.");
+                        }
                     }
                 }
             } else if (casilla instanceof Servizo) {
@@ -847,26 +853,35 @@ public class Xogo implements Comando {
                             + servizo.getNome() + " non ten dono, pódese"
                             + " comprar.\n");
                 } else {
-                    float alquiler = servizo.calculoAlquiler() * sumarDados(getDadosLanzados());
-                    if (xogador.getFortuna() > alquiler) {
-                        xogador.modificarFortuna(-alquiler);
-                        servizo.getDono().modificarFortuna(alquiler);
-                        consola.imprimir("O xogador " + xogador.getNome()
-                                + " pagulle ao xogador " + servizo.getDono().getNome()
-                                + " " + alquiler + " GM. A súa fortuna actual é "
-                                + "de " + xogador.getFortuna() + "\n");
+                    if (!servizo.getDono().equals(xogador)) {
+                        float alquiler = servizo.calculoAlquiler() * sumarDados(getDadosLanzados());
+                        if (xogador.getFortuna() > alquiler) {
+                            xogador.modificarFortuna(-alquiler);
+                            servizo.getDono().modificarFortuna(alquiler);
+                            consola.imprimir("O xogador " + xogador.getNome()
+                                    + " pagulle ao xogador " + servizo.getDono().getNome()
+                                    + " " + alquiler + " GM. A súa fortuna actual é "
+                                    + "de " + xogador.getFortuna() + "\n");
 
-                        if (avatar instanceof Esfinxe) {
-                            ((Esfinxe) avatar).sumarHistorial("alquiler/"
-                                    + alquiler + "/" + servizo.getDono().getNome()
-                                    + "/" + servizo.getNome());
-                        } else if (xogador.getAvatar() instanceof Chapeu) {
-                            ((Chapeu) avatar).sumarHistorial("alquiler/"
-                                    + alquiler + "/" + servizo.getDono().getNome()
-                                    + "/" + servizo.getNome());
+                            if (avatar instanceof Esfinxe) {
+                                ((Esfinxe) avatar).sumarHistorial("alquiler/"
+                                        + alquiler + "/" + servizo.getDono().getNome()
+                                        + "/" + servizo.getNome());
+                            } else if (xogador.getAvatar() instanceof Chapeu) {
+                                ((Chapeu) avatar).sumarHistorial("alquiler/"
+                                        + alquiler + "/" + servizo.getDono().getNome()
+                                        + "/" + servizo.getNome());
+                            }
+                        } else {
+                            consola.imprimir("Implementar bancarrota co número da xogadores.");
                         }
                     } else {
-                        consola.imprimir("Implementar bancarrota co número da xogadores.");
+                        if (servizo.frecuenciaVisita(turno) == 2) {
+                            consola.imprimir("O xogador " + xogador.getNome()
+                                    + " caeu dúas veces na casilla de transporte "
+                                    + servizo.getNome() + ". A partir de agora "
+                                    + "pode edificar.");
+                        }
                     }
                 }
             }
