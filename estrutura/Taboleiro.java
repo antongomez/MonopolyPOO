@@ -30,8 +30,8 @@ public class Taboleiro {
             Grupo grupo8 = new Grupo("Azul", 8, Constantes.AZUL);
 
             //Creacion do resto dos grupos
-            Grupo grupoServ = new Grupo(9); //Servizos
-            Grupo grupoTrans = new Grupo(10); //Transportes
+            Grupo grupoServ = new Grupo("Servizos", 9);
+            Grupo grupoTrans = new Grupo("Transportes", 10);
 
             //Creamos o lado Sur
             casillas.add(ladoSur);

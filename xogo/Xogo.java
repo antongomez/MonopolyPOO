@@ -296,8 +296,8 @@ public class Xogo implements Comando {
                     switch (comando1) {
                         case "casa":
                         case "hotel":
-                        case "piscinas":
-                        case "pistas":
+                        case "piscina":
+                        case "pista":
                             try {
                                 edificar(avatar, comando1, 1);
                             } catch (ErroInterno ex) {
@@ -1373,13 +1373,11 @@ public class Xogo implements Comando {
         if (corGrupo != null) {
             Grupo grupo = getGrupo(corGrupo);
 
-            if (grupo.getPropiedades().get(0) instanceof Solar) {
-                for (Propiedade solar : grupo.getPropiedades()) {
-                    consola.imprimir(solar.getNome());
-                    for (Edificio edificio : ((Solar) solar).getEdificios()) {
-                        consola.imprimir(edificio.toString());
-                    }
+            if (grupo.grupoSolares()) {
+                for (Edificio edificio : grupo.getEdificios()) {
+                    consola.imprimir(edificio.toString());
                 }
+
             } else {
                 throw new PropiedadesNonEdificios(corGrupo);
             }

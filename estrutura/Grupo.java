@@ -1,7 +1,6 @@
 package estrutura;
 
 import xogadores.*;
-import xogo.*;
 import java.util.ArrayList;
 
 public class Grupo extends Casilla {
@@ -21,14 +20,28 @@ public class Grupo extends Casilla {
         this.propiedades = new ArrayList<>();
     }
 
-    public Grupo(int id) {
+    public Grupo(String nome, int id) {
+        super(nome, 0);
         this.id = id;
         this.colorear = Constantes.NEGRO;
+        this.propiedades = new ArrayList<>();
     }
 
     //Getters e Setters
     public int getId() {
         return id;
+    }
+
+    public ArrayList<Edificio> getEdificios() {
+        ArrayList<Edificio> edificios = new ArrayList<>();
+        if (grupoSolares()) {
+            for (Propiedade propiedade : propiedades) {
+                for (Edificio edificio : ((Solar) propiedade).getEdificios()) {
+                    edificios.add(edificio);
+                }
+            }
+        }
+        return edificios;
     }
 
     public void setId(int id) {
@@ -37,6 +50,10 @@ public class Grupo extends Casilla {
 
     public ArrayList<Propiedade> getPropiedades() {
         return this.propiedades;
+    }
+
+    public boolean grupoSolares() {
+        return (propiedades.get(0) instanceof Solar);
     }
 
     public String getColorear() {

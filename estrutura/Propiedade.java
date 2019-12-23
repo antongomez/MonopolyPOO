@@ -5,7 +5,6 @@ import xogadores.*;
 
 public abstract class Propiedade extends Casilla {
 
-    //private int posicion;
     private float valor;
     private HashMap<String, Integer> exentos;
     private Xogador dono;
