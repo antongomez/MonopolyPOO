@@ -2,8 +2,9 @@ package xogadores;
 
 import estrutura.*;
 import xogo.*;
-
+import Excepcions.*;
 import java.util.ArrayList;
+import errosExternos.*;
 
 public class Esfinxe extends Avatar {
 
@@ -67,7 +68,8 @@ public class Esfinxe extends Avatar {
     //Utiliza moverEnBasico
     @Override
     public void moverEnAvanzado(int sumaDados, Taboleiro taboleiro,
-            Xogador banca) {
+            Xogador banca) throws ErroInicializacion, CartosInsuficientes,
+            NonPodeEdificar {
 
         if (sumaDados > 4) {
             String texto = "O xogador " + getXogador().getNome() + " avanza "
@@ -132,8 +134,6 @@ public class Esfinxe extends Avatar {
             destino = taboleiro.getCasilla("Santa Cruz");
 
             this.setPosicion(destino);
-        } else {
-            //Excepcion
         }
     }
 
@@ -146,8 +146,6 @@ public class Esfinxe extends Avatar {
             destino = taboleiro.getCasilla("Verin");
 
             this.setPosicion(destino);
-        } else {
-            //Excepcion
         }
     }
 
@@ -178,13 +176,9 @@ public class Esfinxe extends Avatar {
                     }
                     if (destino != null) {
                         this.setPosicion(destino);
-                    } else {
-                        //Excepcion
                     }
                     break;
             }
-        } else {
-            //Excepcion
         }
     }
 
@@ -221,12 +215,11 @@ public class Esfinxe extends Avatar {
                     }
                     break;
             }
-        } else {
-            //Excepcion
         }
     }
 
-    private void desfacerCambios(Taboleiro taboleiro, Xogador banca) {
+    private void desfacerCambios(Taboleiro taboleiro, Xogador banca)
+            throws CartosInsuficientes, NonPodeEdificar {
         String[] partes;
         String accion;
         for (int i = 0; i < historial.size(); i++) {
@@ -326,7 +319,6 @@ public class Esfinxe extends Avatar {
         if (cantidade > 0) {
             this.getXogador().modificarFortuna(-cantidade);
         } else {
-            //Excepcion
             Xogo.consola.imprimir("O cobro debe ser positivo.\n");
         }
     }
@@ -336,7 +328,6 @@ public class Esfinxe extends Avatar {
             this.getXogador().modificarFortuna(-bote);
             ((Especial) taboleiro.getCasilla("Parking")).modificarBoteParking(bote);
         } else {
-            //Excepcion
             Xogo.consola.imprimir("O bote debe ser positivo.\n");
         }
     }
@@ -378,12 +369,13 @@ public class Esfinxe extends Avatar {
         if (cantidade > 0) {
             this.getXogador().modificarFortuna(cantidade);
         } else {
-            //Excepcion
             Xogo.consola.imprimir("O pago debe ser positivo.\n");
         }
     }
 
-    public void desfacerVenta(float cantidade, String nomeCasilla, String tipoEdificio, Taboleiro taboleiro) {
+    public void desfacerVenta(float cantidade, String nomeCasilla,
+            String tipoEdificio, Taboleiro taboleiro)
+            throws CartosInsuficientes, NonPodeEdificar {
         if ((nomeCasilla != null) && (cantidade > 0) && (taboleiro != null)) {
             desfacerCobro(cantidade);
             if (taboleiro.getCasilla(nomeCasilla) instanceof Solar) {
@@ -398,7 +390,7 @@ public class Esfinxe extends Avatar {
         }
     }
 
-    private char getLado(int posicion) {
+    private char getLado(int posicion) throws ErroInicializacion {
         char lado;
         if ((posicion >= 0) && (posicion <= 9)) {
             lado = 's';
@@ -409,9 +401,8 @@ public class Esfinxe extends Avatar {
         } else if ((posicion >= 30) && (posicion <= 39)) {
             lado = 'e';
         } else {
-            //Excepcion
-            //Polo de agora
-            lado = 'f';
+            throw new ErroInicializacion("Hai casillas que teñen mal introducida"
+                    + " a súa posición.");
         }
 
         return lado;
@@ -420,9 +411,9 @@ public class Esfinxe extends Avatar {
     @Override
     public String toString() {
         String texto = super.toString();
-        
+
         texto += "\n\ttipo: esfinxe" + "\n}";
-        
+
         return texto;
     }
 }

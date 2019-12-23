@@ -121,12 +121,15 @@ public class Taboleiro {
     }
 
     //Getters e Setters
-    public ArrayList<ArrayList<Casilla>> getCasillas() {
-        return casillas;
-    }
+    public ArrayList<Casilla> getCasillas() {
+        ArrayList<Casilla> ArrayCasillas;
+        ArrayCasillas = new ArrayList<>();
+        for (int i = 0; i < 40; i++) {
+            ArrayCasillas.add(getCasilla(i));
+        }
 
-    public void setCasillas() {
-    } //Carece de sentido nesta implementación
+        return ArrayCasillas;
+    }
 
     public void imprimirTaboleiro() {
         String texto = "";

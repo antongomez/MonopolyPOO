@@ -2,10 +2,9 @@ package xogadores;
 
 import estrutura.*;
 import java.util.Random;
-import xogo.Xogo;
 import static xogo.Xogo.consola;
-
-import java.util.ArrayList;
+import Excepcions.*;
+import errosExternos.*;
 
 public abstract class Avatar {
 
@@ -39,7 +38,7 @@ public abstract class Avatar {
         if (xogador != null) {
             this.xogador = xogador;
         } else {
-            System.out.println("Erro en setXogador.");
+            consola.imprimir("Erro en setXogador.");
         }
     }
 
@@ -52,7 +51,7 @@ public abstract class Avatar {
             posicion.engadirAvatar(this);
             this.posicion = posicion;
         } else {
-            System.out.println("ERRO en setPosicion.\n");
+            consola.imprimir("ERRO en setPosicion.\n");
         }
     }
 
@@ -94,18 +93,17 @@ public abstract class Avatar {
 
                 this.xogador.modificarFortuna(Constantes.VALOR_VOLTA);
                 this.xogador.sumarVolta();
-                Xogo.consola.imprimir("O xogador " + xogador.getNome()
+                consola.imprimir("O xogador " + xogador.getNome()
                         + " pasou pola Saída. Cobra "
                         + Constantes.VALOR_VOLTA + " GM.\n");
             }
 
-        } else {
-            System.out.println("O xogador está preso, non pode avanzar.");
         }
     }
 
     public abstract void moverEnAvanzado(int sumaDados, Taboleiro taboleiro,
-            Xogador banca);
+            Xogador banca) throws ErroInicializacion, CartosInsuficientes,
+            NonPodeEdificar;
 
     public static char xerarId() {
         char identificador;

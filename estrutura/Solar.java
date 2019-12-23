@@ -1,7 +1,8 @@
 package estrutura;
 
 import xogadores.*;
-import xogo.*;
+import static xogo.Xogo.consola;
+import errosExternos.*;
 
 import java.util.ArrayList;
 
@@ -324,7 +325,7 @@ public class Solar extends Propiedade {
                 && (this.getGrupo().poderConstruirPista()));
     }
 
-    public void edificar(String tipo) {
+    public void edificar(String tipo) throws CartosInsuficientes, NonPodeEdificar {
         switch (tipo) {
             case "casa":
             case "casas":
@@ -339,10 +340,12 @@ public class Solar extends Propiedade {
                         //Cobramos
                         this.getDono().modificarFortuna(
                                 -this.getValor() * Constantes.CASA);
-                    } //Excepcion
+                    } else {
+                        throw new NonPodeEdificar(getDono().getNome(), "casas",
+                                getNome());
+                    }
                 } else {
-                    System.out.println("O dono deste solar non ten"
-                            + " suficientes GM.");
+                    throw new CartosInsuficientes(getDono().getNome());
                 }
             }
             break;
@@ -361,10 +364,12 @@ public class Solar extends Propiedade {
                         //Cobramos
                         this.getDono().modificarFortuna(
                                 -this.getValor() * Constantes.HOTEL);
-                    } //Excepcion
+                    } else {
+                        throw new NonPodeEdificar(getDono().getNome(), "hoteis",
+                                getNome());
+                    }
                 } else {
-                    System.out.println("O dono deste solar non ten"
-                            + " suficientes GM.");
+                    throw new CartosInsuficientes(getDono().getNome());
                 }
             }
             break;
@@ -380,10 +385,12 @@ public class Solar extends Propiedade {
                         //Cobramos
                         this.getDono().modificarFortuna(
                                 -this.getValor() * Constantes.PISCINA);
+                    } else {
+                        throw new NonPodeEdificar(getDono().getNome(), "piscinas",
+                                getNome());
                     }
                 } else {
-                    System.out.println("O dono deste solar non ten"
-                            + " suficientes GM.");
+                    throw new CartosInsuficientes(getDono().getNome());
                 }
             }
             break;
@@ -399,16 +406,18 @@ public class Solar extends Propiedade {
                         //Cobramos
                         this.getDono().modificarFortuna(
                                 -this.getValor() * Constantes.PISTA);
+                    } else {
+                        throw new NonPodeEdificar(getDono().getNome(), "pistas",
+                                getNome());
                     }
                 } else {
-                    System.out.println("O dono deste solar non ten"
-                            + " suficientes GM.");
+                    throw new CartosInsuficientes(getDono().getNome());
                 }
             }
             break;
             default:
                 //Excepcion
-                System.out.println("Debe introducir un tipo edificio valido.");
+                consola.imprimir("Debe introducir un tipo edificio valido.");
                 break;
         }
     }

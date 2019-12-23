@@ -1,5 +1,9 @@
 package xogo;
 
+import errosExternos.NonPropiedade;
+import errosInternos.*;
+import errosExternos.*;
+import errosExternos.errosExistencia.*;
 import Excepcions.*;
 import carta.*;
 import estrutura.*;
@@ -137,45 +141,53 @@ public class Xogo implements Comando {
 
             Xogador xogador = xogadores.get(turno);
             Avatar avatar = xogador.getAvatar();
-            String comando0, comando1, comando2, comando3;
-
-            if (poderLanzar()) {
-                switch (xogador.getEstadoPreso()) {
-                    case 4:
-                    case 3:
-                        consola.imprimir("O xogador " + xogador.getNome()
-                                + " está preso. Quédanlle "
-                                + (xogador.getEstadoPreso() - 1)
-                                + " turnos no Cárcere.\nTes dúas opcións: \n"
-                                + "\t- Pagar 60 GM e sair do carcere (sair carcere)"
-                                + "\n\t- Tentar sacar dobres (lanzar dados)\n");
-                        break;
-                    case 2:
-                        consola.imprimir("O xogador " + xogador.getNome()
-                                + " está preso. Este é o último turno"
-                                + " no Cárcere.\nTes dúas opcións: \n"
-                                + "\t- Pagar 60 GM e sair do carcere (sair carcere)"
-                                + "\n\t- Tentar sacar dobres (lanzar dados)\n");
-                        break;
-                    case 1:
-                        if (xogador.getFortuna() > Constantes.SAIR_CARCERE) {
-                            xogador.modificarFortuna(-Constantes.SAIR_CARCERE);
-                            xogador.setEstadoPreso(0);
+            String comando0, comando1, comando2, comando3, comando4;
+            try {
+                if (poderLanzar()) {
+                    switch (xogador.getEstadoPreso()) {
+                        case 4:
+                        case 3:
                             consola.imprimir("O xogador " + xogador.getNome()
-                                    + " pagou " + Constantes.SAIR_CARCERE + " "
-                                    + "GM para saír do Cárcere. Podes lanzar os"
-                                    + " dados.\n");
-                        } else {
-                            consola.imprimir("A hipotecar");
-                        }
-                        break;
+                                    + " está preso. Quédanlle "
+                                    + (xogador.getEstadoPreso() - 1)
+                                    + " turnos no Cárcere.\nTes dúas opcións: \n"
+                                    + "\t- Pagar 60 GM e sair do carcere (sair carcere)"
+                                    + "\n\t- Tentar sacar dobres (lanzar dados)\n");
+                            break;
+                        case 2:
+                            consola.imprimir("O xogador " + xogador.getNome()
+                                    + " está preso. Este é o último turno"
+                                    + " no Cárcere.\nTes dúas opcións: \n"
+                                    + "\t- Pagar 60 GM e sair do carcere (sair carcere)"
+                                    + "\n\t- Tentar sacar dobres (lanzar dados)\n");
+                            break;
+                        case 1:
+                            if (xogador.getFortuna() > Constantes.SAIR_CARCERE) {
+                                xogador.modificarFortuna(-Constantes.SAIR_CARCERE);
+                                xogador.setEstadoPreso(0);
+                                consola.imprimir("O xogador " + xogador.getNome()
+                                        + " pagou " + Constantes.SAIR_CARCERE + " "
+                                        + "GM para saír do Cárcere. Podes lanzar os"
+                                        + " dados.\n");
+                            } else {
+                                consola.imprimir("A hipotecar");
+                            }
+                            break;
+                    }
                 }
+            } catch (VariableNull ex) {
+                consola.imprimir("Fin da partida.");
+                sair = true;
             }
 
             if (!tratos.get(xogador.getNome()).isEmpty()) {
-                consola.imprimir("\nTratos pendentes: ");
-                imprimirTratos(xogador);
-                consola.imprimir("\n");
+                try {
+                    consola.imprimir("\nTratos pendentes: ");
+                    imprimirTratos(xogador);
+                    consola.imprimir("\n");
+                } catch (NonHaiTratos ex) {
+                    consola.imprimir(ex.toString());
+                }
             }
 
             //Turno do xogador
@@ -202,10 +214,19 @@ public class Xogo implements Comando {
             } else {
                 comando3 = "";
             }
+            if (partes.length > 4) {
+                comando4 = partes[4];
+            } else {
+                comando4 = "";
+            }
 
             switch (comando0) {
                 case "aceptar":
-                    aceptarTrato(comando1);
+                    try {
+                        aceptarTrato(comando1);
+                    } catch (MonoExcep ex) {
+                        consola.imprimir(ex.toString());
+                    }
                     break;
                 case "cambiar":
                     if (comando1.equals("modo")) {
@@ -213,42 +234,60 @@ public class Xogo implements Comando {
                     }
                     break;
                 case "comprar":
-                    if (!poderLanzar()) {
-                        if (avatar.getPosicion() instanceof Propiedade) {
-                            try {
-                                comprar((Propiedade) avatar.getPosicion(), xogador);
-                            } catch (ComprarErr comprar1) {
-                                System.out.println(comprar1);
+                    try {
+                        if (!poderLanzar()) {
+                            if (avatar.getPosicion() instanceof Propiedade) {
+                                try {
+                                    comprar((Propiedade) avatar.getPosicion(), xogador);
+                                } catch (MonoExcep ex) {
+                                    consola.imprimir(ex.toString());
+                                    if (ex instanceof CartosInsuficientes) {
+                                        consola.imprimir("Debes conseguir "
+                                                + (((Propiedade) avatar.getPosicion())
+                                                        .getValor() - xogador.getFortuna())
+                                                + " GM para poder comprar"
+                                                + "esta propiedade.");
+                                    }
+                                }
+                            } else {
+                                consola.imprimir("Só se poden comprar propiedades");
                             }
                         } else {
-                            consola.imprimir("Só se poden comprar propiedades");
+                            consola.imprimir("Debes lanzar os dados antes.");
                         }
-                    } else {
-                        //Excepcion
+                    } catch (VariableNull ex) {
+                        consola.imprimir("Fin da partida");
+                        sair = true;
                     }
                     break;
                 case "describir":
-                    if (partes.length > 3) {
-                        describir(comando1, comando2 + " " + comando3);
+                    try {
+                        if (partes.length > 3) {
+                            describir(comando1, comando2 + " " + comando3);
+                        }
+                        describir(comando1, comando2);
+                    } catch (MonoExcep ex) {
+                        consola.imprimir(ex.toString());
                     }
-                    describir(comando1, comando2);
                     break;
 
                 case "deshipotecar":
-                    if (existeCasilla(comando1)) {
-                        try {
+                    try {
+
+                        if (existeCasilla(comando1)) {
                             deshipotecar(comando1, xogador, hipotecar);
-                        } catch (DeshipoPropNON deshipo1) {
-                            System.out.println(deshipo1.getMessage());
-                        }
-                    } else if (existeCasilla(comando1 + " " + comando2)) {
-                        try {
+
+                        } else if (existeCasilla(comando1 + " " + comando2)) {
                             deshipotecar(comando1 + " " + comando2, xogador, hipotecar);
-                        } catch (DeshipoPropNON deshipo1) {
-                            System.out.println(deshipo1.getMessage());
+                        } else {
+                            consola.imprimir("Erro de sintaxe: "
+                                    + "deshipotecar <nomePropiedade>");
                         }
-                    } else {
-                        //Excepcion
+                    } catch (CartosInsuficientes ex) {
+                        consola.imprimir("Non tes cartos suficientes para "
+                                + "deshipotecar a propiedade");
+                    } catch (ErroExterno ex) {
+                        consola.imprimir(ex.toString());
                     }
                     break;
 
@@ -261,15 +300,23 @@ public class Xogo implements Comando {
                         case "pistas":
                             try {
                                 edificar(avatar, comando1, 1);
-                            } catch (EdificarErr edif1) {
-                                System.out.println(edif1.getMessage());
+                            } catch (ErroInterno ex) {
+                                consola.imprimir(ex.toString());
+                                consola.imprimir("Fin da partida.");
+                                sair = true;
+                            } catch (ErroExterno ex) {
+                                consola.imprimir(ex.toString());
                             }
                             break;
                         case "casas":
                             try {
                                 edificar(avatar, comando1, Integer.parseInt(comando2));
-                            } catch (EdificarErr edif2) {
-                                System.out.println(edif2.getMessage());
+                            } catch (ErroInterno ex) {
+                                consola.imprimir(ex.toString());
+                                consola.imprimir("Fin da partida.");
+                                sair = true;
+                            } catch (ErroExterno ex) {
+                                consola.imprimir(ex.toString());
                             }
                             break;
                     }
@@ -277,85 +324,110 @@ public class Xogo implements Comando {
                     break;
 
                 case "eliminar":
-                    eliminarTrato(comando1);
+                    try {
+                        eliminarTrato(comando1);
+                    } catch (NonExiste ex) {
+                        consola.imprimir(ex.toString());
+                    }
                     break;
 
                 case "hipotecar":
-                    if (existeCasilla(comando1)) {
-                        try {
+                    try {
+                        if (existeCasilla(comando1)) {
                             hipotecar(comando1, xogador, hipotecar);
-                        } catch (HipoPropNOn hipoprop1) {
-                            System.out.println(hipoprop1.getMessage());
-                        }
-                    } else if (existeCasilla(comando1 + " " + comando2)) {
-                        try {
+
+                        } else if (existeCasilla(comando1 + " " + comando2)) {
                             hipotecar(comando1 + " " + comando2, xogador, hipotecar);
-                        } catch (HipoPropNOn hipoprop2) {
-                            System.out.println(hipoprop2.getMessage());
+
+                        } else {
+                            consola.imprimir("Erro de sintaxe: "
+                                    + "hipotecar <nomePropiedade>");
                         }
-                    } else {
-                        //Excepcion
+                    } catch (ErroExterno ex) {
+                        consola.imprimir(ex.toString());
                     }
                     break;
                 case "lanzar":
                     if (comando1.equals("dados")) {
-                        if (poderLanzar()) {
-                            lanzarDados();
+                        try {
+                            if (poderLanzar()) {
 
-                            if (xogador.getEstadoPreso() == 0) {
+                                lanzarDados();
 
-                                if ((sonDobres(getDadosLanzados())) && (getTirada() == 3)) {
+                                if (xogador.getEstadoPreso() == 0) {
 
-                                    consola.imprimir("Tirar dobres por terceira vez consecutiva.\n");
-                                    moverAoCarcere(avatar);
-                                    consola.imprimir("O avatar " + avatar.getId() + " foi enviado "
-                                            + "ao Cárcere.\n");
+                                    if ((sonDobres(getDadosLanzados())) && (getTirada() == 3)) {
 
-                                } else if (!sonDobres(getDadosLanzados())) {
+                                        consola.imprimir("Tirar dobres por"
+                                                + " terceira vez consecutiva.\n");
+                                        moverAoCarcere(avatar);
+                                        consola.imprimir("O avatar "
+                                                + avatar.getId() + " foi enviado "
+                                                + "ao Cárcere.\n");
 
-                                    avanzar(avatar);
-                                    if ((avatar instanceof Esfinxe) || (avatar instanceof Chapeu)) {
-                                        if (!(avatar.getModoAvanzado() && (sumarDados(getDadosLanzados()) < 4))) {
-                                            comprobarCasilla(avatar.getPosicion(), xogador);
+                                    } else if (!sonDobres(getDadosLanzados())) {
+
+                                        avanzar(avatar);
+                                        if ((avatar instanceof Esfinxe) || (avatar instanceof Chapeu)) {
+                                            if (!(avatar.getModoAvanzado() && (sumarDados(getDadosLanzados()) < 4))) {
+                                                comprobarCasilla(avatar.getPosicion(), xogador);
+                                            }
                                         }
                                     }
-                                }
-                                if (sonDobres(getDadosLanzados())) {
+                                    if (sonDobres(getDadosLanzados())) {
 
-                                    consola.imprimir("Conseguiches tirar dobres. "
-                                            + "Debes volver lanzar.\n");
+                                        consola.imprimir("Conseguiches tirar dobres. "
+                                                + "Debes volver lanzar.\n");
 
-                                    avanzar(avatar);
-                                    comprobarCasilla(avatar.getPosicion(), xogador);
+                                        avanzar(avatar);
+                                        comprobarCasilla(avatar.getPosicion(), xogador);
+                                    }
+
+                                } else {
+
+                                    if (!sonDobres(getDadosLanzados())) {
+                                        xogador.restarEstadoPreso();
+                                        consola.imprimir("Non coneguiches lanzar dobres. Quédanche "
+                                                + (xogador.getEstadoPreso() - 1)
+                                                + " turnos no Cárcere.\n");
+
+                                    } else {
+                                        consola.imprimir("Tiraches dobres, polo que saes do Cárcere.");
+                                        xogador.setEstadoPreso(0);
+
+                                        avanzar(avatar);
+                                        comprobarCasilla(avatar.getPosicion(), xogador);
+                                    }
                                 }
 
                             } else {
-
-                                if (!sonDobres(getDadosLanzados())) {
-                                    xogador.restarEstadoPreso();
-                                    consola.imprimir("Non coneguiches lanzar dobres. Quédanche "
-                                            + (xogador.getEstadoPreso() - 1)
-                                            + " turnos no Cárcere.\n");
-
-                                } else {
-                                    consola.imprimir("Tiraches dobres, polo que saes do Cárcere.");
-                                    xogador.setEstadoPreso(0);
-
-                                    avanzar(avatar);
-                                    comprobarCasilla(avatar.getPosicion(), xogador);
-                                }
+                                consola.imprimir("Non podes lanzar.\n");
                             }
-                        } else {
-                            consola.imprimir("Non podes lanzar.\n");
-                            //Excepcion
+                        } catch (VariableNull ex) {
+                            consola.imprimir("Fin da partida.");
+                            sair = true;
+                        } catch (CartosInsuficientes ex) {
+                            consola.imprimir(ex.toString());
+                            consola.imprimir("Debes hipotecar algunha "
+                                    + "propiedade ou vender algunha casa");
+                            consola.imprimir("Implementar Bancarrota.");
+                        } catch (NonLanzou | NonPodeLanzar ex) {
+                            consola.imprimir("Resetéase o turno."
+                                    + " Volves empezar o turno");
+                            resetDados();
+                        } catch (ErroInicializacion ex) {
+                            consola.imprimir("Rematouse a partida.");
+                            sair = true;
+                        } catch (XogadorNonPreso ex) {
+                            consola.imprimir(ex.toString());
                         }
                     }
                     break;
                 case "listar":
                     try {
                         listar(comando1, comando2);
-                    } catch (ListarErr listar1) {
-                        System.out.println(listar1);
+                    } catch (ErroExterno ex) {
+                        consola.imprimir(ex.toString());
                     }
                     break;
                 case "rematar":
@@ -364,14 +436,26 @@ public class Xogo implements Comando {
                             sair = rematarPartida();
                             break;
                         case "turno":
-                            rematarTurno();
+                            try {
+                                rematarTurno();
+                            } catch (VariableNull ex) {
+                                consola.imprimir("Fin da partida");
+                                sair = true;
+                            }
                             break;
                     }
                     break;
 
                 case "sair":
                     if (comando1.equals("carcere")) {
-                        sairCarcere();
+                        try {
+                            sairCarcere();
+                        } catch (XogadorNonPreso ex) {
+                            consola.imprimir(ex.toString());
+                        } catch (VariableNull ex) {
+                            consola.imprimir("Fin da partida");
+                            sair = true;
+                        }
                     }
                     break;
 
@@ -382,20 +466,30 @@ public class Xogo implements Comando {
                         if (comando2.equals("cambiar")) {
                             try {
                                 proponherTrato(partes);
-                            } catch (MonoExcep ex) {
-                                consola.imprimir(ex.getMessage());
+                            } catch (ErroExterno ex) {
+                                consola.imprimir(ex.toString());
+                            } catch (VariableNull ex) {
+                                consola.imprimir("Fin da partida");
+                                sair = true;
                             }
                         } else {
                             consola.imprimir("comando incorrecto. Falta cambiar.");
                         }
                     } else {
-                        //Excepcion
+                        consola.imprimir("O xogador " + comando1.replace(":", "")
+                                + " non existe.");
                     }
                     break;
 
                 case "vender":
-                    if (existeCasilla(comando2)) {
-                        vender(comando1, comando2, comando3);
+                    try {
+                        if (existeCasilla(comando2)) {
+                            vender(comando1, comando2, comando3);
+                        } else if (existeCasilla(comando2 + " " + comando3)) {
+                            vender(comando1, comando2 + " " + comando3, comando4);
+                        }
+                    } catch (PropiedadesNonEdificios ex) {
+                        consola.imprimir(ex.toString());
                     }
                     break;
 
@@ -434,8 +528,15 @@ public class Xogo implements Comando {
                             ((Esfinxe) avatar).resetHistorial();
                         }
                         avatar.getPosicion().sumarFrecuenciaVisita(turno);
-
-                        comprobarCasilla(avatar.getPosicion(), xogador);
+                        try {
+                            comprobarCasilla(avatar.getPosicion(), xogador);
+                        } catch (CartosInsuficientes ex) {
+                            consola.imprimir(ex.toString());
+                            consola.imprimir("Debes hipotecar para poder pagar.");
+                        } catch (VariableNull ex) {
+                            consola.imprimir("Fin da partida");
+                            sair = true;
+                        }
                     }
                     break;
                 case "historial":
@@ -445,7 +546,7 @@ public class Xogo implements Comando {
                         }
                     }
                     break;
-                default: //Excepcion
+                default:
                     consola.imprimir("Comando incorrecto.\n");
                     break;
 
@@ -453,6 +554,8 @@ public class Xogo implements Comando {
         }
     }
 
+    /*Función que se usa para comprobar que os dados funcionan. Imprime todas
+    * as tiradas do xogador actual no turno actual*/
     private void imprimirDados() {
         consola.imprimir("Dados: \n");
         for (int i = 1; i <= 3; i++) {
@@ -462,22 +565,12 @@ public class Xogo implements Comando {
         consola.imprimir("\n");
     }
 
-    private void imprimirTratos(Xogador xogador) {
-        if (!tratos.isEmpty()) {
-            if (!tratos.get(xogador.getNome()).isEmpty()) {
-                for (Trato trato : tratos.get(xogador.getNome())) {
-                    consola.imprimir(trato.toString());
-                }
-            }
-        }
-    }
-
     //Getters e Setters
     public ArrayList<Xogador> getXogadores() {
         return xogadores;
     }
 
-    public Xogador getXogador(String nome) {
+    public Xogador getXogador(String nome) throws VariableNull {
         if (nome != null) {
             for (Xogador xogador : xogadores) {
                 if (xogador.getNome().equals(nome)) {
@@ -485,10 +578,8 @@ public class Xogo implements Comando {
                 }
 
             }
-        } else {
-            //Excepcion
         }
-        return xogadores.get(0);
+        throw new VariableNull();
     }
 
     public void setXogadores(ArrayList<Xogador> xogadores) {
@@ -503,6 +594,17 @@ public class Xogo implements Comando {
         this.avatares = avatares;
     }
 
+    public Grupo getGrupo(String grupo) throws GrupoNonExiste {
+        for (Casilla casilla : taboleiro.getCasillas()) {
+            if (casilla instanceof Propiedade) {
+                if (((Propiedade) casilla).getGrupo().getNome().equals(grupo)) {
+                    return ((Propiedade) casilla).getGrupo();
+                }
+            }
+        }
+        throw new GrupoNonExiste(grupo);
+    }
+
     public Taboleiro getTaboleiro() {
         return taboleiro;
     }
@@ -511,48 +613,45 @@ public class Xogo implements Comando {
         this.taboleiro = taboleiro;
     }
 
-    public HashMap<String, Dado> getDadosLanzables() {
+    /*Función que devolve a parella de dados que se poden lanzar.*/
+    public HashMap<String, Dado> getDadosLanzables()
+            throws NonPodeLanzar, VariableNull {
+
         if (!dadosLanzados(tiradas.get(1))) {
             return tiradas.get(1);
         } else if ((!dadosLanzados(tiradas.get(2))) && (sonDobres(tiradas.get(1)))) {
             return tiradas.get(2);
         } else if ((!dadosLanzados(tiradas.get(3))) && (sonDobres(tiradas.get(2)))) {
             return tiradas.get(3);
-        } else {
-            //Excepcion
         }
-        System.out.println("Non se deberia chegar aqui. Faltan as excepcions");
-        return tiradas.get(3);
+        throw new NonPodeLanzar();
     }
 
-    private HashMap<String, Dado> getDadosLanzados() {
+    /*Función que devolve a parella de dados que se lanzou por última vez.*/
+    private HashMap<String, Dado> getDadosLanzados() throws NonLanzou {
         if (dadosLanzados(tiradas.get(3))) {
             return tiradas.get(3);
         } else if (dadosLanzados(tiradas.get(2))) {
             return tiradas.get(2);
         } else if (dadosLanzados(tiradas.get(1))) {
             return tiradas.get(1);
-        } else {
-            //Excepcion
         }
-        System.out.println("Non se deberia chegar aqui. Faltan as excepcions");
-        return tiradas.get(1);
+        throw new NonLanzou();
     }
 
-    private int getTirada() {
+    /*Función que devolve o número da última tirada.*/
+    private int getTirada() throws NonLanzou {
         if (dadosLanzados(tiradas.get(3))) {
             return 3;
         } else if (dadosLanzados(tiradas.get(2))) {
             return 2;
         } else if (dadosLanzados(tiradas.get(1))) {
             return 1;
-        } else {
-            //Excepcion
         }
-        System.out.println("Non se deberia chegar aqui. Faltan as excepcions");
-        return 0;
+        throw new NonLanzou();
     }
 
+    /*Función que resetea os dados para que outro xogador poida lanzar.*/
     private void resetDados() {
         for (int i = 1; i <= 3; i++) {
             tiradas.get(i).get("d1").resetDado();
@@ -576,46 +675,65 @@ public class Xogo implements Comando {
         this.banca = banca;
     }
 
-    public int getTurnoAvatar(Avatar avatar) {
+    public int getTurnoAvatar(Avatar avatar) throws ErroInterno {
         if (avatar != null) {
             for (int i = 0; i < avatares.size(); i++) {
                 if (avatar.equals(avatares.get(i))) {
                     return i;
                 }
             }
-        } else {
-            //Excepcion
         }
-        return 0;
+        throw new ErroInterno("O avatar do que se quere obter o turno non"
+                + " existe.");
     }
 
     //Métodos auxiliares para a funcionalidade
     @Override
-    public final void aceptarTrato(String nomeTrato) {
+    public final void aceptarTrato(String nomeTrato)
+            throws TratoNonExiste, TratoNonPropostoA, VariableNull, TratoNonAceptado {
+
         if (nomeTrato != null) {
-            if (existeTrato(xogadores.get(turno), nomeTrato)) {
+            if (existeTratoXogador(xogadores.get(turno), nomeTrato)) {
+
                 getTrato(xogadores.get(turno), nomeTrato).aceptarTrato();
                 tratos.get(xogadores.get(turno).getNome()).remove(getTrato(xogadores.get(turno), nomeTrato));
                 consola.imprimir("Trato aceptado.");
-            } else {
-                consola.imprimir("O trato " + nomeTrato + " non lle foi"
-                        + " proposto ao xogador " + xogadores.get(turno).getNome());
+
             }
+            throw new TratoNonPropostoA(nomeTrato, xogadores.get(turno).getNome());
+
         }
+        throw new TratoNonExiste(nomeTrato);
+
     }
 
-    private void avanzar(Avatar avatar) {
-        if (!avatar.getModoAvanzado()) {
-            avatar.moverEnBasico(sumarDados(getDadosLanzados()), taboleiro);
+    private void avanzar(Avatar avatar) throws VariableNull, ErroInicializacion {
+        try {
+            if (!avatar.getModoAvanzado()) {
+
+                avatar.moverEnBasico(sumarDados(getDadosLanzados()), taboleiro);
+                avatar.getPosicion().sumarFrecuenciaVisita(turno);
+            } else {
+
+                avatar.moverEnAvanzado(sumarDados(getDadosLanzados()), taboleiro, banca);
+            }
             avatar.getPosicion().sumarFrecuenciaVisita(turno);
-        } else {
-            avatar.moverEnAvanzado(sumarDados(getDadosLanzados()), taboleiro, banca);
-            avatar.getPosicion().sumarFrecuenciaVisita(turno);
-        }
-        if (avatar instanceof Esfinxe) {
-            ((Esfinxe) avatar).resetHistorial();
-        } else if (avatar instanceof Chapeu) {
-            ((Chapeu) avatar).resetHistorial();
+
+            if (avatar instanceof Esfinxe) {
+                ((Esfinxe) avatar).resetHistorial();
+            } else if (avatar instanceof Chapeu) {
+                ((Chapeu) avatar).resetHistorial();
+            }
+
+        } catch (NonLanzou nonlanzou) {
+            consola.imprimir(nonlanzou.toString());
+            //Solución provisional
+            resetDados();
+            consola.imprimir("Reseteouse o turno. Volves empezar o turno.");
+        } catch (CartosInsuficientes ex) {
+            consola.imprimir("Implemenetar bancaRota");
+        } catch (NonPodeEdificar ex) {
+            consola.imprimir("Erro na orde de inserción do historial");
         }
     }
 
@@ -631,15 +749,17 @@ public class Xogo implements Comando {
                 consola.imprimir("A partir de agora o avatar " + avatar.getId()
                         + " moverase en modo básico.\n");
             }
-        } else {
-            //Excepcion
         }
     }
 
     @Override
-    public final void comprar(Propiedade propiedade, Xogador xogador) throws ComprarErr {
+    public final void comprar(Propiedade propiedade, Xogador xogador)
+            throws PropNonComprable, CartosInsuficientes {
+
         if (propiedadeComprable(propiedade)) {
-            if (xogador.getFortuna() > propiedade.getValor()) {
+
+            if (xogadorPodePagar(xogador, propiedade.getValor())) {
+
                 propiedade.comprar(xogador);
                 consola.imprimir("O xogador " + xogador.getNome() + " compra a "
                         + "casilla " + propiedade.getNome() + " por "
@@ -662,14 +782,17 @@ public class Xogo implements Comando {
                     }
                 }
             } else {
-                throw new ComprarErr("Non ten fortuna suficiente.");
+                throw new CartosInsuficientes(propiedade.getNome());
             }
+
         } else {
-            throw new ComprarErr("Só se poden comprar as propiedades.");
+            throw new PropNonComprable(propiedade.getNome(), "comprar");
         }
     }
 
-    private void comprobarCasilla(Casilla casilla, Xogador xogador) {
+    private void comprobarCasilla(Casilla casilla, Xogador xogador)
+            throws CartosInsuficientes, VariableNull {
+
         if ((casilla != null) && (xogador != null)) {
             Avatar avatar = xogador.getAvatar();
 
@@ -736,31 +859,40 @@ public class Xogo implements Comando {
             } else if (casilla instanceof Imposto) {
                 switch (casilla.getNome()) {
                     case "IRPF":
-                        xogador.modificarFortuna(-Constantes.IMPOSTO1);
-                        consola.imprimir(" O xogador " + xogador.getNome()
-                                + " paga " + Constantes.IMPOSTO1 + " GM"
-                                + " á banca.\n");
-                        if (avatar instanceof Esfinxe) {
-                            ((Esfinxe) avatar).sumarHistorial("pago/"
-                                    + Constantes.IMPOSTO1);
-                        } else if (xogador.getAvatar() instanceof Chapeu) {
-                            ((Chapeu) avatar).sumarHistorial("pago/"
-                                    + Constantes.IMPOSTO1);
+                        if (xogadorPodePagar(xogador, Constantes.IMPOSTO1)) {
+                            xogador.modificarFortuna(-Constantes.IMPOSTO1);
+                            consola.imprimir(" O xogador " + xogador.getNome()
+                                    + " paga " + Constantes.IMPOSTO1 + " GM"
+                                    + " á banca.\n");
+                            if (avatar instanceof Esfinxe) {
+                                ((Esfinxe) avatar).sumarHistorial("pago/"
+                                        + Constantes.IMPOSTO1);
+                            } else if (xogador.getAvatar() instanceof Chapeu) {
+                                ((Chapeu) avatar).sumarHistorial("pago/"
+                                        + Constantes.IMPOSTO1);
+                            }
+                        } else {
+                            throw new CartosInsuficientes(xogador.getNome());
                         }
+
                         break;
 
                     case "Subida Pension":
-                        xogador.modificarFortuna(-Constantes.IMPOSTO2);
-                        consola.imprimir(" O xogador " + xogador.getNome()
-                                + " paga " + Constantes.IMPOSTO2 + " GM"
-                                + " á banca.\n");
+                        if (xogadorPodePagar(xogador, Constantes.IMPOSTO2)) {
+                            xogador.modificarFortuna(-Constantes.IMPOSTO2);
+                            consola.imprimir(" O xogador " + xogador.getNome()
+                                    + " paga " + Constantes.IMPOSTO2 + " GM"
+                                    + " á banca.\n");
 
-                        if (avatar instanceof Esfinxe) {
-                            ((Esfinxe) avatar).sumarHistorial("pago/"
-                                    + Constantes.IMPOSTO2);
-                        } else if (xogador.getAvatar() instanceof Chapeu) {
-                            ((Chapeu) avatar).sumarHistorial("pago/"
-                                    + Constantes.IMPOSTO2);
+                            if (avatar instanceof Esfinxe) {
+                                ((Esfinxe) avatar).sumarHistorial("pago/"
+                                        + Constantes.IMPOSTO2);
+                            } else if (xogador.getAvatar() instanceof Chapeu) {
+                                ((Chapeu) avatar).sumarHistorial("pago/"
+                                        + Constantes.IMPOSTO2);
+                            }
+                        } else {
+                            throw new CartosInsuficientes(xogador.getNome());
                         }
                         break;
                 }
@@ -777,7 +909,7 @@ public class Xogo implements Comando {
                 } else {
                     if (!solar.getDono().equals(xogador)) {
                         float alquiler = solar.calculoAlquiler();
-                        if (xogador.getFortuna() > alquiler) {
+                        if (xogadorPodePagar(xogador, alquiler)) {
                             xogador.modificarFortuna(-alquiler);
                             solar.getDono().modificarFortuna(alquiler);
                             consola.imprimir("O xogador " + xogador.getNome()
@@ -796,8 +928,7 @@ public class Xogo implements Comando {
                                         + "/" + solar.getNome());
                             }
                         } else {
-                            consola.imprimir("Implementar bancarrota co numero"
-                                    + " da xogadores.");
+                            throw new CartosInsuficientes(xogador.getNome());
                         }
                     } else {
                         if (solar.frecuenciaVisita(turno) == 2) {
@@ -817,7 +948,7 @@ public class Xogo implements Comando {
                 } else {
                     if (!transporte.getDono().equals(xogador)) {
                         float alquiler = transporte.calculoAlquiler();
-                        if (xogador.getFortuna() > alquiler) {
+                        if (xogadorPodePagar(xogador, alquiler)) {
                             xogador.modificarFortuna(-alquiler);
                             transporte.getDono().modificarFortuna(alquiler);
                             consola.imprimir("O xogador " + xogador.getNome()
@@ -835,14 +966,7 @@ public class Xogo implements Comando {
                                         + "/" + transporte.getNome());
                             }
                         } else {
-                            consola.imprimir("Implementar bancarrota co numero da xogadores.");
-                        }
-                    } else {
-                        if (transporte.frecuenciaVisita(turno) == 2) {
-                            consola.imprimir("O xogador " + xogador.getNome()
-                                    + " caeu dúas veces na casilla de transporte "
-                                    + transporte.getNome() + ". A partir de agora "
-                                    + "pode edificar.");
+                            throw new CartosInsuficientes(xogador.getNome());
                         }
                     }
                 }
@@ -854,8 +978,16 @@ public class Xogo implements Comando {
                             + " comprar.\n");
                 } else {
                     if (!servizo.getDono().equals(xogador)) {
-                        float alquiler = servizo.calculoAlquiler() * sumarDados(getDadosLanzados());
-                        if (xogador.getFortuna() > alquiler) {
+                        float alquiler;
+                        try {
+                            alquiler = servizo.calculoAlquiler() * sumarDados(getDadosLanzados());
+                        } catch (NonLanzou ex) {
+                            int sumDados = Integer.parseInt(consola.ler("Intro"
+                                    + "duce o valor da suma dos dados da última"
+                                    + " tirada."));
+                            alquiler = servizo.calculoAlquiler() * sumDados;
+                        }
+                        if (xogadorPodePagar(xogador, alquiler)) {
                             xogador.modificarFortuna(-alquiler);
                             servizo.getDono().modificarFortuna(alquiler);
                             consola.imprimir("O xogador " + xogador.getNome()
@@ -873,21 +1005,13 @@ public class Xogo implements Comando {
                                         + "/" + servizo.getNome());
                             }
                         } else {
-                            consola.imprimir("Implementar bancarrota co número da xogadores.");
-                        }
-                    } else {
-                        if (servizo.frecuenciaVisita(turno) == 2) {
-                            consola.imprimir("O xogador " + xogador.getNome()
-                                    + " caeu dúas veces na casilla de transporte "
-                                    + servizo.getNome() + ". A partir de agora "
-                                    + "pode edificar.");
+                            throw new CartosInsuficientes(xogador.getNome());
                         }
                     }
                 }
             }
-        } else {
-            //Excepcion
         }
+
     }
 
     public boolean dadosLanzados(HashMap<String, Dado> dados) {
@@ -898,7 +1022,7 @@ public class Xogo implements Comando {
     }
 
     @Override
-    public final void describir(String tipo, String nome) {
+    public final void describir(String tipo, String nome) throws ErroSintaxe, NonExiste {
         switch (tipo) {
             case "xogador":
                 describirXogador(nome);
@@ -914,13 +1038,14 @@ public class Xogo implements Comando {
                 describirCasilla(tipo);
                 break;
             default:
-                //Excepcion
-                break;
+                throw new ErroSintaxe("Comando describir incorrecto.\n"
+                        + "\tSintaxe correcta: describir <xogador/avatar/casilla>"
+                        + " <nome>");
 
         }
     }
 
-    private void describirAvatar(char idAvatar) {
+    private void describirAvatar(char idAvatar) throws AvatarNonExiste {
         if (existeAvatar(idAvatar)) {
             for (int i = 0; i < avatares.size(); i++) {
                 if (avatares.get(i).getId() == idAvatar) {
@@ -928,20 +1053,20 @@ public class Xogo implements Comando {
                 }
             }
         } else {
-            //Excepcion
+            throw new AvatarNonExiste(idAvatar);
         }
 
     }
 
-    public void describirCasilla(String nomeCasilla) {
+    public void describirCasilla(String nomeCasilla) throws CasillaNonExiste {
         if (existeCasilla(nomeCasilla)) {
             consola.imprimir(taboleiro.getCasilla(nomeCasilla).imprimirCasilla());
         } else {
-            //Excepcion
+            throw new CasillaNonExiste(nomeCasilla);
         }
     }
 
-    private void describirXogador(String nomeXogador) {
+    private void describirXogador(String nomeXogador) throws XogadorNonExiste {
         if (existeXogador(nomeXogador)) {
             for (int i = 0; i < xogadores.size(); i++) {
                 if (xogadores.get(i).getNome().equals(nomeXogador)) {
@@ -949,33 +1074,29 @@ public class Xogo implements Comando {
                 }
             }
         } else {
-            //Excepcion
+            throw new XogadorNonExiste(nomeXogador);
         }
     }
 
     @Override
-    public void deshipotecar(String nom, Xogador xogador, Xogador hipo) throws DeshipoPropNON {
-        for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
-            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++) {
-                if (taboleiro.getCasillas().get(i).get(j).getNome().equals(nom)) {
-                    if (taboleiro.getCasillas().get(i).get(j) instanceof Propiedade) {
-                        Propiedade prop = (Propiedade) taboleiro.getCasillas().get(i).get(j);
-                        try {
-                            hipo.deshipotecar(xogador, prop);
-                        } catch (DesHipoNONdin deshiponondin) {
-                            System.out.println(deshiponondin.getMessage());
-                        }
-                    } else {
-                        throw new DeshipoPropNON("Esta casilla non é unha propiedade.");
-                    }
-                }
+    public final void deshipotecar(String nomeCasilla, Xogador xogador, Xogador hipo)
+            throws CartosInsuficientes, PropiedadeNonPertenceA,
+            PropiedadeNonHipotecada, PropNonComprable {
 
-            }
+        if (taboleiro.getCasilla(nomeCasilla) instanceof Propiedade) {
+            Propiedade prop = (Propiedade) taboleiro.getCasilla(nomeCasilla);
+            hipo.deshipotecar(xogador, prop);
+        } else {
+            throw new PropNonComprable(nomeCasilla, "hipotecar");
         }
+
     }
 
     @Override
-    public final void edificar(Avatar avatar, String tipoEdificacion, int nEdificios) throws EdificarErr {
+    public final void edificar(Avatar avatar, String tipoEdificacion, int nEdificios)
+            throws CasillaNonEdificable, ErroInterno,
+            NonPropiedade, CartosInsuficientes, NonPodeEdificar {
+
         if (avatar.getPosicion() instanceof Solar) {
             Solar solar = (Solar) avatar.getPosicion();
             Xogador xogador = avatar.getXogador();
@@ -1028,31 +1149,40 @@ public class Xogo implements Comando {
                         }
                     }
                 } else {
-                    throw new EdificarErr("Non reune os requisitos para construir enste solar.");
+                    throw new CasillaNonEdificable(avatar.getXogador().getNome(), solar.getNome());
                 }
             } else {
-                throw new EdificarErr("Non es o dono, non podes edificar.");
+                throw new NonPropiedade(solar.getNome());
             }
         } else {
-            throw new EdificarErr("So se pode edificar nas casillas de tipos olar.");
+            throw new CasillaNonEdificable(avatar.getPosicion().getNome());
         }
     }
 
     @Override
-    public final void eliminarTrato(String nomeTrato) {
-        for (int i = 0; i < xogadores.size(); i++) {
-            if (i != turno) {
-                for (int j = 0; j < tratos.get(xogadores.get(i).getNome()).size(); j++) {
-                    Trato trato = tratos.get(xogadores.get(i).getNome()).get(j);
-                    if (trato.getXogadorPropon().equals(xogadores.get(turno))) {
-                        if (trato.getNome().equals(nomeTrato)) {
-                            consola.imprimir(trato.getNome() + " eliminado.");
-                            tratos.get(xogadores.get(i).getNome()).remove(j);
-                        }
+    public final void eliminarTrato(String nomeTrato) throws TratoNonExiste {
+        try {
+            if (existeTrato(nomeTrato)) {
+                for (int i = 0; i < xogadores.size(); i++) {
+                    if (i != turno) {
+                        for (Trato trato : tratosXogador(xogadores.get(i))) {
+                            //Miramos que coincida o xogador que o propon e o nome do trato.
+                            if (trato.getXogadorPropon().equals(xogadores.get(turno))) {
+                                if (trato.getNome().equals(nomeTrato)) {
+                                    consola.imprimir(trato.getNome() + " eliminado.");
+                                    tratosXogador(xogadores.get(i)).remove(trato);
+                                }
 
+                            }
+                        }
                     }
                 }
+
+            } else {
+                throw new TratoNonExiste(nomeTrato);
             }
+        } catch (VariableNull ex) {
+            consola.imprimir("Para eliminar un trato débese introducir o nome.");
         }
     }
 
@@ -1071,7 +1201,26 @@ public class Xogo implements Comando {
         return taboleiro.getCasilla(nomeCasilla) != null;
     }
 
-    private boolean existeTrato(Xogador xogador, String nomeTrato) {
+    private boolean existeTrato(String nomeTrato) throws VariableNull {
+        if (nomeTrato != null) {
+            if (!tratos.isEmpty()) {
+                for (int i = 0; i < xogadores.size(); i++) {
+                    for (Trato trato : tratosXogador(xogadores.get(i))) {
+                        if (trato.getNome().equals(nomeTrato)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        throw new VariableNull();
+    }
+
+    private boolean existeTratoXogador(Xogador xogador, String nomeTrato)
+            throws VariableNull {
+
         if ((xogador != null) && (nomeTrato != null)) {
             if (!tratos.isEmpty()) {
                 if (!tratos.get(xogador.getNome()).isEmpty()) {
@@ -1083,13 +1232,11 @@ public class Xogo implements Comando {
                 }
             }
             return false;
-        } else {
-            //Excepcion
         }
-        return false;
+        throw new VariableNull();
     }
 
-    public boolean existeXogador(String nomeXogador) {
+    public final boolean existeXogador(String nomeXogador) {
         boolean existe = false;
 
         for (int i = 0; i < xogadores.size(); i++) {
@@ -1100,38 +1247,38 @@ public class Xogo implements Comando {
         return existe;
     }
 
-    private Trato getTrato(Xogador xogador, String nomeTrato) {
-        if (existeTrato(xogador, nomeTrato)) {
-            for (Trato trato : tratosXogador(xogador)) {
-                if (trato.getNome().equals(nomeTrato)) {
-                    return trato;
-                }
-            }
-        } else {
-            //Excepcion
-        }
-        return null;
-    }
-
-    @Override
-    public void hipotecar(String nom, Xogador xogador, Xogador hipo) throws HipoPropNOn {
-        for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
-            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++) {
-                if (taboleiro.getCasillas().get(i).get(j).getNome().equals(nom)) {
-                    if (taboleiro.getCasillas().get(i).get(j) instanceof Propiedade) {
-                        Propiedade prop = (Propiedade) taboleiro.getCasillas().get(i).get(j);
-                        try {
-                            xogador.hipotecar(prop, hipo);
-                        } catch (HipoDono hipodono) {
-                            consola.imprimir(hipodono.getMessage());
+    private Trato getTrato(Xogador xogador, String nomeTrato) throws TratoNonExiste {
+        try {
+            if (existeTrato(nomeTrato)) {
+                if (existeTratoXogador(xogador, nomeTrato)) {
+                    for (Trato trato : tratosXogador(xogador)) {
+                        if (trato.getNome().equals(nomeTrato)) {
+                            return trato;
                         }
-                    } else {
-                        throw new HipoPropNOn("Función de menu principal.");
                     }
                 }
 
             }
+            throw new TratoNonExiste(nomeTrato);
+        } catch (VariableNull ex) {
+            throw new TratoNonExiste(nomeTrato);
         }
+
+    }
+
+    @Override
+    public void hipotecar(String nomeCasilla, Xogador xogador,
+            Xogador hipo) throws PropiedadeNonPertenceA, PropNonComprable {
+
+        if (taboleiro.getCasilla(nomeCasilla) instanceof Propiedade) {
+            Propiedade prop = (Propiedade) taboleiro.getCasilla(nomeCasilla);
+
+            xogador.hipotecar(prop, hipo);
+
+        } else {
+            throw new PropNonComprable(nomeCasilla, "hipotecar");
+        }
+
     }
 
     private boolean IdIgualAvatar(char id) {
@@ -1145,8 +1292,21 @@ public class Xogo implements Comando {
         return false;
     }
 
+    /*Función que percorre os tratos e os imprime*/
+    private void imprimirTratos(Xogador xogador) throws NonHaiTratos {
+        if (!tratos.isEmpty()) {
+            if (!tratos.get(xogador.getNome()).isEmpty()) {
+                for (Trato trato : tratos.get(xogador.getNome())) {
+                    consola.imprimir(trato.toString());
+                }
+            }
+        } else {
+            throw new NonHaiTratos();
+        }
+    }
+
     @Override
-    public final void lanzarDados() {
+    public final void lanzarDados() throws NonPodeLanzar, VariableNull {
 
         if (poderLanzar()) {
             HashMap<String, Dado> dados = getDadosLanzables();
@@ -1157,103 +1317,88 @@ public class Xogo implements Comando {
             consola.imprimir("Dado2: " + dados.get("d2"));
             consola.imprimir("Suma dos dados: " + sumarDados(dados));
         } else {
-            //Excepcion
+            throw new NonPodeLanzar();
         }
 
     }
 
-    public void listarTratos() {
+    public void listarTratos() throws NonHaiTratos {
         for (int i = 0; i < xogadores.size(); i++) {
             imprimirTratos(xogadores.get(i));
         }
     }
 
     @Override
-    public final void listar(String comando1, String grupo) throws ListarErr {
+    public final void listar(String comando1, String grupo)
+            throws ErroSintaxe, NonHaiTratos, GrupoNonExiste, PropiedadesNonEdificios {
+
         switch (comando1) {
             case "xogadores":
-                listarXogador();
+                listarXogadores();
                 break;
             case "avatares":
-                listarAvatar();
+                listarAvatares();
                 break;
             case "casillas":
-                listarCasilla();
+                listarCasillas();
                 break;
             case "edificios":
                 listarEdificios(grupo);
                 break;
             case "enventa":
+            case "en":
                 listarEnVenta();
                 break;
             case "tratos":
                 listarTratos();
                 break;
             default:
-                throw new ListarErr("Comando incorrecto. Debe indicar:\n"
-                        + " listar xogadores\n"
-                        + " listar avatares\n"
-                        + " listar casillas\n"
-                        + " listar edificios\n"
-                        + " listar enventa");
+                throw new ErroSintaxe("Sintaxe incorrecta: \n"
+                        + " listar <xogadores/avatares/casillas/edificios/enventa/tratos>\n");
 
         }
     }
 
-    private void listarAvatar() {
+    private void listarAvatares() {
         for (int i = 0; i < avatares.size(); i++) {
             consola.imprimir(avatares.get(i).toString());
         }
     }
 
-    private void listarEdificios(String grupo) {
-        boolean atopado = false;
-        for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
-            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++) {
-                if (taboleiro.getCasillas().get(i).get(j) instanceof Solar) {
-                    if (((Solar) taboleiro.getCasillas().get(i).get(j)).getGrupo().getNome().equals(grupo)) {
-                        atopado = true;
-                        for (int k = 0; k < ((Solar) taboleiro.getCasillas().get(i).get(j)).getEdificios().size(); k++) {
-                            consola.imprimir(((Solar) taboleiro.getCasillas().get(i).get(j)).getEdificios().get(i).toString());
-                        }
+    private void listarEdificios(String corGrupo) throws GrupoNonExiste, PropiedadesNonEdificios {
+        if (corGrupo != null) {
+            Grupo grupo = getGrupo(corGrupo);
+            if (grupo.getPropiedades().get(0) instanceof Solar) {
+                for (Propiedade solar : grupo.getPropiedades()) {
+                    consola.imprimir(solar.getNome());
+                    for (Edificio edificio : ((Solar) solar).getEdificios()) {
+                        consola.imprimir(edificio.toString());
                     }
                 }
-            }
-        }
-        if (!atopado) {
-            for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
-                for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++) {
-                    if (taboleiro.getCasillas().get(i).get(j) instanceof Solar) {
-                        for (int k = 0; k < ((Solar) taboleiro.getCasillas().get(i).get(j)).getEdificios().size(); k++) {
-                            consola.imprimir(((Solar) taboleiro.getCasillas().get(i).get(j)).getEdificios().get(i).toString());
-                        }
-                    }
-                }
+            } else {
+                throw new PropiedadesNonEdificios(corGrupo);
             }
         }
     }
 
     private void listarEnVenta() {
-        for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
-            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++) {
-                if (taboleiro.getCasillas().get(i).get(j) instanceof Propiedade) {
-                    if (((Propiedade) taboleiro.getCasillas().get(i).get(j)).getDono().getNome().equals("Banca")) {
-                        consola.imprimir(taboleiro.getCasillas().get(i).get(j).imprimirCasilla());
-                    }
+        for (Casilla casilla : taboleiro.getCasillas()) {
+            if (casilla instanceof Propiedade) {
+                if (((Propiedade) casilla).getDono().getNome().equals("Banca")) {
+                    consola.imprimir(casilla.imprimirCasilla());
                 }
             }
         }
+        //Imprimir non hai propiedades en venta cun arraylist de prpiedades en banca
     }
 
-    private void listarCasilla() {
-        for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
-            for (int j = 0; j < taboleiro.getCasillas().get(i).size(); j++) {
-                consola.imprimir(taboleiro.getCasillas().get(i).get(j).imprimirCasilla());
-            }
+    private void listarCasillas() {
+        for (Casilla casilla : taboleiro.getCasillas()) {
+            consola.imprimir(casilla.imprimirCasilla());
         }
     }
 
-    private void listarXogador() {
+    private void listarXogadores() {
         for (int i = 0; i < xogadores.size(); i++) {
             consola.imprimir(xogadores.get(i).toString());
         }
@@ -1276,12 +1421,8 @@ public class Xogo implements Comando {
             Casilla destino = taboleiro.getCasilla("Carcere");
 
             procedencia.eliminarAvatar(avatar);
-            destino.engadirAvatar(avatar);
             avatar.setPosicion(destino);
             avatar.getXogador().setEstadoPreso(4);
-
-        } else {
-            //Excepcion
         }
     }
 
@@ -1326,7 +1467,8 @@ public class Xogo implements Comando {
 
      */
     @Override
-    public final void proponherTrato(String[] partes) throws FalsaPropiedade, ErroSintaxe {
+    public final void proponherTrato(String[] partes)
+            throws NonPropiedade, ErroSintaxe, VariableNull {
         if (partes != null) {
 
             boolean comandoViable = false;
@@ -1376,19 +1518,19 @@ public class Xogo implements Comando {
                                             rematar = true;
 
                                         } else {
-                                            throw new FalsaPropiedade("Non podes cambiar a propiedade "
+                                            throw new NonPropiedade("Non podes cambiar a propiedade "
                                                     + nomeCasilla
                                                     + " co xogador " + xogRec.getNome()
                                                     + " porque non é del.");
                                         }
                                     } else {
-                                        throw new FalsaPropiedade("Non podes cambiar a casilla "
+                                        throw new NonPropiedade("Non podes cambiar a casilla "
                                                 + nomeCasilla
                                                 + " co xogador " + xogRec.getNome()
                                                 + " porque non é del.");
                                     }
                                 } else {
-                                    throw new FalsaPropiedade("A casilla "
+                                    throw new NonPropiedade("A casilla "
                                             + nomeCasilla
                                             + " non existe.");
 
@@ -1397,12 +1539,12 @@ public class Xogo implements Comando {
                             }
 
                         } else {
-                            throw new FalsaPropiedade("Non podes cambiar a propiedade "
+                            throw new NonPropiedade("Non podes cambiar a propiedade "
                                     + nomeCasilla
                                     + " porque non é túa.");
                         }
                     } else {
-                        throw new FalsaPropiedade("Non podes cambiar a propiedade "
+                        throw new NonPropiedade("Non podes cambiar a propiedade "
                                 + nomeCasilla
                                 + " porque non é túa.");
                     }
@@ -1434,13 +1576,13 @@ public class Xogo implements Comando {
                                                         nTurnos = Integer.parseInt(alquileres[1]);
                                                     }
                                                 } else {
-                                                    throw new FalsaPropiedade("A casilla "
+                                                    throw new NonPropiedade("A casilla "
                                                             + nomeCasilla
                                                             + " non é do xogador "
                                                             + xogRec.getNome() + ".");
                                                 }
                                             } else {
-                                                throw new FalsaPropiedade("A casilla "
+                                                throw new NonPropiedade("A casilla "
                                                         + nomeCasilla
                                                         + " non existe.");
                                             }
@@ -1450,13 +1592,13 @@ public class Xogo implements Comando {
                                     }
 
                                 } else {
-                                    throw new FalsaPropiedade("A propiedade "
+                                    throw new NonPropiedade("A propiedade "
                                             + nomeCasilla
                                             + " non pertence ao xogador "
                                             + xogRec.getNome() + ".");
                                 }
                             } else {
-                                throw new FalsaPropiedade("A casilla "
+                                throw new NonPropiedade("A casilla "
                                         + nomeCasilla
                                         + " non existe.");
                             }
@@ -1500,7 +1642,7 @@ public class Xogo implements Comando {
         }
     }
 
-    private boolean poderLanzar() {
+    private boolean poderLanzar() throws VariableNull {
         if (!dadosLanzados(tiradas.get(1))) {
             return true;
         } else if ((!dadosLanzados(tiradas.get(2))) && (sonDobres(tiradas.get(1)))) {
@@ -1512,7 +1654,7 @@ public class Xogo implements Comando {
     }
 
     @Override
-    public final void rematarTurno() {
+    public final void rematarTurno() throws VariableNull {
         if (!poderLanzar()) {
             this.resetDados();
 
@@ -1537,7 +1679,6 @@ public class Xogo implements Comando {
             }
             consola.imprimir("Turno de " + xogadores.get(turno).getNome() + ".\n");
         } else {
-            //Excepcion
             consola.imprimir("O xogador non pode rematar turno.");
         }
     }
@@ -1548,7 +1689,7 @@ public class Xogo implements Comando {
     }
 
     @Override
-    public final void sairCarcere() {
+    public final void sairCarcere() throws XogadorNonPreso, VariableNull {
         if (xogadores.get(turno).getEstadoPreso() > 0) {
             if (poderLanzar()) {
                 xogadores.get(turno).modificarFortuna(-Constantes.SAIR_CARCERE);
@@ -1570,44 +1711,39 @@ public class Xogo implements Comando {
                 consola.imprimir("Xa lanzaches. Agora non podes pagar.\n");
             }
         } else {
-
-            //Excepcion
+            throw new XogadorNonPreso(xogadores.get(turno).getNome());
         }
     }
 
-    private boolean sonDobres(HashMap<String, Dado> dados) {
+    private boolean sonDobres(HashMap<String, Dado> dados) throws VariableNull {
         if (dados != null) {
             if (dados.get("d1").equals(dados.get("d2"))) {
                 if (dados.get("d1").getValor() > 0) {
                     return true;
                 }
             }
-        } else {
-            //Excepcion
         }
-        return false;
+        throw new VariableNull();
     }
 
-    public int sumarDados(HashMap<String, Dado> dados) {
+    public int sumarDados(HashMap<String, Dado> dados) throws VariableNull {
         if (dados != null) {
             return (dados.get("d1").getValor() + dados.get("d2").getValor());
-        } else {
-            //Excepcion
         }
-        return 0;
+        throw new VariableNull();
     }
 
-    public ArrayList<Trato> tratosXogador(Xogador xogador) {
+    public ArrayList<Trato> tratosXogador(Xogador xogador) throws VariableNull {
         if (xogador != null) {
             return tratos.get(xogador.getNome());
         }
-        return tratos.get("Anton");
+        throw new VariableNull();
     }
 
     @Override
     public final void vender(String tipoEdificio, String casilla,
-            String nEdificios
-    ) {
+            String nEdificios) throws PropiedadesNonEdificios {
+
         int n = Integer.parseInt(nEdificios);
         if (taboleiro.getCasilla(casilla) instanceof Solar) {
             Solar solar = (Solar) taboleiro.getCasilla(casilla);
@@ -1644,6 +1780,8 @@ public class Xogo implements Comando {
                             + valor + "/" + casilla + "/" + tipoEdificio);
                 }
             }
+        } else {
+            throw new PropiedadesNonEdificios(taboleiro.getCasilla(casilla));
         }
     }
 
@@ -1656,6 +1794,10 @@ public class Xogo implements Comando {
     public final void xogador() {
         consola.imprimir(xogadores.get(turno).toString());
         consola.imprimir("\n");
+    }
+
+    public boolean xogadorPodePagar(Xogador xogador, float pago) {
+        return (xogador.getFortuna() >= pago);
     }
 
     //Fin clase

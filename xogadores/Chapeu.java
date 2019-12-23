@@ -2,6 +2,8 @@ package xogadores;
 
 import estrutura.*;
 import xogo.*;
+import Excepcions.*;
+import errosExternos.*;
 
 import java.util.ArrayList;
 
@@ -67,55 +69,59 @@ public class Chapeu extends Avatar {
     //Utiliza moverEnBasico
     @Override
     public void moverEnAvanzado(int sumaDados, Taboleiro taboleiro,
-            Xogador banca) {
+            Xogador banca) throws ErroInicializacion, CartosInsuficientes,
+            NonPodeEdificar {
 
-        if (sumaDados > 4) {
-            String texto = "O xogador " + getXogador().getNome() + " avanza "
-                    + sumaDados + " posicións, partindo dende "
-                    + getPosicion().getNome() + " e pasando por";
-            switch (this.getLado(this.getPosicion().getPosicion())) {
-                case 's':
-                    //Facemos o primeiro movemento
-                    desplazarseSur(this.getPosicion(), taboleiro);
-                    sumaDados--;
-                    texto += " " + getPosicion().getNome() + ",";
+        if (getXogador().getEstadoPreso() == 0) {
+            if (sumaDados > 4) {
+                String texto = "O xogador " + getXogador().getNome() + " avanza "
+                        + sumaDados + " posicións, partindo dende "
+                        + getPosicion().getNome() + " e pasando por";
+                switch (this.getLado(this.getPosicion().getPosicion())) {
+                    case 's':
+                        //Facemos o primeiro movemento
+                        desplazarseSur(this.getPosicion(), taboleiro);
+                        sumaDados--;
+                        texto += " " + getPosicion().getNome() + ",";
 
-                case 'e':
-                    for (int i = 1; i <= sumaDados; i++) {
-                        desplazarseEste(this.getPosicion(), taboleiro);
-                        if (i == (sumaDados)) {
-                            texto += " ata chegar a " + getPosicion().getNome() + ".";
-                        } else if (i == (sumaDados - 1)) {
-                            texto += " " + getPosicion().getNome();
-                        } else {
-                            texto += " " + getPosicion().getNome() + ",";
+                    case 'e':
+                        for (int i = 1; i <= sumaDados; i++) {
+                            desplazarseEste(this.getPosicion(), taboleiro);
+                            if (i == (sumaDados)) {
+                                texto += " ata chegar a " + getPosicion().getNome() + ".";
+                            } else if (i == (sumaDados - 1)) {
+                                texto += " " + getPosicion().getNome();
+                            } else {
+                                texto += " " + getPosicion().getNome() + ",";
+                            }
                         }
-                    }
-                    break;
-                case 'n':
-                    //Facemos o primeiro movemento
-                    desplazarseNorte(this.getPosicion(), taboleiro);
-                    sumaDados--;
-                    texto += " " + getPosicion().getNome() + ",";
-                case 'o':
-                    for (int i = 1; i <= sumaDados; i++) {
-                        desplazarseOeste(this.getPosicion(), taboleiro);
-                        if (i == (sumaDados)) {
-                            texto += " ata chegar a " + getPosicion().getNome() + ".";
-                        } else if (i == (sumaDados - 1)) {
-                            texto += " " + getPosicion().getNome();
-                        } else {
-                            texto += " " + getPosicion().getNome() + ",";
+                        break;
+                    case 'n':
+                        //Facemos o primeiro movemento
+                        desplazarseNorte(this.getPosicion(), taboleiro);
+                        sumaDados--;
+                        texto += " " + getPosicion().getNome() + ",";
+                    case 'o':
+                        for (int i = 1; i <= sumaDados; i++) {
+                            desplazarseOeste(this.getPosicion(), taboleiro);
+                            if (i == (sumaDados)) {
+                                texto += " ata chegar a "
+                                        + getPosicion().getNome() + ".";
+                            } else if (i == (sumaDados - 1)) {
+                                texto += " " + getPosicion().getNome();
+                            } else {
+                                texto += " " + getPosicion().getNome() + ",";
+                            }
                         }
-                    }
-                    break;
+                        break;
 
+                }
+                Xogo.consola.imprimir(texto);
+            } else if (sumaDados == 4) {
+                this.moverEnBasico(sumaDados, taboleiro);
+            } else {
+                desfacerCambios(taboleiro, banca);
             }
-            Xogo.consola.imprimir(texto);
-        } else if (sumaDados == 4) {
-            this.moverEnBasico(sumaDados, taboleiro);
-        } else {
-            desfacerCambios(taboleiro, banca);
         }
     }
 
@@ -142,8 +148,6 @@ public class Chapeu extends Avatar {
             destino = taboleiro.getCasilla("Santiago");
 
             this.setPosicion(destino);
-        } else {
-            //Excepcion
         }
     }
 
@@ -180,13 +184,9 @@ public class Chapeu extends Avatar {
                     }
                     if (destino != null) {
                         this.setPosicion(destino);
-                    } else {
-                        //Excepcion
                     }
                     break;
             }
-        } else {
-            //Excepcion
         }
     }
 
@@ -224,17 +224,15 @@ public class Chapeu extends Avatar {
                     if (destino != null) {
 
                         this.setPosicion(destino);
-                    } else {
-                        //Excepcion
                     }
                     break;
             }
-        } else {
-            //Excepcion
         }
     }
 
-    private void desfacerCambios(Taboleiro taboleiro, Xogador banca) {
+    private void desfacerCambios(Taboleiro taboleiro, Xogador banca)
+            throws CartosInsuficientes, NonPodeEdificar {
+
         String[] partes;
         String accion;
         for (int i = 0; i < historial.size(); i++) {
@@ -334,7 +332,6 @@ public class Chapeu extends Avatar {
         if (cantidade > 0) {
             this.getXogador().modificarFortuna(-cantidade);
         } else {
-            //Excepcion
             Xogo.consola.imprimir("O cobro debe ser positivo.\n");
         }
     }
@@ -344,7 +341,6 @@ public class Chapeu extends Avatar {
             this.getXogador().modificarFortuna(-bote);
             ((Especial) taboleiro.getCasilla("Parking")).modificarBoteParking(bote);
         } else {
-            //Excepcion
             Xogo.consola.imprimir("O bote debe ser positivo.\n");
         }
     }
@@ -386,27 +382,28 @@ public class Chapeu extends Avatar {
         if (cantidade > 0) {
             this.getXogador().modificarFortuna(cantidade);
         } else {
-            //Excepcion
             Xogo.consola.imprimir("O pago debe ser positivo.\n");
         }
     }
 
-    public void desfacerVenta(float cantidade, String nomeCasilla, String tipoEdificio, Taboleiro taboleiro) {
+    public void desfacerVenta(float cantidade, String nomeCasilla,
+            String tipoEdificio, Taboleiro taboleiro)
+            throws CartosInsuficientes, NonPodeEdificar {
+
         if ((nomeCasilla != null) && (cantidade > 0) && (taboleiro != null)) {
             desfacerCobro(cantidade);
             if (taboleiro.getCasilla(nomeCasilla) instanceof Solar) {
                 Solar solar = (Solar) taboleiro.getCasilla(nomeCasilla);
                 solar.edificar(tipoEdificio);
             } else {
-
+                Xogo.consola.imprimir("Houbo un erro, xa que o historial ten"
+                        + " erros. Contén ventas de edificios asociadas a"
+                        + "casillas que non son solares.");
             }
-
-        } else {
-
         }
     }
 
-    private char getLado(int posicion) {
+    private char getLado(int posicion) throws ErroInicializacion {
         char lado;
         if ((posicion >= 0) && (posicion <= 9)) {
             lado = 's';
@@ -417,9 +414,8 @@ public class Chapeu extends Avatar {
         } else if ((posicion >= 30) && (posicion <= 39)) {
             lado = 'e';
         } else {
-            //Excepcion
-            //Polo de agora
-            lado = 'f';
+            throw new ErroInicializacion("Hai casillas que teñen mal introducida"
+                    + " a súa posición.");
         }
 
         return lado;

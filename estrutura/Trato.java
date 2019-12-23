@@ -1,6 +1,6 @@
 package estrutura;
 
-import consola.ConsolaNormal;
+import errosExternos.*;
 import xogadores.*;
 import xogo.*;
 
@@ -115,132 +115,19 @@ public class Trato {
         this.nTurnos = nTurnos;
     }
 
+    public void aceptarTrato() throws TratoNonAceptado {
 
-    /*
-    public void InciarTrato(ArrayList<Xogador> xogadores)
-    {
-        final ConsolaNormal consola = new ConsolaNormal();
-        String buffer;
-        boolean xogadoratopado = false;
-        boolean pedirProp = false;
-        boolean pediralquiler = false;
-
-        do {
-            //Xogador a tratar
-            buffer = consola.ler("Con quen quere facer o trato?");
-            for (int i = 0; i < xogadores.size(); i++)
-            {
-                if (xogadores.get(i).getNome().equals(buffer))
-                {
-                    xogadorRecibe = xogadores.get(i);
-                    xogadoratopado=true;
-                }
-            }
-        }while(!xogadoratopado);
-
-        //Dñeiro propon
-        buffer = consola.ler("Canto diñeiro lle gustaría ofertar? 0 para indicar nada.");
-        if (Float.parseFloat(buffer)>=0)
-        {
-            //Excepcion
-            return;
-        }
-
-        cartosProp=Float.parseFloat(buffer); //Diéiro a pagar
-        if (xogadorPropon.getFortuna() < cartosProp)
-        {
-            //excepcion
-        }
-
-        //Porpiedade
-        buffer = consola.ler("Desexa ofertar unha propiedade?");//propieade a cambiar
-        for (int i = 0; i < xogadorPropon.getPropiedades().size(); i++)
-        {
-            if (xogadorPropon.getPropiedades().get(i).getNome().equals(buffer))
-            {
-                propPropon = xogadorPropon.getPropiedades().get(i);
-            }
-        }
-
-        //Pedir dinero a cambio
-        if (cartosProp == 0)
-        {
-            buffer = consola.ler("Te gustaría pedir dinero a cambio? 0 par non");
-            if (Float.parseFloat(buffer)>=0)
-            {
-                cartosRec = Float.parseFloat(buffer);
-            }
-            //else
-                //excepcion
-        }
-
-        //Pedir propiedade a cambio
-        do {
-
-            buffer = consola.ler("Te gustaría obtener una propieade del acuerdo? Non para non.");
-            if (!buffer.equals("Nom ")) {
-                for (int i = 0; i < xogadorRecibe.getPropiedades().size(); i++) {
-                    if (xogadorRecibe.getPropiedades().get(i).getNome().equals(buffer)) {
-                        propRecibe = xogadorRecibe.getPropiedades().get(i);
-                        pedirProp = true;
-                    }
-                }
-
-                //ALquiler por turnos
-                do {
-                    buffer = consola.ler("Desexa pedir alquiler coma parte de pago? Non para non.");
-                    for (int i = 0; i < xogadorRecibe.getPropiedades().size(); i++)
-                    {
-                        if (xogadorRecibe.getPropiedades().get(i).getNome().equals(buffer))
-                        {
-                            if (xogadorRecibe.getPropiedades().get(i).getNome().equals(propRecibe.getNome()))
-                                consola.imprimir("Esta propidade xa foi seleccionada.");
-                            else {
-                                propAlRecibe = xogadorRecibe.getPropiedades().get(i);
-                                buffer = consola.ler("Durante cantos turnos?");
-                                if (Integer.parseInt(buffer)>0){
-                                    nTurnos = Integer.parseInt(buffer);
-                                    pedirProp = true;
-                                    pediralquiler = true;
-                                }
-                                //else
-                                    //Excpción
-                            }
-                        }
-                    }
-                    if (buffer.equals("Non"))
-                    {
-                        pedirProp = true;
-                        pediralquiler = true;
-                    }
-                    else
-                        consola.imprimir("O xogador co que trata non posee esa propiedade.");
-                }while (!pediralquiler);
-
-
-                if (!pedirProp) {
-                    pedirProp = false;
-                    consola.imprimir("O xogador co que trata non posee esa propiedade.");
-                }
-            } else
-                pedirProp = true;
-        }while(!pedirProp);
-    }*/
-    public void aceptarTrato() {
-        final ConsolaNormal consola = new ConsolaNormal();
         if (xogadorRecibe.getFortuna() < cartosRec) {
-            consola.imprimir("Neste momento, non tes suficientes cartos para "
+            throw new TratoNonAceptado("Neste momento, non tes suficientes cartos para "
                     + "aceptar o trato. Debes conseguir "
                     + (cartosRec - xogadorRecibe.getFortuna()) + " GM.");
-            return;
         }
 
         if (xogadorPropon.getFortuna() < cartosProp) {
-            consola.imprimir("O trato non pode ser aceptado ata que o xogador "
+            throw new TratoNonAceptado("O trato non pode ser aceptado ata que o xogador "
                     + "que propuxo o trato consiga " + cartosProp + " GM.");
-            return;
         }
-        //excepcion
+
         //Paga 1 a 2
         xogadorRecibe.modificarFortuna(cartosProp);
         xogadorPropon.modificarFortuna(-cartosProp);

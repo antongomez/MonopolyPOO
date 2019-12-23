@@ -1,8 +1,8 @@
 package xogadores;
 
-import Excepcions.DesHipoNONdin;
-import Excepcions.HipoDono;
-import consola.ConsolaNormal;
+import Excepcions.*;
+import errosExternos.*;
+import static xogo.Xogo.consola;
 import estrutura.*;
 
 import java.util.ArrayList;
@@ -129,11 +129,11 @@ public class Xogador {
         }
     }
 
-    public void restarEstadoPreso() {
+    public void restarEstadoPreso() throws XogadorNonPreso {
         if (this.estadoPreso > 0) {
             this.estadoPreso--;
         } else {
-            //Excepcion
+            throw new XogadorNonPreso(nome);
         }
     }
 
@@ -205,69 +205,54 @@ public class Xogador {
         return texto;
     }
 
-    public void hipotecar(Propiedade prop, Xogador hipotecar) throws HipoDono {
-        boolean atopada = false;
-        final ConsolaNormal consola = new ConsolaNormal();
-        if (!prop.getDono().getNome().equals(this.getNome()))
-            throw new HipoDono("Dono", this.getNome());
+    public void hipotecar(Propiedade prop, Xogador hipotecar)
+            throws PropiedadeNonPertenceA {
 
-        for (Propiedade propiedade : this.propiedades) {
-            if (propiedade.getNome().equals(prop.getNome())) {
-                atopada = true;
-                break;
-            }
-        }
-
-        if (!atopada) {
-            consola.imprimir("Esta propiedade non é da túa propiedade pertence.");
-            //excepcion
-            return;
+        if (!prop.perteneceAXogador(this)) {
+            throw new PropiedadeNonPertenceA("Dono", this.getNome());
         }
 
         if (prop instanceof Solar) {
-            for (int i = ((Solar) prop).getEdificios().size() - 1; i >= 0; i--) {
-                String id = ((Solar) prop).getEdificios().get(i).getId();
-                modificarFortuna(((Solar) prop).venderEdificios(id));
+            if (!((Solar) prop).getEdificios().isEmpty()) {
+                String resp = consola.ler("O solar está edificado. "
+                        + "Desexa vender todos os edificios?");
+                if (resp.toLowerCase().equals("s")) {
+                    for (int i = ((Solar) prop).getEdificios().size() - 1; i >= 0; i--) {
+                        String id = ((Solar) prop).getEdificios().get(i).getId();
+                        modificarFortuna(((Solar) prop).venderEdificios(id));
+                    }
+                }
+            } else {
+
             }
         }
 
         prop.setDono(hipotecar);
         hipotecar.engadirPropiedade(prop);
         consola.imprimir("Hipoteca realizada correctamente.");
-        this.fortuna = (float) (fortuna + prop.getValor() * 0.5);
+        modificarFortuna(prop.getValor() * 0.5f);
     }
 
-    public void deshipotecar(Xogador xog, Propiedade prop) throws DesHipoNONdin {
-        final ConsolaNormal consola = new ConsolaNormal();
-        boolean edel = false;
+    public void deshipotecar(Xogador xog, Propiedade prop)
+            throws PropiedadeNonHipotecada, CartosInsuficientes, PropiedadeNonPertenceA {
 
         if (this.getFortuna() < (0.5f * prop.getValor())) {
-            System.out.println("NO MONEY BABY");
-            throw new DesHipoNONdin("En xogador", this.getNome(), (float) (0.5 * prop.getValor()));
+            throw new CartosInsuficientes(nome);
         }
 
         if (!prop.getDono().getNome().equals("Hipotecar")) {
-            consola.imprimir("Esta propiedade non esta hipotecada.");
-            return;
+            throw new PropiedadeNonHipotecada(prop.getNome());
         }
 
         for (int i = 0; i < xog.getPropiedades().size(); i++) {
-            if (xog.getPropiedades().get(i).getNome().equals(prop.getNome())) {
-                edel = true;
-                break;
+            if (xog.getPropiedades().get(i).equals(prop)) {
+                throw new PropiedadeNonPertenceA(prop.getNome(), nome);
             }
         }
 
-        if (edel) {
-            xog.modificarFortuna((float) (-0.5 * prop.getValor()));
-            prop.setDono(xog);
-            xog.engadirPropiedade(prop);
-            consola.imprimir("Deshipotecado correctamente.");
-
-            xog.eliminarPropiedade(prop);
-        } else {
-            consola.imprimir("Esta propiedade non é túa pilloín!");
-        }
+        xog.modificarFortuna(-0.5f * prop.getValor());
+        prop.setDono(xog);
+        consola.imprimir("Deshipotecado correctamente.");
     }
 
     @Override
