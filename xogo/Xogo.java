@@ -372,6 +372,8 @@ public class Xogo implements Comando {
                                             if (!(avatar.getModoAvanzado() && (sumarDados(getDadosLanzados()) < 4))) {
                                                 comprobarCasilla(avatar.getPosicion(), xogador);
                                             }
+                                        } else {
+                                            comprobarCasilla(avatar.getPosicion(), xogador);
                                         }
                                     }
                                     if (sonDobres(getDadosLanzados())) {
@@ -1365,9 +1367,12 @@ public class Xogo implements Comando {
         }
     }
 
-    private void listarEdificios(String corGrupo) throws GrupoNonExiste, PropiedadesNonEdificios {
+    private void listarEdificios(String corGrupo)
+            throws GrupoNonExiste, PropiedadesNonEdificios {
+
         if (corGrupo != null) {
             Grupo grupo = getGrupo(corGrupo);
+
             if (grupo.getPropiedades().get(0) instanceof Solar) {
                 for (Propiedade solar : grupo.getPropiedades()) {
                     consola.imprimir(solar.getNome());

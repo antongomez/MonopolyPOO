@@ -115,6 +115,14 @@ public class Taboleiro {
             grupo8.engadirPropiedade((Propiedade) getCasilla("Vigo"));
             grupo8.engadirPropiedade((Propiedade) getCasilla("A Corunha"));
 
+            grupoServ.engadirPropiedade((Propiedade) getCasilla("SERGAS"));
+            grupoServ.engadirPropiedade((Propiedade) getCasilla("Ensino Publico"));
+
+            grupoTrans.engadirPropiedade((Propiedade) getCasilla("Autobus"));
+            grupoTrans.engadirPropiedade((Propiedade) getCasilla("Lancha Motora"));
+            grupoTrans.engadirPropiedade((Propiedade) getCasilla("Iate"));
+            grupoTrans.engadirPropiedade((Propiedade) getCasilla("Jet Privado"));
+
         } else {
             System.out.println("\nErro no constructor de taboeiro {Banca}.\n");
         }
