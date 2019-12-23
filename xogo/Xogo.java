@@ -1722,6 +1722,7 @@ public class Xogo implements Comando {
                     return true;
                 }
             }
+            return false;
         }
         throw new VariableNull();
     }
