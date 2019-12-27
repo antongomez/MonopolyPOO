@@ -6,56 +6,55 @@ import xogadores.*;
 
 public class Sorte extends Carta {
 
-
-    public Sorte(String nome)
-    {
+    public Sorte(String nome) {
         super(nome);
     }
 
-    public void accion(Xogador xogador)
-    {
+    public void accion(Xogador xogador) {
         String partes[] = super.getNome().split("-");
-        switch (partes[1])
-        {
-            case "1": this.Carta1(xogador);
+        switch (partes[1]) {
+            case "1":
+                this.Carta1(xogador);
                 break;
-            case "2": this.Carta2(xogador);
+            case "2":
+                this.Carta2(xogador);
                 break;
-            case "3": this.Carta3(xogador);
+            case "3":
+                this.Carta3(xogador);
                 break;
-            case "4": this.Carta4(xogador);
+            case "4":
+                this.Carta4(xogador);
                 break;
         }
     }
 
     @Override
-    public void Carta1(Xogador xogador)
-    {
-        String accion ="Carta de Sorte 1\n";
+    public void Carta1(Xogador xogador) {
+        String accion = "Carta de Sorte 1\n";
         accion += "O aumento do imposto sobre bens inmobles afecta a todas as túas propiedades. "
                 + "Paga 50 GM por  casa, 145 GM por hotel, 25 GM por piscina e 90 GM por pista de deporte.\n";
         System.out.println(accion);
         this.pagarImpostoInmoble(xogador);
     }
-    public void Carta2(Xogador xogador)
-    {
-        String accion ="Carta de Sorte 2\n";
+
+    public void Carta2(Xogador xogador) {
+        String accion = "Carta de Sorte 2\n";
         accion += "Vendes a túa Lancha. Cobra 60 GM.\n";
         System.out.println(accion);
         xogador.modificarFortuna(60);
         System.out.println("O xogador " + xogador.getNome() + " ganhou 60 GM.\n");
     }
-    public void Carta3(Xogador xogador)
-    {
-        String accion ="Carta de Sorte 3\n";
+
+    public void Carta3(Xogador xogador) {
+        String accion = "Carta de Sorte 3\n";
         accion += "Ganhaches o bote da lotaría! Recibe 125 GM.\n";
         System.out.println(accion);
         xogador.modificarFortuna(125);
         System.out.println("O xogador " + xogador.getNome() + " ganhou 125 GM.\n");
     }
-    public void Carta4(Xogador xogador)
-    {
-        String accion ="Carta de Sorte 4\n";
+
+    public void Carta4(Xogador xogador) {
+        String accion = "Carta de Sorte 4\n";
         accion += "Paga 185 GM pola matrícula do colexio privado.\n";
         System.out.println(accion);
         xogador.modificarFortuna(-185);
@@ -63,14 +62,13 @@ public class Sorte extends Carta {
 
     }
 
-
     private void pagarImpostoInmoble(Xogador xogador) {
         if (xogador != null) {
             int casas = 0, hoteis = 0, pistas = 0, piscinas = 0;
             float total;
             for (Propiedade propiedade : xogador.getPropiedades()) {
-                if (propiedade instanceof  Solar) {
-                    for (Edificio edificio : ((Solar)propiedade).getEdificios()) {
+                if (propiedade instanceof Solar) {
+                    for (Edificio edificio : ((Solar) propiedade).getEdificios()) {
                         if (edificio instanceof Casa) {
                             casas++;
                         } else if (edificio instanceof Hotel) {

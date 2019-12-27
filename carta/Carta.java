@@ -8,11 +8,10 @@ package carta;
 import xogadores.Xogador;
 
 public abstract class Carta {
+
     private String nome;
 
-
-    public Carta(String nome)
-    {
+    public Carta(String nome) {
         this.nome = nome;
     }
 

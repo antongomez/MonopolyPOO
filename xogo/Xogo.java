@@ -29,34 +29,21 @@ public class Xogo implements Comando {
     public Xogo() {
         //Créanse as cartas de sorte e caixa
         cartas = new HashMap<>();
-        cartas.put("Sorte", new ArrayList<Carta>());
-        cartas.get("Sorte").add(new Sorte("Sorte-1"));
-        cartas.get("Sorte").add(new Sorte("Sorte-2"));
-        cartas.get("Sorte").add(new Sorte("Sorte-3"));
-        cartas.get("Sorte").add(new Sorte("Sorte-4"));
-        cartas.put("Caixa", new ArrayList<Carta>());
-        cartas.get("Caixa").add(new Sorte("Caixa-1"));
-        cartas.get("Caixa").add(new Sorte("Caixa-2"));
-        cartas.get("Caixa").add(new Sorte("Caixa-3"));
-        cartas.get("Caixa").add(new Sorte("Caixa-4"));
+        crearCartas();
         //Créanse os arrays de xogadores, avatares e tratos baleiros
         xogadores = new ArrayList<>();
         avatares = new ArrayList<>();
         tratos = new HashMap<>();
         //Créanse os dados e inicialízanse a 0 todos
         tiradas = new HashMap<>();
-        for (int i = 1; i <= 3; i++) {
-            HashMap<String, Dado> dados = new HashMap<>();
-            dados.put("d1", new Dado());
-            dados.put("d2", new Dado());
-            tiradas.put(i, dados);
-        }
+        crearDados();
         banca = new Xogador();
         taboleiro = new Taboleiro(banca);
 
         int nXogadores = 0;
         Boolean sair = false;
-        Xogador hipotecar = new Xogador("Hipotecar"); //Xogador ao que se lle hipoteca
+        //Xogador ao que se lle hipoteca
+        Xogador hipotecar = new Xogador("Hipotecar");
 
         do {
             nXogadores = Integer.parseInt(consola.ler("Cantos xogadores sodes? "));
@@ -1014,6 +1001,45 @@ public class Xogo implements Comando {
             }
         }
 
+    }
+
+    private void crearCartas() {
+        cartas.put("Sorte", new ArrayList<Carta>());
+        cartas.get("Sorte").add(new Sorte("Sorte-1"));
+        cartas.get("Sorte").add(new Sorte("Sorte-2"));
+        cartas.get("Sorte").add(new Sorte("Sorte-3"));
+        cartas.get("Sorte").add(new Sorte("Sorte-4"));
+        cartas.get("Sorte").add(new Sorte("Sorte-5"));
+        cartas.get("Sorte").add(new Sorte("Sorte-6"));
+        cartas.get("Sorte").add(new Sorte("Sorte-7"));
+        cartas.get("Sorte").add(new Sorte("Sorte-8"));
+        cartas.get("Sorte").add(new Sorte("Sorte-9"));
+        cartas.get("Sorte").add(new Sorte("Sorte-10"));
+        cartas.get("Sorte").add(new Sorte("Sorte-11"));
+        cartas.get("Sorte").add(new Sorte("Sorte-12"));
+        cartas.get("Sorte").add(new Sorte("Sorte-13"));
+        cartas.get("Sorte").add(new Sorte("Sorte-14"));
+
+        cartas.put("Caixa", new ArrayList<Carta>());
+        cartas.get("Caixa").add(new Sorte("Caixa-1"));
+        cartas.get("Caixa").add(new Sorte("Caixa-2"));
+        cartas.get("Caixa").add(new Sorte("Caixa-3"));
+        cartas.get("Caixa").add(new Sorte("Caixa-4"));
+        cartas.get("Caixa").add(new Sorte("Caixa-5"));
+        cartas.get("Caixa").add(new Sorte("Caixa-6"));
+        cartas.get("Caixa").add(new Sorte("Caixa-7"));
+        cartas.get("Caixa").add(new Sorte("Caixa-8"));
+        cartas.get("Caixa").add(new Sorte("Caixa-9"));
+        cartas.get("Caixa").add(new Sorte("Caixa-10"));
+    }
+
+    private void crearDados() {
+        for (int i = 1; i <= 3; i++) {
+            HashMap<String, Dado> dados = new HashMap<>();
+            dados.put("d1", new Dado());
+            dados.put("d2", new Dado());
+            tiradas.put(i, dados);
+        }
     }
 
     public boolean dadosLanzados(HashMap<String, Dado> dados) {
