@@ -22,7 +22,7 @@ public class Xogo implements Comando {
     private HashMap<String, ArrayList<Trato>> tratos;
     private Taboleiro taboleiro;
     private HashMap<Integer, HashMap<String, Dado>> tiradas;
-    private HashMap<String, ArrayList> cartas;
+    private HashMap<String, ArrayList<Carta>> cartas;
     private int turno = 0;
     private Xogador banca;
 
@@ -818,13 +818,15 @@ public class Xogo implements Comando {
                         Collections.shuffle(cartas.get("Sorte"));
                         int numCarta;
                         do {
-                            numCarta = Integer.parseInt(consola.ler("Escolle unha carta:"));
-                            if ((numCarta < 1) || (numCarta > 4)) {
+                            numCarta = Integer.parseInt(consola.ler("Escolle "
+                                    + "unha carta (1-14):"));
+                            if ((numCarta < 1) || (numCarta > 14)) {
                                 System.out.print("\nEscolla non válida.\n");
                             }
-                        } while ((numCarta < 1) || (numCarta > 4));
+                        } while ((numCarta < 1) || (numCarta > 14));
 
-                        ((Sorte) cartas.get("Sorte").get(numCarta - 1)).accion(xogador);
+                        cartas.get("Sorte").get(numCarta - 1).accion(xogador,
+                                taboleiro, xogadores);
                     }
                     break;
 
@@ -834,13 +836,15 @@ public class Xogo implements Comando {
                         Collections.shuffle(cartas.get("Caixa"));
                         int numCarta;
                         do {
-                            numCarta = Integer.parseInt(consola.ler("Escolle unha carta:"));
-                            if ((numCarta < 1) || (numCarta > 4)) {
+                            numCarta = Integer.parseInt(consola.ler("Escolle "
+                                    + "unha carta (1-10):"));
+                            if ((numCarta < 1) || (numCarta > 10)) {
                                 System.out.print("\nEscolla non válida.\n");
                             }
-                        } while ((numCarta < 1) || (numCarta > 4));
-                        System.out.println("Proba");
-                        ((Sorte) cartas.get("Caixa").get(numCarta - 1)).accion(xogador);
+                        } while ((numCarta < 1) || (numCarta > 10));
+
+                        cartas.get("Caixa").get(numCarta - 1).accion(xogador,
+                                taboleiro, xogadores);
                     }
                     break;
 
@@ -1021,16 +1025,16 @@ public class Xogo implements Comando {
         cartas.get("Sorte").add(new Sorte("Sorte-14"));
 
         cartas.put("Caixa", new ArrayList<Carta>());
-        cartas.get("Caixa").add(new Sorte("Caixa-1"));
-        cartas.get("Caixa").add(new Sorte("Caixa-2"));
-        cartas.get("Caixa").add(new Sorte("Caixa-3"));
-        cartas.get("Caixa").add(new Sorte("Caixa-4"));
-        cartas.get("Caixa").add(new Sorte("Caixa-5"));
-        cartas.get("Caixa").add(new Sorte("Caixa-6"));
-        cartas.get("Caixa").add(new Sorte("Caixa-7"));
-        cartas.get("Caixa").add(new Sorte("Caixa-8"));
-        cartas.get("Caixa").add(new Sorte("Caixa-9"));
-        cartas.get("Caixa").add(new Sorte("Caixa-10"));
+        cartas.get("Caixa").add(new Caixa("Caixa-1"));
+        cartas.get("Caixa").add(new Caixa("Caixa-2"));
+        cartas.get("Caixa").add(new Caixa("Caixa-3"));
+        cartas.get("Caixa").add(new Caixa("Caixa-4"));
+        cartas.get("Caixa").add(new Caixa("Caixa-5"));
+        cartas.get("Caixa").add(new Caixa("Caixa-6"));
+        cartas.get("Caixa").add(new Caixa("Caixa-7"));
+        cartas.get("Caixa").add(new Caixa("Caixa-8"));
+        cartas.get("Caixa").add(new Caixa("Caixa-9"));
+        cartas.get("Caixa").add(new Caixa("Caixa-10"));
     }
 
     private void crearDados() {
