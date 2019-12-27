@@ -1,8 +1,8 @@
 package carta;
 
 import estrutura.*;
-import estrutura.Edificio;
 import xogadores.*;
+import java.util.ArrayList;
 
 public class Sorte extends Carta {
 
@@ -10,7 +10,9 @@ public class Sorte extends Carta {
         super(nome);
     }
 
-    public void accion(Xogador xogador) {
+    @Override
+    public void accion(Xogador xogador, Taboleiro taboleiro,
+            ArrayList<Xogador> xogadores) {
         String partes[] = super.getNome().split("-");
         switch (partes[1]) {
             case "1":

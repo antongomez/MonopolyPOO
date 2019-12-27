@@ -5,7 +5,10 @@
  */
 package carta;
 
-import xogadores.Xogador;
+import xogadores.*;
+import estrutura.*;
+import java.util.ArrayList;
+import errosExternos.*;
 
 public abstract class Carta {
 
@@ -23,7 +26,8 @@ public abstract class Carta {
         this.nome = nome;
     }
 
-    public abstract void accion(Xogador xogador);
+    public abstract void accion(Xogador xogador, Taboleiro taboleiro,
+            ArrayList<Xogador> xogadores) throws CartosInsuficientes;
 
     public abstract void Carta1(Xogador xogador);
 }

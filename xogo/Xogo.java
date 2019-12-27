@@ -1444,7 +1444,7 @@ public class Xogo implements Comando {
         return false;
     }
 
-    private void moverAoCarcere(Avatar avatar) {
+    public void moverAoCarcere(Avatar avatar) {
         if (avatar != null) {
             Casilla procedencia = avatar.getPosicion();
             Casilla destino = taboleiro.getCasilla("Carcere");
