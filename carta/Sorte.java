@@ -34,10 +34,10 @@ public class Sorte extends Carta {
                 this.Carta5(xogador);
                 break;
             case "6":
-                this.Carta6(xogador);
+                this.Carta6(xogador, taboleiro, xogadores);
                 break;
             case "7":
-                this.Carta7(xogador);
+                this.Carta7(xogador, taboleiro);
                 break;
             case "8":
                 this.Carta8(xogador);
@@ -46,10 +46,10 @@ public class Sorte extends Carta {
                 this.Carta9(xogador);
                 break;
             case "10":
-                this.Carta10(xogador);
+                this.Carta10(xogador, taboleiro, xogadores);
                 break;
             case "11":
-                this.Carta11(xogador);
+                this.Carta11(xogador, taboleiro, xogadores);
                 break;
             case "12":
                 this.Carta12(xogador);
@@ -58,53 +58,11 @@ public class Sorte extends Carta {
                 this.Carta13(xogador);
                 break;
             case "14":
-                this.Carta14(xogador);
+                this.Carta14(xogador, taboleiro, xogadores);
                 break;
         }
     }
 
-    /*
-
-case 6:
-    accion += "Decides descansar unha fin de semana en Meanho axudando na Vendimia. Avanza ata Meanho. Se pasas pola Saída cobra 250 GM.\n";
-    System.out.println(accion);
-    avanzar(avatar, casillaProcedencia, taboleiro.getCasilla("Meanho"), taboleiro, partida);
-    break;
-case 7:
-    accion += "A Garda Civil colleute no medio dunha operación. Vai ao Cárcere directamente sen pasar pola casilla de Saída e sen cobrar as 250 GM.\n";
-    System.out.println(accion);
-    enviarCarcere(avatar, partida, taboleiro);
-    break;
-
-case 10:
-    accion += "Decides facer o Caminho de Santiago de Compostela. Avanza ata Santiago. Se pasas pola casilla de Salida, cobra 250 GM.\n";
-    System.out.println(accion);
-    avanzar(avatar, casillaProcedencia, taboleiro.getCasilla("Santiago"), taboleiro, partida);
-    break;
-
-case 11:
-    accion += "Esqueciches a túa carteira en Arteixo. Retrocede ata Arteixo para recuperala.\n";
-    System.out.println(accion);
-    retroceder(avatar, taboleiro.getCasilla("Arteixo"), taboleiro, partida, sumaDados, cartas);
-    break;
-case 12:
-    accion += "Múltante por usar o móbil mentres conduces. Paga 20 GM.\n";
-    System.out.println(accion);
-    avatar.getXogador().modificarFortuna(-20);
-    System.out.println("O xogador " + avatar.getXogador().getNome() + " pagou 20 GM.\n");
-    break;
-case 13:
-    accion += "Beneficio pola venta das túas accións. Recibe 185 GM.\n";
-    System.out.println(accion);
-    avatar.getXogador().modificarFortuna(185);
-    System.out.println("O xogador " + avatar.getXogador().getNome() + " ganhou 185 GM.\n");
-    break;
-case 14:
-    accion += "Avanza ata a casilla de transporte maís próxima. Se non ten dono podes comprarlla á banca. Se ten dono paga ao dono o dobre da operación indicada.\n";
-    System.out.println(accion);
-    //Pagar o dobre
-    avanzar(avatar, casillaProcedencia, calcularTransporteProximo(avatar, taboleiro), taboleiro, partida);
-     */
     public void Carta1(Xogador xogador, Taboleiro taboleiro,
             ArrayList<Xogador> xogadores) throws CartosInsuficientes {
         String accion = "Carta de Sorte 1:\n";
@@ -179,28 +137,156 @@ case 14:
     }
 
     public void Carta5(Xogador xogador) {
-        String accion = "Carta de Sorte 2:\n";
+        String accion = "Carta de Sorte 5:\n";
         accion += "Vendes a túa Lancha. Cobra 60 GM.\n";
         System.out.println(accion);
         xogador.modificarFortuna(60);
         System.out.println("O xogador " + xogador.getNome() + " ganhou 60 GM.\n");
     }
 
+    public void Carta6(Xogador xogador, Taboleiro taboleiro,
+            ArrayList<Xogador> xogadores) throws CartosInsuficientes {
+
+        String accion = "Carta de Sorte 6:\n";
+        accion += "Decides descansar unha fin de semana en Meanho axudando "
+                + "na Vendimia. Avanza ata Meanho. "
+                + "Se pasas pola Saída cobra 250 GM.\n";
+
+        consola.imprimir(accion);
+
+        Avatar avatar = xogador.getAvatar();
+        Solar destino = (Solar) taboleiro.getCasilla("Meanho");
+
+        if (avatar.getPosicion().getPosicion() > destino.getPosicion()) {
+            xogador.modificarFortuna(Constantes.VALOR_VOLTA);
+            consola.imprimir("O xogador " + xogador.getNome() + " pasou pola "
+                    + "Saída. Cobrou 250 GM.\n");
+        }
+
+        avatar.getPosicion().eliminarAvatar(avatar);
+        avatar.setPosicion(destino);
+
+        comprobarCasilla(xogador, destino, xogadores, taboleiro);
+    }
+
+    public void Carta7(Xogador xogador, Taboleiro taboleiro) {
+
+        String accion = "Carta de Sorte 7:\n";
+        accion += "A Garda Civil colleute no medio dunha operación. "
+                + "Vai ao Cárcere directamente sen pasar pola casilla de Saída "
+                + "e sen cobrar as 250 GM.\n";
+        consola.imprimir(accion);
+
+        Avatar avatar = xogador.getAvatar();
+        Casilla destino = taboleiro.getCasilla("Carcere");
+
+        avatar.getPosicion().eliminarAvatar(avatar);
+        avatar.setPosicion(destino);
+        xogador.setEstadoPreso(4);
+    }
+
     public void Carta8(Xogador xogador) {
         String accion = "Carta de Sorte 8:\n";
         accion += "Ganhaches o bote da lotaría! Recibe 125 GM.\n";
-        System.out.println(accion);
+        consola.imprimir(accion);
         xogador.modificarFortuna(125);
-        System.out.println("O xogador " + xogador.getNome() + " ganhou 125 GM.\n");
+        consola.imprimir("O xogador " + xogador.getNome() + " ganhou 125 GM.\n");
     }
 
     public void Carta9(Xogador xogador) {
         String accion = "Carta de Sorte 9:\n";
         accion += "Paga 185 GM pola matrícula do colexio privado.\n";
-        System.out.println(accion);
+        consola.imprimir(accion);
         xogador.modificarFortuna(-185);
-        System.out.println("O xogador " + xogador.getNome() + " pagou 185 GM.\n");
+        consola.imprimir("O xogador " + xogador.getNome() + " pagou 185 GM.\n");
 
+    }
+
+    public void Carta10(Xogador xogador, Taboleiro taboleiro,
+            ArrayList<Xogador> xogadores) throws CartosInsuficientes {
+
+        String accion = "Carta de Sorte 10:\n";
+        accion += "Decides facer o Caminho de Santiago de Compostela para "
+                + "redimirte dos teus pecados. Avanza ata Santiago. "
+                + "Se pasas pola casilla de Salida, "
+                + "cobra 250 GM.\n";
+
+        consola.imprimir(accion);
+
+        Avatar avatar = xogador.getAvatar();
+        Solar destino = (Solar) taboleiro.getCasilla("Santiago");
+
+        if (avatar.getPosicion().getPosicion() > destino.getPosicion()) {
+            xogador.modificarFortuna(Constantes.VALOR_VOLTA);
+            consola.imprimir("O xogador " + xogador.getNome() + " pasou pola "
+                    + "Saída. Cobrou 250 GM.\n");
+        }
+
+        avatar.getPosicion().eliminarAvatar(avatar);
+        avatar.setPosicion(destino);
+
+        comprobarCasilla(xogador, destino, xogadores, taboleiro);
+    }
+
+    public void Carta11(Xogador xogador, Taboleiro taboleiro,
+            ArrayList<Xogador> xogadores) throws CartosInsuficientes {
+
+        String accion = "Carta de Sorte 11:\n";
+        accion += "Esqueciches a túa carteira en Arteixo. Retrocede ata Arteixo"
+                + " para recuperala.";
+
+        consola.imprimir(accion);
+
+        Avatar avatar = xogador.getAvatar();
+        Solar destino = (Solar) taboleiro.getCasilla("Arteixo");
+
+        avatar.getPosicion().eliminarAvatar(avatar);
+        avatar.setPosicion(destino);
+
+        comprobarCasilla(xogador, destino, xogadores, taboleiro);
+    }
+
+    public void Carta12(Xogador xogador) {
+        String accion = "Carta de Sorte 12:\n";
+        accion += "Múltante por usar o móbil mentres conduces. Paga 20 GM.\n";
+        consola.imprimir(accion);
+        xogador.modificarFortuna(-20);
+        consola.imprimir("O xogador " + xogador.getNome() + " pagou 20 GM. A "
+                + "súa fortuna actual é de " + xogador.getFortuna() + " GM.\n");
+    }
+
+    public void Carta13(Xogador xogador) {
+        String accion = "Carta de Sorte 13:\n";
+        accion += "Beneficio pola venta das túas accións. Recibe 185 GM.\n";
+        consola.imprimir(accion);
+        xogador.modificarFortuna(185);
+        consola.imprimir("O xogador " + xogador.getNome() + " recibiu 185 GM. A "
+                + "súa fortuna actual é de " + xogador.getFortuna() + " GM.\n");
+    }
+
+    public void Carta14(Xogador xogador, Taboleiro taboleiro,
+            ArrayList<Xogador> xogadores) throws CartosInsuficientes {
+
+        String accion = "Carta de Sorte 14:\n";
+        accion += "Avanza ata a casilla de transporte maís próxima. Se non ten "
+                + "dono podes comprarlla á banca. Se ten dono paga ao dono o "
+                + "dobre da operación indicada.\n";
+        consola.imprimir(accion);
+
+        Avatar avatar = xogador.getAvatar();
+        Transporte destino = (Transporte) taboleiro.getCasilla(
+                Math.round(avatar.getPosicion().getPosicion() / 10) + 5);
+
+        if (avatar.getPosicion().getPosicion() > destino.getPosicion()) {
+            xogador.modificarFortuna(Constantes.VALOR_VOLTA);
+            consola.imprimir("O xogador " + xogador.getNome() + " pasou pola "
+                    + "Saída. Cobrou 250 GM.\n");
+        }
+
+        avatar.getPosicion().eliminarAvatar(avatar);
+        avatar.setPosicion(destino);
+
+        comprobarCasilla(xogador, destino, xogadores, taboleiro);
     }
 
     private void pagarImpostoInmoble(Xogador xogador) {

@@ -80,7 +80,37 @@ public abstract class Carta {
                 }
             }
         } else if (casilla instanceof Transporte) {
+            Transporte transporte = (Transporte) casilla;
+            if (transporte.getDono().getNome().equals("Banca")) {
+                consola.imprimir("A casilla de transporte "
+                        + transporte.getNome() + " non ten dono, pódese"
+                        + " comprar.\n");
+            } else {
+                if (!transporte.getDono().equals(xogador)) {
+                    //Págase o dobre
+                    float alquiler = 2 * transporte.calculoAlquiler();
+                    if (xogador.getFortuna() >= alquiler) {
+                        xogador.modificarFortuna(-alquiler);
+                        transporte.getDono().modificarFortuna(alquiler);
+                        consola.imprimir("O xogador " + xogador.getNome()
+                                + " pagulle ao xogador " + transporte.getDono().getNome()
+                                + " " + alquiler + " GM. A súa fortuna actual é "
+                                + "de " + xogador.getFortuna() + "\n");
 
+                        if (avatar instanceof Esfinxe) {
+                            ((Esfinxe) avatar).sumarHistorial("alquiler/"
+                                    + alquiler + "/" + transporte.getDono().getNome()
+                                    + "/" + transporte.getNome());
+                        } else if (xogador.getAvatar() instanceof Chapeu) {
+                            ((Chapeu) avatar).sumarHistorial("alquiler/"
+                                    + alquiler + "/" + transporte.getDono().getNome()
+                                    + "/" + transporte.getNome());
+                        }
+                    } else {
+                        throw new CartosInsuficientes(xogador.getNome());
+                    }
+                }
+            }
         } else if (casilla instanceof Especial) {
             if (casilla.getNome().equals("IrCarcere")) {
                 casilla = taboleiro.getCasilla("IrCarcere");

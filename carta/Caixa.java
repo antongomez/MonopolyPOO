@@ -71,7 +71,7 @@ public class Caixa extends Carta {
 
         Avatar avatar = xogador.getAvatar();
         avatar.getPosicion().eliminarAvatar(avatar);
-        avatar.setPosicion(taboleiro.getCasilla("IrCarcere"));
+        avatar.setPosicion(taboleiro.getCasilla("Carcere"));
         xogador.setEstadoPreso(4);
     }
 
@@ -119,7 +119,7 @@ public class Caixa extends Carta {
 
     public void Carta6(Xogador xogador, ArrayList<Xogador> xogadores) {
         String accion = "Carta de Caixa 6:\n";
-        accion += "Alquilas aos teus compañeiros o castelo de Santa Cruz "
+        accion += "Alquilas aos teus companheiros o castelo de Santa Cruz "
                 + "durante unha semana. Paga 25 GM a cada xogador.\n";
         consola.imprimir(accion);
 
