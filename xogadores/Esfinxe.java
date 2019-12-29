@@ -224,7 +224,7 @@ public class Esfinxe extends Avatar {
             NonPropiedade, PropiedadeNonPertenceA, PropiedadeNonHipotecada {
         String[] partes;
         String accion;
-        for (int i = 0; i < historial.size(); i++) {
+        for (int i = (historial.size() - 1); i >= 0; i--) {
             String comando1 = "", comando2 = "", comando3 = "";
             partes = historial.get(i).split("/");
             accion = partes[0];

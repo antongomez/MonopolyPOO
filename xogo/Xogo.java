@@ -1195,10 +1195,10 @@ public class Xogo implements Comando {
             Avatar avatar = xogadores.get(turno).getAvatar();
             if (avatar instanceof Esfinxe) {
                 ((Esfinxe) avatar).sumarHistorial("deshipoteca/"
-                        + prop.getNome() + "/" + (prop.getValor() * 0.5));
+                        + (prop.getValor() * 0.5) + "/" + prop.getNome());
             } else if (avatar instanceof Chapeu) {
                 ((Chapeu) avatar).sumarHistorial("deshipoteca/"
-                        + prop.getNome() + "/" + (prop.getValor() * 0.5));
+                        + (prop.getValor() * 0.5) + "/" + prop.getNome());
             }
 
         } else {
@@ -1393,10 +1393,10 @@ public class Xogo implements Comando {
             Avatar avatar = xogadores.get(turno).getAvatar();
             if (avatar instanceof Esfinxe) {
                 ((Esfinxe) avatar).sumarHistorial("hipoteca/"
-                        + prop.getNome() + "/" + (prop.getValor() * 0.5));
+                        + (prop.getValor() * 0.5) + "/" + prop.getNome());
             } else if (avatar instanceof Chapeu) {
                 ((Chapeu) avatar).sumarHistorial("hipoteca/"
-                        + prop.getNome() + "/" + (prop.getValor() * 0.5));
+                        + (prop.getValor() * 0.5) + "/" + prop.getNome());
             }
 
         } else {
