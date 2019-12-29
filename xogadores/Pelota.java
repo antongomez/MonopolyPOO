@@ -15,7 +15,7 @@ public class Pelota extends Avatar {
 
     @Override
     public void moverEnAvanzado(int sumaDados, Taboleiro taboleiro,
-            Xogador banca) {
+            Xogador banca, Xogador hipoteca) {
         moverEnBasico(sumaDados, taboleiro);
     }
 
