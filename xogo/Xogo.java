@@ -323,10 +323,10 @@ public class Xogo implements Comando {
                 case "hipotecar":
                     try {
                         if (existeCasilla(comando1)) {
-                            hipotecar(comando1, xogador);
+                            hipotecar(comando1);
 
                         } else if (existeCasilla(comando1 + " " + comando2)) {
-                            hipotecar(comando1 + " " + comando2, xogador);
+                            hipotecar(comando1 + " " + comando2);
 
                         } else {
                             consola.imprimir("Erro de sintaxe: "
@@ -1187,6 +1187,16 @@ public class Xogo implements Comando {
         if (taboleiro.getCasilla(nomeCasilla) instanceof Propiedade) {
             Propiedade prop = (Propiedade) taboleiro.getCasilla(nomeCasilla);
             xogadores.get(turno).deshipotecar(hipotecar, prop);
+
+            Avatar avatar = xogadores.get(turno).getAvatar();
+            if (avatar instanceof Esfinxe) {
+                ((Esfinxe) avatar).sumarHistorial("deshipoteca/"
+                        + prop.getNome() + "/" + (prop.getValor() * 0.5));
+            } else if (avatar instanceof Chapeu) {
+                ((Chapeu) avatar).sumarHistorial("deshipoteca/"
+                        + prop.getNome() + "/" + (prop.getValor() * 0.5));
+            }
+
         } else {
             throw new PropNonComprable(nomeCasilla, "hipotecar");
         }
@@ -1368,18 +1378,26 @@ public class Xogo implements Comando {
     }
 
     @Override
-    public final void hipotecar(String nomeCasilla, Xogador xogador)
+    public final void hipotecar(String nomeCasilla)
             throws PropiedadeNonPertenceA, PropNonComprable {
 
         if (taboleiro.getCasilla(nomeCasilla) instanceof Propiedade) {
             Propiedade prop = (Propiedade) taboleiro.getCasilla(nomeCasilla);
 
-            xogador.hipotecar(prop, hipotecar);
+            xogadores.get(turno).hipotecar(prop, hipotecar);
+
+            Avatar avatar = xogadores.get(turno).getAvatar();
+            if (avatar instanceof Esfinxe) {
+                ((Esfinxe) avatar).sumarHistorial("hipoteca/"
+                        + prop.getNome() + "/" + (prop.getValor() * 0.5));
+            } else if (avatar instanceof Chapeu) {
+                ((Chapeu) avatar).sumarHistorial("hipoteca/"
+                        + prop.getNome() + "/" + (prop.getValor() * 0.5));
+            }
 
         } else {
             throw new PropNonComprable(nomeCasilla, "hipotecar");
         }
-
     }
 
     private boolean IdIgualAvatar(char id) {

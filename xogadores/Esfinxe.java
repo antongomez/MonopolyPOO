@@ -13,7 +13,6 @@ public class Esfinxe extends Avatar {
 
     //Exemplo: alquiler/150/Anton/A Guarda    /*sendo Victor o xogador deste avatar*/
     //Exemplo: compra/150/Lugo 
-    //Exemplo: hipoteca/150/Lugo 
     /*Se se edifica nun turno varios edificios van en comandos distintos.
       Asi, so se pode edificar ou 4-casas, 1-hotel, 1-piscina ou 1-pista,
       como moito
@@ -45,7 +44,7 @@ public class Esfinxe extends Avatar {
 
     public void sumarHistorial(String accion) {
         this.historial.add(accion);
-        System.err.println("Linha engadida: \n" + accion + "\n");
+        System.out.println("Linha engadida: \n" + accion + "\n");
     }
 
     public void resetHistorial() {

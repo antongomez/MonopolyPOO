@@ -27,7 +27,7 @@ public interface Comando {
     public void eliminarTrato(String nomeTrato) throws TratoNonExiste;
 
     //public void estatisticas();
-    public void hipotecar(String nome, Xogador xogador)
+    public void hipotecar(String nome)
             throws PropiedadeNonPertenceA, PropNonComprable;
 
     public void deshipotecar(String nomePropiedade)
