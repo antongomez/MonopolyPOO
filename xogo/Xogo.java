@@ -536,6 +536,8 @@ public class Xogo implements Comando {
                         tiradas.get(1).get("d2").setValor(1);
                         if (avatar instanceof Esfinxe) {
                             ((Esfinxe) avatar).resetHistorial();
+                        } else if (avatar instanceof Chapeu) {
+                            ((Chapeu) avatar).resetHistorial();
                         }
                         avatar.getPosicion().sumarFrecuenciaVisita(turno);
                         try {
@@ -777,10 +779,12 @@ public class Xogo implements Comando {
             }
             avatar.getPosicion().sumarFrecuenciaVisita(turno);
 
-            if (avatar instanceof Esfinxe) {
-                ((Esfinxe) avatar).resetHistorial();
-            } else if (avatar instanceof Chapeu) {
-                ((Chapeu) avatar).resetHistorial();
+            if (getTirada() == 1) {
+                if (avatar instanceof Esfinxe) {
+                    ((Esfinxe) avatar).resetHistorial();
+                } else if (avatar instanceof Chapeu) {
+                    ((Chapeu) avatar).resetHistorial();
+                }
             }
 
         } catch (NonLanzou nonlanzou) {

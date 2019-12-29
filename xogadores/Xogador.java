@@ -238,14 +238,19 @@ public class Xogador {
             throw new CartosInsuficientes(nome);
         }
 
-        if (!prop.getDono().equals(hipoteca)) {
+        if (!prop.perteneceAXogador(hipoteca)) {
             throw new PropiedadeNonHipotecada(prop.getNome());
         }
 
+        boolean atopada = false;
         for (int i = 0; i < getPropiedades().size(); i++) {
             if (getPropiedades().get(i).equals(prop)) {
-                throw new PropiedadeNonPertenceA(prop.getNome(), nome);
+                atopada = true;
             }
+        }
+
+        if (!atopada) {
+            throw new PropiedadeNonPertenceA(prop.getNome(), nome);
         }
 
         modificarFortuna(-0.5f * prop.getValor());
