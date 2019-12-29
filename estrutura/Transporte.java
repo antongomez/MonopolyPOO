@@ -1,7 +1,6 @@
 package estrutura;
 
 import xogadores.*;
-import xogo.*;
 
 public class Transporte extends Propiedade {
 

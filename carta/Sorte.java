@@ -72,7 +72,7 @@ public class Sorte extends Carta {
         consola.imprimir(accion);
 
         Avatar avatar = xogador.getAvatar();
-        Solar destino = (Solar) taboleiro.getCasilla("Lancha Motora");
+        Transporte destino = (Transporte) taboleiro.getCasilla("Lancha Motora");
 
         if (avatar.getPosicion().getPosicion() > destino.getPosicion()) {
             xogador.modificarFortuna(Constantes.VALOR_VOLTA);
@@ -274,8 +274,13 @@ public class Sorte extends Carta {
         consola.imprimir(accion);
 
         Avatar avatar = xogador.getAvatar();
-        Transporte destino = (Transporte) taboleiro.getCasilla(
-                Math.round(avatar.getPosicion().getPosicion() / 10) + 5);
+        Transporte destino;
+        if ((Math.round(avatar.getPosicion().getPosicion() / 10f) * 10 + 5) < 40) {
+            destino = (Transporte) taboleiro.getCasilla(
+                    Math.round(avatar.getPosicion().getPosicion() / 10f) * 10 + 5);
+        } else {
+            destino = (Transporte) taboleiro.getCasilla(5);
+        }
 
         if (avatar.getPosicion().getPosicion() > destino.getPosicion()) {
             xogador.modificarFortuna(Constantes.VALOR_VOLTA);

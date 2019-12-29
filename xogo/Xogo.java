@@ -1,6 +1,5 @@
 package xogo;
 
-import errosExternos.NonPropiedade;
 import errosInternos.*;
 import errosExternos.*;
 import errosExternos.errosExistencia.*;
@@ -222,7 +221,7 @@ public class Xogo implements Comando {
                     break;
                 case "comprar":
                     try {
-                        if (!poderLanzar()) {
+                        if ((!poderLanzar()) || (sonDobres(getDadosLanzados()))) {
                             if (avatar.getPosicion() instanceof Propiedade) {
                                 try {
                                     comprar((Propiedade) avatar.getPosicion(), xogador);
@@ -245,6 +244,8 @@ public class Xogo implements Comando {
                     } catch (VariableNull ex) {
                         consola.imprimir("Fin da partida");
                         sair = true;
+                    } catch (NonLanzou ex) {
+                        consola.imprimir(ex.getMessage());
                     }
                     break;
                 case "describir":
@@ -254,7 +255,7 @@ public class Xogo implements Comando {
                         }
                         describir(comando1, comando2);
                     } catch (MonoExcep ex) {
-                        consola.imprimir(ex.toString());
+                        consola.imprimir(ex.getMessage());
                     }
                     break;
 
@@ -339,7 +340,17 @@ public class Xogo implements Comando {
                         try {
                             if (poderLanzar()) {
 
-                                lanzarDados();
+                                //Paso para trucar os dados
+                                if (partes.length == 4) {
+                                    lanzarDados(Integer.parseInt(comando2),
+                                            Integer.parseInt(comando3));
+                                } else if (comando2.equals("dobres")) {
+                                    lanzarDadosDobres();
+                                } else if (partes.length == 3) {
+                                    lanzarDados(Integer.parseInt(comando2));
+                                } else {
+                                    lanzarDados();
+                                }
 
                                 if (xogador.getEstadoPreso() == 0) {
 
@@ -412,6 +423,7 @@ public class Xogo implements Comando {
                         }
                     }
                     break;
+
                 case "listar":
                     try {
                         listar(comando1, comando2);
@@ -492,6 +504,7 @@ public class Xogo implements Comando {
                     xogador();
                     break;
                 case "tele":
+                case "Tele":
                 case "teletransport":
                 case "Teletransport":
                     Casilla destino = null;
@@ -532,9 +545,55 @@ public class Xogo implements Comando {
                     if (xogadores.get(turno).equals(xogador)) {
                         if (avatar instanceof Esfinxe) {
                             ((Esfinxe) avatar).imprimirHistorial();
+                        } else if (avatar instanceof Chapeu) {
+                            ((Chapeu) avatar).imprimirHistorial();
                         }
                     }
                     break;
+                case "sumar":
+                    if (existeXogador(comando1)) {
+
+                        try {
+                            getXogador(comando1).modificarFortuna(Float.
+                                    parseFloat(comando2));
+
+                            consola.imprimir("O xogador " + comando1
+                                    + " recibiu " + comando2 + " GM. A súa "
+                                    + "fortuna actual é de "
+                                    + getXogador(comando1).getFortuna()
+                                    + " GM.\n");
+
+                        } catch (VariableNull ex) {
+                            consola.imprimir("Se queres facer trampas aprende "
+                                    + "a programar.");
+                        }
+                    } else {
+                        consola.imprimir("O xogador introducido non existe.");
+                    }
+                    break;
+
+                case "restar":
+                    if (existeXogador(comando1)) {
+
+                        try {
+                            getXogador(comando1).modificarFortuna(-Float.
+                                    parseFloat(comando2));
+
+                            consola.imprimir("O xogador " + comando1
+                                    + " perdeu " + comando2 + " GM. A súa "
+                                    + "fortuna actual é de "
+                                    + getXogador(comando1).getFortuna()
+                                    + " GM.\n");
+
+                        } catch (VariableNull ex) {
+                            consola.imprimir("Se queres facer trampas aprende "
+                                    + "a programar.");
+                        }
+                    } else {
+                        consola.imprimir("O xogador introducido non existe.");
+                    }
+                    break;
+
                 default:
                     consola.imprimir("Comando incorrecto.\n");
                     break;
@@ -559,7 +618,7 @@ public class Xogo implements Comando {
         return xogadores;
     }
 
-    public Xogador getXogador(String nome) throws VariableNull {
+    public final Xogador getXogador(String nome) throws VariableNull {
         if (nome != null) {
             for (Xogador xogador : xogadores) {
                 if (xogador.getNome().equals(nome)) {
@@ -815,7 +874,7 @@ public class Xogo implements Comando {
                     case "Sorte 1":
                     case "Sorte 2":
                     case "Sorte 3": {
-                        Collections.shuffle(cartas.get("Sorte"));
+                        //Collections.shuffle(cartas.get("Sorte"));
                         int numCarta;
                         do {
                             numCarta = Integer.parseInt(consola.ler("Escolle "
@@ -833,7 +892,7 @@ public class Xogo implements Comando {
                     case "Caixa 1":
                     case "Caixa 2":
                     case "Caixa 3": {
-                        Collections.shuffle(cartas.get("Caixa"));
+                        //Collections.shuffle(cartas.get("Caixa"));
                         int numCarta;
                         do {
                             numCarta = Integer.parseInt(consola.ler("Escolle "
@@ -1299,7 +1358,7 @@ public class Xogo implements Comando {
     }
 
     @Override
-    public void hipotecar(String nomeCasilla, Xogador xogador,
+    public final void hipotecar(String nomeCasilla, Xogador xogador,
             Xogador hipo) throws PropiedadeNonPertenceA, PropNonComprable {
 
         if (taboleiro.getCasilla(nomeCasilla) instanceof Propiedade) {
@@ -1344,6 +1403,57 @@ public class Xogo implements Comando {
             HashMap<String, Dado> dados = getDadosLanzables();
             dados.get("d1").tirardado();
             dados.get("d2").tirardado();
+
+            consola.imprimir("Dado1: " + dados.get("d1"));
+            consola.imprimir("Dado2: " + dados.get("d2"));
+            consola.imprimir("Suma dos dados: " + sumarDados(dados));
+        } else {
+            throw new NonPodeLanzar();
+        }
+
+    }
+
+    public final void lanzarDados(int dado1, int dado2)
+            throws NonPodeLanzar, VariableNull {
+
+        if (poderLanzar()) {
+            HashMap<String, Dado> dados = getDadosLanzables();
+            dados.get("d1").setValor(dado1);
+            dados.get("d2").setValor(dado2);
+
+            consola.imprimir("Dado1: " + dados.get("d1"));
+            consola.imprimir("Dado2: " + dados.get("d2"));
+            consola.imprimir("Suma dos dados: " + sumarDados(dados));
+        } else {
+            throw new NonPodeLanzar();
+        }
+
+    }
+
+    public final void lanzarDados(int dado1)
+            throws NonPodeLanzar, VariableNull {
+
+        if (poderLanzar()) {
+            HashMap<String, Dado> dados = getDadosLanzables();
+            dados.get("d1").setValor(dado1);
+            dados.get("d2").setValor(dado1);
+
+            consola.imprimir("Dado1: " + dados.get("d1"));
+            consola.imprimir("Dado2: " + dados.get("d2"));
+            consola.imprimir("Suma dos dados: " + sumarDados(dados));
+        } else {
+            throw new NonPodeLanzar();
+        }
+
+    }
+
+    public final void lanzarDadosDobres()
+            throws NonPodeLanzar, VariableNull {
+
+        if (poderLanzar()) {
+            HashMap<String, Dado> dados = getDadosLanzables();
+            dados.get("d1").tirardado();
+            dados.get("d2").setValor(dados.get("d1").getValor());
 
             consola.imprimir("Dado1: " + dados.get("d1"));
             consola.imprimir("Dado2: " + dados.get("d2"));
@@ -1760,7 +1870,7 @@ public class Xogo implements Comando {
         throw new VariableNull();
     }
 
-    public int sumarDados(HashMap<String, Dado> dados) throws VariableNull {
+    public final int sumarDados(HashMap<String, Dado> dados) throws VariableNull {
         if (dados != null) {
             return (dados.get("d1").getValor() + dados.get("d2").getValor());
         }
