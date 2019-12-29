@@ -387,25 +387,6 @@ public class Esfinxe extends Avatar {
         }
     }
 
-    public void desfacerHipoteca(float cantidade, String nomePropiedade,
-            Taboleiro taboleiro, Xogador hipoteca) throws CasillaNonExiste,
-            NonPropiedade, PropiedadeNonHipotecada, CartosInsuficientes,
-            PropiedadeNonPertenceA {
-
-        if ((nomePropiedade != null) && (hipoteca != null)) {
-            if (taboleiro.getCasilla(nomePropiedade) == null) {
-                throw new CasillaNonExiste(nomePropiedade);
-            }
-            if (!(taboleiro.getCasilla(nomePropiedade) instanceof Propiedade)) {
-                throw new NonPropiedade(nomePropiedade);
-            }
-
-            Propiedade propiedade = (Propiedade) taboleiro.getCasilla(nomePropiedade);
-            getXogador().deshipotecar(hipoteca, propiedade);
-
-        }
-    }
-
     public void desfacerDeshipoteca(float cantidade, String nomePropiedade,
             Taboleiro taboleiro, Xogador hipoteca) throws CasillaNonExiste,
             NonPropiedade, PropiedadeNonHipotecada, CartosInsuficientes,
@@ -421,6 +402,25 @@ public class Esfinxe extends Avatar {
 
             Propiedade propiedade = (Propiedade) taboleiro.getCasilla(nomePropiedade);
             getXogador().hipotecar(propiedade, hipoteca);
+
+        }
+    }
+
+    public void desfacerHipoteca(float cantidade, String nomePropiedade,
+            Taboleiro taboleiro, Xogador hipoteca) throws CasillaNonExiste,
+            NonPropiedade, PropiedadeNonHipotecada, CartosInsuficientes,
+            PropiedadeNonPertenceA {
+
+        if ((nomePropiedade != null) && (hipoteca != null)) {
+            if (taboleiro.getCasilla(nomePropiedade) == null) {
+                throw new CasillaNonExiste(nomePropiedade);
+            }
+            if (!(taboleiro.getCasilla(nomePropiedade) instanceof Propiedade)) {
+                throw new NonPropiedade(nomePropiedade);
+            }
+
+            Propiedade propiedade = (Propiedade) taboleiro.getCasilla(nomePropiedade);
+            getXogador().deshipotecar(hipoteca, propiedade);
 
         }
     }
