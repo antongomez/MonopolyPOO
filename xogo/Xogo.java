@@ -24,6 +24,7 @@ public class Xogo implements Comando {
     private HashMap<String, ArrayList<Carta>> cartas;
     private int turno = 0;
     private Xogador banca;
+    private Xogador hipotecar;
 
     public Xogo() {
         //Créanse as cartas de sorte e caixa
@@ -37,12 +38,12 @@ public class Xogo implements Comando {
         tiradas = new HashMap<>();
         crearDados();
         banca = new Xogador();
+        //Xogador ao que se lle hipoteca
+        hipotecar = new Xogador("Hipotecar");
         taboleiro = new Taboleiro(banca);
 
         int nXogadores = 0;
         Boolean sair = false;
-        //Xogador ao que se lle hipoteca
-        Xogador hipotecar = new Xogador("Hipotecar");
 
         do {
             nXogadores = Integer.parseInt(consola.ler("Cantos xogadores sodes? "));
@@ -263,10 +264,10 @@ public class Xogo implements Comando {
                     try {
 
                         if (existeCasilla(comando1)) {
-                            deshipotecar(comando1, xogador, hipotecar);
+                            deshipotecar(comando1);
 
                         } else if (existeCasilla(comando1 + " " + comando2)) {
-                            deshipotecar(comando1 + " " + comando2, xogador, hipotecar);
+                            deshipotecar(comando1 + " " + comando2);
                         } else {
                             consola.imprimir("Erro de sintaxe: "
                                     + "deshipotecar <nomePropiedade>");
@@ -322,10 +323,10 @@ public class Xogo implements Comando {
                 case "hipotecar":
                     try {
                         if (existeCasilla(comando1)) {
-                            hipotecar(comando1, xogador, hipotecar);
+                            hipotecar(comando1, xogador);
 
                         } else if (existeCasilla(comando1 + " " + comando2)) {
-                            hipotecar(comando1 + " " + comando2, xogador, hipotecar);
+                            hipotecar(comando1 + " " + comando2, xogador);
 
                         } else {
                             consola.imprimir("Erro de sintaxe: "
@@ -380,7 +381,13 @@ public class Xogo implements Comando {
                                                 + "Debes volver lanzar.\n");
 
                                         avanzar(avatar);
-                                        comprobarCasilla(avatar.getPosicion(), xogador);
+                                        if ((avatar instanceof Esfinxe) || (avatar instanceof Chapeu)) {
+                                            if (!(avatar.getModoAvanzado() && (sumarDados(getDadosLanzados()) < 4))) {
+                                                comprobarCasilla(avatar.getPosicion(), xogador);
+                                            }
+                                        } else {
+                                            comprobarCasilla(avatar.getPosicion(), xogador);
+                                        }
                                     }
 
                                 } else {
@@ -415,11 +422,12 @@ public class Xogo implements Comando {
                             consola.imprimir("Resetéase o turno."
                                     + " Volves empezar o turno");
                             resetDados();
-                        } catch (ErroInicializacion ex) {
-                            consola.imprimir("Rematouse a partida.");
-                            sair = true;
                         } catch (XogadorNonPreso ex) {
                             consola.imprimir(ex.toString());
+
+                        } catch (ErroInicializacion | ErroExterno ex) {
+                            consola.imprimir("Rematouse a partida.");
+                            sair = true;
                         }
                     }
                     break;
@@ -755,7 +763,8 @@ public class Xogo implements Comando {
 
     }
 
-    private void avanzar(Avatar avatar) throws VariableNull, ErroInicializacion {
+    private void avanzar(Avatar avatar) throws VariableNull, ErroInicializacion,
+            ErroExterno {
         try {
             if (!avatar.getModoAvanzado()) {
 
@@ -763,7 +772,8 @@ public class Xogo implements Comando {
                 avatar.getPosicion().sumarFrecuenciaVisita(turno);
             } else {
 
-                avatar.moverEnAvanzado(sumarDados(getDadosLanzados()), taboleiro, banca);
+                avatar.moverEnAvanzado(sumarDados(getDadosLanzados()),
+                        taboleiro, banca, hipotecar);
             }
             avatar.getPosicion().sumarFrecuenciaVisita(turno);
 
@@ -774,7 +784,7 @@ public class Xogo implements Comando {
             }
 
         } catch (NonLanzou nonlanzou) {
-            consola.imprimir(nonlanzou.toString());
+            consola.imprimir(nonlanzou.getMessage());
             //Solución provisional
             resetDados();
             consola.imprimir("Reseteouse o turno. Volves empezar o turno.");
@@ -1170,13 +1180,13 @@ public class Xogo implements Comando {
     }
 
     @Override
-    public final void deshipotecar(String nomeCasilla, Xogador xogador, Xogador hipo)
+    public final void deshipotecar(String nomeCasilla)
             throws CartosInsuficientes, PropiedadeNonPertenceA,
             PropiedadeNonHipotecada, PropNonComprable {
 
         if (taboleiro.getCasilla(nomeCasilla) instanceof Propiedade) {
             Propiedade prop = (Propiedade) taboleiro.getCasilla(nomeCasilla);
-            hipo.deshipotecar(xogador, prop);
+            xogadores.get(turno).deshipotecar(hipotecar, prop);
         } else {
             throw new PropNonComprable(nomeCasilla, "hipotecar");
         }
@@ -1358,13 +1368,13 @@ public class Xogo implements Comando {
     }
 
     @Override
-    public final void hipotecar(String nomeCasilla, Xogador xogador,
-            Xogador hipo) throws PropiedadeNonPertenceA, PropNonComprable {
+    public final void hipotecar(String nomeCasilla, Xogador xogador)
+            throws PropiedadeNonPertenceA, PropNonComprable {
 
         if (taboleiro.getCasilla(nomeCasilla) instanceof Propiedade) {
             Propiedade prop = (Propiedade) taboleiro.getCasilla(nomeCasilla);
 
-            xogador.hipotecar(prop, hipo);
+            xogador.hipotecar(prop, hipotecar);
 
         } else {
             throw new PropNonComprable(nomeCasilla, "hipotecar");
@@ -1558,7 +1568,7 @@ public class Xogo implements Comando {
         return false;
     }
 
-    public void moverAoCarcere(Avatar avatar) {
+    public final void moverAoCarcere(Avatar avatar) {
         if (avatar != null) {
             Casilla procedencia = avatar.getPosicion();
             Casilla destino = taboleiro.getCasilla("Carcere");

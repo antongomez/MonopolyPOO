@@ -222,8 +222,6 @@ public class Xogador {
                         modificarFortuna(((Solar) prop).venderEdificios(id));
                     }
                 }
-            } else {
-
             }
         }
 
@@ -233,25 +231,26 @@ public class Xogador {
         modificarFortuna(prop.getValor() * 0.5f);
     }
 
-    public void deshipotecar(Xogador xog, Propiedade prop)
+    public void deshipotecar(Xogador hipoteca, Propiedade prop)
             throws PropiedadeNonHipotecada, CartosInsuficientes, PropiedadeNonPertenceA {
 
         if (this.getFortuna() < (0.5f * prop.getValor())) {
             throw new CartosInsuficientes(nome);
         }
 
-        if (!prop.getDono().getNome().equals("Hipotecar")) {
+        if (!prop.getDono().equals(hipoteca)) {
             throw new PropiedadeNonHipotecada(prop.getNome());
         }
 
-        for (int i = 0; i < xog.getPropiedades().size(); i++) {
-            if (xog.getPropiedades().get(i).equals(prop)) {
+        for (int i = 0; i < getPropiedades().size(); i++) {
+            if (getPropiedades().get(i).equals(prop)) {
                 throw new PropiedadeNonPertenceA(prop.getNome(), nome);
             }
         }
 
-        xog.modificarFortuna(-0.5f * prop.getValor());
-        prop.setDono(xog);
+        modificarFortuna(-0.5f * prop.getValor());
+        prop.setDono(this);
+        hipoteca.eliminarPropiedade(prop);
         consola.imprimir("Deshipotecado correctamente.");
     }
 

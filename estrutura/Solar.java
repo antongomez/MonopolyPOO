@@ -441,33 +441,35 @@ public class Solar extends Propiedade {
     private Edificio getUltimoEdificio(String tipoEdificio) {
 
         if (tipoEdificio != null) {
-            switch (tipoEdificio) {
-                case "casa":
-                case "casas":
-                    if (!getCasas().isEmpty()) {
-                        return getUltimaCasa();
-                    } else {
-                        //Excepcion
-                    }
-                    break;
-                case "hotel":
-                case "hoteis":
-                    if (!getCasas().isEmpty()) {
-                        return getUltimoHotel();
-                    }
-                    break;
-                case "piscina":
-                case "piscinas":
-                    if (!getCasas().isEmpty()) {
-                        return getUltimaPiscina();
-                    }
-                    break;
-                case "pista":
-                case "pistas":
-                    if (!getCasas().isEmpty()) {
-                        return getUltimaPista();
-                    }
-                    break;
+            if (!edificios.isEmpty()) {
+                switch (tipoEdificio) {
+                    case "casa":
+                    case "casas":
+                        if (!getCasas().isEmpty()) {
+                            return getUltimaCasa();
+                        }
+                        break;
+                    case "hotel":
+                    case "hoteis":
+                        if (!getCasas().isEmpty()) {
+                            return getUltimoHotel();
+                        }
+                        break;
+                    case "piscina":
+                    case "piscinas":
+                        if (!getCasas().isEmpty()) {
+                            return getUltimaPiscina();
+                        }
+                        break;
+                    case "pista":
+                    case "pistas":
+                        if (!getCasas().isEmpty()) {
+                            return getUltimaPista();
+                        }
+                        break;
+                }
+            } else {
+                consola.imprimir("Erro: Non hai edificios.");
             }
         }
         return getUltimaCasa();

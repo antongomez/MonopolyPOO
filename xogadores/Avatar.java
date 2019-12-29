@@ -5,6 +5,7 @@ import java.util.Random;
 import static xogo.Xogo.consola;
 import Excepcions.*;
 import errosExternos.*;
+import errosExternos.errosExistencia.*;
 
 public abstract class Avatar {
 
@@ -102,8 +103,9 @@ public abstract class Avatar {
     }
 
     public abstract void moverEnAvanzado(int sumaDados, Taboleiro taboleiro,
-            Xogador banca) throws ErroInicializacion, CartosInsuficientes,
-            NonPodeEdificar;
+            Xogador banca, Xogador hipoteca) throws ErroInicializacion,
+            CartosInsuficientes, NonPodeEdificar, PropiedadeNonPertenceA,
+            NonPropiedade, PropiedadeNonHipotecada, CasillaNonExiste;
 
     public static char xerarId() {
         char identificador;

@@ -5,6 +5,7 @@ import xogo.*;
 import Excepcions.*;
 import java.util.ArrayList;
 import errosExternos.*;
+import errosExternos.errosExistencia.*;
 
 public class Esfinxe extends Avatar {
 
@@ -68,8 +69,9 @@ public class Esfinxe extends Avatar {
     //Utiliza moverEnBasico
     @Override
     public void moverEnAvanzado(int sumaDados, Taboleiro taboleiro,
-            Xogador banca) throws ErroInicializacion, CartosInsuficientes,
-            NonPodeEdificar {
+            Xogador banca, Xogador hipoteca) throws ErroInicializacion,
+            CartosInsuficientes, NonPodeEdificar, CasillaNonExiste,
+            PropiedadeNonPertenceA, NonPropiedade, PropiedadeNonHipotecada {
 
         if (sumaDados > 4) {
             String texto = "O xogador " + getXogador().getNome() + " avanza "
@@ -121,7 +123,7 @@ public class Esfinxe extends Avatar {
         } else if (sumaDados == 4) {
             this.moverEnBasico(sumaDados, taboleiro);
         } else {
-            desfacerCambios(taboleiro, banca);
+            desfacerCambios(taboleiro, banca, hipoteca);
         }
     }
 
@@ -218,8 +220,9 @@ public class Esfinxe extends Avatar {
         }
     }
 
-    private void desfacerCambios(Taboleiro taboleiro, Xogador banca)
-            throws CartosInsuficientes, NonPodeEdificar {
+    private void desfacerCambios(Taboleiro taboleiro, Xogador banca, Xogador hipoteca)
+            throws CartosInsuficientes, NonPodeEdificar, CasillaNonExiste,
+            NonPropiedade, PropiedadeNonPertenceA, PropiedadeNonHipotecada {
         String[] partes;
         String accion;
         for (int i = 0; i < historial.size(); i++) {
@@ -269,8 +272,20 @@ public class Esfinxe extends Avatar {
                             + comando2 + ". Tiráronse abaixo as construcións.");
                     break;
                 case "hipoteca":
+                    desfacerHipoteca(Float.parseFloat(comando1), comando2,
+                            taboleiro, hipoteca);
+                    Xogo.consola.imprimir("Desfíxose a hipoteca da propiedade "
+                            + comando2 + ". O xogador " + getXogador().getNome()
+                            + " pagou de volta as " + comando1 + " GM e"
+                            + " recibiu de volta a propiedade.");
                     break;
                 case "deshipoteca":
+                    desfacerDeshipoteca(Float.parseFloat(comando1), comando2,
+                            taboleiro, hipoteca);
+                    Xogo.consola.imprimir("Desfíxose a deshipoteca da propiedade "
+                            + comando2 + ". O xogador " + getXogador().getNome()
+                            + " recibiu de volta as " + comando1 + " GM e"
+                            + " hipotecou de novo a propiedade.");
                     break;
                 case "venta":
                     desfacerVenta(Float.parseFloat(comando1), comando2, comando3, taboleiro);
@@ -339,9 +354,8 @@ public class Esfinxe extends Avatar {
             Propiedade casilla = (Propiedade) taboleiro.getCasilla(nomeCasilla);
             if (casilla instanceof Solar) {
                 if (!(((Solar) casilla).getEdificios().isEmpty())) {
-                    for (int i = 0; i < ((Solar) casilla).getEdificios().size(); i++) {
-
-                    }
+                    System.out.println("Mal implementado historial. Orde "
+                            + "errónea Edificar-Comprar");
                 }
             }
             casilla.setDono(banca);
@@ -354,14 +368,60 @@ public class Esfinxe extends Avatar {
         desfacerPago(cantidade);
         if ((nomeCasilla != null) && (cantidade > 0) && (taboleiro != null)
                 && (edificio.length > 0)) {
+
             if (taboleiro.getCasilla(nomeCasilla) instanceof Solar) {
                 Solar solar = (Solar) taboleiro.getCasilla(nomeCasilla);
                 if (edificio.length == 2) {
                     solar.destruirEdificio(Integer.parseInt(edificio[1]));
                 } else if (edificio.length == 1) {
                     solar.destruirEdificio(edificio[0]);
+                    if (edificio[0].equals("hotel")) {
+                        /*No caso de que se destrúa un hotel, 
+                        colocamos as catro casas que habia antes*/
+                        for (int i = 0; i < 4; i++) {
+                            solar.engadirEdificio(new Casa(solar));
+                        }
+                    }
                 }
             }
+        }
+    }
+
+    public void desfacerHipoteca(float cantidade, String nomePropiedade,
+            Taboleiro taboleiro, Xogador hipoteca) throws CasillaNonExiste,
+            NonPropiedade, PropiedadeNonHipotecada, CartosInsuficientes,
+            PropiedadeNonPertenceA {
+
+        if ((nomePropiedade != null) && (hipoteca != null)) {
+            if (taboleiro.getCasilla(nomePropiedade) == null) {
+                throw new CasillaNonExiste(nomePropiedade);
+            }
+            if (!(taboleiro.getCasilla(nomePropiedade) instanceof Propiedade)) {
+                throw new NonPropiedade(nomePropiedade);
+            }
+
+            Propiedade propiedade = (Propiedade) taboleiro.getCasilla(nomePropiedade);
+            getXogador().deshipotecar(hipoteca, propiedade);
+
+        }
+    }
+
+    public void desfacerDeshipoteca(float cantidade, String nomePropiedade,
+            Taboleiro taboleiro, Xogador hipoteca) throws CasillaNonExiste,
+            NonPropiedade, PropiedadeNonHipotecada, CartosInsuficientes,
+            PropiedadeNonPertenceA {
+
+        if ((nomePropiedade != null) && (hipoteca != null)) {
+            if (taboleiro.getCasilla(nomePropiedade) == null) {
+                throw new CasillaNonExiste(nomePropiedade);
+            }
+            if (!(taboleiro.getCasilla(nomePropiedade) instanceof Propiedade)) {
+                throw new NonPropiedade(nomePropiedade);
+            }
+
+            Propiedade propiedade = (Propiedade) taboleiro.getCasilla(nomePropiedade);
+            getXogador().hipotecar(propiedade, hipoteca);
+
         }
     }
 
