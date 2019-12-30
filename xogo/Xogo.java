@@ -22,9 +22,10 @@ public class Xogo implements Comando {
     private Taboleiro taboleiro;
     private HashMap<Integer, HashMap<String, Dado>> tiradas;
     private HashMap<String, ArrayList<Carta>> cartas;
-    private int turno = 0;
+    private int turno;
     private Xogador banca;
     private Xogador hipotecar;
+    private int nXogadores;
 
     public Xogo() {
         //Créanse as cartas de sorte e caixa
@@ -41,8 +42,9 @@ public class Xogo implements Comando {
         //Xogador ao que se lle hipoteca
         hipotecar = new Xogador("Hipotecar");
         taboleiro = new Taboleiro(banca);
+        turno = 0;
+        nXogadores = 0;
 
-        int nXogadores = 0;
         Boolean sair = false;
 
         do {
@@ -66,61 +68,27 @@ public class Xogo implements Comando {
                 }
             } while (nomeIgualXogador(nomeXogador));
 
-            //Engadimos o xogador
-            xogadores.add(new Xogador(nomeXogador, taboleiro));
-            tratos.put(nomeXogador, new ArrayList());
+            crearXogador(nomeXogador);
 
-            String tipoAvatar;
-            char IdAvatar;
-
-            //Creamos o avatar
-            tipoAvatar = consola.ler("Introduce o tipo de avatar"
-                    + " do xogador " + (i + 1) + ": ");
-            IdAvatar = Avatar.xerarId();
-
-            while (IdIgualAvatar(IdAvatar)) {
-                IdAvatar = Avatar.xerarId();
-            }
-            //Engadimos o avatar
-            switch (tipoAvatar) {
-                case "Sombreiro":
-                case "sombreiro":
-                case "Chapeu":
-                case "chapeu":
-                    avatares.add(new Chapeu(IdAvatar, xogadores.get(i), taboleiro));
-                    break;
-                case "Coche":
-                case "coche":
-                    avatares.add(new Coche(IdAvatar, xogadores.get(i), taboleiro));
-                    break;
-                case "esfinxe":
-                case "Esfinxe":
-                    avatares.add(new Esfinxe(IdAvatar, xogadores.get(i), taboleiro));
-                    break;
-                case "pelota":
-                case "Pelota":
-                    avatares.add(new Pelota(IdAvatar, xogadores.get(i), taboleiro));
-                    break;
-                default:
-                    avatares.add(new Pelota(IdAvatar, xogadores.get(i), taboleiro));
-                    consola.imprimir("Introduciuse Pelota por defecto.\n");
-                    break;
-            }
-
-            xogadores.get(i).setAvatar(avatares.get(i));
-
-            consola.imprimir("O avatar do xogador e: "
+            consola.imprimir("O avatar do xogador é: "
                     + avatares.get(i).getId() + "\n");
         }
 
         taboleiro.imprimirTaboleiro();
 
         //Incio xogo
-        String menuimpreso = "=========== MENU ==========\n"
-                + "1. listar xogadores\n" + "2. listar avatares\n" + "3. listar enventa\n"
-                + "4. lanzar dados\n" + "5. rematar turno\n" + "6. xogador (indica o turno)\n"
-                + "7. describir casilla\n" + "8. describir xogador\n" + "9. describir avatar\n"
-                + "10. comprar\n" + "11. ver taboleiro\n" + "12. rematar partida\n"
+        String menuimpreso = "=========== MENÚ ==========\n"
+                + "1. listar xogadores\n" + "2. listar avatares\n"
+                + "3. listar en venta\n" + "4. listar edificios <corGrupo>\n"
+                + "5. describir casilla <nomeCasilla>\n"
+                + "6. describir xogador<nomeXogador>\n"
+                + "7. describir avatar<idAvatar>\n"
+                + "8. xogador (indica o turno)\n" + "9. estatísticas\n"
+                + "10. cambiar modo\n" + "11. sair carcere\n"
+                + "12. lanzar dados\n" + "13. comprar\n"
+                + "14. edificar <tipoedificio>\n"
+                + "15. edificar casas <númeroCasas>\n" + "16. rematar turno\n"
+                + "17. ver taboleiro\n" + "18. rematar partida\n"
                 + "===========================\n";
 
         while (!sair) {
@@ -249,6 +217,16 @@ public class Xogo implements Comando {
                         consola.imprimir(ex.getMessage());
                     }
                     break;
+
+                case "crear":
+                    if (comando1.equals("xogador")) {
+                        crearXogador(comando2);
+                    } else {
+                        consola.imprimir("Sintaxe errónea:"
+                                + " crear xogador <nome>");
+                    }
+                    break;
+
                 case "describir":
                     try {
                         if (partes.length > 3) {
@@ -1119,6 +1097,65 @@ public class Xogo implements Comando {
         }
     }
 
+    @Override
+    public final void crearXogador(String nomeXogador) {
+        if (nXogadores < 6) {
+            if (!nomeIgualXogador(nomeXogador)) {
+
+                Xogador xogador = new Xogador(nomeXogador, taboleiro);
+                xogadores.add(xogador);
+                tratos.put(nomeXogador, new ArrayList());
+
+                String tipoAvatar;
+                char IdAvatar;
+
+                //Creamos o avatar
+                tipoAvatar = consola.ler("Introduce o tipo de avatar"
+                        + " do xogador " + xogadores.size() + ": ");
+                IdAvatar = Avatar.xerarId();
+
+                while (IdIgualAvatar(IdAvatar)) {
+                    IdAvatar = Avatar.xerarId();
+                }
+
+                Avatar avatar;
+                //Engadimos o avatar
+                switch (tipoAvatar.toLowerCase()) {
+                    case "sombreiro":
+                    case "chapeu":
+                        avatar = new Chapeu(IdAvatar, xogador, taboleiro);
+                        avatares.add(avatar);
+                        break;
+                    case "coche":
+                        avatar = new Coche(IdAvatar, xogador, taboleiro);
+                        avatares.add(avatar);
+                        break;
+                    case "esfinxe":
+                        avatar = new Esfinxe(IdAvatar, xogador, taboleiro);
+                        avatares.add(avatar);
+                        break;
+                    case "pelota":
+                        avatar = new Pelota(IdAvatar, xogador, taboleiro);
+                        avatares.add(avatar);
+                        break;
+                    default:
+                        avatar = new Pelota(IdAvatar, xogador, taboleiro);
+                        avatares.add(avatar);
+                        consola.imprimir("Introduciuse pelota por defecto.\n");
+                        break;
+                }
+
+                xogador.setAvatar(avatar);
+
+            } else {
+                consola.imprimir("Xa existe un xogador co nome "
+                        + nomeXogador + ".");
+            }
+        } else {
+            consola.imprimir("Non se poden engadir máis xogadores.");
+        }
+    }
+
     public boolean dadosLanzados(HashMap<String, Dado> dados) {
         if ((dados.get("d1").getValor() == 0) && (dados.get("d2").getValor() == 0)) {
             return false;
@@ -1580,6 +1617,7 @@ public class Xogo implements Comando {
     }
 
     private boolean nomeIgualXogador(String nome) {
+
         if (!xogadores.isEmpty()) {
             for (Xogador xogador : xogadores) {
                 if (xogador.getNome().equals(nome)) {
@@ -1587,7 +1625,8 @@ public class Xogo implements Comando {
                 }
             }
         }
-        return false;
+        return (nome.isBlank()) || (nome.toLowerCase().equals("hipoteca"))
+                || (nome.toLowerCase().equals("banca"));
     }
 
     public final void moverAoCarcere(Avatar avatar) {

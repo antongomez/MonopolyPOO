@@ -18,6 +18,8 @@ public interface Comando {
 
     public void comprar(Propiedade propiedade, Xogador xogador) throws PropNonComprable, CartosInsuficientes;
 
+    public void crearXogador(String nomeXogador);
+    
     public void describir(String tipo, String nome) throws ErroSintaxe, NonExiste;
 
     public void edificar(Avatar avatar, String tipoEdificacion, int nEdificios)
