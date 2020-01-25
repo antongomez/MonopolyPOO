@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+import javax.swing.JOptionPane;
+import InterfazGrafica.*;
+
 public class Xogo implements Comando {
 
     public static final ConsolaNormal consola = new ConsolaNormal();
@@ -26,6 +29,7 @@ public class Xogo implements Comando {
     private Xogador banca;
     private Xogador hipotecar;
     private int nXogadores;
+    private InterfazGrafica interfaz;
 
     public Xogo() {
         //Créanse as cartas de sorte e caixa
@@ -44,15 +48,35 @@ public class Xogo implements Comando {
         taboleiro = new Taboleiro(banca);
         turno = 0;
         nXogadores = 0;
+        interfaz = new InterfazGrafica();
+        interfaz.setVisible(true);
 
         Boolean sair = false;
 
+        /*Cambios
+        String firstNumber = JOptionPane..showInputDialog("Enter first integer");
+        String secondNumber = JOptionPane.showInputDialog("Enter second integer");
+
+        int number1 = Integer.parseInt(firstNumber);
+        int number2 = Integer.parseInt(secondNumber);
+
+        int sum = number1 + number2; // add numbers
+
+        JOptionPane.showMessageDialog(null, "The sum is " + sum,
+                "Sum of Two Integers", JOptionPane.PLAIN_MESSAGE);
+
+        Cambios*/
         do {
-            nXogadores = Integer.parseInt(consola.ler("Cantos xogadores sodes? "));
+
+            nXogadores = Integer.parseInt(JOptionPane.showInputDialog(interfaz,
+                    "Cantos xogadores sodes?"));
             if ((nXogadores < 2) || (nXogadores > 7)) {
-                consola.imprimir("O número de xogadores non é válido.\n");
+                JOptionPane.showMessageDialog(interfaz, "O número de xogadores non é válido.\n");
             }
         } while ((nXogadores < 2) || (nXogadores > 7));
+
+        JOptionPane.showInputDialog(interfaz,
+                "Introduce o nome do Xogador 1: ");
 
         //Pedimos nome e avatar para inicializar todos os xogadores menos a banca
         for (int i = 0; i < nXogadores; i++) {
@@ -421,6 +445,7 @@ public class Xogo implements Comando {
                     switch (comando1) {
                         case "partida":
                             sair = rematarPartida();
+                            consola.imprimir("Fin da partida");
                             break;
                         case "turno":
                             try {

@@ -44,23 +44,23 @@ public interface Noticias {
         + "las confusas informaciones aparecidas durante la ma�ana de ayer y recogidas por la "
         + "agencia Reuters, en la que el portavoz de la federaci�n camerunesa habr�a pedido la "
         + "inmediata incorporaci�n del ariete azulgrana bajo amenaza de tomar medidas ante el "
-        + "m�ximo organismo futbol�stico."
+        + "m�ximo organismo futbolístico."
     };
     /**
      *
      */
     public static final String[] noticiasCortas = new String[]{
-        "Las primarias de New Hampshire han devuelto la vida, pol�ticamente hablando, "
+        "Las primarias de New Hampshire han devuelto la vida, políticamente hablando, "
         + "a Hillary Clinton y John McCain. La ex primera dama ha destrozado todos los "
-        + "pron�sticos difundidos tras su derrota en los 'caucus' de Iowa, mientras que "
-        + "el veterano senador ha superado la crisis que puso en serio peligro su campa�a "
+        + "pronósticos difundidos tras su derrota en los 'caucus' de Iowa, mientras que "
+        + "el veterano senador ha superado la crisis que puso en serio peligro su campaña "
         + "presidencial hace unos meses y se ha reincorporado al grupo de favoritos "
         + "republicanos. ",
-         "El Sevilla afronta la en�sima gran cita para cubrirse de gloria. Superado el "
-        + "bals�mico y endeble escollo del eterno rival, el Ram�n S�nchez Pizju�n recibe "
+         "El Sevilla afronta la enésima gran cita para cubrirse de gloria. Superado el "
+        + "balsámico y endeble escollo del eterno rival, el Ramón Sánchez Pizjuán recibe "
         + "esta noche a un timorato Barcelona en la que ha sido calificada sin titubeos "
-        + "por Manolo Jim�nez como la final anticipada. Eso s�, desde Nervi�n no han "
-        + "dudado en mostrar su malestar por la presencia del camerun�s Samuel Eto'o en "
+        + "por Manolo Jiménez como la final anticipada. Eso sí, desde Nervión no han "
+        + "dudado en mostrar su malestar por la presencia del camerunés Samuel Eto'o en "
         + "tan trascendente encuentro."
     };
     /**
