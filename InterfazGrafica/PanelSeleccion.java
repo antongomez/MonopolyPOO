@@ -32,8 +32,7 @@ public class PanelSeleccion extends JPanel {
     private JCheckBox formatoLargo;
     private JButton botonOk;
     private TitledBorder bordePanelSeleccion;
-
-    InterfazGrafica ventanaPrincipal;
+    private InterfazGrafica ventanaPrincipal;
 
     /**
      *

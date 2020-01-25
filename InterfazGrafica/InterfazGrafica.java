@@ -25,17 +25,23 @@ public class InterfazGrafica extends JFrame {
      *
      */
     public InterfazGrafica() {
-        initComponents();
+        iniciarVenta();
+        iniciarComponhentes();
         setupComponents();
         layoutComponents();
         addEventHandlers();
     }
 
-    /**
-     *
-     */
-    public void initComponents() {
-        //
+    private void iniciarVenta() {
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE); //A execucion finalizase cando se pecha a venta
+        this.setLocationRelativeTo(null);
+        this.setTitle("MONOPOLY GALEGO");
+        this.setMinimumSize(new Dimension(200, 200));
+        this.setSize(new Dimension(800, 600));
+    }
+
+    private void iniciarComponhentes() {
+
         this.tabs = new JTabbedPane();
         this.seleccion = new PanelSeleccion(this);
         this.split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -50,12 +56,11 @@ public class InterfazGrafica extends JFrame {
     private void setupComponents() {
         //
         this.tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-        this.setSize(new Dimension(800, 600));
         this.seleccion.setPreferredSize(new Dimension(200, 200));
         this.split.setRightComponent(tabs);
         this.split.setLeftComponent(seleccion);
 
-        menuBar.add(menuAplicacion);
+        this.menuBar.add(menuAplicacion);
     }
 
     /**
