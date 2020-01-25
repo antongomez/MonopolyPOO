@@ -75,8 +75,7 @@ public class Xogo implements Comando {
             }
         } while ((nXogadores < 2) || (nXogadores > 7));
 
-        JOptionPane.showInputDialog(interfaz,
-                "Introduce o nome do Xogador 1: ");
+        //JOptionPane.showInputDialog(interfaz, "Introduce o nome dos Xogadores", "Proba", nXogadores, icon, selectionValues, taboleiro);
 
         //Pedimos nome e avatar para inicializar todos os xogadores menos a banca
         for (int i = 0; i < nXogadores; i++) {
