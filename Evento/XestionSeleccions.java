@@ -6,11 +6,6 @@ import InterfazGrafica.PanelSeleccion;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-/**
- *
- * @author Manuel Lama Pen�n
- *
- */
 public class XestionSeleccions implements ItemListener {
     //
 

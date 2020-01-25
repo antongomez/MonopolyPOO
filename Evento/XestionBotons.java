@@ -5,11 +5,7 @@ import InterfazGrafica.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- *
- * @author Manuel Lama Pen�n
- *
- */
+
 public class XestionBotons implements ActionListener {
     //
 
