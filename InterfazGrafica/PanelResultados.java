@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
+import Evento.XestionBotons;
+
 /**
  *
  * @author Manuel Lama Pen�n
@@ -36,7 +38,7 @@ public class PanelResultados extends JPanel {
         initComponents();
         setupComponents();
         layoutComponents();
-        //addEventHandlers();
+        addEventHandlers();
     }
 
     /**
@@ -88,9 +90,10 @@ public class PanelResultados extends JPanel {
     /**
      *
      */
-    /*private void addEventHandlers() {
-        this.botonCerrar.addActionListener(new GestionBotones(this.ventanaPrincipal));
-    }*/
+    private void addEventHandlers() {
+        this.botonCerrar.addActionListener(new XestionBotons(this.ventanaPrincipal));
+    }
+
     /**
      *
      * @return

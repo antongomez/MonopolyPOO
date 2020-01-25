@@ -10,6 +10,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
+import Evento.XestionMenus;
+
 public class InterfazGrafica extends JFrame {
 
     //

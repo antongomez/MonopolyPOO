@@ -15,6 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import Evento.XestionBotons;
+import Evento.XestionSeleccions;
+
 public class PanelSeleccion extends JPanel {
     //
 
@@ -40,7 +43,7 @@ public class PanelSeleccion extends JPanel {
         initComponents();
         setupComponents();
         layoutComponents();
-        //addEventHandlers();
+        addEventHandlers();
     }
 
     /**
@@ -101,13 +104,14 @@ public class PanelSeleccion extends JPanel {
     /**
      *
      */
-    /*private void addEventHandlers() {
+    private void addEventHandlers() {
         // Añadir el gestor de eventos para el campo de texto
-        this.botonOk.addActionListener(new GestionBotones(this.ventanaPrincipal));
-        this.formatoCorto.addItemListener(new GestionSelecciones(this.ventanaPrincipal));
-        this.formatoLargo.addItemListener(new GestionSelecciones(this.ventanaPrincipal));
-        this.combo.addItemListener(new GestionSelecciones(this.ventanaPrincipal));
-    }*/
+        this.botonOk.addActionListener(new XestionBotons(this.ventanaPrincipal));
+        this.formatoCorto.addItemListener(new XestionSeleccions(this.ventanaPrincipal));
+        this.formatoLargo.addItemListener(new XestionSeleccions(this.ventanaPrincipal));
+        this.combo.addItemListener(new XestionSeleccions(this.ventanaPrincipal));
+    }
+
     /**
      *
      * @return
