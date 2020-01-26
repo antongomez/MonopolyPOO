@@ -1,6 +1,7 @@
 package VentaInicializacion;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -26,15 +27,15 @@ public class VentaInicializacion extends JFrame {
     }
 
     private void iniciarVenta() {
-        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); //A venta non se pode pechar
         this.setLocationRelativeTo(null);
         this.setTitle("Introdución de Xogadores");
         this.setMinimumSize(new Dimension(200, 200));
-        this.setSize(new Dimension(400, 400));
+        this.setSize(new Dimension(500, 600));
     }
 
     private void initComp() {
-        panel = new JPanel();
+        panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
         etiquetas = new HashMap<>();
         camposTexto = new HashMap<>();
         botonAceptar = new JButton("Aceptar");
@@ -56,9 +57,9 @@ public class VentaInicializacion extends JFrame {
             String idEtiquetaNome = (i + 1) + ".1"; //Id das etiquetas
             String idEtiquetaAvatar = (i + 1) + ".2";
 
-            etiquetas.put(idEtiquetaNome, new JLabel("Introduce o nome do "
+            etiquetas.put(idEtiquetaNome, new JLabel("Nome do "
                     + "xogador " + (i + 1) + ": "));
-            etiquetas.put(idEtiquetaAvatar, new JLabel("Introduce o tipo de "
+            etiquetas.put(idEtiquetaAvatar, new JLabel("Tipo de "
                     + "avatar do xogador " + (i + 1) + ": "));
 
             String idTextFieldNome = (i + 1) + ".1"; //Id das JTextField

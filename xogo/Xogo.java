@@ -65,19 +65,19 @@ public class Xogo implements Comando {
             if ((nXogadores < 2) || (nXogadores > 7)) {
                 JOptionPane.showMessageDialog(interfaz, "O número de xogadores non é válido.\n");
             }
-        } while ((nXogadores < 2) || (nXogadores > 7));
+        } while ((nXogadores < 2) || (nXogadores > 6));
 
         //Inicializase a venta para pedir o nome dos xogadores
         ventaInicial = new VentaInicializacion(nXogadores);
         ventaInicial.setVisible(true);
 
+        //Implementacion da accion do boton aceptar.
         ActionListener ointe = new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
 
                 boolean camposBaleiros = false;
-                boolean nomesRepetidos = false;
                 String nomeXogador;
                 String tipoAvatar;
 
@@ -85,19 +85,17 @@ public class Xogo implements Comando {
                     nomeXogador = ventaInicial.getCamposTexto().get((i + 1) + ".1").getText();
                     if (nomeXogador.isBlank()) {
                         camposBaleiros = true;
-                    } else if (nomeIgualXogador(nomeXogador)) {
-                        nomesRepetidos = true;
                     }
                 }
 
                 if (camposBaleiros) {
-                    JOptionPane.showInternalMessageDialog(ventaInicial,
+                    JOptionPane.showInternalMessageDialog(null,
                             "Non se poden deixar nomes de xogadores en branco.",
                             "Erro", JOptionPane.WARNING_MESSAGE);
-                } else if (nomesRepetidos) {
-                    JOptionPane.showInternalMessageDialog(ventaInicial,
+                } else if (nomesIguaisXogadores()) {
+                    JOptionPane.showInternalMessageDialog(null,
                             "Non se poden repetir os nomes dos xogadores.",
-                            "Erro", JOptionPane.INFORMATION_MESSAGE);
+                            "Erro", JOptionPane.WARNING_MESSAGE);
                 } else {
                     for (int i = 0; i < nXogadores; i++) {
 
@@ -117,15 +115,13 @@ public class Xogo implements Comando {
                     ventaInicial.setVisible(false);
                 }
 
-                System.out.println("Numero xogadores : " + xogadores.size()
-                        + " nXogadores: " + nXogadores + ".\n");
-
             }
         };
 
+        //Engadese a accion ao boton aceptar
         ventaInicial.engadirAccionBoton(ointe);
 
-        System.out.println(xogadores.size());
+        //Fio que espera a que se introduzan os datos na venta emerxente inicial
         if (xogadores.size() != nXogadores) {
             synchronized (ventaInicial.getBotonAceptar()) {
                 try {
@@ -135,7 +131,6 @@ public class Xogo implements Comando {
                 }
             }
         }
-        System.out.println(xogadores.size());
 
         /*
         for (int i = 0; i < nXogadores; i++) {
@@ -1711,8 +1706,27 @@ public class Xogo implements Comando {
                 }
             }
         }
+
         return (nome.isBlank()) || (nome.toLowerCase().equals("hipoteca"))
                 || (nome.toLowerCase().equals("banca"));
+    }
+
+    private boolean nomesIguaisXogadores() {
+        String nomeXogador, nomeXogador2;
+        for (int i = 0; i < nXogadores; i++) {
+            nomeXogador = ventaInicial.getCamposTexto().get((i + 1) + ".1").getText();
+            if ((nomeXogador.toLowerCase().equals("hipoteca"))
+                    || (nomeXogador.toLowerCase().equals("banca"))) {
+                return true;
+            }
+            for (int j = (i + 1); j < nXogadores; j++) {
+                nomeXogador2 = ventaInicial.getCamposTexto().get((j + 1) + ".1").getText();
+                if (nomeXogador.toLowerCase().equals(nomeXogador2.toLowerCase())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public final void moverAoCarcere(Avatar avatar) {
