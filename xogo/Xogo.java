@@ -111,7 +111,10 @@ public class Xogo implements Comando {
                         crearXogador(nomeXogador, tipoAvatar);
 
                     }
-                    ventaInicial.getBotonAceptar().notify();
+                    synchronized (ventaInicial.getBotonAceptar()) {
+                        ventaInicial.getBotonAceptar().notifyAll();
+                    }
+                    ventaInicial.setVisible(false);
                 }
 
                 System.out.println("Numero xogadores : " + xogadores.size()
@@ -124,10 +127,12 @@ public class Xogo implements Comando {
 
         System.out.println(xogadores.size());
         if (xogadores.size() != nXogadores) {
-            try {
-                ventaInicial.getBotonAceptar().wait();
-            } catch (InterruptedException ex) {
-                System.out.println("Lanzouse unha excepcion...");
+            synchronized (ventaInicial.getBotonAceptar()) {
+                try {
+                    ventaInicial.getBotonAceptar().wait();
+                } catch (InterruptedException ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
         }
         System.out.println(xogadores.size());
