@@ -78,7 +78,7 @@ public class InterfazGrafica extends JFrame {
      *
      */
     private void addEventHandlers() {
-        //this.salir.addActionListener(new GestionMenus(this));
+        //this.salir.addActionListener(new XestionMenus(this));
     }
 
     /**

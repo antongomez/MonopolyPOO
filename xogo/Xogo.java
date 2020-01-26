@@ -8,6 +8,7 @@ import carta.*;
 import estrutura.*;
 import xogadores.*;
 import consola.*;
+import VentaInicializacion.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +31,7 @@ public class Xogo implements Comando {
     private Xogador hipotecar;
     private int nXogadores;
     private InterfazGrafica interfaz;
+    private VentaInicializacion ventaInicial;
 
     public Xogo() {
         //Créanse as cartas de sorte e caixa
@@ -48,24 +50,11 @@ public class Xogo implements Comando {
         taboleiro = new Taboleiro(banca);
         turno = 0;
         nXogadores = 0;
-        interfaz = new InterfazGrafica();
-        interfaz.setVisible(true);
+        interfaz = new InterfazGrafica(); //Arrancase a interfaz
+        interfaz.setVisible(true); //Ponse visible
 
         Boolean sair = false;
 
-        /*Cambios
-        String firstNumber = JOptionPane..showInputDialog("Enter first integer");
-        String secondNumber = JOptionPane.showInputDialog("Enter second integer");
-
-        int number1 = Integer.parseInt(firstNumber);
-        int number2 = Integer.parseInt(secondNumber);
-
-        int sum = number1 + number2; // add numbers
-
-        JOptionPane.showMessageDialog(null, "The sum is " + sum,
-                "Sum of Two Integers", JOptionPane.PLAIN_MESSAGE);
-
-        Cambios*/
         do {
 
             nXogadores = Integer.parseInt(JOptionPane.showInputDialog(interfaz,
@@ -75,7 +64,9 @@ public class Xogo implements Comando {
             }
         } while ((nXogadores < 2) || (nXogadores > 7));
 
-        //JOptionPane.showInputDialog(interfaz, "Introduce o nome dos Xogadores", "Proba", nXogadores, icon, selectionValues, taboleiro);
+        //Inicializase a venta para pedir o nome dos xogadores
+        ventaInicial = new VentaInicializacion(nXogadores);
+        ventaInicial.setVisible(true);
 
         //Pedimos nome e avatar para inicializar todos os xogadores menos a banca
         for (int i = 0; i < nXogadores; i++) {
@@ -97,6 +88,7 @@ public class Xogo implements Comando {
                     + avatares.get(i).getId() + "\n");
         }
 
+        ventaInicial.setVisible(false);
         taboleiro.imprimirTaboleiro();
 
         //Incio xogo
