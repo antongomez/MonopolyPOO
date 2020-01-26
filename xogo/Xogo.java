@@ -11,11 +11,14 @@ import consola.*;
 import VentaInicializacion.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 import InterfazGrafica.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Xogo implements Comando {
 
@@ -68,7 +71,68 @@ public class Xogo implements Comando {
         ventaInicial = new VentaInicializacion(nXogadores);
         ventaInicial.setVisible(true);
 
-        //Pedimos nome e avatar para inicializar todos os xogadores menos a banca
+        ActionListener ointe = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                boolean camposBaleiros = false;
+                boolean nomesRepetidos = false;
+                String nomeXogador;
+                String tipoAvatar;
+
+                for (int i = 0; i < nXogadores; i++) {
+                    nomeXogador = ventaInicial.getCamposTexto().get((i + 1) + ".1").getText();
+                    if (nomeXogador.isBlank()) {
+                        camposBaleiros = true;
+                    } else if (nomeIgualXogador(nomeXogador)) {
+                        nomesRepetidos = true;
+                    }
+                }
+
+                if (camposBaleiros) {
+                    JOptionPane.showInternalMessageDialog(ventaInicial,
+                            "Non se poden deixar nomes de xogadores en branco.",
+                            "Erro", JOptionPane.WARNING_MESSAGE);
+                } else if (nomesRepetidos) {
+                    JOptionPane.showInternalMessageDialog(ventaInicial,
+                            "Non se poden repetir os nomes dos xogadores.",
+                            "Erro", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    for (int i = 0; i < nXogadores; i++) {
+
+                        nomeXogador = ventaInicial.getCamposTexto().get((i + 1) + ".1").getText();
+                        if (!ventaInicial.getCamposTexto().get((i + 1) + ".2").getText().isEmpty()) {
+                            tipoAvatar = ventaInicial.getCamposTexto().get((i + 1) + ".2").getText();
+                        } else {
+                            tipoAvatar = "valorPorDefecto";
+                        }
+
+                        crearXogador(nomeXogador, tipoAvatar);
+
+                    }
+                    ventaInicial.getBotonAceptar().notify();
+                }
+
+                System.out.println("Numero xogadores : " + xogadores.size()
+                        + " nXogadores: " + nXogadores + ".\n");
+
+            }
+        };
+
+        ventaInicial.engadirAccionBoton(ointe);
+
+        System.out.println(xogadores.size());
+        if (xogadores.size() != nXogadores) {
+            try {
+                ventaInicial.getBotonAceptar().wait();
+            } catch (InterruptedException ex) {
+                System.out.println("Lanzouse unha excepcion...");
+            }
+        }
+        System.out.println(xogadores.size());
+
+        /*
         for (int i = 0; i < nXogadores; i++) {
             //Creamos o xogador
             String nomeXogador = "";
@@ -87,8 +151,7 @@ public class Xogo implements Comando {
             consola.imprimir("O avatar do xogador é: "
                     + avatares.get(i).getId() + "\n");
         }
-
-        ventaInicial.setVisible(false);
+         */
         taboleiro.imprimirTaboleiro();
 
         //Incio xogo
@@ -235,7 +298,7 @@ public class Xogo implements Comando {
 
                 case "crear":
                     if (comando1.equals("xogador")) {
-                        crearXogador(comando2);
+                        crearXogador(comando2, comando3);
                     } else {
                         consola.imprimir("Sintaxe errónea:"
                                 + " crear xogador <nome>");
@@ -1114,7 +1177,7 @@ public class Xogo implements Comando {
     }
 
     @Override
-    public final void crearXogador(String nomeXogador) {
+    public final void crearXogador(String nomeXogador, String av) {
         if (nXogadores < 6) {
             if (!nomeIgualXogador(nomeXogador)) {
 
@@ -1126,8 +1189,7 @@ public class Xogo implements Comando {
                 char IdAvatar;
 
                 //Creamos o avatar
-                tipoAvatar = consola.ler("Introduce o tipo de avatar"
-                        + " do xogador " + xogadores.size() + ": ");
+                tipoAvatar = av;
                 IdAvatar = Avatar.xerarId();
 
                 while (IdIgualAvatar(IdAvatar)) {
@@ -1162,6 +1224,9 @@ public class Xogo implements Comando {
                 }
 
                 xogador.setAvatar(avatar);
+
+                System.out.println("Xogador " + xogador.getNome() + " creado.\n");
+                System.out.println("Avatar: " + avatar.getId() + ".\n");
 
             } else {
                 consola.imprimir("Xa existe un xogador co nome "

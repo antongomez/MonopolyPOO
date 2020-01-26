@@ -1,6 +1,8 @@
 package VentaInicializacion;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
@@ -24,9 +26,9 @@ public class VentaInicializacion extends JFrame {
     }
 
     private void iniciarVenta() {
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE); //A execucion finalizase cando se pecha a venta
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        this.setTitle("Introdución de XOgadores");
+        this.setTitle("Introdución de Xogadores");
         this.setMinimumSize(new Dimension(200, 200));
         this.setSize(new Dimension(400, 400));
     }
@@ -65,6 +67,7 @@ public class VentaInicializacion extends JFrame {
             camposTexto.put(idEtiquetaNome, new JTextField(20));
             camposTexto.put(idEtiquetaAvatar, new JTextField(20));
         }
+
     }
 
     private void colocarElementos(int nXogadores) {
@@ -80,4 +83,43 @@ public class VentaInicializacion extends JFrame {
     private void colocarPanel() {
         this.add(panel);
     }
+
+    public void engadirAccionBoton(ActionListener al) {
+        //Colocaselle a accion ao boton
+        botonAceptar.addActionListener(al);
+    }
+
+    //Getters e Setters
+    public JPanel getPanel() {
+        return panel;
+    }
+
+    public void setPanel(JPanel panel) {
+        this.panel = panel;
+    }
+
+    public HashMap<String, JLabel> getEtiquetas() {
+        return etiquetas;
+    }
+
+    public void setEtiquetas(HashMap<String, JLabel> etiquetas) {
+        this.etiquetas = etiquetas;
+    }
+
+    public HashMap<String, JTextField> getCamposTexto() {
+        return camposTexto;
+    }
+
+    public void setCamposTexto(HashMap<String, JTextField> camposTexto) {
+        this.camposTexto = camposTexto;
+    }
+
+    public JButton getBotonAceptar() {
+        return botonAceptar;
+    }
+
+    public void setBotonAceptar(JButton botonAceptar) {
+        this.botonAceptar = botonAceptar;
+    }
+
 }

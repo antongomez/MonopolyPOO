@@ -50,13 +50,13 @@ public class PanelSeleccion extends JPanel {
      */
     public void initComponents() {
         //
-        this.bordePanelSeleccion = BorderFactory.createTitledBorder("Selecci�n");
+        this.bordePanelSeleccion = BorderFactory.createTitledBorder("Selección");
         this.panelComponentes = new JPanel();
         this.grupoSeleccion = new ButtonGroup();
         this.etiquetaId = new JLabel("Id");
         this.etiquetaCombo = new JLabel("Noticia");
         this.id = new JTextField();
-        this.textoPie = new JTextField("Ning�n tipo seleccionado");
+        this.textoPie = new JTextField("Ningún tipo seleccionado");
         this.formatoLargo = new JCheckBox("Largo");
         this.formatoCorto = new JCheckBox("Corto");
         this.botonOk = new JButton("Ok");
