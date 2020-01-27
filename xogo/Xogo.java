@@ -223,7 +223,17 @@ public class Xogo implements Comando {
 
             //Turno do xogador
             //Facemos as declaracións e imos lendo do caso que sexa
-            String orde = consola.lerLinha("Turno de " + xogador.getNome() + "\n$> ");
+            consola.imprimir("Turno de " + xogador.getNome() + "\n$> ");
+
+            synchronized (interfaz.getPanelComandos().getCampoComandos()) {
+                try {
+                    interfaz.getPanelComandos().getCampoComandos().wait();
+                } catch (InterruptedException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+
+            String orde = interfaz.getPanelComandos().getIntroducionComando().getComando();
 
             //Xestion de comando
             String[] partes = orde.split(" ");

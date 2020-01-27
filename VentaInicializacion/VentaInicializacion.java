@@ -1,10 +1,6 @@
 package VentaInicializacion;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -35,6 +31,14 @@ public class VentaInicializacion extends JFrame {
     private void iniciarVenta() {
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); //A venta non se pode pechar
         //this.setLocationRelativeTo(null);
+
+        //Victor: Centrado que me funciona
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = pantalla.height;
+        int width = pantalla.width;
+        setLocation(width/4, height/4);
+        //Víctor
+
         this.setTitle("Introdución de Xogadores");
         this.setSize(new Dimension(500, 600));
         this.setPreferredSize(new Dimension(500, 600));
