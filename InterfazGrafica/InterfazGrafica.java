@@ -15,7 +15,7 @@ import Evento.XestionMenus;
 public class InterfazGrafica extends JFrame {
 
     //
-    private PanelSeleccion seleccion;
+    private PanelComandos panelComandos;
     private JSplitPane split;
     private JTabbedPane tabs;
     private JMenuBar menuBar;
@@ -34,7 +34,7 @@ public class InterfazGrafica extends JFrame {
 
     private void iniciarVenta() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE); //A execucion finalizase cando se pecha a venta
-        this.setLocationRelativeTo(null);
+        //this.setLocationRelativeTo(null);
         this.setTitle("MONOPOLY GALEGO");
         this.setMinimumSize(new Dimension(200, 200));
         this.setSize(new Dimension(800, 600));
@@ -43,7 +43,7 @@ public class InterfazGrafica extends JFrame {
     private void iniciarComponhentes() {
 
         this.tabs = new JTabbedPane();
-        this.seleccion = new PanelSeleccion(this);
+        this.panelComandos = new PanelComandos(this);
         this.split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 
         this.menuBar = new JMenuBar();
@@ -56,9 +56,9 @@ public class InterfazGrafica extends JFrame {
     private void setupComponents() {
         //
         this.tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-        this.seleccion.setPreferredSize(new Dimension(200, 200));
+        this.panelComandos.setPreferredSize(new Dimension(200, 200));
         this.split.setRightComponent(tabs);
-        this.split.setLeftComponent(seleccion);
+        this.split.setLeftComponent(panelComandos);
 
         this.menuBar.add(menuAplicacion);
     }
@@ -93,8 +93,8 @@ public class InterfazGrafica extends JFrame {
      *
      * @return
      */
-    public PanelSeleccion getSeleccion() {
-        return seleccion;
+    public PanelComandos getPanelComandos() {
+        return panelComandos;
     }
 
     /**

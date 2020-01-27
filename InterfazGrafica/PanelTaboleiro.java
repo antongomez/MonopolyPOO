@@ -12,14 +12,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
-import Evento.XestionBotons;
-
 /**
  *
  * @author Manuel Lama Pen�n
  *
  */
-public class PanelResultados extends JPanel {
+public class PanelTaboleiro extends JPanel {
     //
 
     private JPanel panelComponentes;
@@ -33,7 +31,7 @@ public class PanelResultados extends JPanel {
     /**
      *
      */
-    public PanelResultados(InterfazGrafica interfaz) {
+    public PanelTaboleiro(InterfazGrafica interfaz) {
         this.ventanaPrincipal = interfaz;
         initComponents();
         setupComponents();
@@ -87,17 +85,11 @@ public class PanelResultados extends JPanel {
         this.add(this.panelComponentes, BorderLayout.NORTH);
     }
 
-    /**
-     *
-     */
     private void addEventHandlers() {
-        this.botonCerrar.addActionListener(new XestionBotons(this.ventanaPrincipal));
+        //this.botonCerrar.addActionListener(new XestionBotons(this.ventanaPrincipal));
     }
 
-    /**
-     *
-     * @return
-     */
+
     public JEditorPane getAreaResultados() {
         return areaResultados;
     }

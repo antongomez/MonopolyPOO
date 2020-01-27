@@ -1,16 +1,22 @@
 package VentaInicializacion;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import javax.swing.BorderFactory;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 
 public class VentaInicializacion extends JFrame {
 
@@ -28,14 +34,17 @@ public class VentaInicializacion extends JFrame {
 
     private void iniciarVenta() {
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); //A venta non se pode pechar
-        this.setLocationRelativeTo(null);
+        //this.setLocationRelativeTo(null);
         this.setTitle("Introdución de Xogadores");
-        this.setMinimumSize(new Dimension(200, 200));
         this.setSize(new Dimension(500, 600));
+        this.setPreferredSize(new Dimension(500, 600));
     }
 
     private void initComp() {
-        panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
+        GridLayout layout = new GridLayout(13, 2);
+        layout.setHgap(10);
+        layout.setVgap(10);
+        panel = new JPanel(layout);
         etiquetas = new HashMap<>();
         camposTexto = new HashMap<>();
         botonAceptar = new JButton("Aceptar");
@@ -45,6 +54,8 @@ public class VentaInicializacion extends JFrame {
         initCompPanel(nXogadores);
 
         colocarElementos(nXogadores);
+
+        darFormaPanel();
     }
 
     private void initCompPanel(int nXogadores) {
@@ -79,6 +90,12 @@ public class VentaInicializacion extends JFrame {
             panel.add(camposTexto.get((i + 1) + ".2"));
         }
         panel.add(botonAceptar);
+    }
+
+    private void darFormaPanel() {
+        Border border = BorderFactory.createTitledBorder("Inicialización");
+        panel.setBorder(border);
+        panel.setPreferredSize(new Dimension(450, 550));
     }
 
     private void colocarPanel() {
