@@ -18,15 +18,18 @@ import javax.swing.ScrollPaneConstants;
 
 public class PanelComandos extends JPanel {
 
-    private JLabel etiquetaComando;
+    private InterfazGrafica ventaPrincipal;
+
     private JPanel panelTexto;
+    private TitledBorder bordePanelSeleccion;
+    private JLabel etiquetaComando;
     private JTextField campoComandos;
     private JLabel etiquetaHistorial;
     private JTextArea historialComandos;
+
     private JTextField textoPe;
-    private TitledBorder bordePanelSeleccion;
+
     private XestionCampoTexto introducionComando;
-    private InterfazGrafica ventaPrincipal;
 
     public PanelComandos(InterfazGrafica interfaz) {
         this.ventaPrincipal = interfaz;
@@ -38,6 +41,7 @@ public class PanelComandos extends JPanel {
 
     private void initComponents() {
 
+        this.introducionComando = new XestionCampoTexto(ventaPrincipal);
         this.panelTexto = new JPanel();
         this.bordePanelSeleccion = BorderFactory.createTitledBorder("Comandos");
         this.campoComandos = new JTextField(25);
@@ -50,7 +54,7 @@ public class PanelComandos extends JPanel {
     private void setupComponents() {
 
         //this.panelComandos.setBorder(bordePanelSeleccion);
-        //this.panelTexto.setPreferredSize(new Dimension(300, 300));
+        this.panelTexto.setPreferredSize(new Dimension(300, 600));
         this.historialComandos.setEditable(false);
         this.textoPe.setEnabled(false);
         this.textoPe.setDisabledTextColor(Color.BLUE);
@@ -61,6 +65,7 @@ public class PanelComandos extends JPanel {
     private void layoutComponents() {
 
         FlowLayout layout = new FlowLayout();
+        layout.setVgap(7);
 
         this.panelTexto.setLayout(layout);
         this.panelTexto.add(etiquetaComando);
@@ -70,7 +75,7 @@ public class PanelComandos extends JPanel {
         JScrollPane scroll = new JScrollPane(historialComandos,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scroll.setSize(historialComandos.getPreferredSize());
+        scroll.setSize(historialComandos.getSize());
         this.add(scroll);
 
         this.setLayout(new BorderLayout());
@@ -79,7 +84,7 @@ public class PanelComandos extends JPanel {
     }
 
     private void addEventHandlers() {
-        this.campoComandos.addKeyListener(new XestionCampoTexto(ventaPrincipal));
+        this.campoComandos.addKeyListener(introducionComando);
         /*
         this.formatoCorto.addItemListener(new XestionCampoTexto(this.ventaPrincipal));
         this.formatoLargo.addItemListener(new XestionCampoTexto(this.ventaPrincipal));
