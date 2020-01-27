@@ -16,8 +16,8 @@ public class InterfazGrafica extends JFrame {
 
     //
     private PanelComandos panelComandos;
-    private JSplitPane split;
-    private JTabbedPane tabs;
+    private JSplitPane split1;
+    private PanelTaboleiro tab;
     private JMenuBar menuBar;
     private JMenu menuAplicacion;
 
@@ -42,9 +42,9 @@ public class InterfazGrafica extends JFrame {
 
     private void iniciarComponhentes() {
 
-        this.tabs = new JTabbedPane();
+        this.tab = new PanelTaboleiro(this);
         this.panelComandos = new PanelComandos(this);
-        this.split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        this.split1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 
         this.menuBar = new JMenuBar();
         this.menuAplicacion = new JMenu("Aplicacion");
@@ -54,11 +54,10 @@ public class InterfazGrafica extends JFrame {
      *
      */
     private void setupComponents() {
-        //
-        this.tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-        this.panelComandos.setPreferredSize(new Dimension(200, 200));
-        this.split.setRightComponent(tabs);
-        this.split.setLeftComponent(panelComandos);
+
+        //this.panelComandos.setPreferredSize(new Dimension(300, 300));
+        this.split1.setRightComponent(tab);
+        this.split1.setLeftComponent(panelComandos);
 
         this.menuBar.add(menuAplicacion);
     }
@@ -67,9 +66,9 @@ public class InterfazGrafica extends JFrame {
      *
      */
     private void layoutComponents() {
-        //
+
         this.getContentPane().setLayout(new BorderLayout());
-        this.getContentPane().add(this.split);
+        this.getContentPane().add(this.split1);
 
         this.setJMenuBar(menuBar);
     }
@@ -78,7 +77,7 @@ public class InterfazGrafica extends JFrame {
      *
      */
     private void addEventHandlers() {
-        //this.salir.addActionListener(new XestionMenus(this));
+
     }
 
     /**
@@ -101,15 +100,15 @@ public class InterfazGrafica extends JFrame {
      *
      * @return
      */
-    public JSplitPane getSplit() {
-        return split;
+    public JSplitPane getSplit1() {
+        return split1;
     }
 
     /**
      *
      * @return
      */
-    public JTabbedPane getTabs() {
-        return tabs;
+    public PanelTaboleiro getTab() {
+        return tab;
     }
 }

@@ -12,7 +12,9 @@ import javax.swing.border.TitledBorder;
 
 import Evento.XestionCampoTexto;
 import java.awt.FlowLayout;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
 public class PanelComandos extends JPanel {
     //
@@ -42,18 +44,18 @@ public class PanelComandos extends JPanel {
 
         this.bordePanelSeleccion = BorderFactory.createTitledBorder("Comandos");
         this.panelComandos = new JPanel();
-        this.campoComandos = new JTextField(30);
+        this.campoComandos = new JTextField(25);
         this.etiquetaComando = new JLabel("Introduce aquí os comandos: ");
-        this.historialComandos = new JTextArea(20, 30);
+        this.historialComandos = new JTextArea(15, 25);
         this.etiquetaHistorial = new JLabel("Historial: ");
         this.textoPe = new JTextField("Ningún tipo seleccionado");
     }
 
     private void setupComponents() {
 
-        this.panelComandos.setBorder(bordePanelSeleccion);
-        this.panelComandos.setPreferredSize(new Dimension(50, 125));
-        historialComandos.setEditable(false);
+        //this.panelComandos.setBorder(bordePanelSeleccion);
+        this.historialComandos.setEditable(false);
+        this.historialComandos.setMaximumSize(historialComandos.getPreferredSize());
         this.textoPe.setEnabled(false);
         this.textoPe.setDisabledTextColor(Color.BLUE);
         this.textoPe.setBackground(this.getBackground());
@@ -63,12 +65,18 @@ public class PanelComandos extends JPanel {
     private void layoutComponents() {
 
         FlowLayout layout = new FlowLayout();
-        layout.setVgap(5);
+        layout.setVgap(7);
+
         this.panelComandos.setLayout(layout);
         this.panelComandos.add(etiquetaComando);
         this.panelComandos.add(campoComandos);
         this.panelComandos.add(etiquetaHistorial);
         this.panelComandos.add(historialComandos);
+        JScrollPane scroll = new JScrollPane(historialComandos,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scroll.setSize(historialComandos.getPreferredSize());
+        this.panelComandos.add(scroll);
 
         this.setLayout(new BorderLayout());
         this.add(this.panelComandos, BorderLayout.NORTH);

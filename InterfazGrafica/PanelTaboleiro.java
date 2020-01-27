@@ -4,12 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -21,116 +23,80 @@ public class PanelTaboleiro extends JPanel {
     //
 
     private JPanel panelComponentes;
-    private JScrollPane scroll;
-    private JEditorPane areaResultados;
-    private JButton botonCerrar;
-    private TitledBorder bordeAreaResultados;
+    private JSplitPane split;
+    private JPanel panelTab;
+    private ArrayList<ArrayList<JButton>> casillas;
+    private InterfazGrafica ventaPrincipal;
 
-    private InterfazGrafica ventanaPrincipal;
-
-    /**
-     *
-     */
     public PanelTaboleiro(InterfazGrafica interfaz) {
-        this.ventanaPrincipal = interfaz;
+        this.ventaPrincipal = interfaz;
         initComponents();
+        creacionCasillas();
         setupComponents();
         layoutComponents();
         addEventHandlers();
     }
 
-    /**
-     *
-     */
     public void initComponents() {
-        //
-        this.bordeAreaResultados = BorderFactory.createTitledBorder("Resultados");
+
         this.panelComponentes = new JPanel();
-        this.areaResultados = new JEditorPane();
-        this.scroll = new JScrollPane(this.areaResultados);
-        this.botonCerrar = new JButton("Cerrar");
+        this.split = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        this.panelTab = new JPanel();
+        this.casillas = new ArrayList<>();
+
     }
 
-    /**
-     *
-     */
+    private void creacionCasillas() {
+        ArrayList<JButton> ladoSur = new ArrayList<>();
+
+        JButton Saida = new JButton();
+        ladoSur.add(Saida);
+        JButton SantaCruz = new JButton();
+        ladoSur.add(SantaCruz);
+        JButton Caixa1 = new JButton();
+        ladoSur.add(Caixa1);
+        JButton Arteixo = new JButton();
+        ladoSur.add(Arteixo);
+        JButton IRPF = new JButton();
+        ladoSur.add(IRPF);
+        JButton Autobus = new JButton();
+        ladoSur.add(Autobus);
+        JButton Meanho = new JButton();
+        ladoSur.add(Meanho);
+        JButton Sorte1 = new JButton();
+        ladoSur.add(Sorte1);
+        JButton Corrubedo = new JButton();
+        ladoSur.add(Corrubedo);
+        JButton Lugo = new JButton();
+        ladoSur.add(Lugo);
+
+        casillas.add(ladoSur);
+
+        ArrayList<JButton> ladoOeste = new ArrayList<>();
+        ArrayList<JButton> ladoNorte = new ArrayList<>();
+        ArrayList<JButton> ladoEste = new ArrayList<>();
+    }
+
     private void setupComponents() {
-        //
-        this.scroll.setBorder(bordeAreaResultados);
-        this.scroll.setPreferredSize(new Dimension(400, 480));
-        this.scroll.setMinimumSize(new Dimension(400, 500));
-        this.areaResultados.setContentType("text/html");
+
+        BorderLayout layout = new BorderLayout();
+        this.panelTab.setLayout(layout);
+        split.setLeftComponent(panelTab);
     }
 
-    /**
-     *
-     */
     private void layoutComponents() {
-        //
-        GridBagLayout layout = new GridBagLayout();
-        GridBagConstraints restricciones = new GridBagConstraints();
-        this.panelComponentes.setLayout(layout);
 
-        restricciones.fill = GridBagConstraints.HORIZONTAL;
-        restricciones.gridwidth = GridBagConstraints.REMAINDER;
-        layout.setConstraints(this.scroll, restricciones);
-        this.panelComponentes.add(this.scroll);
-
-        restricciones.fill = GridBagConstraints.NONE;
-        restricciones.weightx = 0.0;
-        layout.setConstraints(this.botonCerrar, restricciones);
-        this.panelComponentes.add(this.botonCerrar);
-
-        this.setLayout(new BorderLayout());
-        this.add(this.panelComponentes, BorderLayout.NORTH);
     }
 
     private void addEventHandlers() {
-        //this.botonCerrar.addActionListener(new XestionBotons(this.ventanaPrincipal));
+        //this.botonCerrar.addActionListener(new XestionBotons(this.ventaPrincipal));
     }
 
-
-    public JEditorPane getAreaResultados() {
-        return areaResultados;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public TitledBorder getBordeAreaResultados() {
-        return bordeAreaResultados;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public JButton getBotonCerrar() {
-        return botonCerrar;
-    }
-
-    /**
-     *
-     * @return
-     */
     public JPanel getPanelComponentes() {
         return panelComponentes;
     }
 
-    /**
-     *
-     * @return
-     */
-    public JScrollPane getScroll() {
-        return scroll;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public InterfazGrafica getVentanaPrincipal() {
-        return ventanaPrincipal;
+    public InterfazGrafica getVentaPrincipal() {
+        return ventaPrincipal;
     }
 }
