@@ -75,8 +75,8 @@ public class PanelComandos extends JPanel {
         JScrollPane scroll = new JScrollPane(historialComandos,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scroll.setSize(historialComandos.getSize());
-        this.add(scroll);
+        scroll.setSize(historialComandos.getPreferredSize());
+        this.panelTexto.add(scroll);
 
         this.setLayout(new BorderLayout());
         this.add(panelTexto, BorderLayout.NORTH);
