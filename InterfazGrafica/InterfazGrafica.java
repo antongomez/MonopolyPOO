@@ -17,7 +17,7 @@ public class InterfazGrafica extends JFrame {
     //
     private PanelComandos panelComandos;
     private JSplitPane split1;
-    private PanelTaboleiro tab;
+    private PanelDereito tab;
     private JMenuBar menuBar;
     private JMenu menuAplicacion;
 
@@ -42,7 +42,7 @@ public class InterfazGrafica extends JFrame {
 
     private void iniciarComponhentes() {
 
-        this.tab = new PanelTaboleiro(this);
+        this.tab = new PanelDereito(this);
         this.panelComandos = new PanelComandos(this);
         this.split1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 
@@ -50,9 +50,6 @@ public class InterfazGrafica extends JFrame {
         this.menuAplicacion = new JMenu("Aplicacion");
     }
 
-    /**
-     *
-     */
     private void setupComponents() {
 
         //this.panelComandos.setPreferredSize(new Dimension(300, 300));
@@ -62,9 +59,6 @@ public class InterfazGrafica extends JFrame {
         this.menuBar.add(menuAplicacion);
     }
 
-    /**
-     *
-     */
     private void layoutComponents() {
 
         this.getContentPane().setLayout(new BorderLayout());
@@ -73,42 +67,23 @@ public class InterfazGrafica extends JFrame {
         this.setJMenuBar(menuBar);
     }
 
-    /**
-     *
-     */
     private void addEventHandlers() {
 
     }
 
-    /**
-     *
-     * @return
-     */
     public JMenu getMenuSeleccion() {
         return menuAplicacion;
     }
 
-    /**
-     *
-     * @return
-     */
     public PanelComandos getPanelComandos() {
         return panelComandos;
     }
 
-    /**
-     *
-     * @return
-     */
     public JSplitPane getSplit1() {
         return split1;
     }
 
-    /**
-     *
-     * @return
-     */
-    public PanelTaboleiro getTab() {
+    public PanelDereito getTab() {
         return tab;
     }
 }

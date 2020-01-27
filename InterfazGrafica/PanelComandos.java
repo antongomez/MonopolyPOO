@@ -20,7 +20,6 @@ public class PanelComandos extends JPanel {
     //
 
     private JPanel panelComandos;
-
     private JLabel etiquetaComando;
     private JTextField campoComandos;
     private JLabel etiquetaHistorial;
