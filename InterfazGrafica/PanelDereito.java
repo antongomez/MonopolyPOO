@@ -14,7 +14,6 @@ import javax.swing.JSplitPane;
 public class PanelDereito extends JPanel {
 
     private JPanel panelComponentes;
-    private JSplitPane split;
     private PanelTaboleiro panelTab;
     private InterfazGrafica ventaPrincipal;
 
@@ -28,24 +27,21 @@ public class PanelDereito extends JPanel {
 
     public void initComponents() {
 
-        this.panelComponentes = new JPanel();
-        this.split = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        this.panelComponentes = ventaPrincipal.getPanelComandos();
         this.panelTab = new PanelTaboleiro(ventaPrincipal);
-        this.setPreferredSize(new Dimension(400, 400));
 
     }
 
     private void setupComponents() {
-        //split.add(panelTab);
+
     }
 
     private void layoutComponents() {
-        //this.add(split);
         this.add(panelTab);
     }
 
     private void addEventHandlers() {
-        //this.botonCerrar.addActionListener(new XestionBotons(this.ventaPrincipal));
+
     }
 
     //Getters e Setters
@@ -53,8 +49,23 @@ public class PanelDereito extends JPanel {
         return panelComponentes;
     }
 
+    public void setPanelComponentes(JPanel panelComponentes) {
+        this.panelComponentes = panelComponentes;
+    }
+
+    public PanelTaboleiro getPanelTab() {
+        return panelTab;
+    }
+
+    public void setPanelTab(PanelTaboleiro panelTab) {
+        this.panelTab = panelTab;
+    }
+
     public InterfazGrafica getVentaPrincipal() {
         return ventaPrincipal;
     }
 
+    public void setVentaPrincipal(InterfazGrafica ventaPrincipal) {
+        this.ventaPrincipal = ventaPrincipal;
+    }
 }
