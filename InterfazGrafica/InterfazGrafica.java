@@ -11,15 +11,12 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
 import Evento.XestionMenus;
+import java.awt.Color;
 
 public class InterfazGrafica extends JFrame {
 
-    //
     private PanelComandos panelComandos;
-    private JSplitPane split1;
     private PanelDereito tab;
-    private JMenuBar menuBar;
-    private JMenu menuAplicacion;
 
     /**
      *
@@ -34,53 +31,37 @@ public class InterfazGrafica extends JFrame {
 
     private void iniciarVenta() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE); //A execucion finalizase cando se pecha a venta
-        //this.setLocationRelativeTo(null);
+        this.setLayout(new BorderLayout());
         this.setTitle("MONOPOLY GALEGO");
-        this.setMinimumSize(new Dimension(200, 200));
-        this.setSize(new Dimension(800, 600));
+        this.setMinimumSize(new Dimension(800, 600));
+        this.setSize(new Dimension(1000, 700));
     }
 
     private void iniciarComponhentes() {
 
         this.tab = new PanelDereito(this);
         this.panelComandos = new PanelComandos(this);
-        this.split1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-
-        this.menuBar = new JMenuBar();
-        this.menuAplicacion = new JMenu("Aplicacion");
     }
 
     private void setupComponents() {
 
-        //this.panelComandos.setPreferredSize(new Dimension(300, 300));
-        this.split1.setRightComponent(tab);
-        this.split1.setLeftComponent(panelComandos);
-
-        this.menuBar.add(menuAplicacion);
+        this.panelComandos.setPreferredSize(new Dimension(300, 400));
+        this.panelComandos.setBackground(Color.red);
+        this.panelComandos.setOpaque(false);
+        this.add(tab, BorderLayout.CENTER);
+        this.add(panelComandos, BorderLayout.WEST);
     }
 
     private void layoutComponents() {
 
-        this.getContentPane().setLayout(new BorderLayout());
-        this.getContentPane().add(this.split1);
-
-        this.setJMenuBar(menuBar);
     }
 
     private void addEventHandlers() {
 
     }
 
-    public JMenu getMenuSeleccion() {
-        return menuAplicacion;
-    }
-
     public PanelComandos getPanelComandos() {
         return panelComandos;
-    }
-
-    public JSplitPane getSplit1() {
-        return split1;
     }
 
     public PanelDereito getTab() {

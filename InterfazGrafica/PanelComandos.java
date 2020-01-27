@@ -17,20 +17,17 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
 public class PanelComandos extends JPanel {
-    //
 
-    private JPanel panelComandos;
     private JLabel etiquetaComando;
+    private JPanel campoTexto;
     private JTextField campoComandos;
     private JLabel etiquetaHistorial;
     private JTextArea historialComandos;
     private JTextField textoPe;
     private TitledBorder bordePanelSeleccion;
+    private XestionCampoTexto introducionComando;
     private InterfazGrafica ventaPrincipal;
 
-    /**
-     *
-     */
     public PanelComandos(InterfazGrafica interfaz) {
         this.ventaPrincipal = interfaz;
         initComponents();
@@ -41,8 +38,8 @@ public class PanelComandos extends JPanel {
 
     private void initComponents() {
 
+        //this.setBackground(Color.blue);
         this.bordePanelSeleccion = BorderFactory.createTitledBorder("Comandos");
-        this.panelComandos = new JPanel();
         this.campoComandos = new JTextField(25);
         this.etiquetaComando = new JLabel("Introduce aquí os comandos: ");
         this.historialComandos = new JTextArea(15, 25);
@@ -54,7 +51,6 @@ public class PanelComandos extends JPanel {
 
         //this.panelComandos.setBorder(bordePanelSeleccion);
         this.historialComandos.setEditable(false);
-        this.historialComandos.setMaximumSize(historialComandos.getPreferredSize());
         this.textoPe.setEnabled(false);
         this.textoPe.setDisabledTextColor(Color.BLUE);
         this.textoPe.setBackground(this.getBackground());
@@ -64,27 +60,23 @@ public class PanelComandos extends JPanel {
     private void layoutComponents() {
 
         FlowLayout layout = new FlowLayout();
-        layout.setVgap(7);
 
-        this.panelComandos.setLayout(layout);
-        this.panelComandos.add(etiquetaComando);
-        this.panelComandos.add(campoComandos);
-        this.panelComandos.add(etiquetaHistorial);
-        this.panelComandos.add(historialComandos);
+        this.setLayout(layout);
+        this.add(etiquetaComando);
+        this.add(campoComandos);
+        this.add(etiquetaHistorial);
+        this.add(historialComandos);
         JScrollPane scroll = new JScrollPane(historialComandos,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroll.setSize(historialComandos.getPreferredSize());
-        this.panelComandos.add(scroll);
+        this.add(scroll);
 
         this.setLayout(new BorderLayout());
-        this.add(this.panelComandos, BorderLayout.NORTH);
+        this.add(this, BorderLayout.NORTH);
         this.add(this.textoPe, BorderLayout.SOUTH);
     }
 
-    /**
-     *
-     */
     private void addEventHandlers() {
         this.campoComandos.addKeyListener(new XestionCampoTexto(ventaPrincipal));
         /*
@@ -96,10 +88,6 @@ public class PanelComandos extends JPanel {
     //Getters e Setters
     public TitledBorder getBordePanelSeleccion() {
         return bordePanelSeleccion;
-    }
-
-    public JPanel getPanelComandos() {
-        return panelComandos;
     }
 
     public InterfazGrafica getVentaPrincipal() {
@@ -141,4 +129,5 @@ public class PanelComandos extends JPanel {
     public void setHistorialComandos(JTextArea historialComandos) {
         this.historialComandos = historialComandos;
     }
+
 }
