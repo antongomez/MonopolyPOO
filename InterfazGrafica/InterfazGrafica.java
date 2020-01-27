@@ -45,9 +45,8 @@ public class InterfazGrafica extends JFrame {
 
     private void setupComponents() {
 
-        this.panelComandos.setPreferredSize(new Dimension(300, 400));
+        //this.panelComandos.setPreferredSize(new Dimension(300, 400));
         this.panelComandos.setBackground(Color.red);
-        this.panelComandos.setOpaque(false);
         this.add(tab, BorderLayout.CENTER);
         this.add(panelComandos, BorderLayout.WEST);
     }

@@ -19,7 +19,7 @@ import javax.swing.ScrollPaneConstants;
 public class PanelComandos extends JPanel {
 
     private JLabel etiquetaComando;
-    private JPanel campoTexto;
+    private JPanel panelTexto;
     private JTextField campoComandos;
     private JLabel etiquetaHistorial;
     private JTextArea historialComandos;
@@ -38,7 +38,7 @@ public class PanelComandos extends JPanel {
 
     private void initComponents() {
 
-        //this.setBackground(Color.blue);
+        this.panelTexto = new JPanel();
         this.bordePanelSeleccion = BorderFactory.createTitledBorder("Comandos");
         this.campoComandos = new JTextField(25);
         this.etiquetaComando = new JLabel("Introduce aquí os comandos: ");
@@ -50,6 +50,7 @@ public class PanelComandos extends JPanel {
     private void setupComponents() {
 
         //this.panelComandos.setBorder(bordePanelSeleccion);
+        //this.panelTexto.setPreferredSize(new Dimension(300, 300));
         this.historialComandos.setEditable(false);
         this.textoPe.setEnabled(false);
         this.textoPe.setDisabledTextColor(Color.BLUE);
@@ -61,11 +62,11 @@ public class PanelComandos extends JPanel {
 
         FlowLayout layout = new FlowLayout();
 
-        this.setLayout(layout);
-        this.add(etiquetaComando);
-        this.add(campoComandos);
-        this.add(etiquetaHistorial);
-        this.add(historialComandos);
+        this.panelTexto.setLayout(layout);
+        this.panelTexto.add(etiquetaComando);
+        this.panelTexto.add(campoComandos);
+        this.panelTexto.add(etiquetaHistorial);
+        this.panelTexto.add(historialComandos);
         JScrollPane scroll = new JScrollPane(historialComandos,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -73,7 +74,7 @@ public class PanelComandos extends JPanel {
         this.add(scroll);
 
         this.setLayout(new BorderLayout());
-        this.add(this, BorderLayout.NORTH);
+        this.add(panelTexto, BorderLayout.NORTH);
         this.add(this.textoPe, BorderLayout.SOUTH);
     }
 
@@ -128,6 +129,22 @@ public class PanelComandos extends JPanel {
 
     public void setHistorialComandos(JTextArea historialComandos) {
         this.historialComandos = historialComandos;
+    }
+
+    public JPanel getPanelTexto() {
+        return panelTexto;
+    }
+
+    public void setPanelTexto(JPanel campoTexto) {
+        this.panelTexto = campoTexto;
+    }
+
+    public XestionCampoTexto getIntroducionComando() {
+        return introducionComando;
+    }
+
+    public void setIntroducionComando(XestionCampoTexto introducionComando) {
+        this.introducionComando = introducionComando;
     }
 
 }
