@@ -8,11 +8,8 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JEditorPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.border.TitledBorder;
 
 /**
  *
@@ -79,7 +76,7 @@ public class PanelTaboleiro extends JPanel {
 
     private void setupComponents() {
 
-        BorderLayout layout = new BorderLayout();
+        BorderLayout layout = new BorderLayout(0,0);
         this.panelTab.setLayout(layout);
         split.setLeftComponent(panelTab);
     }
