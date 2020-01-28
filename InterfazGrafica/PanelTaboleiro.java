@@ -164,7 +164,12 @@ public class PanelTaboleiro extends JPanel {
         }
 
         //Colocanse as imaxes enriba dos botons
-        colocarIconos();
+        JButton casilla;
+
+        casilla = casillas.get(0).get(0);
+        ImageIcon imaxeSaida = new ImageIcon("FotosMonopoly/SantaCruz.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(50, 62, Image.SCALE_SMOOTH)));
+        //colocarIconos();
 
         GridLayout layoutSur = new GridLayout(1, 11, 0, 0);
 
