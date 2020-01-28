@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class PanelTaboleiro extends JPanel {
@@ -154,24 +155,6 @@ public class PanelTaboleiro extends JPanel {
             }
         }
 
-        for (int j = 8;
-                j >= 0; j--) {
-            setUpCasilla(casillas.get(1).get(j));
-
-        }
-
-        for (int j = 0;
-                j <= 10; j++) {
-            setUpCasilla(casillas.get(2).get(j));
-
-        }
-
-        for (int j = 0;
-                j <= 8; j++) {
-            setUpCasilla(casillas.get(3).get(j));
-
-        }
-
         //Colocanse as imaxes enriba dos botons
         colocarIconos();
 
@@ -225,7 +208,7 @@ public class PanelTaboleiro extends JPanel {
         JButton casilla;
 
         casilla = casillas.get(0).get(0);
-        ImageIcon imaxeSaida = new ImageIcon("FotosMonopoly/SantaCruz.png");
+        ImageIcon imaxeSaida = new ImageIcon("SantaCruz.png");
         casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
     }
 
@@ -236,6 +219,23 @@ public class PanelTaboleiro extends JPanel {
         this.add(panelNorte, BorderLayout.NORTH);
         this.add(panelEste, BorderLayout.EAST);
         this.add(new JPanel(), BorderLayout.CENTER);
+    }
+
+    public JButton getCasilla(int i) {
+        if (i <= 10) {
+            return casillas.get(0).get(i);
+        } else if (i <= 19) {
+            return casillas.get(1).get(i - 11);
+        } else if (i <= 30) {
+            return casillas.get(2).get(i - 20);
+        } else if (i <= 39) {
+            return casillas.get(3).get(i - 31);
+        }
+        //Erro
+        JOptionPane.showInternalMessageDialog(null,
+                "Victor pasache mal o número da casilla",
+                "Erro", JOptionPane.WARNING_MESSAGE);
+        return casillas.get(0).get(0);
     }
 
     //Getters e Setters
