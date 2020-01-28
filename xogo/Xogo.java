@@ -51,8 +51,10 @@ public class Xogo implements Comando {
         taboleiro = new Taboleiro(banca);
         turno = 0;
         nXogadores = 0;
-        interfaz = new InterfazGrafica(); //Arrancase a interfaz
+        interfaz = new InterfazGrafica(taboleiro); //Arrancase a interfaz
         interfaz.setVisible(true); //Ponse visible
+
+
 
         Boolean sair = false;
 

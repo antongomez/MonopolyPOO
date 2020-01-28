@@ -1,5 +1,7 @@
 package InterfazGrafica;
 
+import estrutura.Taboleiro;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Color;
@@ -10,9 +12,11 @@ import javax.swing.JFrame;
 public class InterfazGrafica extends JFrame {
 
     private PanelComandos panelComandos;
-    private PanelDereito tab;
+    private PanelTaboleiro tab;
+    private Taboleiro taboleiro;
 
-    public InterfazGrafica() {
+    public InterfazGrafica(Taboleiro taboleiro) {
+        this.taboleiro = taboleiro;
         iniciarVenta();
         iniciarComponhentes();
         setupComponents();
@@ -33,7 +37,7 @@ public class InterfazGrafica extends JFrame {
 
     private void iniciarComponhentes() {
 
-        this.tab = new PanelDereito(this);
+        this.tab = new PanelTaboleiro(this, taboleiro);
         this.panelComandos = new PanelComandos(this);
     }
 
@@ -55,7 +59,7 @@ public class InterfazGrafica extends JFrame {
         return panelComandos;
     }
 
-    public PanelDereito getTab() {
+    /*public PanelDereito getTab() {
         return tab;
-    }
+    }*/
 }

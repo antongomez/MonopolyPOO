@@ -1,5 +1,6 @@
 package InterfazGrafica;
 
+import Evento.DescripcionTaboleiro;
 import estrutura.Taboleiro;
 
 import java.awt.BorderLayout;
@@ -24,12 +25,13 @@ public class PanelTaboleiro extends JPanel {
     private JPanel panelNorte;
     private JPanel panelEste;
 
-    public PanelTaboleiro(InterfazGrafica ventaPrincipal) {
+    public PanelTaboleiro(InterfazGrafica ventaPrincipal, Taboleiro taboleiro) {
         this.ventaPrincipal = ventaPrincipal;
         initComp();
         creacionCasillas();
         setUpComp();
         layoutComp();
+        activardescrp(ventaPrincipal, taboleiro);
 
     }
 
@@ -144,9 +146,12 @@ public class PanelTaboleiro extends JPanel {
         casillas.add(ladoEste);
     }
 
-    public void activardescrp(Taboleiro taboleiro)
+    public void activardescrp(InterfazGrafica ventaPrincipal, Taboleiro taboleiro)
     {
-
+        for (int i = 0; i < taboleiro.getCasillas().size(); i++)
+        {
+            new DescripcionTaboleiro(ventaPrincipal, getCasilla(taboleiro.getCasillas().get(i).getPosicion()),taboleiro.getCasillas().get(i));
+        }
     }
 
     private void setUpComp() {

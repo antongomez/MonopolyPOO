@@ -1,4 +1,4 @@
-package InterfazGrafica;
+/*package InterfazGrafica;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -68,4 +68,4 @@ public class PanelDereito extends JPanel {
     public void setVentaPrincipal(InterfazGrafica ventaPrincipal) {
         this.ventaPrincipal = ventaPrincipal;
     }
-}
+}*/
