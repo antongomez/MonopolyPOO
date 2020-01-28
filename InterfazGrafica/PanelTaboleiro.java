@@ -1,5 +1,7 @@
 package InterfazGrafica;
 
+import estrutura.Taboleiro;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -28,6 +30,7 @@ public class PanelTaboleiro extends JPanel {
         creacionCasillas();
         setUpComp();
         layoutComp();
+
     }
 
     private void initComp() {
@@ -139,6 +142,11 @@ public class PanelTaboleiro extends JPanel {
         ladoEste.add(Corunha);
 
         casillas.add(ladoEste);
+    }
+
+    public void activardescrp(Taboleiro taboleiro)
+    {
+
     }
 
     private void setUpComp() {
