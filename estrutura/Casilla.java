@@ -2,6 +2,8 @@ package estrutura;
 
 import xogadores.*;
 import xogo.*;
+
+import javax.swing.*;
 import java.util.ArrayList;
 
 public abstract class Casilla {
@@ -12,6 +14,7 @@ public abstract class Casilla {
     private int posicion;
     //ArrayList que conten as veces que o avatar i visitou a casilla
     private ArrayList<Integer> frecuentada;
+    private ImageIcon imaxedescrip;
 
     //Constructor
     public Casilla() {
@@ -56,6 +59,16 @@ public abstract class Casilla {
         if ((posicion >= 0) && (posicion < 40)) {
             this.posicion = posicion;
         }
+    }
+
+    public ImageIcon getImaxedescrip()
+    {
+        return imaxedescrip;
+    }
+
+    public void setImaxedescrip(ImageIcon imaxe)
+    {
+        this.imaxedescrip = imaxe;
     }
 
     public ArrayList<Avatar> getAvatares() {
