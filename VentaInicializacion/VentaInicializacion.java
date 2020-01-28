@@ -39,9 +39,11 @@ public class VentaInicializacion extends JFrame {
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int height = pantalla.height;
         int width = pantalla.width;
-        int localizacionWidth = Math.round(((float) width / 2f) - ((float) getSize().getWidth() / 2f));
-        int localizacionHeight = Math.round(((float) height / 2f) - ((float) getSize().getHeight() / 2f));
-        setLocation(localizacionWidth, localizacionHeight);
+        int localizacionWidth = Math.round(((float) width / 2f) - ((float) getWidth() / 2f));
+        int localizacionHeight = Math.round(((float) height / 2f) - ((float) getHeight() / 2f));
+        this.setLocation(localizacionWidth, localizacionHeight);
+
+        this.setResizable(false);
     }
 
     private void initComp() {
