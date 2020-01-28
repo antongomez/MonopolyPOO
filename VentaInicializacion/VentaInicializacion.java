@@ -30,18 +30,18 @@ public class VentaInicializacion extends JFrame {
 
     private void iniciarVenta() {
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); //A venta non se pode pechar
-        //this.setLocationRelativeTo(null);
-
-        //Victor: Centrado que me funciona
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        int height = pantalla.height;
-        int width = pantalla.width;
-        setLocation(width/4, height/4);
-        //Víctor
 
         this.setTitle("Introdución de Xogadores");
         this.setSize(new Dimension(500, 600));
         this.setPreferredSize(new Dimension(500, 600));
+
+        //Centardo da panatalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = pantalla.height;
+        int width = pantalla.width;
+        int localizacionWidth = Math.round(((float) width / 2f) - ((float) getSize().getWidth() / 2f));
+        int localizacionHeight = Math.round(((float) height / 2f) - ((float) getSize().getHeight() / 2f));
+        setLocation(localizacionWidth, localizacionHeight);
     }
 
     private void initComp() {

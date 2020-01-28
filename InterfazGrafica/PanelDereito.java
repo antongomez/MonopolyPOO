@@ -33,7 +33,7 @@ public class PanelDereito extends JPanel {
     }
 
     private void setupComponents() {
-
+        //this.panelTab.setPreferredSize(new Dimension(550, 550));
     }
 
     private void layoutComponents() {

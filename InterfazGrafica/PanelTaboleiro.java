@@ -2,6 +2,7 @@ package InterfazGrafica;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.JButton;
@@ -66,73 +67,73 @@ public class PanelTaboleiro extends JPanel {
         ArrayList<JButton> ladoOeste = new ArrayList<>();
 
         JButton Carballinho = new JButton("Carballinho");
-        ladoSur.add(Carballinho);
+        ladoOeste.add(Carballinho);
         JButton Sergas = new JButton("Sergas");
-        ladoSur.add(Sergas);
+        ladoOeste.add(Sergas);
         JButton Sada = new JButton("Sada");
-        ladoSur.add(Sada);
+        ladoOeste.add(Sada);
         JButton Mera = new JButton("Mera");
-        ladoSur.add(Mera);
+        ladoOeste.add(Mera);
         JButton Lancha = new JButton("Lancha");
-        ladoSur.add(Lancha);
+        ladoOeste.add(Lancha);
         JButton Cedofeita = new JButton("Cedofeita");
-        ladoSur.add(Cedofeita);
+        ladoOeste.add(Cedofeita);
         JButton Caixa2 = new JButton("Caixa2");
-        ladoSur.add(Caixa2);
+        ladoOeste.add(Caixa2);
         JButton Viveiro = new JButton("Viveiro");
-        ladoSur.add(Viveiro);
+        ladoOeste.add(Viveiro);
         JButton Ribadeo = new JButton("Ribadeo");
-        ladoSur.add(Ribadeo);
+        ladoOeste.add(Ribadeo);
 
         casillas.add(ladoOeste);
 
         ArrayList<JButton> ladoNorte = new ArrayList<>();
 
         JButton Parking = new JButton("Parking");
-        ladoSur.add(Parking);
+        ladoNorte.add(Parking);
         JButton Verin = new JButton("Verin");
-        ladoSur.add(Verin);
+        ladoNorte.add(Verin);
         JButton Sorte2 = new JButton("Sorte2");
-        ladoSur.add(Sorte2);
+        ladoNorte.add(Sorte2);
         JButton Cambados = new JButton("Cambados");
-        ladoSur.add(Cambados);
+        ladoNorte.add(Cambados);
         JButton Tui = new JButton("Tui");
-        ladoSur.add(Tui);
+        ladoNorte.add(Tui);
         JButton Iate = new JButton("Iate");
-        ladoSur.add(Iate);
+        ladoNorte.add(Iate);
         JButton Caurel = new JButton("Caurel");
-        ladoSur.add(Caurel);
+        ladoNorte.add(Caurel);
         JButton Guarda = new JButton("Guarda");
-        ladoSur.add(Guarda);
+        ladoNorte.add(Guarda);
         JButton Ensino = new JButton("Ensino");
-        ladoSur.add(Ensino);
+        ladoNorte.add(Ensino);
         JButton Ourense = new JButton("Ourense");
-        ladoSur.add(Ourense);
+        ladoNorte.add(Ourense);
         JButton IrCarcere = new JButton("IrCarcere");
-        ladoSur.add(IrCarcere);
+        ladoNorte.add(IrCarcere);
 
         casillas.add(ladoNorte);
 
         ArrayList<JButton> ladoEste = new ArrayList<>();
 
         JButton Santiago = new JButton("Santiago");
-        ladoSur.add(Santiago);
+        ladoEste.add(Santiago);
         JButton Sanxenxo = new JButton("Sanxenxo");
-        ladoSur.add(Sanxenxo);
+        ladoEste.add(Sanxenxo);
         JButton Caixa3 = new JButton("Caixa3");
-        ladoSur.add(Sorte2);
+        ladoEste.add(Caixa3);
         JButton Pontevedra = new JButton("Pontevedra");
-        ladoSur.add(Pontevedra);
+        ladoEste.add(Pontevedra);
         JButton Jet = new JButton("Jet");
-        ladoSur.add(Jet);
+        ladoEste.add(Jet);
         JButton Sorte3 = new JButton("Sorte3");
-        ladoSur.add(Sorte3);
+        ladoEste.add(Sorte3);
         JButton Vigo = new JButton("Vigo");
-        ladoSur.add(Vigo);
+        ladoEste.add(Vigo);
         JButton Subida = new JButton("Subida");
-        ladoSur.add(Subida);
+        ladoEste.add(Subida);
         JButton Corunha = new JButton("Corunha");
-        ladoSur.add(Corunha);
+        ladoEste.add(Corunha);
 
         casillas.add(ladoEste);
     }
@@ -142,38 +143,39 @@ public class PanelTaboleiro extends JPanel {
         this.panelSur.setLayout(layoutSur);
 
         for (int j = 10; j >= 0; j--) {
-            establecerTamCasilla(casillas.get(0).get(j));
+            setUpCasilla(casillas.get(0).get(j));
             panelSur.add(casillas.get(0).get(j));
         }
 
         GridLayout layoutOeste = new GridLayout(9, 1, 0, 0);
         this.panelOeste.setLayout(layoutOeste);
 
-        for (int j = 19; j > 10; j--) {
-            establecerTamCasilla(casillas.get(0).get(j));
-            panelOeste.add(casillas.get(0).get(j));
+        for (int j = 8; j >= 0; j--) {
+            setUpCasilla(casillas.get(1).get(j));
+            panelOeste.add(casillas.get(1).get(j));
         }
 
         GridLayout layoutNorte = new GridLayout(1, 11, 0, 0);
         this.panelNorte.setLayout(layoutNorte);
 
-        for (int j = 30; j > 19; j--) {
-            establecerTamCasilla(casillas.get(0).get(j));
-            panelNorte.add(casillas.get(0).get(j));
+        for (int j = 0; j <= 10; j++) {
+            setUpCasilla(casillas.get(2).get(j));
+            panelNorte.add(casillas.get(2).get(j));
         }
 
         GridLayout layoutEste = new GridLayout(9, 1, 0, 0);
         this.panelEste.setLayout(layoutEste);
 
-        for (int j = 39; j > 30; j--) {
-            establecerTamCasilla(casillas.get(0).get(j));
-            panelEste.add(casillas.get(0).get(j));
+        for (int j = 0; j <= 8; j++) {
+            setUpCasilla(casillas.get(3).get(j));
+            panelEste.add(casillas.get(3).get(j));
         }
 
     }
 
-    private void establecerTamCasilla(JButton casilla) {
-        casilla.setSize(new Dimension(30, 30));
+    private void setUpCasilla(JButton casilla) {
+        casilla.setPreferredSize(new Dimension(60, 60));
+        casilla.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 8));
     }
 
     private void layoutComp() {
@@ -183,6 +185,63 @@ public class PanelTaboleiro extends JPanel {
         this.add(panelNorte, BorderLayout.NORTH);
         this.add(panelEste, BorderLayout.EAST);
         this.add(new JPanel(), BorderLayout.CENTER);
+    }
+
+    //Getters e Setters
+    public InterfazGrafica getVentaPrincipal() {
+        return ventaPrincipal;
+    }
+
+    public void setVentaPrincipal(InterfazGrafica ventaPrincipal) {
+        this.ventaPrincipal = ventaPrincipal;
+    }
+
+    public BorderLayout getDisposicion() {
+        return disposicion;
+    }
+
+    public void setDisposicion(BorderLayout disposicion) {
+        this.disposicion = disposicion;
+    }
+
+    public ArrayList<ArrayList<JButton>> getCasillas() {
+        return casillas;
+    }
+
+    public void setCasillas(ArrayList<ArrayList<JButton>> casillas) {
+        this.casillas = casillas;
+    }
+
+    public JPanel getPanelSur() {
+        return panelSur;
+    }
+
+    public void setPanelSur(JPanel panelSur) {
+        this.panelSur = panelSur;
+    }
+
+    public JPanel getPanelOeste() {
+        return panelOeste;
+    }
+
+    public void setPanelOeste(JPanel panelOeste) {
+        this.panelOeste = panelOeste;
+    }
+
+    public JPanel getPanelNorte() {
+        return panelNorte;
+    }
+
+    public void setPanelNorte(JPanel panelNorte) {
+        this.panelNorte = panelNorte;
+    }
+
+    public JPanel getPanelEste() {
+        return panelEste;
+    }
+
+    public void setPanelEste(JPanel panelEste) {
+        this.panelEste = panelEste;
     }
 
 }
