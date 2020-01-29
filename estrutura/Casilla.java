@@ -61,13 +61,11 @@ public abstract class Casilla {
         }
     }
 
-    public ImageIcon getImaxedescrip()
-    {
+    public ImageIcon getImaxedescrip() {
         return imaxedescrip;
     }
 
-    public void setImaxedescrip(ImageIcon imaxe)
-    {
+    public void setImaxedescrip(ImageIcon imaxe) {
         this.imaxedescrip = imaxe;
     }
 
