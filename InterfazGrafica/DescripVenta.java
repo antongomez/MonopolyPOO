@@ -43,6 +43,8 @@ public class DescripVenta extends JDialog {
         this.leste.setPreferredSize(new Dimension(width/4, (int) Math.ceil(height/1.5)));
         this.panel.add(leste,BorderLayout.WEST);
         this.leste.setLayout(new BorderLayout());
+        this.leste.setBackground(Color.BLUE);
+        this.leste.setOpaque(true);
         this.este = new JPanel();
         this.este.setPreferredSize(new Dimension(width/3, (int) Math.ceil(height/1.5)));
         this.panel.add(este,BorderLayout.EAST);
@@ -51,7 +53,6 @@ public class DescripVenta extends JDialog {
 
         //Introuducimos Jbutton
         this.imaxe = new JButton();
-        this.panel.add(this.imaxe, BorderLayout.WEST);
         this.imaxe.setPreferredSize(new Dimension(width/4, (int) Math.ceil(height/1.5)));
         this.imaxe.setEnabled(true);
         this.leste.add(imaxe, BorderLayout.CENTER);
@@ -71,6 +72,7 @@ public class DescripVenta extends JDialog {
         this.aux.setPreferredSize(new Dimension(width/4, (int) Math.ceil(height/12)));
         this.este.add(aux, BorderLayout.NORTH);
 
+
         //FUnción para engadir informacion
         this.inciarDescripVenta(casilla);
     }
@@ -80,7 +82,7 @@ public class DescripVenta extends JDialog {
         this.info.setText(casilla.imprimirCasilla());
         this.info.setVisible(true);
 
-        this.imaxe.setIcon( new ImageIcon(casilla.getImaxedescrip().getImage().getScaledInstance(imaxe.getWidth(), imaxe.getHeight(), Image.SCALE_SMOOTH)));
+        //this.imaxe.setIcon( new ImageIcon(casilla.getImaxedescrip().getImage().getScaledInstance(imaxe.getWidth(), imaxe.getHeight(), Image.SCALE_SMOOTH)));
     }
 
 }

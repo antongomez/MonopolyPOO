@@ -62,8 +62,7 @@ public class Transporte extends Propiedade {
         String texto ="\tnome: " + this.getNome() + "\n"
                 + "\ttipo: Transporte\n"
                 + "\tdono: " + this.getDono().getNome() + "\n"
-                + "\talquiler: " + this.calculoAlquiler() + " GM\n"
-                + "\txogadores: [" + "]\n";
+                + "\talquiler: " + this.calculoAlquiler() + " GM\n";
 
         return texto;
     }

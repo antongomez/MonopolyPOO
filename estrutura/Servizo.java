@@ -58,8 +58,7 @@ public class Servizo extends Propiedade {
         String texto ="\tnome: " + this.getNome() + "\n"
                 + "\ttipo: Servizo\n"
                 + "\tdono: " + this.getDono().getNome() + "\n"
-                + "\talquiler: " + this.calculoAlquiler() + " GM\n"
-                + "\txogadores: [" + "]\n";
+                + "\talquiler: " + this.calculoAlquiler() + " GM\n";
 
         return texto;
     }
