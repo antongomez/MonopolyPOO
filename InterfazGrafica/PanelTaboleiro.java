@@ -31,7 +31,7 @@ public class PanelTaboleiro extends JPanel {
         creacionCasillas();
         setUpComp();
         layoutComp();
-        activardescrp(ventaPrincipal, taboleiro);
+        activarDescripcion(ventaPrincipal, taboleiro);
 
     }
 
@@ -146,11 +146,9 @@ public class PanelTaboleiro extends JPanel {
         casillas.add(ladoEste);
     }
 
-    public void activardescrp(InterfazGrafica ventaPrincipal, Taboleiro taboleiro)
-    {
-        for (int i = 0; i < taboleiro.getCasillas().size(); i++)
-        {
-            new DescripcionTaboleiro(ventaPrincipal, getCasilla(taboleiro.getCasillas().get(i).getPosicion()),taboleiro.getCasillas().get(i));
+    public void activarDescripcion(InterfazGrafica ventaPrincipal, Taboleiro taboleiro) {
+        for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
+            new DescripcionTaboleiro(ventaPrincipal, getCasilla(taboleiro.getCasillas().get(i).getPosicion()), taboleiro.getCasillas().get(i));
         }
     }
 
@@ -225,8 +223,8 @@ public class PanelTaboleiro extends JPanel {
     private void colocarIconos() {
         JButton casilla;
 
-        casilla = casillas.get(0).get(0);
-        ImageIcon imaxeSaida = new ImageIcon("SantaCruz.png");
+        casilla = casillas.get(0).get(1);
+        ImageIcon imaxeSaida = new ImageIcon("FotosMonopoly/Santa Cruz.png");
         casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
     }
 
