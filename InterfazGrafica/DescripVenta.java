@@ -22,10 +22,10 @@ public class DescripVenta extends JDialog {
         int height = pantalla.height;
         int width = pantalla.width;
 
-        //Configuramos a benta
+        //Configuramos a venta
         setLocation(width / 4, height / 4);
         this.setSize((int) Math.ceil(width / 1.75), (int) Math.ceil(height / 1.5));
-        this.setResizable(false); //Non redimnsionable
+        this.setResizable(false); //Non redimensionable
         this.setTitle(" ");
         this.setVisible(true);
 
@@ -38,6 +38,7 @@ public class DescripVenta extends JDialog {
         //Construimos paneles auxiliares
         this.leste = new JPanel();
         this.leste.setPreferredSize(new Dimension(width / 4, (int) Math.ceil(height / 1.5)));
+        this.leste.setSize(new Dimension(width / 4, (int) Math.ceil(height / 1.5)));
         this.panel.add(leste, BorderLayout.WEST);
         this.leste.setLayout(new BorderLayout());
         this.leste.setBackground(Color.BLUE);
@@ -49,10 +50,26 @@ public class DescripVenta extends JDialog {
 
         //Introuducimos Jbutton
         this.imaxe = new JButton();
-        this.imaxe.setPreferredSize(new Dimension(width / 4, (int) Math.ceil(height / 1.5)));
-        this.imaxe.setSize(new Dimension(width / 4, (int) Math.ceil(height / 1.5)));
+        this.imaxe.setPreferredSize(new Dimension(getWidth() - 40, getHeight() - 40));
+        this.imaxe.setSize(new Dimension(getWidth() - 40, getHeight() - 40));
         this.imaxe.setEnabled(true);
         this.leste.add(imaxe, BorderLayout.CENTER);
+
+        JPanel panelNorte = new JPanel();
+        panelNorte.setPreferredSize(new Dimension(width / 4, 20));
+        this.leste.add(panelNorte, BorderLayout.NORTH);
+
+        JPanel panelSur = new JPanel();
+        panelSur.setPreferredSize(new Dimension(width / 4, 20));
+        this.leste.add(panelNorte, BorderLayout.SOUTH);
+
+        JPanel panelOeste = new JPanel();
+        panelOeste.setPreferredSize(new Dimension(20, (int) Math.ceil(height / 1.5)));
+        this.leste.add(panelNorte, BorderLayout.WEST);
+
+        JPanel PanelEste = new JPanel();
+        PanelEste.setPreferredSize(new Dimension(20, (int) Math.ceil(height / 1.5)));
+        this.leste.add(panelNorte, BorderLayout.EAST);
 
         //Texto
         this.info = new JTextArea();
