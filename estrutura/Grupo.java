@@ -215,9 +215,8 @@ public class Grupo extends Casilla {
 
     @Override
     public String imprimirCasilla() {
-        String texto = "{\n"
-                + "\tnome: " + this.getNome() + ",\n"
-                + "\tnumero de Grupo:" + id + ",\n";
+        String texto ="\tnome: " + this.getNome() + "\n"
+                + "\tnumero de Grupo:" + id + "\n";
 
         return texto;
     }

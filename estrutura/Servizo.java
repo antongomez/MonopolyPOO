@@ -55,13 +55,11 @@ public class Servizo extends Propiedade {
 
     @Override
     public String imprimirCasilla() {
-        String texto = "{\n"
-                + "\tnome: " + this.getNome() + ",\n"
-                + "\ttipo: Servizo,\n"
-                + "\tdono: " + this.getDono().getNome() + ",\n"
-                + "\talquiler: " + this.calculoAlquiler() + " GM,\n"
-                + "\txogadores: [" + "]\n"
-                + "}\n";
+        String texto ="\tnome: " + this.getNome() + "\n"
+                + "\ttipo: Servizo\n"
+                + "\tdono: " + this.getDono().getNome() + "\n"
+                + "\talquiler: " + this.calculoAlquiler() + " GM\n"
+                + "\txogadores: [" + "]\n";
 
         return texto;
     }
