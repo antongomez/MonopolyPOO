@@ -54,7 +54,7 @@ public class Taboleiro {
             ladoOeste.add(new Solar("Sada", 13, Constantes.CASILLA_G3, grupo3, banca));
             ladoOeste.add(new Solar("Mera", 14, Constantes.CASILLA_G3, grupo3, banca));
             ladoOeste.add(new Transporte("Lancha Motora", 15, grupoTrans, banca));
-            ladoOeste.add(new Solar("Cedofeita", 16, Constantes.CASILLA_G4, grupo4, banca));
+            ladoOeste.add(new Solar("Negreira", 16, Constantes.CASILLA_G4, grupo4, banca));
             ladoOeste.add(new Especial("Caixa 2", 17));
             ladoOeste.add(new Solar("Viveiro", 18, Constantes.CASILLA_G4, grupo4, banca));
             ladoOeste.add(new Solar("Ribadeo", 19, Constantes.CASILLA_G4, grupo4, banca));
@@ -96,7 +96,7 @@ public class Taboleiro {
             grupo3.engadirPropiedade((Propiedade) getCasilla("Sada"));
             grupo3.engadirPropiedade((Propiedade) getCasilla("Mera"));
 
-            grupo4.engadirPropiedade((Propiedade) getCasilla("Cedofeita"));
+            grupo4.engadirPropiedade((Propiedade) getCasilla("Negreira"));
             grupo4.engadirPropiedade((Propiedade) getCasilla("Viveiro"));
             grupo4.engadirPropiedade((Propiedade) getCasilla("Ribadeo"));
 
