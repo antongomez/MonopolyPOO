@@ -129,27 +129,7 @@ public class Xogo implements Comando {
                 }
             }
         }
-
-        /*
-        for (int i = 0; i < nXogadores; i++) {
-            //Creamos o xogador
-            String nomeXogador = "";
-            do {
-                //Pedimos a información ao usuario
-                nomeXogador = consola.ler("Introduce o nome do xogador " + (i + 1) + ": ");
-
-                if (nomeIgualXogador(nomeXogador)) {
-                    consola.imprimir("\nXa existe un xogador con ese nome."
-                            + " Introduce outro nome.\n");
-                }
-            } while (nomeIgualXogador(nomeXogador));
-
-            crearXogador(nomeXogador);
-
-            consola.imprimir("O avatar do xogador é: "
-                    + avatares.get(i).getId() + "\n");
-        }
-         */
+        
         taboleiro.imprimirTaboleiro();
 
         //Incio xogo

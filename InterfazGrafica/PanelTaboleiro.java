@@ -49,98 +49,98 @@ public class PanelTaboleiro extends JPanel {
 
         JButton Saida = new JButton();
         ladoSur.add(Saida);
-        JButton SantaCruz = new JButton("Santa");
+        JButton SantaCruz = new JButton();
         ladoSur.add(SantaCruz);
-        JButton Caixa1 = new JButton("Caixa1");
+        JButton Caixa1 = new JButton();
         ladoSur.add(Caixa1);
-        JButton Arteixo = new JButton("Arteixo");
+        JButton Arteixo = new JButton();
         ladoSur.add(Arteixo);
-        JButton IRPF = new JButton("IRPF");
+        JButton IRPF = new JButton();
         ladoSur.add(IRPF);
-        JButton Autobus = new JButton("Auto");
+        JButton Autobus = new JButton();
         ladoSur.add(Autobus);
-        JButton Meanho = new JButton("Meanho");
+        JButton Meanho = new JButton();
         ladoSur.add(Meanho);
-        JButton Sorte1 = new JButton("Sorte1");
+        JButton Sorte1 = new JButton();
         ladoSur.add(Sorte1);
-        JButton Corrubedo = new JButton("Corrubedo");
+        JButton Corrubedo = new JButton();
         ladoSur.add(Corrubedo);
-        JButton Lugo = new JButton("Lugo");
+        JButton Lugo = new JButton();
         ladoSur.add(Lugo);
-        JButton Carcere = new JButton("Carcere");
+        JButton Carcere = new JButton();
         ladoSur.add(Carcere);
 
         casillas.add(ladoSur);
 
         ArrayList<JButton> ladoOeste = new ArrayList<>();
 
-        JButton Carballinho = new JButton("Carballinho");
+        JButton Carballinho = new JButton();
         ladoOeste.add(Carballinho);
-        JButton Sergas = new JButton("Sergas");
+        JButton Sergas = new JButton();
         ladoOeste.add(Sergas);
-        JButton Sada = new JButton("Sada");
+        JButton Sada = new JButton();
         ladoOeste.add(Sada);
-        JButton Mera = new JButton("Mera");
+        JButton Mera = new JButton();
         ladoOeste.add(Mera);
-        JButton Lancha = new JButton("Lancha");
+        JButton Lancha = new JButton();
         ladoOeste.add(Lancha);
-        JButton Cedofeita = new JButton("Cedofeita");
+        JButton Cedofeita = new JButton();
         ladoOeste.add(Cedofeita);
-        JButton Caixa2 = new JButton("Caixa2");
+        JButton Caixa2 = new JButton();
         ladoOeste.add(Caixa2);
-        JButton Viveiro = new JButton("Viveiro");
+        JButton Viveiro = new JButton();
         ladoOeste.add(Viveiro);
-        JButton Ribadeo = new JButton("Ribadeo");
+        JButton Ribadeo = new JButton();
         ladoOeste.add(Ribadeo);
 
         casillas.add(ladoOeste);
 
         ArrayList<JButton> ladoNorte = new ArrayList<>();
 
-        JButton Parking = new JButton("Parking");
+        JButton Parking = new JButton();
         ladoNorte.add(Parking);
-        JButton Verin = new JButton("Verin");
+        JButton Verin = new JButton();
         ladoNorte.add(Verin);
-        JButton Sorte2 = new JButton("Sorte2");
+        JButton Sorte2 = new JButton();
         ladoNorte.add(Sorte2);
-        JButton Cambados = new JButton("Cambados");
+        JButton Cambados = new JButton();
         ladoNorte.add(Cambados);
-        JButton Tui = new JButton("Tui");
+        JButton Tui = new JButton();
         ladoNorte.add(Tui);
-        JButton Iate = new JButton("Iate");
+        JButton Iate = new JButton();
         ladoNorte.add(Iate);
-        JButton Caurel = new JButton("Caurel");
+        JButton Caurel = new JButton();
         ladoNorte.add(Caurel);
-        JButton Guarda = new JButton("Guarda");
+        JButton Guarda = new JButton();
         ladoNorte.add(Guarda);
-        JButton Ensino = new JButton("Ensino");
+        JButton Ensino = new JButton();
         ladoNorte.add(Ensino);
-        JButton Ourense = new JButton("Ourense");
+        JButton Ourense = new JButton();
         ladoNorte.add(Ourense);
-        JButton IrCarcere = new JButton("IrCarcere");
+        JButton IrCarcere = new JButton();
         ladoNorte.add(IrCarcere);
 
         casillas.add(ladoNorte);
 
         ArrayList<JButton> ladoEste = new ArrayList<>();
 
-        JButton Santiago = new JButton("Santiago");
+        JButton Santiago = new JButton();
         ladoEste.add(Santiago);
-        JButton Sanxenxo = new JButton("Sanxenxo");
+        JButton Sanxenxo = new JButton();
         ladoEste.add(Sanxenxo);
-        JButton Caixa3 = new JButton("Caixa3");
+        JButton Caixa3 = new JButton();
         ladoEste.add(Caixa3);
-        JButton Pontevedra = new JButton("Pontevedra");
+        JButton Pontevedra = new JButton();
         ladoEste.add(Pontevedra);
-        JButton Jet = new JButton("Jet");
+        JButton Jet = new JButton();
         ladoEste.add(Jet);
-        JButton Sorte3 = new JButton("Sorte3");
+        JButton Sorte3 = new JButton();
         ladoEste.add(Sorte3);
-        JButton Vigo = new JButton("Vigo");
+        JButton Vigo = new JButton();
         ladoEste.add(Vigo);
-        JButton Subida = new JButton("Subida");
+        JButton Subida = new JButton();
         ladoEste.add(Subida);
-        JButton Corunha = new JButton("Corunha");
+        JButton Corunha = new JButton();
         ladoEste.add(Corunha);
 
         casillas.add(ladoEste);
@@ -221,7 +221,91 @@ public class PanelTaboleiro extends JPanel {
 
         casilla = casillas.get(0).get(1);
         imaxeSaida = new ImageIcon("FotosMonopoly/Santa Cruz Taboleiro.png");
-        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_AREA_AVERAGING)));
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(0).get(3);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Arteixo Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(0).get(6);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Meaño Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(0).get(8);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Corrubedo Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(0).get(9);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Lugo Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(1).get(0);
+        imaxeSaida = new ImageIcon("FotosMonopoly/O Carballiño Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(1).get(2);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Sada Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(1).get(3);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Mera Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(1).get(5);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Negreira Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(1).get(6);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Viveiro Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(1).get(8);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Ribadeo Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(2).get(1);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Verin Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(2).get(3);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Cambados Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(2).get(4);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Tui Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(2).get(6);
+        imaxeSaida = new ImageIcon("FotosMonopoly/O Caurel Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(2).get(7);
+        imaxeSaida = new ImageIcon("FotosMonopoly/A Guarda Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(2).get(9);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Ourense Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(3).get(0);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Santiago Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(3).get(1);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Sanxenxo Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(3).get(3);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Pontevedra Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(3).get(6);
+        imaxeSaida = new ImageIcon("FotosMonopoly/Vigo Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(3).get(8);
+        imaxeSaida = new ImageIcon("FotosMonopoly/A Coruña Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
     }
 
     private void layoutComp() {
