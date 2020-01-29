@@ -7,8 +7,13 @@ import java.awt.*;
 
 public class DescripVenta extends JDialog {
     private JPanel panel;
-    private JTextPane info;
+    private JPanel este;
+    private JPanel leste;
+    private JTextArea info;
     private JButton imaxe;
+    private JPanel aux;
+
+
 
     public DescripVenta(Frame owner, Casilla casilla)
     {
@@ -21,34 +26,50 @@ public class DescripVenta extends JDialog {
 
         //Configuramos a benta
         setLocation(width/4, height/4);
-        this.setSize(width/2, (int) Math.ceil(height/1.5));
+        this.setSize((int) Math.ceil(width/1.75), (int) Math.ceil(height/1.5));
         this.setResizable(false); //Non redimnsionable
         this.setTitle(" ");
         this.setVisible(true);
 
 
-        //Configuramos o panel
+        //Configuramos o panel base
         this.panel = new JPanel();
         this.panel.setLayout(new BorderLayout());
         this.panel.setVisible(true);
         this.add(panel);
 
-        this.info = new JTextPane();
-        this.info.setSize(width/3, height/2);
-        this.info.setPreferredSize(new Dimension(width/4, (int) Math.ceil(height/1.5)));
-        this.info.setEditable(false);
-        this.info.setFont(new Font("arial",0,14));
-        this.info.setAlignmentX(JTextArea.LEFT_ALIGNMENT);
-        this.panel.add(info, BorderLayout.EAST);
+        //Construimos paneles auxiliares
+        this.leste = new JPanel();
+        this.leste.setPreferredSize(new Dimension(width/4, (int) Math.ceil(height/1.5)));
+        this.panel.add(leste,BorderLayout.WEST);
+        this.leste.setLayout(new BorderLayout());
+        this.este = new JPanel();
+        this.este.setPreferredSize(new Dimension(width/3, (int) Math.ceil(height/1.5)));
+        this.panel.add(este,BorderLayout.EAST);
+        this.este.setLayout(new BorderLayout());
 
 
-        //Imaxe
+        //Introuducimos Jbutton
         this.imaxe = new JButton();
         this.panel.add(this.imaxe, BorderLayout.WEST);
         this.imaxe.setPreferredSize(new Dimension(width/4, (int) Math.ceil(height/1.5)));
-        this.imaxe.setEnabled(false);
+        this.imaxe.setEnabled(true);
+        this.leste.add(imaxe, BorderLayout.CENTER);
 
 
+        //Texto
+        this.info = new JTextArea();
+        this.info.setPreferredSize(new Dimension(width/3, (int) Math.ceil(height/1.5)));
+        this.este.add(info, BorderLayout.CENTER);
+        this.info.setFont(new Font("arial",0,14));
+        this.info.setOpaque(false);
+        this.info.setEditable(false);
+
+
+        //Situar texto
+        this.aux = new JPanel();
+        this.aux.setPreferredSize(new Dimension(width/4, (int) Math.ceil(height/12)));
+        this.este.add(aux, BorderLayout.NORTH);
 
         //FUnción para engadir informacion
         this.inciarDescripVenta(casilla);
@@ -59,9 +80,7 @@ public class DescripVenta extends JDialog {
         this.info.setText(casilla.imprimirCasilla());
         this.info.setVisible(true);
 
-        //this.imaxe.setIcon( new ImageIcon(casilla.getImaxedescrip().getImage().getScaledInstance(imaxe.getWidth(), imaxe.getHeight(), Image.SCALE_SMOOTH)));
-
-
+        this.imaxe.setIcon( new ImageIcon(casilla.getImaxedescrip().getImage().getScaledInstance(imaxe.getWidth(), imaxe.getHeight(), Image.SCALE_SMOOTH)));
     }
 
 }
