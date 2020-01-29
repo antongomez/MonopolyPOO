@@ -538,23 +538,23 @@ public class Solar extends Propiedade {
     @Override
     public String imprimirCasilla() {
         String texto = "{\n"
-                + "\tnome: " + this.getNome() + ",\n"
-                + "\ttipo: Solar,\n"
-                + "\tgrupo: " + this.getGrupo().getNome() + ",\n"
-                + "\tdono: " + this.getDono().getNome() + ",\n"
-                + "\tvalor: " + this.getValor() + " GM,\n"
-                + "\talquiler: " + this.calculoAlquiler() + " GM,\n"
-                + "\tvalor casa: " + (this.getValor() * Constantes.CASA) + " GM,\n"
-                + "\tvalor hotel: " + (this.getValor() * Constantes.HOTEL) + " GM,\n"
+                + "\tnome: " + this.getNome() + "\n"
+                + "\ttipo: Solar\n"
+                + "\tgrupo: " + this.getGrupo().getNome() + "\n"
+                + "\tdono: " + this.getDono().getNome() + "\n"
+                + "\tvalor: " + this.getValor() + " GM\n"
+                + "\talquiler: " + this.calculoAlquiler() + " GM\n"
+                + "\tvalor casa: " + (this.getValor() * Constantes.CASA) + " GM\n"
+                + "\tvalor hotel: " + (this.getValor() * Constantes.HOTEL) + " GM\n"
                 + "\tvalor piscina: " + (this.getValor() * Constantes.PISCINA) + " GM,\n"
-                + "\tvalor pista de deporte: " + (this.getValor() * Constantes.PISTA) + " GM,\n"
-                + "\talquiler unha casa: " + alquiler1Casa() + " GM,\n"
-                + "\talquiler dúas casas: " + alquiler2Casas() + " GM,\n"
-                + "\talquiler tres casas: " + alquiler3Casas() + " GM,\n"
-                + "\talquiler catro casas: " + alquiler4Casas() + " GM,\n"
-                + "\talquiler hotel: " + alquilerHotel() + " GM,\n"
-                + "\talquiler piscina: " + alquilerPiscina() + " GM,\n"
-                + "\talquiler pista de deporte: " + alquilerPista() + " GM,\n";
+                + "\tvalor pista de deporte: " + (this.getValor() * Constantes.PISTA) + " GM\n"
+                + "\talquiler unha casa: " + alquiler1Casa() + " GM\n"
+                + "\talquiler dúas casas: " + alquiler2Casas() + " GM\n"
+                + "\talquiler tres casas: " + alquiler3Casas() + " GM\n"
+                + "\talquiler catro casas: " + alquiler4Casas() + " GM\n"
+                + "\talquiler hotel: " + alquilerHotel() + " GM\n"
+                + "\talquiler piscina: " + alquilerPiscina() + " GM\n"
+                + "\talquiler pista de deporte: " + alquilerPista() + " GM\n";
         if (!getAvatares().isEmpty()) {
             texto += "\txogadores: [" + "]\n";
         }
