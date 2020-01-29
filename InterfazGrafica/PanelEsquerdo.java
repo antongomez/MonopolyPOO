@@ -42,6 +42,13 @@ public class PanelEsquerdo extends JPanel {
         this.add(panelComandos, BorderLayout.NORTH);
         this.add(this.textoPe, BorderLayout.SOUTH);
 
+        XestionXogadores();
+    }
+
+    public void XestionXogadores()
+    {
+        PanelXogadores xog = new PanelXogadores();
+        this.add(xog, BorderLayout.CENTER);
     }
 
     public InterfazGrafica getVentaPrincipal() {

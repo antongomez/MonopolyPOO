@@ -7,7 +7,7 @@ import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Toolkit;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class InterfazGrafica extends JFrame {
 
@@ -19,6 +19,7 @@ public class InterfazGrafica extends JFrame {
         this.taboleiro = taboleiro;
         iniciarVenta();
         iniciarComponhentes();
+
         setupComponents();
         layoutComponents();
         addEventHandlers();

@@ -50,7 +50,7 @@ public class PanelComandos extends JPanel {
 
     private void setupComponents() {
 
-        this.panelTexto.setPreferredSize(new Dimension(300, 600));
+        this.panelTexto.setPreferredSize(new Dimension(300, 300));
         this.historialComandos.setEditable(false);
     }
 
