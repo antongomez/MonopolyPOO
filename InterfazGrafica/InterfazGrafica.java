@@ -11,8 +11,8 @@ import javax.swing.JFrame;
 
 public class InterfazGrafica extends JFrame {
 
-    private PanelComandos panelComandos;
-    private PanelTaboleiro tab;
+    private PanelEsquerdo panelEsquerdo;
+    private PanelDereito panelDereito;
     private Taboleiro taboleiro;
 
     public InterfazGrafica(Taboleiro taboleiro) {
@@ -37,14 +37,14 @@ public class InterfazGrafica extends JFrame {
 
     private void iniciarComponhentes() {
 
-        this.tab = new PanelTaboleiro(this, taboleiro);
-        this.panelComandos = new PanelComandos(this);
+        this.panelDereito = new PanelDereito(this, taboleiro);
+        this.panelEsquerdo = new PanelEsquerdo(this);
     }
 
     private void setupComponents() {
 
-        this.add(tab, BorderLayout.CENTER);
-        this.add(panelComandos, BorderLayout.WEST);
+        this.add(panelDereito, BorderLayout.CENTER);
+        this.add(panelEsquerdo, BorderLayout.WEST);
     }
 
     private void layoutComponents() {
@@ -55,11 +55,29 @@ public class InterfazGrafica extends JFrame {
 
     }
 
-    public PanelComandos getPanelComandos() {
-        return panelComandos;
+    //Getters e Settersç
+    public PanelEsquerdo getPanelEsquerdo() {
+        return panelEsquerdo;
     }
 
-    /*public PanelDereito getTab() {
-        return tab;
-    }*/
+    public void setPanelEsquerdo(PanelEsquerdo panelEsquerdo) {
+        this.panelEsquerdo = panelEsquerdo;
+    }
+
+    public PanelDereito getPanelDereito() {
+        return panelDereito;
+    }
+
+    public void setPanelDereito(PanelDereito panelDereito) {
+        this.panelDereito = panelDereito;
+    }
+
+    public Taboleiro getTaboleiro() {
+        return taboleiro;
+    }
+
+    public void setTaboleiro(Taboleiro taboleiro) {
+        this.taboleiro = taboleiro;
+    }
+
 }

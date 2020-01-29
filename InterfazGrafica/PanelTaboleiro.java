@@ -37,7 +37,7 @@ public class PanelTaboleiro extends JPanel {
 
     private void initComp() {
         this.casillas = new ArrayList<>();
-        this.disposicion = new BorderLayout();
+        this.disposicion = new BorderLayout(0, 0);
         this.panelSur = new JPanel();
         this.panelOeste = new JPanel();
         this.panelNorte = new JPanel();
@@ -153,79 +153,75 @@ public class PanelTaboleiro extends JPanel {
     }
 
     private void setUpComp() {
+        //this.setPreferredSize(new Dimension(600, 800));
 
         for (int i = 0; i < casillas.size(); i++) {
             if ((i == 0) || (i == 1)) {
                 for (int j = casillas.get(i).size() - 1; j >= 0; j--) {
-                    setUpCasilla(casillas.get(i).get(j));
+                    setUpCasillaVertical(casillas.get(i).get(j));
                 }
             } else if ((i == 2) || (i == 3)) {
                 for (int j = 0; j < casillas.get(i).size(); j++) {
-                    setUpCasilla(casillas.get(i).get(j));
+                    setUpCasillaVertical(casillas.get(i).get(j));
                 }
             }
         }
 
         //Colocanse as imaxes enriba dos botons
-        JButton casilla;
-
-        casilla = casillas.get(0).get(0);
-        ImageIcon imaxeSaida = new ImageIcon("FotosMonopoly/SantaCruz.png");
-        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(50, 62, Image.SCALE_SMOOTH)));
-        //colocarIconos();
+        colocarIconos();
 
         GridLayout layoutSur = new GridLayout(1, 11, 0, 0);
-
         this.panelSur.setLayout(layoutSur);
-        for (int j = 10;
-                j >= 0; j--) {
+        for (int j = 10; j >= 0; j--) {
+            setUpCasillaVertical(casillas.get(0).get(j));
             panelSur.add(casillas.get(0).get(j));
         }
 
         GridLayout layoutOeste = new GridLayout(9, 1, 0, 0);
-
         this.panelOeste.setLayout(layoutOeste);
 
-        for (int j = 8;
-                j >= 0; j--) {
-            setUpCasilla(casillas.get(1).get(j));
+        for (int j = 8; j >= 0; j--) {
+            setUpCasillaHorizontal(casillas.get(1).get(j));
             panelOeste.add(casillas.get(1).get(j));
         }
 
         GridLayout layoutNorte = new GridLayout(1, 11, 0, 0);
-
         this.panelNorte.setLayout(layoutNorte);
 
-        for (int j = 0;
-                j <= 10; j++) {
-            setUpCasilla(casillas.get(2).get(j));
+        for (int j = 0; j <= 10; j++) {
+            setUpCasillaVertical(casillas.get(2).get(j));
             panelNorte.add(casillas.get(2).get(j));
         }
 
         GridLayout layoutEste = new GridLayout(9, 1, 0, 0);
-
         this.panelEste.setLayout(layoutEste);
 
-        for (int j = 0;
-                j <= 8; j++) {
-            setUpCasilla(casillas.get(3).get(j));
+        for (int j = 0; j <= 8; j++) {
+            setUpCasillaHorizontal(casillas.get(3).get(j));
             panelEste.add(casillas.get(3).get(j));
         }
 
     }
 
-    private void setUpCasilla(JButton casilla) {
-        casilla.setPreferredSize(new Dimension(50, 62));
-        casilla.setSize(new Dimension(50, 62));
+    private void setUpCasillaVertical(JButton casilla) {
+        casilla.setPreferredSize(new Dimension(56, 65));
+        casilla.setSize(new Dimension(56, 65));
+        casilla.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 8));
+    }
+
+    private void setUpCasillaHorizontal(JButton casilla) {
+        casilla.setPreferredSize(new Dimension(65, 56));
+        casilla.setSize(new Dimension(65, 56));
         casilla.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 8));
     }
 
     private void colocarIconos() {
         JButton casilla;
+        ImageIcon imaxeSaida;
 
         casilla = casillas.get(0).get(1);
-        ImageIcon imaxeSaida = new ImageIcon("FotosMonopoly/Santa Cruz.png");
-        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+        imaxeSaida = new ImageIcon("FotosMonopoly/Santa Cruz Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxeSaida.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_AREA_AVERAGING)));
     }
 
     private void layoutComp() {

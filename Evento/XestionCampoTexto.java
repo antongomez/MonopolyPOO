@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JTextArea;
 
 public class XestionCampoTexto implements KeyListener {
+
     private String comando;
     private boolean valido;
 
@@ -53,12 +54,11 @@ public class XestionCampoTexto implements KeyListener {
     @Override
     public void keyReleased(KeyEvent ke) {
         if (ke.getKeyChar() == '\n') {
-            comando = ventaPrincipal.getPanelComandos().getCampoComandos().getText();
+            comando = ventaPrincipal.getPanelEsquerdo().getPanelComandos().getCampoComandos().getText();
             String[] partes = comando.split(" ");
             String comando2 = partes[0];
 
-            switch (comando2)
-            {
+            switch (comando2) {
                 case "aceptar":
                 case "eliminar":
                 case "listar":
@@ -70,16 +70,15 @@ public class XestionCampoTexto implements KeyListener {
                 case "sair":
                 case "xogador":
                 case "estatisticas":
-                    synchronized (ventaPrincipal.getPanelComandos().getCampoComandos()) {
-                        ventaPrincipal.getPanelComandos().getCampoComandos().notifyAll();
+                    synchronized (ventaPrincipal.getPanelEsquerdo().getPanelComandos().getCampoComandos()) {
+                        ventaPrincipal.getPanelEsquerdo().getPanelComandos().getCampoComandos().notifyAll();
                     }
 
-                    ventaPrincipal.getPanelComandos().getHistorialComandos().append(comando + "\n");
-                    ventaPrincipal.getPanelComandos().getCampoComandos().setText("");
+                    ventaPrincipal.getPanelEsquerdo().getPanelComandos().getHistorialComandos().append(comando + "\n");
+                    ventaPrincipal.getPanelEsquerdo().getPanelComandos().getCampoComandos().setText("");
                     break;
             }
         }
-
 
     }
 }

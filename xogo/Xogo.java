@@ -54,8 +54,6 @@ public class Xogo implements Comando {
         interfaz = new InterfazGrafica(taboleiro); //Arrancase a interfaz
         interfaz.setVisible(true); //Ponse visible
 
-
-
         Boolean sair = false;
 
         do {
@@ -227,15 +225,15 @@ public class Xogo implements Comando {
             //Facemos as declaracións e imos lendo do caso que sexa
             consola.imprimir("Turno de " + xogador.getNome() + "\n$> ");
 
-            synchronized (interfaz.getPanelComandos().getCampoComandos()) {
+            synchronized (interfaz.getPanelEsquerdo().getPanelComandos().getCampoComandos()) {
                 try {
-                    interfaz.getPanelComandos().getCampoComandos().wait();
+                    interfaz.getPanelEsquerdo().getPanelComandos().getCampoComandos().wait();
                 } catch (InterruptedException ex) {
                     System.out.println(ex.getMessage());
                 }
             }
 
-            String orde = interfaz.getPanelComandos().getIntroducionComando().getComando();
+            String orde = interfaz.getPanelEsquerdo().getPanelComandos().getIntroducionComando().getComando();
 
             //Xestion de comando
             String[] partes = orde.split(" ");

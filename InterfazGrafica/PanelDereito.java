@@ -1,66 +1,31 @@
-/*package InterfazGrafica;
+package InterfazGrafica;
 
+import estrutura.Taboleiro;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.util.ArrayList;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.FlowLayout;
 import javax.swing.JPanel;
-import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 
 public class PanelDereito extends JPanel {
 
-    private JPanel panelComponentes;
-    private PanelTaboleiro panelTab;
     private InterfazGrafica ventaPrincipal;
+    private Taboleiro taboleiro;
+    private PanelTaboleiro tab;
 
-    public PanelDereito(InterfazGrafica interfaz) {
-        this.ventaPrincipal = interfaz;
-        initComponents();
-        setupComponents();
-        layoutComponents();
-        addEventHandlers();
-    }
+    public PanelDereito(InterfazGrafica ventaPrincipal, Taboleiro taboleiro) {
+        this.ventaPrincipal = ventaPrincipal;
+        this.taboleiro = taboleiro;
+        this.tab = new PanelTaboleiro(ventaPrincipal, taboleiro);
 
-    public void initComponents() {
+        FlowLayout layout = new FlowLayout(FlowLayout.RIGHT);
 
-        this.panelComponentes = ventaPrincipal.getPanelComandos();
-        this.panelTab = new PanelTaboleiro(ventaPrincipal);
-
-    }
-
-    private void setupComponents() {
-        //this.panelTab.setPreferredSize(new Dimension(550, 550));
-    }
-
-    private void layoutComponents() {
-        this.add(panelTab);
-    }
-
-    private void addEventHandlers() {
+        this.setLayout(layout);
+        this.add(tab);
 
     }
 
-    //Getters e Setters
-    public JPanel getPanelComponentes() {
-        return panelComponentes;
-    }
-
-    public void setPanelComponentes(JPanel panelComponentes) {
-        this.panelComponentes = panelComponentes;
-    }
-
-    public PanelTaboleiro getPanelTab() {
-        return panelTab;
-    }
-
-    public void setPanelTab(PanelTaboleiro panelTab) {
-        this.panelTab = panelTab;
-    }
-
+//Getters e Setters
     public InterfazGrafica getVentaPrincipal() {
         return ventaPrincipal;
     }
@@ -68,4 +33,20 @@ public class PanelDereito extends JPanel {
     public void setVentaPrincipal(InterfazGrafica ventaPrincipal) {
         this.ventaPrincipal = ventaPrincipal;
     }
-}*/
+
+    public Taboleiro getTaboleiro() {
+        return taboleiro;
+    }
+
+    public void setTaboleiro(Taboleiro taboleiro) {
+        this.taboleiro = taboleiro;
+    }
+
+    public PanelTaboleiro getTab() {
+        return tab;
+    }
+
+    public void setTab(PanelTaboleiro tab) {
+        this.tab = tab;
+    }
+}

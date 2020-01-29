@@ -27,8 +27,6 @@ public class PanelComandos extends JPanel {
     private JLabel etiquetaHistorial;
     private JTextArea historialComandos;
 
-    private JTextField textoPe;
-
     private XestionCampoTexto introducionComando;
 
     public PanelComandos(InterfazGrafica interfaz) {
@@ -48,18 +46,12 @@ public class PanelComandos extends JPanel {
         this.etiquetaComando = new JLabel("Introduce aquí os comandos: ");
         this.historialComandos = new JTextArea(15, 25);
         this.etiquetaHistorial = new JLabel("Historial: ");
-        this.textoPe = new JTextField("Ningún tipo seleccionado");
     }
 
     private void setupComponents() {
 
-        //this.panelComandos.setBorder(bordePanelSeleccion);
         this.panelTexto.setPreferredSize(new Dimension(300, 600));
         this.historialComandos.setEditable(false);
-        this.textoPe.setEnabled(false);
-        this.textoPe.setDisabledTextColor(Color.BLUE);
-        this.textoPe.setBackground(this.getBackground());
-        this.textoPe.setBorder(null);
     }
 
     private void layoutComponents() {
@@ -79,16 +71,12 @@ public class PanelComandos extends JPanel {
         this.panelTexto.add(scroll);
 
         this.setLayout(new BorderLayout());
-        this.add(panelTexto, BorderLayout.NORTH);
-        this.add(this.textoPe, BorderLayout.SOUTH);
+        this.add(panelTexto, BorderLayout.CENTER);
+
     }
 
     private void addEventHandlers() {
         this.campoComandos.addKeyListener(introducionComando);
-        /*
-        this.formatoCorto.addItemListener(new XestionCampoTexto(this.ventaPrincipal));
-        this.formatoLargo.addItemListener(new XestionCampoTexto(this.ventaPrincipal));
-        this.combo.addItemListener(new XestionCampoTexto(this.ventaPrincipal));*/
     }
 
     //Getters e Setters
@@ -98,10 +86,6 @@ public class PanelComandos extends JPanel {
 
     public InterfazGrafica getVentaPrincipal() {
         return ventaPrincipal;
-    }
-
-    public JTextField getTextoPe() {
-        return textoPe;
     }
 
     public JLabel getEtiquetaComando() {
