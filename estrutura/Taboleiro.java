@@ -2,6 +2,7 @@ package estrutura;
 
 import xogadores.Xogador;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 public class Taboleiro {
 
@@ -123,9 +124,56 @@ public class Taboleiro {
             grupoTrans.engadirPropiedade((Propiedade) getCasilla("Iate"));
             grupoTrans.engadirPropiedade((Propiedade) getCasilla("Jet Privado"));
 
+            //Engadimos as imaxes
+            engadirImaxes();
+
         } else {
             System.out.println("\nErro no constructor de taboeiro {Banca}.\n");
         }
+    }
+
+    private void engadirImaxes() {
+        getCasilla(0).setImaxedescrip(new ImageIcon("FotosMonopoly/Saída.png"));
+        getCasilla(1).setImaxedescrip(new ImageIcon("FotosMonopoly/Santa Cruz.png"));
+        getCasilla(2).setImaxedescrip(new ImageIcon("FotosMonopoly/Caixa1.png"));
+        getCasilla(3).setImaxedescrip(new ImageIcon("FotosMonopoly/Arteixo.png"));
+        getCasilla(4).setImaxedescrip(new ImageIcon("FotosMonopoly/IRPF.png"));
+        getCasilla(5).setImaxedescrip(new ImageIcon("FotosMonopoly/Autobús.png"));
+        getCasilla(6).setImaxedescrip(new ImageIcon("FotosMonopoly/Meaño.png"));
+        getCasilla(7).setImaxedescrip(new ImageIcon("FotosMonopoly/Sorte1.png"));
+        getCasilla(8).setImaxedescrip(new ImageIcon("FotosMonopoly/Corrubedo.png"));
+        getCasilla(9).setImaxedescrip(new ImageIcon("FotosMonopoly/Lugo.png"));
+        getCasilla(10).setImaxedescrip(new ImageIcon("FotosMonopoly/Carcere.png"));
+        getCasilla(11).setImaxedescrip(new ImageIcon("FotosMonopoly/O Carballiño.png"));
+        getCasilla(12).setImaxedescrip(new ImageIcon("FotosMonopoly/SERGAS.png"));
+        getCasilla(13).setImaxedescrip(new ImageIcon("FotosMonopoly/Sada.png"));
+        getCasilla(14).setImaxedescrip(new ImageIcon("FotosMonopoly/Mera.png"));
+        getCasilla(15).setImaxedescrip(new ImageIcon("FotosMonopoly/Lancha Motora.png"));
+        getCasilla(16).setImaxedescrip(new ImageIcon("FotosMonopoly/Negreira.png"));
+        getCasilla(17).setImaxedescrip(new ImageIcon("FotosMonopoly/Caixa2.png"));
+        getCasilla(18).setImaxedescrip(new ImageIcon("FotosMonopoly/Viveiro.png"));
+        getCasilla(19).setImaxedescrip(new ImageIcon("FotosMonopoly/Ribadeo.png"));
+        getCasilla(20).setImaxedescrip(new ImageIcon("FotosMonopoly/Parking.png"));
+        getCasilla(21).setImaxedescrip(new ImageIcon("FotosMonopoly/Verín.png"));
+        getCasilla(22).setImaxedescrip(new ImageIcon("FotosMonopoly/Sorte2.png"));
+        getCasilla(23).setImaxedescrip(new ImageIcon("FotosMonopoly/Cambados.png"));
+        getCasilla(24).setImaxedescrip(new ImageIcon("FotosMonopoly/Tui.png"));
+        getCasilla(25).setImaxedescrip(new ImageIcon("FotosMonopoly/Iate.png"));
+        getCasilla(26).setImaxedescrip(new ImageIcon("FotosMonopoly/O Caurel.png"));
+        getCasilla(27).setImaxedescrip(new ImageIcon("FotosMonopoly/A Guarda.png"));
+        getCasilla(28).setImaxedescrip(new ImageIcon("FotosMonopoly/Ensino Público.png"));
+        getCasilla(29).setImaxedescrip(new ImageIcon("FotosMonopoly/Ourense.png"));
+        getCasilla(30).setImaxedescrip(new ImageIcon("FotosMonopoly/Ir Carcere.png"));
+        getCasilla(31).setImaxedescrip(new ImageIcon("FotosMonopoly/Santiago.png"));
+        getCasilla(32).setImaxedescrip(new ImageIcon("FotosMonopoly/Sanxenxo.png"));
+        getCasilla(33).setImaxedescrip(new ImageIcon("FotosMonopoly/Caixa3.png"));
+        getCasilla(34).setImaxedescrip(new ImageIcon("FotosMonopoly/Pontevedra.png"));
+        getCasilla(35).setImaxedescrip(new ImageIcon("FotosMonopoly/Jet Privado.png"));
+        getCasilla(36).setImaxedescrip(new ImageIcon("FotosMonopoly/Sorte3.png"));
+        getCasilla(37).setImaxedescrip(new ImageIcon("FotosMonopoly/Vigo.png"));
+        getCasilla(38).setImaxedescrip(new ImageIcon("FotosMonopoly/Subida Pensión.png"));
+        getCasilla(39).setImaxedescrip(new ImageIcon("FotosMonopoly/A Coruña.png"));
+
     }
 
     //Getters e Setters
