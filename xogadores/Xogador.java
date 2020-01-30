@@ -270,11 +270,10 @@ public class Xogador {
                     + "\n";
             return texto;
         } else {
-            String texto = "\nXogador:\n"
-                    + "\tAvatar: " + this.avatar.getId()
-                    + "\n" + "\tNome: " + this.nome
-                    + "\n" + "\tFortuna: " + this.fortuna
-                    + "\n" + "\tCartos gastados: " + this.cartosGastados()
+            String texto = "Avatar: " + this.avatar.getId()
+                    + "\n" + "Nome: " + this.nome
+                    + "\n" + "Fortuna: " + this.fortuna
+                    + "\n" + "Cartos gastados: " + this.cartosGastados()
                     + "\n" + this.imprimirPropiedades()
                     + "\n";
             return texto;

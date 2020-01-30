@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class PanelXogadores extends JPanel {
     private JTabbedPane panel;
-    private JPanel aux;
     private ArrayList<JPanel> paneisxog;
 
 
@@ -28,28 +27,40 @@ public class PanelXogadores extends JPanel {
         panel.setVisible(true);
         this.panel.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
-        PestañaXogador();
-
-        this.panel.add("ejemplo",aux);
-
         paneisxog = new ArrayList<>();
+
+
+
+
     }
 
-    public void PestañaXogador()
+    public void centrado(JPanel pan)
     {
-        //Creamos paneis e text area
-        aux = new JPanel();
-        aux.setVisible(true);
-        JTextArea info = new JTextArea();
-        info.setVisible(true);
-        info.setText("proba");
-        aux.setPreferredSize(new Dimension(200,100));
-        info.setPreferredSize(new Dimension(200,100));
+        //Establecemos o Layout
+        pan.setLayout(new BorderLayout());
 
+        //Obtemos tamaño panel
+        int height = this.getHeight();
+        int width = this.getWidth();
 
-        //Introducimos
-        aux.add(info);
+        //Creamos os paneis
+        JPanel superior =  new JPanel();
+        superior.setPreferredSize( new Dimension(width, height/10));
+        JPanel inferior =  new JPanel();
+        inferior.setPreferredSize( new Dimension(width, height/10));
+        JPanel este =  new JPanel();
+        este.setPreferredSize( new Dimension(width/10, height));
+        JPanel leste =  new JPanel();
+        leste.setPreferredSize( new Dimension(width/10, height));
+
+        //ENgadimolos
+        pan.add(superior,BorderLayout.NORTH);
+        pan.add(inferior,BorderLayout.SOUTH);
+        pan.add(este,BorderLayout.EAST);
+        pan.add(leste,BorderLayout.WEST);
+
     }
+
 
     public void actualizar(ArrayList<Xogador> xogadores)
     {
@@ -79,6 +90,13 @@ public class PanelXogadores extends JPanel {
             textaux.setVisible(true);
             panaux.setVisible(true);
             panaux.setOpaque(false);
+
+            //Axustamollo
+            centrado(panaux);
+
+            //Establecemos fonte
+            textaux.setFont( new Font("arial", 0 ,14));
+
 
             panaux.add(textaux);
             this.paneisxog.add(panaux);
