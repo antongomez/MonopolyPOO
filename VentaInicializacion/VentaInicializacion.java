@@ -44,6 +44,7 @@ public class VentaInicializacion extends JFrame {
         this.setLocation(localizacionWidth, localizacionHeight);
 
         this.setResizable(false);
+        this.setBackground(Color.DARK_GRAY);
     }
 
     private void initComp() {

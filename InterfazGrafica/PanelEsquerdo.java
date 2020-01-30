@@ -70,7 +70,7 @@ public class PanelEsquerdo extends JPanel {
         this.setSize(getPreferredSize());
 
         //Establecemos as dimensions do panel de comandos
-        int metadeAncho = (int) Math.round(getPreferredSize().getWidth() / 2);
+        int metadeAncho = (int) Math.round(getPreferredSize().getWidth() / 4);
         int metadeAlto = (int) Math.round(getPreferredSize().getHeight() / 2);
         this.panelComandos.setPreferredSize(new Dimension(metadeAncho, metadeAlto));
 
@@ -83,7 +83,7 @@ public class PanelEsquerdo extends JPanel {
     }
 
     private void XestionXogadores() {
-        panelXogadores = new PanelXogadores();
+        panelXogadores = new PanelXogadores(new Dimension( this.getWidth(),this.getHeight()));
         this.add(panelXogadores, BorderLayout.CENTER);
     }
 

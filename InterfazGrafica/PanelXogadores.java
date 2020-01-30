@@ -11,15 +11,16 @@ public class PanelXogadores extends JPanel {
     private JTabbedPane panel;
     private ArrayList<JPanel> paneisxog;
 
-    public PanelXogadores() {
+    public PanelXogadores(Dimension pantalla) {
         //Iniciamos panel
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int height = pantalla.height;
         int width = pantalla.width;
         this.setOpaque(false);
 
         panel = new JTabbedPane();
-        panel.setPreferredSize(getPreferredSize());
+        panel.setPreferredSize(new Dimension(width, height/2));
+        //panel.setPreferredSize(new Dimension(100, 300));
         this.add(panel);
         panel.setVisible(true);
         this.panel.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
