@@ -1,16 +1,21 @@
 package consola;
 
+import InterfazGrafica.PanelSaida;
+
 import java.util.Scanner;
 
 public class ConsolaNormal implements Consola {
+    private PanelSaida saida;
 
     public ConsolaNormal() {
     }
+
 
     @Override
     public void imprimir(String mensaxe) {
         if (mensaxe != null) {
             System.out.println(mensaxe);
+            saida.terminal(mensaxe);
         }
     }
 
@@ -20,6 +25,7 @@ public class ConsolaNormal implements Consola {
         if (descricion != null) {
 
             System.out.println(descricion);
+            saida.terminal(mensaxe);
             Scanner sc = new Scanner(System.in);
             mensaxe = sc.next();
         } else {
@@ -34,6 +40,7 @@ public class ConsolaNormal implements Consola {
         if (descricion != null) {
 
             System.out.println(descricion);
+            saida.terminal(mensaxe);
             Scanner sc = new Scanner(System.in);
             mensaxe = sc.nextLine();
         } else {
@@ -60,5 +67,13 @@ public class ConsolaNormal implements Consola {
         mensaxe = sc.nextLine();
 
         return mensaxe;
+    }
+
+    public PanelSaida getSaida() {
+        return saida;
+    }
+
+    public void setSaida(PanelSaida saida) {
+        this.saida = saida;
     }
 }

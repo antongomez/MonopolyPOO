@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 public class Xogo implements Comando {
 
     public static final ConsolaNormal consola = new ConsolaNormal();
+    //public ConsolaNormal consola;
     private ArrayList<Xogador> xogadores;
     private ArrayList<Avatar> avatares;
     private HashMap<String, ArrayList<Trato>> tratos;
@@ -53,6 +54,8 @@ public class Xogo implements Comando {
         nXogadores = 0;
         interfaz = new InterfazGrafica(taboleiro); //Arrancase a interfaz
         interfaz.setVisible(true); //Ponse visible
+
+        consola.setSaida(interfaz.getPanelEsquerdo().getPanelSaida());
 
         Boolean sair = false;
 

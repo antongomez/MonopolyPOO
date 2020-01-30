@@ -25,67 +25,67 @@ import javax.swing.JTextField;
 public class PanelEsquerdo extends JPanel {
 
     private InterfazGrafica ventaPrincipal;
-    private Taboleiro taboleiro;
     private PanelComandos panelComandos;
     private PanelSaida panelSaida;
     private PanelXogadores panelXogadores;
-
+    private JPanel panelIntermedio;
     private JTextField textoPe;
 
     public PanelEsquerdo(InterfazGrafica ventaPrincipal) {
         this.ventaPrincipal = ventaPrincipal;
-        this.taboleiro = taboleiro;
+
+        //Maqueamos panel esquerdo
+        BorderLayout layout = new BorderLayout();
+        this.setLayout(layout);
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = pantalla.height;
+        int width = pantalla.width;
+        this.setPreferredSize(new Dimension(width/2, height));
+        this.setSize(getPreferredSize());
+
+        //Trangallamos o panel comandos
         this.panelComandos = new PanelComandos(ventaPrincipal);
-        this.panelSaida = new PanelSaida();
-        JPanel panelIntermedio = new JPanel(new BorderLayout(0, 0));
+        int metadeAncho = (int) Math.round(getPreferredSize().getWidth() / 2);
+        int metadeAlto = (int) Math.round(getPreferredSize().getHeight() / 2);
+        this.panelComandos.setPreferredSize(new Dimension(metadeAncho, metadeAlto));
 
+        //Trangallamos panelsaida
+        this.panelSaida = new PanelSaida(new Dimension(metadeAncho, metadeAlto));
+
+        //Merdas de panel intermedio
+        panelIntermedio = new JPanel(new BorderLayout(0, 0));
+        panelIntermedio.setPreferredSize(new Dimension(2*metadeAncho, metadeAlto));
+        panelIntermedio.setSize(new Dimension(2*metadeAncho, metadeAlto));
+        panelIntermedio.add(panelComandos, BorderLayout.WEST);
+        panelIntermedio.add(panelSaida, BorderLayout.EAST);
+
+        //Merdas de textpe
         this.textoPe = new JTextField("Ningún tipo seleccionado");
-
         this.textoPe.setEnabled(false);
         this.textoPe.setDisabledTextColor(Color.BLUE);
         this.textoPe.setBackground(this.getBackground());
         this.textoPe.setBorder(null);
 
-        BorderLayout layout = new BorderLayout();
-        this.setLayout(layout);
 
-        panelIntermedio.add(panelComandos, BorderLayout.WEST);
-        panelIntermedio.add(panelSaida, BorderLayout.EAST);
-        this.add(panelIntermedio, BorderLayout.NORTH);
+        //Mierdas de Panel xogadores
+        panelXogadores = new PanelXogadores(new Dimension( this.getWidth(),this.getHeight()));
+
+        //Metemos as cousas no seu sitio
         this.add(this.textoPe, BorderLayout.SOUTH);
-
-        XestionXogadores();
-        setOpaque(false);
-
-        setTamanhos();
-    }
-
-    private void setTamanhos() {
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        int height = pantalla.height;
-        int width = pantalla.width;
-
-        //Establecemos o tamaño do panel esquerdo
-        this.setPreferredSize(new Dimension(380, height));
-        this.setSize(getPreferredSize());
-
-        //Establecemos as dimensions do panel de comandos
-        int metadeAncho = (int) Math.round(getPreferredSize().getWidth() / 4);
-        int metadeAlto = (int) Math.round(getPreferredSize().getHeight() / 2);
-        this.panelComandos.setPreferredSize(new Dimension(metadeAncho, metadeAlto));
-
-        //Establecemos as dimensions do panel de saida
-        this.panelComandos.setPreferredSize(panelComandos.getPreferredSize());
+        this.add(panelIntermedio, BorderLayout.NORTH);
+        this.add(panelXogadores, BorderLayout.CENTER);
 
         //Establecemos as dimensions do panel de xogadores
         this.panelXogadores.setPreferredSize(new Dimension(getWidth(), metadeAlto));
         this.panelXogadores.setSize(getPreferredSize());
+
+        setOpaque(false);
     }
 
-    private void XestionXogadores() {
-        panelXogadores = new PanelXogadores(new Dimension( this.getWidth(),this.getHeight()));
-        this.add(panelXogadores, BorderLayout.CENTER);
+    public PanelSaida getPanelSaida() {
+        return panelSaida;
     }
+
 
     public PanelXogadores getPanelXogadores() {
         return this.panelXogadores;
@@ -97,14 +97,6 @@ public class PanelEsquerdo extends JPanel {
 
     public void setVentaPrincipal(InterfazGrafica ventaPrincipal) {
         this.ventaPrincipal = ventaPrincipal;
-    }
-
-    public Taboleiro getTaboleiro() {
-        return taboleiro;
-    }
-
-    public void setTaboleiro(Taboleiro taboleiro) {
-        this.taboleiro = taboleiro;
     }
 
     public PanelComandos getPanelComandos() {
