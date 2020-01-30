@@ -221,6 +221,14 @@ public class Xogo implements Comando {
                 }
             }
 
+            synchronized (interfaz.getPanelEsquerdo().getPanelComandos().getCampoComandos()) {
+                try {
+                    interfaz.getPanelEsquerdo().getPanelComandos().getCampoComandos().wait();
+                } catch (InterruptedException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+
             String orde = interfaz.getPanelEsquerdo().getPanelComandos().getIntroducionComando().getComando();
 
             //Xestion de comando

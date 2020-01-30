@@ -71,9 +71,9 @@ public class PanelEsquerdo extends JPanel {
         panelXogadores = new PanelXogadores(new Dimension( this.getWidth(),this.getHeight()));
 
         //Metemos as cousas no seu sitio
-        this.add(this.textoPe, BorderLayout.SOUTH);
+        //this.add(this.textoPe, BorderLayout.SOUTH);
         this.add(panelIntermedio, BorderLayout.NORTH);
-        this.add(panelXogadores, BorderLayout.CENTER);
+        this.add(panelXogadores, BorderLayout.SOUTH);
 
         //Establecemos as dimensions do panel de xogadores
         this.panelXogadores.setPreferredSize(new Dimension(getWidth(), metadeAlto));
