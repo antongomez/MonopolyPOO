@@ -4,11 +4,13 @@ import Evento.DescripcionTaboleiro;
 import estrutura.Taboleiro;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.ArrayList;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -214,7 +216,7 @@ public class PanelTaboleiro extends JPanel {
     private void setUpCasillaHorizontal(JButton casilla) {
         casilla.setPreferredSize(new Dimension(65, 56));
         casilla.setSize(new Dimension(65, 56));
-        casilla.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 8));
+        casilla.setBorder(BorderFactory.createLineBorder(Color.black, 1));
     }
 
     private void colocarIconos() {

@@ -5,6 +5,7 @@ import estrutura.Casilla;
 import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.Flow;
+import javax.swing.border.BevelBorder;
 
 public class DescripVenta extends JDialog {
 
@@ -12,10 +13,10 @@ public class DescripVenta extends JDialog {
     private JPanel este;
     private JPanel leste;
     private JTextArea info;
-    private JButton imaxe;
+    private JLabel imaxe;
     private JPanel panelTitulo;
     private Casilla casilla;
-    private JTextField titulo;
+    private JLabel titulo;
 
     public DescripVenta(Frame owner, Casilla casilla) {
         super(owner);
@@ -77,10 +78,11 @@ public class DescripVenta extends JDialog {
         panelImaxe.setPreferredSize(new Dimension(ancho, alto));
         panelImaxe.setSize(panelImaxe.getPreferredSize());
         //FlowLayout layout = new FlowLayout(FlowLayout.CENTER);
-        this.imaxe = new JButton();
+        this.imaxe = new JLabel();
         this.imaxe.setPreferredSize(panelImaxe.getPreferredSize());
         this.imaxe.setSize(imaxe.getPreferredSize());
         this.imaxe.setEnabled(true);
+        this.imaxe.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         panelImaxe.add(imaxe);
         this.leste.add(panelImaxe, BorderLayout.CENTER);
 
@@ -94,9 +96,9 @@ public class DescripVenta extends JDialog {
 
         //Situar titulo
         this.panelTitulo = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        this.titulo = new JTextField(casilla.getNome());
+        this.titulo = new JLabel(casilla.getNome());
         this.titulo.setOpaque(false);
-        this.titulo.setFont(new Font("Alegreya Bold", Font.PLAIN, 30));
+        this.titulo.setFont(new Font("Alegreya", Font.PLAIN, 30));
         this.titulo.setBorder(null);
 
         this.panelTitulo.add(titulo);
