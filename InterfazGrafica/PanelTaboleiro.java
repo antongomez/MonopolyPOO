@@ -255,7 +255,7 @@ public class PanelTaboleiro extends JPanel {
         imaxe = new ImageIcon("FotosMonopoly/Negreira Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
 
-        casilla = casillas.get(1).get(6);
+        casilla = casillas.get(1).get(7);
         imaxe = new ImageIcon("FotosMonopoly/Viveiro Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
 
