@@ -10,7 +10,9 @@ import xogadores.Xogador;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import javax.swing.JPanel;
@@ -25,6 +27,7 @@ public class PanelEsquerdo extends JPanel {
     private InterfazGrafica ventaPrincipal;
     private Taboleiro taboleiro;
     private PanelComandos panelComandos;
+    private PanelSaida panelSaida;
     private PanelXogadores panelXogadores;
 
     private JTextField textoPe;
@@ -33,6 +36,8 @@ public class PanelEsquerdo extends JPanel {
         this.ventaPrincipal = ventaPrincipal;
         this.taboleiro = taboleiro;
         this.panelComandos = new PanelComandos(ventaPrincipal);
+        this.panelSaida = new PanelSaida();
+        JPanel panelIntermedio = new JPanel(new BorderLayout(0, 0));
 
         this.textoPe = new JTextField("Ningún tipo seleccionado");
 
@@ -44,21 +49,45 @@ public class PanelEsquerdo extends JPanel {
         BorderLayout layout = new BorderLayout();
         this.setLayout(layout);
 
-        this.add(panelComandos, BorderLayout.NORTH);
+        panelIntermedio.add(panelComandos, BorderLayout.WEST);
+        panelIntermedio.add(panelSaida, BorderLayout.EAST);
+        this.add(panelIntermedio, BorderLayout.NORTH);
         this.add(this.textoPe, BorderLayout.SOUTH);
 
-       XestionXogadores();
-       setOpaque(false);
+        XestionXogadores();
+        setOpaque(false);
+
+        setTamanhos();
     }
 
-    public void XestionXogadores()
-    {
+    private void setTamanhos() {
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = pantalla.height;
+        int width = pantalla.width;
+
+        //Establecemos o tamaño do panel esquerdo
+        this.setPreferredSize(new Dimension(380, height));
+        this.setSize(getPreferredSize());
+
+        //Establecemos as dimensions do panel de comandos
+        int metadeAncho = (int) Math.round(getPreferredSize().getWidth() / 2);
+        int metadeAlto = (int) Math.round(getPreferredSize().getHeight() / 2);
+        this.panelComandos.setPreferredSize(new Dimension(metadeAncho, metadeAlto));
+
+        //Establecemos as dimensions do panel de saida
+        this.panelComandos.setPreferredSize(panelComandos.getPreferredSize());
+
+        //Establecemos as dimensions do panel de xogadores
+        this.panelXogadores.setPreferredSize(new Dimension(getWidth(), metadeAlto));
+        this.panelXogadores.setSize(getPreferredSize());
+    }
+
+    private void XestionXogadores() {
         panelXogadores = new PanelXogadores();
         this.add(panelXogadores, BorderLayout.CENTER);
     }
 
-    public PanelXogadores getPanelXogadores()
-    {
+    public PanelXogadores getPanelXogadores() {
         return this.panelXogadores;
     }
 

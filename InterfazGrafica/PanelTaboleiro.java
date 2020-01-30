@@ -210,7 +210,7 @@ public class PanelTaboleiro extends JPanel {
     private void setUpCasillaVertical(JButton casilla) {
         casilla.setPreferredSize(new Dimension(56, 65));
         casilla.setSize(new Dimension(56, 65));
-        casilla.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 8));
+        casilla.setBorder(BorderFactory.createLineBorder(Color.black, 1));
     }
 
     private void setUpCasillaHorizontal(JButton casilla) {
