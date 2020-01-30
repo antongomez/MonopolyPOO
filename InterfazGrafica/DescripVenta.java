@@ -36,20 +36,15 @@ public class DescripVenta extends JDialog {
         //Configuramos o panel base
         this.panel = new JPanel();
         this.panel.setLayout(new BorderLayout());
-        this.panel.setVisible(true);
-        this.panel.setOpaque(false);
         this.add(panel);
 
         //Construimos paneles auxiliares
         this.leste = new JPanel();
-        this.leste.setOpaque(false);
         this.leste.setPreferredSize(new Dimension(getWidth() / 2, getHeight()));
         this.leste.setSize(leste.getPreferredSize());
         this.panel.add(leste, BorderLayout.WEST);
         this.leste.setLayout(new BorderLayout());
-        this.leste.setOpaque(true);
         this.este = new JPanel();
-        this.este.setOpaque(false);
         this.este.setPreferredSize(new Dimension(getWidth() / 2, getHeight()));
         this.panel.add(este, BorderLayout.EAST);
         this.este.setLayout(new BorderLayout());
@@ -65,12 +60,34 @@ public class DescripVenta extends JDialog {
 
         JPanel panelOeste = new JPanel();
         panelOeste.setPreferredSize(new Dimension(50, leste.getHeight()));
-        panelOeste.setOpaque(false);
         this.leste.add(panelOeste, BorderLayout.WEST);
 
         JPanel panelEste = new JPanel();
         panelEste.setPreferredSize(new Dimension(50, leste.getHeight()));
         this.leste.add(panelEste, BorderLayout.EAST);
+
+        //Poñemos transparente o fondo
+        /*panel.setOpaque(false);
+        leste.setOpaque(false);
+        este.setOpaque(false);
+        panelNorte.setOpaque(false);
+        panelOeste.setOpaque(false);
+        panelEste.setOpaque(false);
+        panelSur.setOpaque(false);*/
+        leste.setBackground(Color.red);
+        este.setBackground(Color.yellow);
+        panelNorte.setBackground(Color.black);
+        panelOeste.setBackground(Color.orange);
+        panelEste.setBackground(Color.GREEN);
+        panelSur.setBackground(Color.MAGENTA);
+        panel.setOpaque(false);
+        leste.setOpaque(false);
+        este.setOpaque(false);
+        panelNorte.setOpaque(false);
+        panelOeste.setOpaque(false);
+        panelEste.setOpaque(false);
+        panelSur.setOpaque(false);
+        
 
         //Introuducimos Jbutton
         JPanel panelImaxe = new JPanel();
