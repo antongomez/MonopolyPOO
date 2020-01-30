@@ -6,9 +6,13 @@
 package InterfazGrafica;
 
 import estrutura.Taboleiro;
+import xogadores.Xogador;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -21,6 +25,7 @@ public class PanelEsquerdo extends JPanel {
     private InterfazGrafica ventaPrincipal;
     private Taboleiro taboleiro;
     private PanelComandos panelComandos;
+    private PanelXogadores panelXogadores;
 
     private JTextField textoPe;
 
@@ -42,13 +47,18 @@ public class PanelEsquerdo extends JPanel {
         this.add(panelComandos, BorderLayout.NORTH);
         this.add(this.textoPe, BorderLayout.SOUTH);
 
-        XestionXogadores();
+       XestionXogadores();
     }
 
     public void XestionXogadores()
     {
-        PanelXogadores xog = new PanelXogadores();
-        this.add(xog, BorderLayout.CENTER);
+        panelXogadores = new PanelXogadores();
+        this.add(panelXogadores, BorderLayout.CENTER);
+    }
+
+    public PanelXogadores getPanelXogadores()
+    {
+        return this.panelXogadores;
     }
 
     public InterfazGrafica getVentaPrincipal() {

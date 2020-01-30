@@ -107,6 +107,8 @@ public class Xogo implements Comando {
                         crearXogador(nomeXogador, tipoAvatar);
 
                     }
+
+
                     synchronized (ventaInicial.getBotonAceptar()) {
                         ventaInicial.getBotonAceptar().notifyAll();
                     }
@@ -119,6 +121,7 @@ public class Xogo implements Comando {
         //Engadese a accion ao boton aceptar
         ventaInicial.engadirAccionBoton(ointe);
 
+
         //Fio que espera a que se introduzan os datos na venta emerxente inicial
         if (xogadores.size() != nXogadores) {
             synchronized (ventaInicial.getBotonAceptar()) {
@@ -129,6 +132,8 @@ public class Xogo implements Comando {
                 }
             }
         }
+
+        interfaz.getPanelEsquerdo().getPanelXogadores().actualizar(xogadores);
         
         taboleiro.imprimirTaboleiro();
 
