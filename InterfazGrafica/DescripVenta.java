@@ -13,10 +13,14 @@ public class DescripVenta extends JDialog {
     private JPanel leste;
     private JTextArea info;
     private JButton imaxe;
-    private JPanel aux;
+    private JPanel panelTitulo;
+    private Casilla casilla;
+    private JTextField titulo;
 
     public DescripVenta(Frame owner, Casilla casilla) {
         super(owner);
+
+        this.casilla = casilla;
 
         //Obtemos as dimensións da pantalla para a xestión da ubicación
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -30,7 +34,7 @@ public class DescripVenta extends JDialog {
         int localizacionAlto = (int) Math.round(height / 2) - (int) Math.round(getSize().getHeight() / 2);
         this.setLocation(localizacionAncho, localizacionAlto);
         this.setResizable(false); //Non redimensionable
-        this.setTitle(" ");
+        this.setTitle(casilla.getNome());
         this.setVisible(true);
 
         //Configuramos o panel base
@@ -51,11 +55,11 @@ public class DescripVenta extends JDialog {
 
         //Introducimos os espazos adicionais para o JButton
         JPanel panelNorte = new JPanel();
-        panelNorte.setPreferredSize(new Dimension(getWidth() / 2, 30));
+        panelNorte.setPreferredSize(new Dimension(getWidth() / 2, 29));
         this.leste.add(panelNorte, BorderLayout.NORTH);
 
         JPanel panelSur = new JPanel();
-        panelSur.setPreferredSize(new Dimension(getWidth() / 2, 30));
+        panelSur.setPreferredSize(new Dimension(getWidth() / 2, 29));
         this.leste.add(panelSur, BorderLayout.SOUTH);
 
         JPanel panelOeste = new JPanel();
@@ -66,34 +70,11 @@ public class DescripVenta extends JDialog {
         panelEste.setPreferredSize(new Dimension(50, leste.getHeight()));
         this.leste.add(panelEste, BorderLayout.EAST);
 
-        //Poñemos transparente o fondo
-        /*panel.setOpaque(false);
-        leste.setOpaque(false);
-        este.setOpaque(false);
-        panelNorte.setOpaque(false);
-        panelOeste.setOpaque(false);
-        panelEste.setOpaque(false);
-        panelSur.setOpaque(false);*/
-        leste.setBackground(Color.red);
-        este.setBackground(Color.yellow);
-        panelNorte.setBackground(Color.black);
-        panelOeste.setBackground(Color.orange);
-        panelEste.setBackground(Color.GREEN);
-        panelSur.setBackground(Color.MAGENTA);
-        panel.setOpaque(false);
-        leste.setOpaque(false);
-        este.setOpaque(false);
-        panelNorte.setOpaque(false);
-        panelOeste.setOpaque(false);
-        panelEste.setOpaque(false);
-        panelSur.setOpaque(false);
-        
-
         //Introuducimos Jbutton
-        JPanel panelImaxe = new JPanel();
+        JPanel panelImaxe = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         int ancho = 360;
         int alto = 420;
-        panelImaxe.setPreferredSize(new Dimension(ancho, alto));
+        panelImaxe.setPreferredSize(new Dimension(ancho, alto + 2));
         panelImaxe.setSize(panelImaxe.getPreferredSize());
         //FlowLayout layout = new FlowLayout(FlowLayout.CENTER);
         this.imaxe = new JButton();
@@ -105,19 +86,43 @@ public class DescripVenta extends JDialog {
 
         //Texto
         this.info = new JTextArea();
-        this.info.setPreferredSize(new Dimension(width / 3, (int) Math.ceil(height / 1.5)));
+        this.info.setPreferredSize(new Dimension(getWidth() / 2, getHeight() - 120));
         this.este.add(info, BorderLayout.CENTER);
         this.info.setFont(new Font("arial", 0, 14));
         this.info.setOpaque(false);
         this.info.setEditable(false);
 
-        //Situar texto
-        this.aux = new JPanel();
-        this.aux.setPreferredSize(new Dimension(width / 4, (int) Math.ceil(height / 12)));
-        this.este.add(aux, BorderLayout.NORTH);
+        //Situar titulo
+        this.panelTitulo = new JPanel(new BorderLayout(0, 20));
+        //this.panelTitulo.setPreferredSize(new Dimension(info.getWidth(), 60));
+
+        this.titulo = new JTextField(casilla.getNome());
+        this.titulo.setOpaque(false);
+        this.titulo.setFont(new Font("Cooper Black", Font.BOLD, 30));
+        this.titulo.setBorder(null);
+        JPanel panelAuxTitulo = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+
+        panelAuxTitulo.add(titulo);
+        this.panelTitulo.add(panelAuxTitulo, BorderLayout.CENTER);
+        this.este.add(panelTitulo, BorderLayout.NORTH);
+
+        JPanel panelNorte2 = new JPanel();
+        panelNorte2.setPreferredSize(new Dimension(getWidth() / 2, 29));
+        this.panelTitulo.add(panelNorte2, BorderLayout.NORTH);
 
         //Función para engadir informacion
         this.inciarDescripVenta(casilla);
+
+        //Poñemos transparente o fondo
+        //panel.setBackground(Color.darkGray);
+        
+        leste.setOpaque(false);
+        este.setOpaque(false);
+        panelNorte.setOpaque(false);
+        panelOeste.setOpaque(false);
+        panelEste.setOpaque(false);
+        panelSur.setOpaque(false);
+        panelTitulo.setOpaque(false);
     }
 
     public void inciarDescripVenta(Casilla casilla) {
