@@ -33,6 +33,8 @@ public class PanelTaboleiro extends JPanel {
         layoutComp();
         activarDescripcion(ventaPrincipal, taboleiro);
 
+        setOpaque(false);
+
     }
 
     private void initComp() {

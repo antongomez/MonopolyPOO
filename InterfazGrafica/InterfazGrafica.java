@@ -25,6 +25,8 @@ public class InterfazGrafica extends JFrame {
         setupComponents();
         layoutComponents();
         addEventHandlers();
+
+        setBackground(Color.cyan);
     }
 
     private void iniciarVenta() {

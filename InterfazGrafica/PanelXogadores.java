@@ -20,7 +20,7 @@ public class PanelXogadores extends JPanel {
         int width = pantalla.width;
 
         this.setPreferredSize(new Dimension(width/2, height/2));
-        this.setBackground(Color.CYAN);
+        this.setOpaque(false);
 
         panel = new JTabbedPane();
         panel.setPreferredSize(new Dimension(width/2, height/2));
@@ -78,6 +78,7 @@ public class PanelXogadores extends JPanel {
             //Visibilidad
             textaux.setVisible(true);
             panaux.setVisible(true);
+            panaux.setOpaque(false);
 
             panaux.add(textaux);
             this.paneisxog.add(panaux);

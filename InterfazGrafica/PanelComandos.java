@@ -35,6 +35,8 @@ public class PanelComandos extends JPanel {
         setupComponents();
         layoutComponents();
         addEventHandlers();
+
+        setOpaque(false);
     }
 
     private void initComponents() {

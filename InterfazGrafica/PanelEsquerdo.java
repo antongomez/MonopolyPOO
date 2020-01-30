@@ -48,6 +48,7 @@ public class PanelEsquerdo extends JPanel {
         this.add(this.textoPe, BorderLayout.SOUTH);
 
        XestionXogadores();
+       setOpaque(false);
     }
 
     public void XestionXogadores()
