@@ -8,7 +8,7 @@ import java.util.concurrent.Flow;
 
 public class DescripVenta extends JDialog {
 
-    private JPanel panel;
+    private PanelDescripcion panel;
     private JPanel este;
     private JPanel leste;
     private JTextArea info;
@@ -38,7 +38,7 @@ public class DescripVenta extends JDialog {
         this.setVisible(true);
 
         //Configuramos o panel base
-        this.panel = new JPanel();
+        this.panel = new PanelDescripcion();
         this.panel.setLayout(new BorderLayout());
         this.add(panel);
 
@@ -51,15 +51,15 @@ public class DescripVenta extends JDialog {
         this.este = new JPanel();
         this.este.setPreferredSize(new Dimension(getWidth() / 2, getHeight()));
         this.panel.add(este, BorderLayout.EAST);
-        this.este.setLayout(new BorderLayout());
+        this.este.setLayout(new BorderLayout(0, 0));
 
         //Introducimos os espazos adicionais para o JButton
         JPanel panelNorte = new JPanel();
-        panelNorte.setPreferredSize(new Dimension(getWidth() / 2, 29));
+        panelNorte.setPreferredSize(new Dimension(getWidth() / 2, 30));
         this.leste.add(panelNorte, BorderLayout.NORTH);
 
         JPanel panelSur = new JPanel();
-        panelSur.setPreferredSize(new Dimension(getWidth() / 2, 29));
+        panelSur.setPreferredSize(new Dimension(getWidth() / 2, 30));
         this.leste.add(panelSur, BorderLayout.SOUTH);
 
         JPanel panelOeste = new JPanel();
@@ -74,7 +74,7 @@ public class DescripVenta extends JDialog {
         JPanel panelImaxe = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         int ancho = 360;
         int alto = 420;
-        panelImaxe.setPreferredSize(new Dimension(ancho, alto + 2));
+        panelImaxe.setPreferredSize(new Dimension(ancho, alto));
         panelImaxe.setSize(panelImaxe.getPreferredSize());
         //FlowLayout layout = new FlowLayout(FlowLayout.CENTER);
         this.imaxe = new JButton();
@@ -87,41 +87,38 @@ public class DescripVenta extends JDialog {
         //Texto
         this.info = new JTextArea();
         this.info.setPreferredSize(new Dimension(getWidth() / 2, getHeight() - 120));
-        this.este.add(info, BorderLayout.CENTER);
+        this.este.add(info, BorderLayout.SOUTH);
         this.info.setFont(new Font("arial", 0, 14));
         this.info.setOpaque(false);
         this.info.setEditable(false);
 
         //Situar titulo
-        this.panelTitulo = new JPanel(new BorderLayout(0, 20));
-        //this.panelTitulo.setPreferredSize(new Dimension(info.getWidth(), 60));
-
+        this.panelTitulo = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         this.titulo = new JTextField(casilla.getNome());
         this.titulo.setOpaque(false);
-        this.titulo.setFont(new Font("Cooper Black", Font.BOLD, 30));
+        this.titulo.setFont(new Font("Alegreya Bold", Font.PLAIN, 30));
         this.titulo.setBorder(null);
-        JPanel panelAuxTitulo = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
-        panelAuxTitulo.add(titulo);
-        this.panelTitulo.add(panelAuxTitulo, BorderLayout.CENTER);
-        this.este.add(panelTitulo, BorderLayout.NORTH);
+        this.panelTitulo.add(titulo);
+        this.este.add(panelTitulo, BorderLayout.CENTER);
 
         JPanel panelNorte2 = new JPanel();
-        panelNorte2.setPreferredSize(new Dimension(getWidth() / 2, 29));
-        this.panelTitulo.add(panelNorte2, BorderLayout.NORTH);
+        panelNorte2.setPreferredSize(new Dimension(getWidth() / 2, 30));
+        this.este.add(panelNorte2, BorderLayout.NORTH);
 
         //Función para engadir informacion
         this.inciarDescripVenta(casilla);
 
         //Poñemos transparente o fondo
         //panel.setBackground(Color.darkGray);
-        
+        panel.setOpaque(false);
         leste.setOpaque(false);
         este.setOpaque(false);
         panelNorte.setOpaque(false);
         panelOeste.setOpaque(false);
         panelEste.setOpaque(false);
         panelSur.setOpaque(false);
+        panelNorte2.setOpaque(false);
         panelTitulo.setOpaque(false);
     }
 
