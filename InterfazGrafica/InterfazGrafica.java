@@ -26,7 +26,7 @@ public class InterfazGrafica extends JFrame {
         layoutComponents();
         addEventHandlers();
 
-        setBackground(new Color(199,255,185));
+        setBackground(new Color(199, 255, 185));
         ImageIcon imaxe = new ImageIcon("FotosMonopoly/chapeu.png");
         setIconImage(imaxe.getImage());
     }
@@ -38,7 +38,7 @@ public class InterfazGrafica extends JFrame {
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int height = pantalla.height;
         int width = pantalla.width;
-        this.setMinimumSize(new Dimension(1000, height - 33));
+        this.setMinimumSize(new Dimension(width - 30, height - 33));
         this.setSize(new Dimension(width, height - 33));
     }
 

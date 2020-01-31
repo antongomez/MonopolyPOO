@@ -13,13 +13,18 @@ public class PanelSaida extends JPanel {
         this.setOpaque(false);
         this.setVisible(true);
         this.setBackground(new Color(199, 255, 185));
+        this.setLayout(new BorderLayout(0, 0));
 
-        terminal = new JTextArea(15, 25);
+        terminal = new JTextArea(20, 25);
         terminal.setForeground(Color.GREEN);
         terminal.setBackground(Color.BLACK);
         terminal.setEditable(false);
         terminal.setVisible(true);
-        this.add(terminal);
+        this.add(terminal, BorderLayout.CENTER);
+        JPanel aux = new JPanel();
+        aux.setOpaque(false);
+        aux.setPreferredSize(new Dimension((int) Math.round(dimension.getWidth()), 15));
+        this.add(aux, BorderLayout.NORTH);
 
         JScrollPane scroll = new JScrollPane(terminal,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,

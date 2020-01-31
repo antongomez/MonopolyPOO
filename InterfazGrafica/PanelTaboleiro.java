@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -423,8 +424,18 @@ public class PanelTaboleiro extends JPanel {
         this.add(panelOeste, BorderLayout.WEST);
         this.add(panelNorte, BorderLayout.NORTH);
         this.add(panelEste, BorderLayout.EAST);
-        JPanel aux = new JPanel();
+        JPanel aux = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         aux.setOpaque(false);
+        JLabel fotoMonopoly = new JLabel();
+        fotoMonopoly.setOpaque(false);
+        fotoMonopoly.setPreferredSize(new Dimension(500, 500));
+        fotoMonopoly.setSize(fotoMonopoly.getPreferredSize());
+        ImageIcon foto = new ImageIcon("FotosMonopoly/Monopoly.png");
+        fotoMonopoly.setIcon(new ImageIcon(foto.getImage().getScaledInstance(
+                fotoMonopoly.getWidth(),
+                fotoMonopoly.getHeight(),
+                Image.SCALE_SMOOTH)));
+        aux.add(fotoMonopoly);
         this.add(aux, BorderLayout.CENTER);
     }
 
