@@ -37,7 +37,9 @@ public class PanelDereito extends JPanel {
         panelEspazo2.setPreferredSize(new Dimension(20, panelIntermedio.getHeight()));
         this.add(panelEspazo2, BorderLayout.EAST);
 
-        setOpaque(false);
+        setOpaque(true);
+        panelIntermedio.setOpaque(false);
+        setBackground(new Color(199,255,199));
     }
 
 //Getters e Setters

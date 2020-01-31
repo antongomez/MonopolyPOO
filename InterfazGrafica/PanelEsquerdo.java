@@ -35,6 +35,9 @@ public class PanelEsquerdo extends JPanel {
     public PanelEsquerdo(InterfazGrafica ventaPrincipal) {
         this.ventaPrincipal = ventaPrincipal;
 
+        //Color
+        this.setOpaque(false);
+
         //Maqueamos panel esquerdo
         BorderLayout layout = new BorderLayout();
         this.setLayout(layout);
@@ -60,10 +63,12 @@ public class PanelEsquerdo extends JPanel {
         panelIntermedio.add(panelComandos, BorderLayout.WEST);
         panelIntermedio.add(panelSaida, BorderLayout.EAST);
 
+
         //Merdas de panel botons
         panelbotons = new JPanel();
         panelbotons.setPreferredSize(panelIntermedio.getPreferredSize());
-        panelbotons.setOpaque(false);
+        panelbotons.setOpaque(true);
+        panelbotons.setBackground(new Color(199,255,185));
         panelbotons.setVisible(true);
         panelbotons.add(new Botons(this));
 
@@ -81,6 +86,8 @@ public class PanelEsquerdo extends JPanel {
         //Metemos as cousas no seu sitio
         //this.add(this.textoPe, BorderLayout.SOUTH);
         this.add(panelIntermedio, BorderLayout.NORTH);
+        panelIntermedio.setOpaque(true);
+        panelIntermedio.setBackground(new Color(199,255,185));
         this.add(panelbotons,BorderLayout.CENTER);
         this.add(panelXogadores, BorderLayout.SOUTH);
 

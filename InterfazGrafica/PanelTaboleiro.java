@@ -35,8 +35,13 @@ public class PanelTaboleiro extends JPanel {
         layoutComp();
         activarDescripcion(ventaPrincipal, taboleiro);
 
-        setOpaque(false);
+        setOpaque(true);
+        setBackground(new Color(199,255,185));
 
+        panelSur.setOpaque(false);
+                panelOeste.setOpaque(false);
+        panelNorte.setOpaque(false);
+                panelEste.setOpaque(false);
     }
 
     private void initComp() {

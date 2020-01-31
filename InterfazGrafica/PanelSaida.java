@@ -13,6 +13,8 @@ public class PanelSaida extends JPanel {
         this.setPreferredSize(dimension);
         this.setOpaque(false);
         this.setVisible(true);
+        this.setBackground(new Color(199,255,185));
+
 
 
         principal = new JPanel();

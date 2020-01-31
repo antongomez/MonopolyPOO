@@ -36,7 +36,17 @@ public class PanelComandos extends JPanel {
         layoutComponents();
         addEventHandlers();
 
-        setOpaque(false);
+        this.setOpaque(true);
+        Color cor = new Color(199,255,185);
+        this.setBackground(cor);
+
+        panelTexto.setBackground(cor);
+        //bordePanelSeleccion.setBackground(cor);
+        etiquetaComando.setBackground(cor);
+        //campoComandos.setBackground(cor);
+        etiquetaHistorial.setBackground(cor);
+        //historialComandos.setBackground(cor);
+
     }
 
     private void initComponents() {

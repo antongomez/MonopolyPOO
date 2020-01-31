@@ -26,7 +26,7 @@ public class InterfazGrafica extends JFrame {
         layoutComponents();
         addEventHandlers();
 
-        setBackground(Color.cyan);
+        setBackground(new Color(199,255,185));
 
         setIconImage( new ImageIcon(getClass().getResource("./chapeu.png")).getImage());
     }

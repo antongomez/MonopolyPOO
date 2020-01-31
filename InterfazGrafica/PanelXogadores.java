@@ -16,7 +16,8 @@ public class PanelXogadores extends JPanel {
         //Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int height = pantalla.height;
         int width = pantalla.width;
-        this.setOpaque(false);
+        this.setOpaque(true);
+        this.setBackground(new Color(199,255,185));
 
         panel = new JTabbedPane();
         panel.setPreferredSize(new Dimension(width, height/2));
@@ -46,6 +47,12 @@ public class PanelXogadores extends JPanel {
         este.setPreferredSize(new Dimension(width / 10, height));
         JPanel leste = new JPanel();
         leste.setPreferredSize(new Dimension(width / 10, height));
+
+        superior.setBackground(Color.white);
+                inferior.setBackground(Color.white);
+        este.setBackground(Color.white);
+                leste.setBackground(Color.white);
+
 
         //ENgadimolos
         pan.add(superior, BorderLayout.NORTH);
@@ -86,6 +93,7 @@ public class PanelXogadores extends JPanel {
             textaux.setFont(new Font("arial", 0, 14));
 
             panaux.add(textaux);
+
             this.paneisxog.add(panaux);
             this.panel.add(xogadores.get(i).getNome(), panaux);
         }

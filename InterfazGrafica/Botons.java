@@ -15,11 +15,13 @@ public class Botons extends JPanel {
     public Botons(PanelEsquerdo panex)
     {
         this.setVisible(true);
-        this.setOpaque(false);
+        this.setOpaque(true);
         this.setPreferredSize(new Dimension(panex.getWidth(),panex.getHeight()/3));
         this.setSize(this.getPreferredSize());
 
-        this.setLayout(new BorderLayout());
+        this.setBackground(new Color(199,255,185));
+
+        //this.setLayout(new BorderLayout());
 
         lanzardados = new JButton("Lanzar");
         lanzardados.setVisible(true);
@@ -57,6 +59,6 @@ public class Botons extends JPanel {
         };
 
         lanzardados.addMouseListener(lanzar);
-        this.add(lanzardados, BorderLayout.CENTER);
+        this.add(lanzardados);
     }
 }

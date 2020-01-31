@@ -52,6 +52,9 @@ public class VentaInicializacion extends JFrame {
         layout.setHgap(10);
         layout.setVgap(10);
         panel = new JPanel(layout);
+        panel.setBackground(new Color(199,255,185));
+        panel.setOpaque(true);
+        panel.setVisible(true);
         etiquetas = new HashMap<>();
         camposTexto = new HashMap<>();
         botonAceptar = new JButton("Aceptar");
