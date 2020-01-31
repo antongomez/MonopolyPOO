@@ -26,6 +26,7 @@ public class PanelTaboleiro extends JPanel {
     private JPanel panelOeste;
     private JPanel panelNorte;
     private JPanel panelEste;
+    private ArrayList<AvataresTaboleiro> avatares;
 
     public PanelTaboleiro(InterfazGrafica ventaPrincipal, Taboleiro taboleiro) {
         this.ventaPrincipal = ventaPrincipal;
@@ -79,6 +80,11 @@ public class PanelTaboleiro extends JPanel {
         JButton Carcere = new JButton();
         ladoSur.add(Carcere);
 
+        for (int i = 0; i < ladoSur.size(); i++)
+        {
+            ladoSur.get(i).add(new AvataresTaboleiro(ladoSur.get(i)));
+        }
+
         casillas.add(ladoSur);
 
         ArrayList<JButton> ladoOeste = new ArrayList<>();
@@ -101,6 +107,12 @@ public class PanelTaboleiro extends JPanel {
         ladoOeste.add(Viveiro);
         JButton Ribadeo = new JButton();
         ladoOeste.add(Ribadeo);
+
+
+        for (int i = 0; i < ladoOeste.size(); i++)
+        {
+            ladoOeste.get(i).add(new AvataresTaboleiro(ladoOeste.get(i)));
+        }
 
         casillas.add(ladoOeste);
 
@@ -131,6 +143,12 @@ public class PanelTaboleiro extends JPanel {
 
         casillas.add(ladoNorte);
 
+
+        for (int i = 0; i < ladoNorte.size(); i++)
+        {
+            ladoNorte.get(i).add(new AvataresTaboleiro(ladoNorte.get(i)));
+        }
+
         ArrayList<JButton> ladoEste = new ArrayList<>();
 
         JButton Santiago = new JButton();
@@ -152,8 +170,20 @@ public class PanelTaboleiro extends JPanel {
         JButton Corunha = new JButton();
         ladoEste.add(Corunha);
 
+
+        for (int i = 0; i < ladoEste.size(); i++)
+        {
+            ladoEste.get(i).add(new AvataresTaboleiro(ladoEste.get(i)));
+        }
+
         casillas.add(ladoEste);
     }
+
+    public ArrayList<AvataresTaboleiro> getAvatares() {
+        return avatares;
+    }
+
+
 
     public void activarDescripcion(InterfazGrafica ventaPrincipal, Taboleiro taboleiro) {
         for (int i = 0; i < taboleiro.getCasillas().size(); i++) {

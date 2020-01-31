@@ -824,7 +824,7 @@ public class Xogo implements Comando {
         try {
             if (!avatar.getModoAvanzado()) {
 
-                avatar.moverEnBasico(sumarDados(getDadosLanzados()), taboleiro);
+                avatar.moverEnBasico(sumarDados(getDadosLanzados()), taboleiro, interfaz);
                 avatar.getPosicion().sumarFrecuenciaVisita(turno);
             } else {
 

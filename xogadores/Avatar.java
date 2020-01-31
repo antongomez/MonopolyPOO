@@ -1,5 +1,6 @@
 package xogadores;
 
+import InterfazGrafica.InterfazGrafica;
 import estrutura.*;
 import java.util.Random;
 import static xogo.Xogo.consola;
@@ -66,13 +67,15 @@ public abstract class Avatar {
 
     //Metodos
     //Metodo que move ao avatar en modo Basico
-    public void moverEnBasico(int sumaDados, Taboleiro taboleiro) {
+    public void moverEnBasico(int sumaDados, Taboleiro taboleiro, InterfazGrafica interfaz) {
         if (this.xogador.getEstadoPreso() == 0) {
 
             Casilla procedencia = posicion;
 
             //Eliminase ao avatar da casilla na que esta
             this.posicion.eliminarAvatar(this);
+
+            interfaz.getPanelDereito().getTab().getAvatares().get(this.posicion.getPosicion()).elimAvatar(this);
             //Distinguimos o caso que pasa pola saida e o que non
             if (this.posicion.getPosicion() + sumaDados < 40) {
                 //Actualizase a posicion
@@ -83,10 +86,13 @@ public abstract class Avatar {
                         + " ata " + posicion.getNome() + ".\n");
 
                 this.posicion.engadirAvatar(this);
+                interfaz.getPanelDereito().getTab().getAvatares().get(this.posicion.getPosicion()).addAvater(this);
 
             } else { //Caso no que o avatar da unha volta
                 this.posicion = taboleiro.getCasilla(this.posicion.getPosicion() + sumaDados - 40);
                 this.posicion.engadirAvatar(this);
+                interfaz.getPanelDereito().getTab().getAvatares().get(this.posicion.getPosicion()).addAvater(this);
+
 
                 consola.imprimir("O avatar " + id + " avanza " + sumaDados
                         + " posicións, desde " + procedencia.getNome()

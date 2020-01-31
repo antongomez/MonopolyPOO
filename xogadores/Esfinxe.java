@@ -1,5 +1,6 @@
 package xogadores;
 
+import InterfazGrafica.InterfazGrafica;
 import estrutura.*;
 import xogo.*;
 import Excepcions.*;
@@ -10,6 +11,7 @@ import errosExternos.errosExistencia.*;
 public class Esfinxe extends Avatar {
 
     private ArrayList<String> historial;
+    private InterfazGrafica interfaz;
 
     //Exemplo: alquiler/150/Anton/A Guarda    /*sendo Victor o xogador deste avatar*/
     //Exemplo: compra/150/Lugo 
@@ -31,6 +33,7 @@ public class Esfinxe extends Avatar {
         super(Id, xogador, taboleiro);
 
         this.historial = new ArrayList<>();
+        this.interfaz = null;
     }
 
     //Getters e Setters
@@ -120,7 +123,7 @@ public class Esfinxe extends Avatar {
             }
             Xogo.consola.imprimir(texto);
         } else if (sumaDados == 4) {
-            this.moverEnBasico(sumaDados, taboleiro);
+            this.moverEnBasico(sumaDados, taboleiro, interfaz);
         } else {
             desfacerCambios(taboleiro, banca, hipoteca);
         }

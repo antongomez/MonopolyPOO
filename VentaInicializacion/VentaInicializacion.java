@@ -58,6 +58,10 @@ public class VentaInicializacion extends JFrame {
         etiquetas = new HashMap<>();
         camposTexto = new HashMap<>();
         botonAceptar = new JButton("Aceptar");
+        botonAceptar.setPreferredSize(new Dimension(panel.getWidth()/3, panel.getHeight()/10));
+        botonAceptar.setSize(botonAceptar.getPreferredSize());
+        botonAceptar.setBackground(Color.green);
+        botonAceptar.setForeground(Color.white);
     }
 
     private void setUpPanel(int nXogadores) {

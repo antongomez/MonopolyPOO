@@ -1,5 +1,6 @@
 package xogadores;
 
+import InterfazGrafica.InterfazGrafica;
 import estrutura.Taboleiro;
 
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 public class Coche extends Avatar {
 
     private int bloqueado;
+    private InterfazGrafica interfaz;
 
     public Coche(char Id, Xogador xogador, Taboleiro taboleiro) {
         super(Id, xogador, taboleiro);
@@ -16,7 +18,7 @@ public class Coche extends Avatar {
     @Override
     public void moverEnAvanzado(int sumaDados, Taboleiro taboleiro,
             Xogador banca, Xogador hipoteca) {
-        moverEnBasico(sumaDados, taboleiro);
+        moverEnBasico(sumaDados, taboleiro, interfaz);
     }
 
     @Override
