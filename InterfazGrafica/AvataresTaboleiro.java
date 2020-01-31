@@ -9,11 +9,11 @@ import java.util.HashMap;
 
 public class AvataresTaboleiro extends JPanel {
 
-    private ArrayList<JLabel> avatares;
+    private HashMap<Avatar, JLabel> avatares;
 
     public AvataresTaboleiro(JButton boton) {
         //this.setPreferredSize(new Dimension(boton.getWidth(), boton.getHeight() - 10));
-        avatares = new ArrayList<>();
+        avatares = new HashMap<>();
         
         this.setVisible(true);
         this.setOpaque(false);
@@ -25,12 +25,13 @@ public class AvataresTaboleiro extends JPanel {
         text.setFont(new Font("arial", 0, 15));
         text.setVisible(true);
         text.setOpaque(true);
-        avatares.add(text);
+        avatares.put(avatar, text);
         this.add(text);
     }
 
     public void elimAvatar(Avatar avatar) {
         //avatares.remove(avatar);
+        avatares.get(avatar).setText("");
     }
 
 }

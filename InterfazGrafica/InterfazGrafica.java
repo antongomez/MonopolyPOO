@@ -27,7 +27,8 @@ public class InterfazGrafica extends JFrame {
         addEventHandlers();
 
         setBackground(new Color(199,255,185));
-        setIconImage( new ImageIcon(getClass().getResource("FotosMonopoly/chapeu.png")).getImage());
+        ImageIcon imaxe = new ImageIcon("FotosMonopoly/chapeu.png");
+        setIconImage(imaxe.getImage());
     }
 
     private void iniciarVenta() {

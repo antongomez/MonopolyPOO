@@ -78,7 +78,6 @@ public abstract class Avatar {
             this.posicion.eliminarAvatar(this);
             //Elimínase o avatar do taboleiro
             interfaz.getPanelDereito().getTab().getAvatares().get(posicion.getPosicion()).elimAvatar(this);
-            interfaz.getPanelDereito().getTab().getAvatares().get(1).addAvater(this);
 
             //Distinguimos o caso que pasa pola saida e o que non
             if (this.posicion.getPosicion() + sumaDados < 40) {
@@ -107,7 +106,7 @@ public abstract class Avatar {
                         + Constantes.VALOR_VOLTA + " GM.\n");
             }
             //Engadese o avatar no taboleiro
-            interfaz.getPanelDereito().getTab().getAvatares().get(this.posicion.getPosicion()).addAvater(this);
+            interfaz.getPanelDereito().getTab().getAvatares().get(posicion.getPosicion()).addAvater(this);
 
         }
     }
