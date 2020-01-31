@@ -206,6 +206,8 @@ public class PanelTaboleiro extends JPanel {
         //Colocanse as imaxes enriba dos botons
         colocarIconos();
 
+        colocarAvatares();
+
     }
 
     private void setUpCasillaEspecial(JButton casilla) {
@@ -246,6 +248,14 @@ public class PanelTaboleiro extends JPanel {
         imaxe = new ImageIcon("FotosMonopoly/Arteixo Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
 
+        casilla = casillas.get(0).get(4);
+        imaxe = new ImageIcon("FotosMonopoly/IRPF Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(0).get(5);
+        imaxe = new ImageIcon("FotosMonopoly/Autobús Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+
         casilla = casillas.get(0).get(6);
         imaxe = new ImageIcon("FotosMonopoly/Meaño Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
@@ -270,12 +280,20 @@ public class PanelTaboleiro extends JPanel {
         imaxe = new ImageIcon("FotosMonopoly/O Carballiño Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
 
+        casilla = casillas.get(1).get(1);
+        imaxe = new ImageIcon("FotosMonopoly/SERGAS Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
+
         casilla = casillas.get(1).get(2);
         imaxe = new ImageIcon("FotosMonopoly/Sada Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
 
         casilla = casillas.get(1).get(3);
         imaxe = new ImageIcon("FotosMonopoly/Mera Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
+
+        casilla = casillas.get(1).get(4);
+        imaxe = new ImageIcon("FotosMonopoly/Lancha Motora Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
 
         casilla = casillas.get(1).get(5);
@@ -314,6 +332,10 @@ public class PanelTaboleiro extends JPanel {
         imaxe = new ImageIcon("FotosMonopoly/Tui Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
 
+        casilla = casillas.get(2).get(5);
+        imaxe = new ImageIcon("FotosMonopoly/Iate Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+
         casilla = casillas.get(2).get(6);
         imaxe = new ImageIcon("FotosMonopoly/O Caurel Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
@@ -322,12 +344,16 @@ public class PanelTaboleiro extends JPanel {
         imaxe = new ImageIcon("FotosMonopoly/A Guarda Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
 
+        casilla = casillas.get(2).get(8);
+        imaxe = new ImageIcon("FotosMonopoly/Ensino Público Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+
         casilla = casillas.get(2).get(9);
         imaxe = new ImageIcon("FotosMonopoly/Ourense Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
 
         casilla = casillas.get(2).get(10);
-        imaxe = new ImageIcon("FotosMonopoly/IrCácere Taboleiro.png");
+        imaxe = new ImageIcon("FotosMonopoly/IrCárcere Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
 
         casilla = casillas.get(3).get(0);
@@ -346,6 +372,10 @@ public class PanelTaboleiro extends JPanel {
         imaxe = new ImageIcon("FotosMonopoly/Pontevedra Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
 
+        casilla = casillas.get(3).get(4);
+        imaxe = new ImageIcon("FotosMonopoly/Jet Privado Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
+
         casilla = casillas.get(3).get(5);
         imaxe = new ImageIcon("FotosMonopoly/Sorte3 Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
@@ -354,9 +384,17 @@ public class PanelTaboleiro extends JPanel {
         imaxe = new ImageIcon("FotosMonopoly/Vigo Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
 
+        casilla = casillas.get(3).get(7);
+        imaxe = new ImageIcon("FotosMonopoly/Baixada Pensión Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+
         casilla = casillas.get(3).get(8);
         imaxe = new ImageIcon("FotosMonopoly/A Coruña Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
+    }
+
+    private void colocarAvatares() {
+
     }
 
     private void layoutComp() {

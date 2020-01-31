@@ -22,7 +22,7 @@ public class DescripVenta extends JDialog {
         super(owner);
 
         this.casilla = casilla;
-        this.setBackground(new Color(199,255,185));
+        this.setBackground(new Color(199, 255, 185));
 
         //Obtemos as dimensións da pantalla para a xestión da ubicación
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -125,7 +125,7 @@ public class DescripVenta extends JDialog {
         panelTitulo.setOpaque(false);
 
         //Plastidecorç
-        Color cor = new Color(199,255,185);
+        Color cor = new Color(199, 255, 185);
         panel.setBackground(cor);
         este.setBackground(cor);
         leste.setBackground(cor);
@@ -139,16 +139,13 @@ public class DescripVenta extends JDialog {
         imaxe.setOpaque(true);
         panelTitulo.setOpaque(true);
 
-
     }
 
     public void inciarDescripVenta(Casilla casilla) {
         this.info.setText(casilla.imprimirCasilla());
         this.info.setVisible(true);
+        this.imaxe.setIcon(new ImageIcon(casilla.getImaxedescrip().getImage().getScaledInstance(imaxe.getWidth(), imaxe.getHeight(), Image.SCALE_SMOOTH)));
 
-        if (casilla.getImaxedescrip() != null) {
-            this.imaxe.setIcon(new ImageIcon(casilla.getImaxedescrip().getImage().getScaledInstance(imaxe.getWidth(), imaxe.getHeight(), Image.SCALE_SMOOTH)));
-        }
     }
 
 }
