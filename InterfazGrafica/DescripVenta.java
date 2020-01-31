@@ -57,30 +57,16 @@ public class DescripVenta extends JDialog {
 
         //Introducimos os espazos adicionais para o JButton
         JPanel panelNorte = new JPanel();
-        panelNorte.setPreferredSize(new Dimension(getWidth() / 2, 30));
+        panelNorte.setPreferredSize(new Dimension(getWidth() / 2, 15));
         this.leste.add(panelNorte, BorderLayout.NORTH);
-
-        JPanel panelSur = new JPanel();
-        panelSur.setPreferredSize(new Dimension(getWidth() / 2, 30));
-        this.leste.add(panelSur, BorderLayout.SOUTH);
-
-        JPanel panelOeste = new JPanel();
-        panelOeste.setPreferredSize(new Dimension(50, leste.getHeight()));
-        this.leste.add(panelOeste, BorderLayout.WEST);
-
-        JPanel panelEste = new JPanel();
-        panelEste.setPreferredSize(new Dimension(50, leste.getHeight()));
-        this.leste.add(panelEste, BorderLayout.EAST);
 
         //Introuducimos Jbutton
         JPanel panelImaxe = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         int ancho = 360;
         int alto = 420;
-        panelImaxe.setPreferredSize(new Dimension(ancho, alto));
-        panelImaxe.setSize(panelImaxe.getPreferredSize());
-        //FlowLayout layout = new FlowLayout(FlowLayout.CENTER);
+
         this.imaxe = new JLabel();
-        this.imaxe.setPreferredSize(panelImaxe.getPreferredSize());
+        this.imaxe.setPreferredSize(new Dimension(ancho, alto));
         this.imaxe.setSize(imaxe.getPreferredSize());
         this.imaxe.setEnabled(true);
         this.imaxe.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
@@ -113,18 +99,15 @@ public class DescripVenta extends JDialog {
         this.inciarDescripVenta(casilla);
 
         //Poñemos transparente o fondo
-        //panel.setBackground(Color.darkGray);
         panel.setOpaque(false);
         leste.setOpaque(false);
         este.setOpaque(false);
         panelNorte.setOpaque(false);
-        panelOeste.setOpaque(false);
-        panelEste.setOpaque(false);
-        panelSur.setOpaque(false);
         panelNorte2.setOpaque(false);
+        panelImaxe.setOpaque(false);
         panelTitulo.setOpaque(false);
 
-        //Plastidecorç
+        //Plastidecor
         Color cor = new Color(199, 255, 185);
         panel.setBackground(cor);
         este.setBackground(cor);
