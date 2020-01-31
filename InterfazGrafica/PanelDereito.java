@@ -32,13 +32,16 @@ public class PanelDereito extends JPanel {
         JPanel panelEspazo1 = new JPanel();
         panelEspazo1.setPreferredSize(new Dimension(panelIntermedio.getWidth(), 30));
         this.add(panelEspazo1, BorderLayout.NORTH);
+        panelEspazo1.setOpaque(false);
         
         JPanel panelEspazo2 = new JPanel();
         panelEspazo2.setPreferredSize(new Dimension(20, panelIntermedio.getHeight()));
         this.add(panelEspazo2, BorderLayout.EAST);
+        panelEspazo2.setOpaque(false);
 
         setOpaque(true);
-        panelIntermedio.setOpaque(false);
+        panelIntermedio.setOpaque(true);
+        panelIntermedio.setBackground(new Color(199,255,199));
         setBackground(new Color(199,255,199));
     }
 

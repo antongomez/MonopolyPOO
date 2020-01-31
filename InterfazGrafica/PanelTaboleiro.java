@@ -39,9 +39,9 @@ public class PanelTaboleiro extends JPanel {
         setBackground(new Color(199,255,185));
 
         panelSur.setOpaque(false);
-                panelOeste.setOpaque(false);
+        panelOeste.setOpaque(false);
         panelNorte.setOpaque(false);
-                panelEste.setOpaque(false);
+        panelEste.setOpaque(false);
     }
 
     private void initComp() {
@@ -323,7 +323,9 @@ public class PanelTaboleiro extends JPanel {
         this.add(panelOeste, BorderLayout.WEST);
         this.add(panelNorte, BorderLayout.NORTH);
         this.add(panelEste, BorderLayout.EAST);
-        this.add(new JPanel(), BorderLayout.CENTER);
+        JPanel aux =new JPanel();
+        aux.setOpaque(false);
+        this.add(aux, BorderLayout.CENTER);
     }
 
     public JButton getCasilla(int i) {
