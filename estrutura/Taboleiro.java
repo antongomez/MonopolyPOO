@@ -83,7 +83,7 @@ public class Taboleiro {
             ladoEste.add(new Transporte("Jet Privado", 35, grupoTrans, banca));
             ladoEste.add(new Especial("Sorte 3", 36));
             ladoEste.add(new Solar("Vigo", 37, Constantes.CASILLA_G8, grupo8, banca));
-            ladoEste.add(new Imposto("Subida Pension", 38, Constantes.IMPOSTO2));
+            ladoEste.add(new Imposto("Baixada Pension", 38, Constantes.IMPOSTO2));
             ladoEste.add(new Solar("A Corunha", 39, Constantes.CASILLA_G8, grupo8, banca));
 
             grupo1.engadirPropiedade((Propiedade) getCasilla("Santa Cruz"));
@@ -171,7 +171,7 @@ public class Taboleiro {
         getCasilla(35).setImaxedescrip(new ImageIcon("FotosMonopoly/Jet Privado.png"));
         getCasilla(36).setImaxedescrip(new ImageIcon("FotosMonopoly/Sorte3.png"));
         getCasilla(37).setImaxedescrip(new ImageIcon("FotosMonopoly/Vigo.png"));
-        getCasilla(38).setImaxedescrip(new ImageIcon("FotosMonopoly/Subida Pensión.png"));
+        getCasilla(38).setImaxedescrip(new ImageIcon("FotosMonopoly/Baixada Pensión.png"));
         getCasilla(39).setImaxedescrip(new ImageIcon("FotosMonopoly/A Coruña.png"));
 
     }

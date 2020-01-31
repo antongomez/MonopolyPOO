@@ -44,7 +44,7 @@ public class PanelEsquerdo extends JPanel {
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int height = pantalla.height;
         int width = pantalla.width;
-        this.setPreferredSize(new Dimension(width/2, height));
+        this.setPreferredSize(new Dimension(width/3 + 40, height));
         this.setSize(getPreferredSize());
 
         //Trangallamos o panel comandos
