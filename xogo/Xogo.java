@@ -820,7 +820,6 @@ public class Xogo implements Comando {
             ErroExterno {
         try {
             if (!avatar.getModoAvanzado()) {
-                
                 avatar.moverEnBasico(sumarDados(getDadosLanzados()), taboleiro);
                 avatar.getPosicion().sumarFrecuenciaVisita(turno);
             } else {

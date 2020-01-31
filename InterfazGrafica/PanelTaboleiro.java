@@ -445,10 +445,6 @@ public class PanelTaboleiro extends JPanel {
         return casillas.get(0).get(0);
     }
 
-    public void engadirAvatar() {
-
-    }
-
     //Getters e Setters
     public InterfazGrafica getVentaPrincipal() {
         return ventaPrincipal;

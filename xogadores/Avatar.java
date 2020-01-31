@@ -78,7 +78,8 @@ public abstract class Avatar {
             this.posicion.eliminarAvatar(this);
             //Elimínase o avatar do taboleiro
             interfaz.getPanelDereito().getTab().getAvatares().get(posicion.getPosicion()).elimAvatar(this);
-            interfaz.getPanelDereito().getTab().getAvatares().get(0).elimAvatar(this);
+            interfaz.getPanelDereito().getTab().getAvatares().get(1).addAvater(this);
+
             //Distinguimos o caso que pasa pola saida e o que non
             if (this.posicion.getPosicion() + sumaDados < 40) {
                 //Actualizase a posicion
