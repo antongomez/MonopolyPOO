@@ -22,11 +22,20 @@ public class ConsolaNormal implements Consola {
 
     @Override
     public String ler(String descricion, JTextField campotexto) {
+
         String mensaxe = null;
         if (descricion != null) {
 
             System.out.println(descricion);
-            saida.terminal(mensaxe);
+            saida.terminal(descricion);
+            synchronized (campotexto) {
+                try {
+                    campotexto.wait();
+                } catch (InterruptedException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+
             mensaxe = campotexto.getText();
         } else {
             //Excepcion
