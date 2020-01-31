@@ -213,13 +213,6 @@ public class Xogo implements Comando {
             //Facemos as declaracións e imos lendo do caso que sexa
             consola.imprimir("Turno de " + xogador.getNome() + "\n$> ");
 
-            synchronized (interfaz.getPanelEsquerdo().getPanelComandos().getCampoComandos()) {
-                try {
-                    interfaz.getPanelEsquerdo().getPanelComandos().getCampoComandos().wait();
-                } catch (InterruptedException ex) {
-                    System.out.println(ex.getMessage());
-                }
-            }
 
             synchronized (interfaz.getPanelEsquerdo().getPanelComandos().getCampoComandos()) {
                 try {

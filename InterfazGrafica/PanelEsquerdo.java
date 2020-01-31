@@ -29,6 +29,7 @@ public class PanelEsquerdo extends JPanel {
     private PanelSaida panelSaida;
     private PanelXogadores panelXogadores;
     private JPanel panelIntermedio;
+    private JPanel panelbotons;
     private JTextField textoPe;
 
     public PanelEsquerdo(InterfazGrafica ventaPrincipal) {
@@ -46,7 +47,7 @@ public class PanelEsquerdo extends JPanel {
         //Trangallamos o panel comandos
         this.panelComandos = new PanelComandos(ventaPrincipal);
         int metadeAncho = (int) Math.round(getPreferredSize().getWidth() / 2);
-        int metadeAlto = (int) Math.round(getPreferredSize().getHeight() / 2);
+        int metadeAlto = (int) Math.round(getPreferredSize().getHeight() / 3);
         this.panelComandos.setPreferredSize(new Dimension(metadeAncho, metadeAlto));
 
         //Trangallamos panelsaida
@@ -54,10 +55,17 @@ public class PanelEsquerdo extends JPanel {
 
         //Merdas de panel intermedio
         panelIntermedio = new JPanel(new BorderLayout(0, 0));
-        panelIntermedio.setPreferredSize(new Dimension(2*metadeAncho, metadeAlto));
-        panelIntermedio.setSize(new Dimension(2*metadeAncho, metadeAlto));
+        panelIntermedio.setPreferredSize(new Dimension(2*metadeAncho, height/3));
+        panelIntermedio.setSize(new Dimension(2*metadeAncho, height/3));
         panelIntermedio.add(panelComandos, BorderLayout.WEST);
         panelIntermedio.add(panelSaida, BorderLayout.EAST);
+
+        //Merdas de panel botons
+        panelbotons = new JPanel();
+        panelbotons.setPreferredSize(panelIntermedio.getPreferredSize());
+        panelbotons.setOpaque(false);
+        panelbotons.setVisible(true);
+        panelbotons.add(new Botons(this));
 
         //Merdas de textpe
         this.textoPe = new JTextField("Ningún tipo seleccionado");
@@ -73,6 +81,7 @@ public class PanelEsquerdo extends JPanel {
         //Metemos as cousas no seu sitio
         //this.add(this.textoPe, BorderLayout.SOUTH);
         this.add(panelIntermedio, BorderLayout.NORTH);
+        this.add(panelbotons,BorderLayout.CENTER);
         this.add(panelXogadores, BorderLayout.SOUTH);
 
         //Establecemos as dimensions do panel de xogadores
