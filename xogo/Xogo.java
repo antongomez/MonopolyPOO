@@ -111,7 +111,6 @@ public class Xogo implements Comando {
 
                     }
 
-
                     synchronized (ventaInicial.getBotonAceptar()) {
                         ventaInicial.getBotonAceptar().notifyAll();
                     }
@@ -123,7 +122,6 @@ public class Xogo implements Comando {
 
         //Engadese a accion ao boton aceptar
         ventaInicial.engadirAccionBoton(ointe);
-
 
         //Fio que espera a que se introduzan os datos na venta emerxente inicial
         if (xogadores.size() != nXogadores) {
@@ -137,7 +135,7 @@ public class Xogo implements Comando {
         }
 
         interfaz.getPanelEsquerdo().getPanelXogadores().actualizar(xogadores);
-        
+
         taboleiro.imprimirTaboleiro();
 
         //Incio xogo
@@ -212,7 +210,6 @@ public class Xogo implements Comando {
             //Turno do xogador
             //Facemos as declaracións e imos lendo do caso que sexa
             consola.imprimir("Turno de " + xogador.getNome() + "\n$> ");
-
 
             synchronized (interfaz.getPanelEsquerdo().getPanelComandos().getCampoComandos()) {
                 try {
@@ -823,7 +820,7 @@ public class Xogo implements Comando {
             ErroExterno {
         try {
             if (!avatar.getModoAvanzado()) {
-
+                
                 avatar.moverEnBasico(sumarDados(getDadosLanzados()), taboleiro);
                 avatar.getPosicion().sumarFrecuenciaVisita(turno);
             } else {
@@ -1221,6 +1218,7 @@ public class Xogo implements Comando {
                 }
 
                 xogador.setAvatar(avatar);
+                interfaz.getPanelDereito().getTab().getAvatares().get(0).addAvater(avatar);
 
                 System.out.println("Xogador " + xogador.getNome() + " creado.\n");
                 System.out.println("Avatar: " + avatar.getId() + ".\n");

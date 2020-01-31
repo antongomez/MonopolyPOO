@@ -26,7 +26,6 @@ public abstract class Avatar {
         this.posicion = taboleiro.getCasilla(0);
         this.modoAvanzado = false;
         this.posicion.engadirAvatar(this);
-        interfaz.getPanelDereito().getTab().getAvatares().get(this.posicion.getPosicion()).addAvater(this);
         this.interfaz = interfaz;
     }
 
@@ -77,11 +76,13 @@ public abstract class Avatar {
 
             //Eliminase ao avatar da casilla na que esta
             this.posicion.eliminarAvatar(this);
+            interfaz.getPanelDereito().getTab().getAvatares().get(posicion.getPosicion()).elimAvatar(this);
 
             interfaz.getPanelDereito().getTab().getAvatares().get(this.posicion.getPosicion()).elimAvatar(this);
             //Distinguimos o caso que pasa pola saida e o que non
             if (this.posicion.getPosicion() + sumaDados < 40) {
                 //Actualizase a posicion
+
                 this.posicion = taboleiro.getCasilla(this.posicion.getPosicion() + sumaDados);
 
                 consola.imprimir("O avatar " + id + " avanza " + sumaDados
@@ -95,7 +96,6 @@ public abstract class Avatar {
                 this.posicion = taboleiro.getCasilla(this.posicion.getPosicion() + sumaDados - 40);
                 this.posicion.engadirAvatar(this);
                 interfaz.getPanelDereito().getTab().getAvatares().get(this.posicion.getPosicion()).addAvater(this);
-
 
                 consola.imprimir("O avatar " + id + " avanza " + sumaDados
                         + " posicións, desde " + procedencia.getNome()
