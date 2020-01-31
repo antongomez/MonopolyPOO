@@ -143,7 +143,7 @@ public class Taboleiro {
         getCasilla(7).setImaxedescrip(new ImageIcon("FotosMonopoly/Sorte1.png"));
         getCasilla(8).setImaxedescrip(new ImageIcon("FotosMonopoly/Corrubedo.png"));
         getCasilla(9).setImaxedescrip(new ImageIcon("FotosMonopoly/Lugo.png"));
-        getCasilla(10).setImaxedescrip(new ImageIcon("FotosMonopoly/Carcere.png"));
+        getCasilla(10).setImaxedescrip(new ImageIcon("FotosMonopoly/Cárcere.png"));
         getCasilla(11).setImaxedescrip(new ImageIcon("FotosMonopoly/O Carballiño.png"));
         getCasilla(12).setImaxedescrip(new ImageIcon("FotosMonopoly/SERGAS.png"));
         getCasilla(13).setImaxedescrip(new ImageIcon("FotosMonopoly/Sada.png"));
@@ -163,7 +163,7 @@ public class Taboleiro {
         getCasilla(27).setImaxedescrip(new ImageIcon("FotosMonopoly/A Guarda.png"));
         getCasilla(28).setImaxedescrip(new ImageIcon("FotosMonopoly/Ensino Público.png"));
         getCasilla(29).setImaxedescrip(new ImageIcon("FotosMonopoly/Ourense.png"));
-        getCasilla(30).setImaxedescrip(new ImageIcon("FotosMonopoly/Ir Carcere.png"));
+        getCasilla(30).setImaxedescrip(new ImageIcon("FotosMonopoly/IrCárcere.png"));
         getCasilla(31).setImaxedescrip(new ImageIcon("FotosMonopoly/Santiago.png"));
         getCasilla(32).setImaxedescrip(new ImageIcon("FotosMonopoly/Sanxenxo.png"));
         getCasilla(33).setImaxedescrip(new ImageIcon("FotosMonopoly/Caixa3.png"));
