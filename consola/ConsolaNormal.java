@@ -2,10 +2,12 @@ package consola;
 
 import InterfazGrafica.PanelSaida;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 public class ConsolaNormal implements Consola {
     private PanelSaida saida;
+
 
     public ConsolaNormal() {
     }
@@ -20,14 +22,29 @@ public class ConsolaNormal implements Consola {
     }
 
     @Override
+    public String ler(String descricion, JTextField campoTexto) {
+        String mensaxe = null;
+        if (descricion != null) {
+
+            System.out.println(descricion);
+            saida.terminal(mensaxe);
+            //Scanner sc = new Scanner(System.in);
+            //mensaxe = sc.next();
+            mensaxe = campoTexto.getText();
+        } else {
+            //Excepcion
+        }
+        return mensaxe;
+    }
+
     public String ler(String descricion) {
         String mensaxe = null;
         if (descricion != null) {
 
             System.out.println(descricion);
             saida.terminal(mensaxe);
-            Scanner sc = new Scanner(System.in);
-            mensaxe = sc.next();
+            //Scanner sc = new Scanner(System.in);
+            //mensaxe = sc.next();
         } else {
             //Excepcion
         }

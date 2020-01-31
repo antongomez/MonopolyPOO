@@ -946,7 +946,7 @@ public class Xogo implements Comando {
                         int numCarta;
                         do {
                             numCarta = Integer.parseInt(consola.ler("Escolle "
-                                    + "unha carta (1-14):"));
+                                    + "unha carta (1-14):", interfaz.getPanelEsquerdo().getPanelComandos().getCampoComandos()));
                             if ((numCarta < 1) || (numCarta > 14)) {
                                 System.out.print("\nEscolla non válida.\n");
                             }
@@ -964,7 +964,7 @@ public class Xogo implements Comando {
                         int numCarta;
                         do {
                             numCarta = Integer.parseInt(consola.ler("Escolle "
-                                    + "unha carta (1-10):"));
+                                    + "unha carta (1-10):", interfaz.getPanelEsquerdo().getPanelComandos().getCampoComandos()));
                             if ((numCarta < 1) || (numCarta > 10)) {
                                 System.out.print("\nEscolla non válida.\n");
                             }
@@ -1104,7 +1104,7 @@ public class Xogo implements Comando {
                         } catch (NonLanzou ex) {
                             int sumDados = Integer.parseInt(consola.ler("Intro"
                                     + "duce o valor da suma dos dados da última"
-                                    + " tirada."));
+                                    + " tirada.", interfaz.getPanelEsquerdo().getPanelComandos().getCampoComandos()));
                             alquiler = servizo.calculoAlquiler() * sumDados;
                         }
                         if (xogadorPodePagar(xogador, alquiler)) {
