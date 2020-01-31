@@ -2,6 +2,7 @@ package consola;
 
 import InterfazGrafica.PanelSaida;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 public class ConsolaNormal implements Consola {
@@ -17,6 +18,20 @@ public class ConsolaNormal implements Consola {
             System.out.println(mensaxe);
             saida.terminal(mensaxe);
         }
+    }
+
+    @Override
+    public String ler(String descricion, JTextField campotexto) {
+        String mensaxe = null;
+        if (descricion != null) {
+
+            System.out.println(descricion);
+            saida.terminal(mensaxe);
+            mensaxe = campotexto.getText();
+        } else {
+            //Excepcion
+        }
+        return mensaxe;
     }
 
     @Override
@@ -43,6 +58,21 @@ public class ConsolaNormal implements Consola {
             saida.terminal(mensaxe);
             Scanner sc = new Scanner(System.in);
             mensaxe = sc.nextLine();
+        } else {
+            //Excepcion
+        }
+        return mensaxe;
+    }
+
+    public String lerLinha(String descricion, JTextField campotexto) {
+        String mensaxe = null;
+        if (descricion != null) {
+
+            System.out.println(descricion);
+            saida.terminal(mensaxe);
+            //Scanner sc = new Scanner(System.in);
+            //mensaxe = sc.nextLine();
+            mensaxe = campotexto.getText();
         } else {
             //Excepcion
         }

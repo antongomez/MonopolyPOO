@@ -9,6 +9,8 @@ public interface Consola {
 
     /*Metodo que le un dato usando a clase Scanner*/
     public String ler(String mensaxe, JTextField campoTexto);
+    public String ler(String mensaxe);
+
 
     public String lerLinha(String mensaxe);
 
