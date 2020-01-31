@@ -28,8 +28,6 @@ public class ConsolaNormal implements Consola {
             saida.terminal(mensaxe);
             Scanner sc = new Scanner(System.in);
             mensaxe = sc.next();
-        } else {
-            //Excepcion
         }
         return mensaxe;
     }

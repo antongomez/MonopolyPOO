@@ -21,15 +21,16 @@ public class PanelTaboleiro extends JPanel {
     private InterfazGrafica ventaPrincipal;
     private BorderLayout disposicion;
     private ArrayList<ArrayList<JButton>> casillas;
+    private ArrayList<AvataresTaboleiro> avatares;
 
     private JPanel panelSur;
     private JPanel panelOeste;
     private JPanel panelNorte;
     private JPanel panelEste;
-    private ArrayList<AvataresTaboleiro> avatares;
 
     public PanelTaboleiro(InterfazGrafica ventaPrincipal, Taboleiro taboleiro) {
         this.ventaPrincipal = ventaPrincipal;
+        this.avatares = new ArrayList<AvataresTaboleiro>();
         initComp();
         creacionCasillas();
         setUpComp();
@@ -38,8 +39,6 @@ public class PanelTaboleiro extends JPanel {
 
         setOpaque(true);
         setBackground(new Color(199, 255, 185));
-
-        this.avatares = new ArrayList<AvataresTaboleiro>();
 
         panelSur.setOpaque(false);
         panelOeste.setOpaque(false);
@@ -82,11 +81,6 @@ public class PanelTaboleiro extends JPanel {
         JButton Carcere = new JButton();
         ladoSur.add(Carcere);
 
-        for (int i = 0; i < ladoSur.size(); i++)
-        {
-            ladoSur.get(i).add(new AvataresTaboleiro(ladoSur.get(i)));
-        }
-
         casillas.add(ladoSur);
 
         ArrayList<JButton> ladoOeste = new ArrayList<>();
@@ -109,12 +103,6 @@ public class PanelTaboleiro extends JPanel {
         ladoOeste.add(Viveiro);
         JButton Ribadeo = new JButton();
         ladoOeste.add(Ribadeo);
-
-
-        for (int i = 0; i < ladoOeste.size(); i++)
-        {
-            ladoOeste.get(i).add(new AvataresTaboleiro(ladoOeste.get(i)));
-        }
 
         casillas.add(ladoOeste);
 
@@ -145,12 +133,6 @@ public class PanelTaboleiro extends JPanel {
 
         casillas.add(ladoNorte);
 
-
-        for (int i = 0; i < ladoNorte.size(); i++)
-        {
-            ladoNorte.get(i).add(new AvataresTaboleiro(ladoNorte.get(i)));
-        }
-
         ArrayList<JButton> ladoEste = new ArrayList<>();
 
         JButton Santiago = new JButton();
@@ -172,20 +154,33 @@ public class PanelTaboleiro extends JPanel {
         JButton Corunha = new JButton();
         ladoEste.add(Corunha);
 
-
-        for (int i = 0; i < ladoEste.size(); i++)
-        {
-            ladoEste.get(i).add(new AvataresTaboleiro(ladoEste.get(i)));
-        }
-
         casillas.add(ladoEste);
+
+        AvataresTaboleiro panelBoton;
+        for (int i = 0; i < ladoSur.size(); i++) {
+            panelBoton = new AvataresTaboleiro(ladoSur.get(i));
+            ladoSur.get(i).add(panelBoton);
+            avatares.add(panelBoton);
+        }
+        
+        for (int i = 0; i < ladoOeste.size(); i++) {
+            panelBoton = new AvataresTaboleiro(ladoOeste.get(i));
+            ladoOeste.get(i).add(panelBoton);
+            avatares.add(panelBoton);
+        }        
+        
+        for (int i = 0; i < ladoNorte.size(); i++) {
+            panelBoton = new AvataresTaboleiro(ladoNorte.get(i));
+            ladoNorte.get(i).add(panelBoton);
+            avatares.add(panelBoton);
+        }
+        
+        for (int i = 0; i < ladoEste.size(); i++) {
+            panelBoton = new AvataresTaboleiro(ladoEste.get(i));
+            ladoEste.get(i).add(panelBoton);
+            avatares.add(panelBoton);
+        }
     }
-
-    public ArrayList<AvataresTaboleiro> getAvatares() {
-        return avatares;
-    }
-
-
 
     public void activarDescripcion(InterfazGrafica ventaPrincipal, Taboleiro taboleiro) {
         for (int i = 0; i < taboleiro.getCasillas().size(); i++) {
@@ -456,6 +451,10 @@ public class PanelTaboleiro extends JPanel {
         return casillas.get(0).get(0);
     }
 
+    public void engadirAvatar() {
+
+    }
+
     //Getters e Setters
     public InterfazGrafica getVentaPrincipal() {
         return ventaPrincipal;
@@ -471,6 +470,10 @@ public class PanelTaboleiro extends JPanel {
 
     public void setDisposicion(BorderLayout disposicion) {
         this.disposicion = disposicion;
+    }
+
+    public ArrayList<AvataresTaboleiro> getAvatares() {
+        return avatares;
     }
 
     public ArrayList<ArrayList<JButton>> getCasillas() {
