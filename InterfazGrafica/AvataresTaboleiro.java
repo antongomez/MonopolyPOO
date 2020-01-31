@@ -5,14 +5,15 @@ import xogadores.Avatar;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AvataresTaboleiro extends JPanel {
 
-    private ArrayList<JLabel> avatares;
+    private HashMap<Avatar, JLabel> avatares;
 
     public AvataresTaboleiro(JButton boton) {
-        this.setPreferredSize(new Dimension(boton.getWidth(), boton.getHeight() - 10));
-        avatares = new ArrayList<>();
+        //this.setPreferredSize(new Dimension(boton.getWidth(), boton.getHeight() - 10));
+        avatares = new HashMap<>();
 
         this.setVisible(true);
         this.setOpaque(false);
@@ -21,19 +22,15 @@ public class AvataresTaboleiro extends JPanel {
     public void addAvater(Avatar avatar) {
         JLabel text = new JLabel("&" + avatar.getId());
 
-        text.setFont(new Font("arial", 0, 10));
+        text.setFont(new Font("arial", 0, 15));
         text.setVisible(true);
         text.setOpaque(true);
-        avatares.add(text);
+        avatares.put(avatar, text);
         this.add(text);
     }
 
     public void elimAvatar(Avatar avatar) {
-        for (int i = 0; i < avatares.size(); i++) {
-            if (avatares.get(i).getText().equals("&" + avatar.getId())) {
-                avatares.remove(i);
-            }
-        }
+        avatares.remove(avatar);
     }
 
 }

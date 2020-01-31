@@ -76,9 +76,9 @@ public abstract class Avatar {
 
             //Eliminase ao avatar da casilla na que esta
             this.posicion.eliminarAvatar(this);
+            //Elimínase o avatar do taboleiro
             interfaz.getPanelDereito().getTab().getAvatares().get(posicion.getPosicion()).elimAvatar(this);
-
-            interfaz.getPanelDereito().getTab().getAvatares().get(this.posicion.getPosicion()).elimAvatar(this);
+            interfaz.getPanelDereito().getTab().getAvatares().get(0).elimAvatar(this);
             //Distinguimos o caso que pasa pola saida e o que non
             if (this.posicion.getPosicion() + sumaDados < 40) {
                 //Actualizase a posicion
@@ -90,12 +90,10 @@ public abstract class Avatar {
                         + " ata " + posicion.getNome() + ".\n");
 
                 this.posicion.engadirAvatar(this);
-                interfaz.getPanelDereito().getTab().getAvatares().get(this.posicion.getPosicion()).addAvater(this);
 
             } else { //Caso no que o avatar da unha volta
                 this.posicion = taboleiro.getCasilla(this.posicion.getPosicion() + sumaDados - 40);
                 this.posicion.engadirAvatar(this);
-                interfaz.getPanelDereito().getTab().getAvatares().get(this.posicion.getPosicion()).addAvater(this);
 
                 consola.imprimir("O avatar " + id + " avanza " + sumaDados
                         + " posicións, desde " + procedencia.getNome()
@@ -107,6 +105,8 @@ public abstract class Avatar {
                         + " pasou pola Saída. Cobra "
                         + Constantes.VALOR_VOLTA + " GM.\n");
             }
+            //Engadese o avatar no taboleiro
+            interfaz.getPanelDereito().getTab().getAvatares().get(this.posicion.getPosicion()).addAvater(this);
 
         }
     }

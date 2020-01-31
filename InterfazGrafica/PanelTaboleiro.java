@@ -162,19 +162,19 @@ public class PanelTaboleiro extends JPanel {
             ladoSur.get(i).add(panelBoton);
             avatares.add(panelBoton);
         }
-        
+
         for (int i = 0; i < ladoOeste.size(); i++) {
             panelBoton = new AvataresTaboleiro(ladoOeste.get(i));
             ladoOeste.get(i).add(panelBoton);
             avatares.add(panelBoton);
-        }        
-        
+        }
+
         for (int i = 0; i < ladoNorte.size(); i++) {
             panelBoton = new AvataresTaboleiro(ladoNorte.get(i));
             ladoNorte.get(i).add(panelBoton);
             avatares.add(panelBoton);
         }
-        
+
         for (int i = 0; i < ladoEste.size(); i++) {
             panelBoton = new AvataresTaboleiro(ladoEste.get(i));
             ladoEste.get(i).add(panelBoton);
@@ -231,8 +231,6 @@ public class PanelTaboleiro extends JPanel {
 
         //Colocanse as imaxes enriba dos botons
         colocarIconos();
-
-        colocarAvatares();
 
     }
 
@@ -417,10 +415,6 @@ public class PanelTaboleiro extends JPanel {
         casilla = casillas.get(3).get(8);
         imaxe = new ImageIcon("FotosMonopoly/A Coruña Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(65, 56, Image.SCALE_SMOOTH)));
-    }
-
-    private void colocarAvatares() {
-
     }
 
     private void layoutComp() {
