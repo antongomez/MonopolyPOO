@@ -44,15 +44,15 @@ public class PanelEsquerdo extends JPanel {
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int height = pantalla.height;
         int width = pantalla.width;
-        this.setPreferredSize(new Dimension(600, ventaPrincipal.getHeight()));
+        this.setPreferredSize(new Dimension(630, ventaPrincipal.getHeight()));
         this.setSize(getPreferredSize());
 
         int metadeAncho = (int) Math.round(getPreferredSize().getWidth() / 2);
         int metadeAlto = (int) Math.round(getPreferredSize().getHeight() / 3);
 
-        //Merdas de panel intermedio
+        //Medidas de panel intermedio
         panelIntermedio = new JPanel(new BorderLayout(0, 0));
-        panelIntermedio.setPreferredSize(new Dimension(getWidth(), getHeight() / 3));
+        panelIntermedio.setPreferredSize(new Dimension(getWidth(), getHeight() / 2));
         panelIntermedio.setSize(new Dimension(2 * metadeAncho, getHeight() / 3));
 
         //Panel comandos
@@ -60,13 +60,13 @@ public class PanelEsquerdo extends JPanel {
         this.panelComandos.setPreferredSize(new Dimension(metadeAncho, metadeAlto));
 
         //Panelsaida
-        this.panelSaida = new PanelSaida(new Dimension(metadeAncho, metadeAlto));
+        this.panelSaida = new PanelSaida(new Dimension(300, 300));
         panelIntermedio.add(panelComandos, BorderLayout.WEST);
-        panelIntermedio.add(panelSaida, BorderLayout.EAST);
+        panelIntermedio.add(panelSaida, BorderLayout.CENTER);
 
         //Merdas de panel botons
         panelbotons = new JPanel();
-        panelbotons.setPreferredSize(panelIntermedio.getPreferredSize());
+        //panelbotons.setPreferredSize(panelIntermedio.getPreferredSize());
         panelbotons.setOpaque(true);
         panelbotons.setBackground(new Color(199, 255, 185));
         panelbotons.setVisible(true);
