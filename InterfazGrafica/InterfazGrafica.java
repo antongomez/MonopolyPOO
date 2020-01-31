@@ -28,7 +28,7 @@ public class InterfazGrafica extends JFrame {
 
         setBackground(new Color(199,255,185));
 
-        setIconImage( new ImageIcon(getClass().getResource("./chapeu.png")).getImage());
+        //setIconImage( new ImageIcon(getClass().getResource("./chapeu.png")).getImage());
     }
 
     private void iniciarVenta() {
