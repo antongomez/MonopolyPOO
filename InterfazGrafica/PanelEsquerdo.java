@@ -38,6 +38,24 @@ public class PanelEsquerdo extends JPanel {
         //Maqueamos panel esquerdo
         BorderLayout layout = new BorderLayout();
         this.setLayout(layout);
+<<<<<<< HEAD
+=======
+
+        panelIntermedio.add(panelComandos, BorderLayout.WEST);
+        panelIntermedio.add(panelSaida, BorderLayout.CENTER);
+        this.add(panelIntermedio, BorderLayout.NORTH);
+        this.add(this.textoPe, BorderLayout.SOUTH);
+
+        setTamanhos();
+        
+        XestionXogadores();
+        setOpaque(false);
+
+       
+    }
+
+    private void setTamanhos() {
+>>>>>>> Cambiso
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int height = pantalla.height;
         int width = pantalla.width;
@@ -50,6 +68,7 @@ public class PanelEsquerdo extends JPanel {
         int metadeAlto = (int) Math.round(getPreferredSize().getHeight() / 3);
         this.panelComandos.setPreferredSize(new Dimension(metadeAncho, metadeAlto));
 
+<<<<<<< HEAD
         //Trangallamos panelsaida
         this.panelSaida = new PanelSaida(new Dimension(metadeAncho, metadeAlto));
 
@@ -83,6 +102,10 @@ public class PanelEsquerdo extends JPanel {
         this.add(panelIntermedio, BorderLayout.NORTH);
         this.add(panelbotons,BorderLayout.CENTER);
         this.add(panelXogadores, BorderLayout.SOUTH);
+=======
+        //Establecemos as dimensions do panel de saida
+        this.panelSaida.setPreferredSize(panelComandos.getPreferredSize());
+>>>>>>> Cambiso
 
         //Establecemos as dimensions do panel de xogadores
         this.panelXogadores.setPreferredSize(new Dimension(getWidth(), metadeAlto));
