@@ -93,6 +93,7 @@ public class PanelXogadores extends JPanel {
             textaux.setFont(new Font("arial", 0, 14));
 
             panaux.add(textaux);
+            textaux.setEditable(false);
 
             this.paneisxog.add(panaux);
             this.panel.add(xogadores.get(i).getNome(), panaux);

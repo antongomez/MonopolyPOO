@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class Botons extends JPanel {
-    private JButton lanzardados;
+    private JLabel lanzardados;
     private JButton comprar;
     private String comando;
 
@@ -23,10 +23,17 @@ public class Botons extends JPanel {
 
         //this.setLayout(new BorderLayout());
 
-        lanzardados = new JButton("Lanzar");
+        lanzardados = new JLabel("Lanzar dados");
+        lanzardados.setFont(new Font("cooper black",3, 20));
+        lanzardados.setBackground(Color.red);
+        lanzardados.setForeground(Color.white);
         lanzardados.setVisible(true);
         lanzardados.setPreferredSize(new Dimension(this.getWidth()/3, this.getHeight()/2));
         lanzardados.setSize(lanzardados.getPreferredSize());
+        lanzardados.setOpaque(true);
+        ImageIcon imaxe = new ImageIcon("dados.png");
+        lanzardados.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(lanzardados.getWidth(), lanzardados.getHeight(), Image.SCALE_SMOOTH)));
+
 
         MouseListener lanzar = new MouseListener() {
             @Override
