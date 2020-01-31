@@ -16,7 +16,7 @@ public class Botons extends JPanel {
     {
         this.setVisible(true);
         this.setOpaque(false);
-        this.setPreferredSize(new Dimension(panex.getWidth(),panex.getHeight()/4));
+        this.setPreferredSize(new Dimension(panex.getWidth(),panex.getHeight()/3));
         this.setSize(this.getPreferredSize());
 
         this.setLayout(new BorderLayout());
@@ -24,6 +24,7 @@ public class Botons extends JPanel {
         lanzardados = new JButton("Lanzar");
         lanzardados.setVisible(true);
         lanzardados.setPreferredSize(new Dimension(this.getWidth()/3, this.getHeight()/2));
+        lanzardados.setSize(lanzardados.getPreferredSize());
 
         MouseListener lanzar = new MouseListener() {
             @Override
