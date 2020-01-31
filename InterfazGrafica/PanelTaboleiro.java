@@ -440,7 +440,7 @@ public class PanelTaboleiro extends JPanel {
         }
         //Erro
         JOptionPane.showInternalMessageDialog(null,
-                "Victor pasache mal o número da casilla",
+                "Erro",
                 "Erro", JOptionPane.WARNING_MESSAGE);
         return casillas.get(0).get(0);
     }
