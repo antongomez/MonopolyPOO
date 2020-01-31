@@ -228,6 +228,10 @@ public class PanelTaboleiro extends JPanel {
         JButton casilla;
         ImageIcon imaxe;
 
+        casilla = casillas.get(0).get(0);
+        imaxe = new ImageIcon("FotosMonopoly/Saída Taboleiro.png");
+        casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
+        
         casilla = casillas.get(0).get(1);
         imaxe = new ImageIcon("FotosMonopoly/Santa Cruz Taboleiro.png");
         casilla.setIcon(new ImageIcon(imaxe.getImage().getScaledInstance(casilla.getWidth(), casilla.getHeight(), Image.SCALE_SMOOTH)));
