@@ -5,43 +5,30 @@ import java.awt.*;
 import java.security.Principal;
 
 public class PanelSaida extends JPanel {
-    private JPanel principal;
+
     private JTextArea terminal;
 
-    public PanelSaida(Dimension dimension)
-    {
+    public PanelSaida(Dimension dimension) {
         this.setPreferredSize(dimension);
         this.setOpaque(false);
         this.setVisible(true);
-        this.setBackground(new Color(199,255,185));
-
-
-
-        principal = new JPanel();
-        principal.setPreferredSize(dimension);
-        principal.setOpaque(false);
-        principal.setVisible(true);
-        this.add(principal);
-
+        this.setBackground(new Color(199, 255, 185));
 
         terminal = new JTextArea(15, 25);
         terminal.setForeground(Color.GREEN);
         terminal.setBackground(Color.BLACK);
+        terminal.setEditable(false);
         terminal.setVisible(true);
-        terminal.setPreferredSize(dimension);
+        this.add(terminal);
 
         JScrollPane scroll = new JScrollPane(terminal,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scroll.setSize(terminal.getPreferredSize());
-        this.principal.add(scroll);
-
-
-        //principal.add(terminal);
+        scroll.setSize(terminal.getSize());
+        this.add(scroll);
     }
 
-    public void terminal(String saida)
-    {
+    public void terminal(String saida) {
         terminal.append(saida + "\n");
     }
 

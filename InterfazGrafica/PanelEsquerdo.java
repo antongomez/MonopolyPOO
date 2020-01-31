@@ -44,31 +44,31 @@ public class PanelEsquerdo extends JPanel {
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int height = pantalla.height;
         int width = pantalla.width;
-        this.setPreferredSize(new Dimension(width/3 + 40, height));
+        this.setPreferredSize(new Dimension(630, ventaPrincipal.getHeight()));
         this.setSize(getPreferredSize());
 
-        //Trangallamos o panel comandos
-        this.panelComandos = new PanelComandos(ventaPrincipal);
         int metadeAncho = (int) Math.round(getPreferredSize().getWidth() / 2);
         int metadeAlto = (int) Math.round(getPreferredSize().getHeight() / 3);
+
+        //Medidas de panel intermedio
+        panelIntermedio = new JPanel(new BorderLayout(0, 0));
+        panelIntermedio.setPreferredSize(new Dimension(getWidth(), getHeight() / 2));
+        panelIntermedio.setSize(new Dimension(2 * metadeAncho, getHeight() / 3));
+
+        //Panel comandos
+        this.panelComandos = new PanelComandos(ventaPrincipal);
         this.panelComandos.setPreferredSize(new Dimension(metadeAncho, metadeAlto));
 
-        //Trangallamos panelsaida
-        this.panelSaida = new PanelSaida(new Dimension(metadeAncho, metadeAlto));
-
-        //Merdas de panel intermedio
-        panelIntermedio = new JPanel(new BorderLayout(0, 0));
-        panelIntermedio.setPreferredSize(new Dimension(2*metadeAncho, height/3));
-        panelIntermedio.setSize(new Dimension(2*metadeAncho, height/3));
+        //Panelsaida
+        this.panelSaida = new PanelSaida(new Dimension(300, 300));
         panelIntermedio.add(panelComandos, BorderLayout.WEST);
-        panelIntermedio.add(panelSaida, BorderLayout.EAST);
-
+        panelIntermedio.add(panelSaida, BorderLayout.CENTER);
 
         //Merdas de panel botons
         panelbotons = new JPanel();
-        panelbotons.setPreferredSize(panelIntermedio.getPreferredSize());
+        //panelbotons.setPreferredSize(panelIntermedio.getPreferredSize());
         panelbotons.setOpaque(true);
-        panelbotons.setBackground(new Color(199,255,185));
+        panelbotons.setBackground(new Color(199, 255, 185));
         panelbotons.setVisible(true);
         panelbotons.add(new Botons(this));
 
@@ -79,16 +79,15 @@ public class PanelEsquerdo extends JPanel {
         this.textoPe.setBackground(this.getBackground());
         this.textoPe.setBorder(null);
 
-
         //Mierdas de Panel xogadores
-        panelXogadores = new PanelXogadores(new Dimension( this.getWidth(),this.getHeight()));
+        panelXogadores = new PanelXogadores(new Dimension(this.getWidth(), this.getHeight()));
 
         //Metemos as cousas no seu sitio
         //this.add(this.textoPe, BorderLayout.SOUTH);
         this.add(panelIntermedio, BorderLayout.NORTH);
         panelIntermedio.setOpaque(true);
-        panelIntermedio.setBackground(new Color(199,255,185));
-        this.add(panelbotons,BorderLayout.CENTER);
+        panelIntermedio.setBackground(new Color(199, 255, 185));
+        this.add(panelbotons, BorderLayout.CENTER);
         this.add(panelXogadores, BorderLayout.SOUTH);
 
         //Establecemos as dimensions do panel de xogadores
@@ -101,7 +100,6 @@ public class PanelEsquerdo extends JPanel {
     public PanelSaida getPanelSaida() {
         return panelSaida;
     }
-
 
     public PanelXogadores getPanelXogadores() {
         return this.panelXogadores;
