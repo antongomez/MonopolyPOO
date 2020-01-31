@@ -824,7 +824,7 @@ public class Xogo implements Comando {
         try {
             if (!avatar.getModoAvanzado()) {
 
-                avatar.moverEnBasico(sumarDados(getDadosLanzados()), taboleiro, interfaz);
+                avatar.moverEnBasico(sumarDados(getDadosLanzados()), taboleiro);
                 avatar.getPosicion().sumarFrecuenciaVisita(turno);
             } else {
 
@@ -1198,23 +1198,23 @@ public class Xogo implements Comando {
                 switch (tipoAvatar.toLowerCase()) {
                     case "sombreiro":
                     case "chapeu":
-                        avatar = new Chapeu(IdAvatar, xogador, taboleiro);
+                        avatar = new Chapeu(IdAvatar, xogador, taboleiro, interfaz);
                         avatares.add(avatar);
                         break;
                     case "coche":
-                        avatar = new Coche(IdAvatar, xogador, taboleiro);
+                        avatar = new Coche(IdAvatar, xogador, taboleiro, interfaz);
                         avatares.add(avatar);
                         break;
                     case "esfinxe":
-                        avatar = new Esfinxe(IdAvatar, xogador, taboleiro);
+                        avatar = new Esfinxe(IdAvatar, xogador, taboleiro, interfaz);
                         avatares.add(avatar);
                         break;
                     case "pelota":
-                        avatar = new Pelota(IdAvatar, xogador, taboleiro);
+                        avatar = new Pelota(IdAvatar, xogador, taboleiro, interfaz);
                         avatares.add(avatar);
                         break;
                     default:
-                        avatar = new Pelota(IdAvatar, xogador, taboleiro);
+                        avatar = new Pelota(IdAvatar, xogador, taboleiro, interfaz);
                         avatares.add(avatar);
                         consola.imprimir("Introduciuse pelota por defecto.\n");
                         break;

@@ -14,17 +14,20 @@ public abstract class Avatar {
     private Xogador xogador;
     private Casilla posicion;
     private boolean modoAvanzado;
+    private InterfazGrafica interfaz;
 
     //Constructores
     public Avatar() {
     }
 
-    public Avatar(char Id, Xogador xogador, Taboleiro taboleiro) {
+    public Avatar(char Id, Xogador xogador, Taboleiro taboleiro, InterfazGrafica interfaz) {
         this.id = Id;
         this.xogador = xogador;
         this.posicion = taboleiro.getCasilla(0);
         this.modoAvanzado = false;
         this.posicion.engadirAvatar(this);
+        interfaz.getPanelDereito().getTab().getAvatares().get(this.posicion.getPosicion()).addAvater(this);
+        this.interfaz = interfaz;
     }
 
     //Getters y Setters
@@ -67,7 +70,7 @@ public abstract class Avatar {
 
     //Metodos
     //Metodo que move ao avatar en modo Basico
-    public void moverEnBasico(int sumaDados, Taboleiro taboleiro, InterfazGrafica interfaz) {
+    public void moverEnBasico(int sumaDados, Taboleiro taboleiro) {
         if (this.xogador.getEstadoPreso() == 0) {
 
             Casilla procedencia = posicion;

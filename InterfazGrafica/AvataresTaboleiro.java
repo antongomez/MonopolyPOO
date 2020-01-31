@@ -13,13 +13,18 @@ public class AvataresTaboleiro extends JPanel {
     {
         this.setPreferredSize(new Dimension(boton.getWidth(), boton.getHeight()-10));
         avatares = new ArrayList<>();
+
+        this.setVisible(true);
+        this.setOpaque(false);
     }
 
     public void addAvater(Avatar avatar)
     {
-        JLabel text =  new JLabel();
-        text.setText(avatar.getId() + " ");
+        JLabel text =  new JLabel(avatar.getId() + "fsd ");
 
+        text.setFont(new Font("arial",0, 5));
+        text.setVisible(true);
+        text.setOpaque(true);
         avatares.add(text);
     }
 

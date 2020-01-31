@@ -40,6 +40,8 @@ public class PanelTaboleiro extends JPanel {
         setOpaque(true);
         setBackground(new Color(199, 255, 185));
 
+        this.avatares = new ArrayList<AvataresTaboleiro>();
+
         panelSur.setOpaque(false);
         panelOeste.setOpaque(false);
         panelNorte.setOpaque(false);

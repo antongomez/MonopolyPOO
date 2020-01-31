@@ -29,11 +29,11 @@ public class Esfinxe extends Avatar {
     //Exemplo: hipoteca/100/Lugo
     //Exemplo: dehipoteca/100/Lugo
     //Exemplo: trato/Anton/Brais/Lugo/100/Vigo/100/Meanho /*sendo Meanho a casilla na que non se paga o alquiler*/
-    public Esfinxe(char Id, Xogador xogador, Taboleiro taboleiro) {
-        super(Id, xogador, taboleiro);
+    public Esfinxe(char Id, Xogador xogador, Taboleiro taboleiro, InterfazGrafica interfaz) {
+        super(Id, xogador, taboleiro, interfaz);
 
         this.historial = new ArrayList<>();
-        this.interfaz = null;
+        this.interfaz = interfaz;
     }
 
     //Getters e Setters
@@ -123,7 +123,7 @@ public class Esfinxe extends Avatar {
             }
             Xogo.consola.imprimir(texto);
         } else if (sumaDados == 4) {
-            this.moverEnBasico(sumaDados, taboleiro, interfaz);
+            this.moverEnBasico(sumaDados, taboleiro);
         } else {
             desfacerCambios(taboleiro, banca, hipoteca);
         }
