@@ -1,0 +1,31 @@
+<project name="MonopolyPOO" default="compile">
+
+    <!-- Propiedades -->
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="assets.dir" value="assets"/>
+    <property name="lint.options" value="-Xlint"/>
+    <property name="javac.source" value="1.8"/>
+    <property name="javac.target" value="1.8"/>
+
+    <!-- Tarefa para compilar -->
+    <target name="compile">
+        <mkdir dir="${build.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false">
+            <compilerarg value="${lint.options}"/>
+        </javac>
+        
+        <!-- Copiamos os arquivos "assets" ao directorio de compilacion -->
+        <copy todir="${build.dir}">
+            <fileset dir="${assets.dir}"/>
+        </copy>
+    </target>
+
+    <!-- Tarefa para executar -->
+    <target name="run" depends="compile">
+        <java classname="xogo.Main" classpath="${build.dir}">
+        </java>
+    </target>
+
+
+</project>
